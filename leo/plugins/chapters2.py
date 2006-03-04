@@ -314,7 +314,7 @@ class Chapter:
     #@+node:ekr.20060213023839.24: ctor: Chapter
     def __init__ (self,cc,c,tree,frame,canvas,page,pageName):
         
-        # g.trace('Chapter',pageName,id(canvas))
+        g.trace('Chapter',pageName,id(canvas))
     
         # Set the ivars.
         self.c = c 
@@ -325,6 +325,10 @@ class Chapter:
         self.page = page # The Pmw.NoteBook page.
         self.tree = tree
         self.treeBar = frame.treeBar
+        
+        # The name of the page.
+        self.sv = Tk.StringVar()
+        self.sv.set(pageName)
         
         self.initTree()
         self.init()
@@ -344,9 +348,7 @@ class Chapter:
         hull = nb.component('hull')
         tab = nb.tab(pageName)
         tab.bind('<Button-3>',lambda event,hull=hull: hull.tmenu.post(event.x_root,event.y_root))
-        
-        sv = cc.stringVars.get(pageName)
-        cc.createBalloon(page,sv)
+        cc.createBalloon(page,self.sv)
      
         # The keyhandler won't be defined for the first chapter,
         # but that's ok: we only need to do this for later chapters.
@@ -450,7 +452,6 @@ class chapterController:
         self.editorBodies = {} # Keys are panes, values are leoTkinterBodies.
         self.numberOfEditors = 0
         self.panedBody = None # The present Tk.PanedWidget.
-        self.stringVars = {} # Keys are tab names, values are stringVars.
     
         self.createNoteBook(parentFrame) # sets self.nb
     #@nonl
@@ -458,6 +459,8 @@ class chapterController:
     #@+node:ekr.20060213023839.29:Create widgets
     #@+node:ekr.20060213023839.32:constructTree
     def constructTree (self,frame,pageName):
+        
+        g.trace(pageName)
     
         cc = self ; c = self.c ; nb = self.nb
         canvas = treeBar = tree = None
@@ -465,10 +468,6 @@ class chapterController:
             canvas = frame.canvas
             treeBar = frame.treeBar
             tree = frame.tree
-    
-        sv = Tk.StringVar()
-        sv.set(pageName)
-        cc.stringVars[pageName] = sv
         
         frame.canvas = canvas = frame.createCanvas(parentFrame=None,pageName=pageName)
         frame.tree = leoTkinterTree.leoTkinterTree(frame.c,frame,frame.canvas)
@@ -551,10 +550,7 @@ class chapterController:
         button = nb.tab(tabName) # tab is a Tk.Button.
         button.configure(background='grey',foreground='white')
         
-        cc.stringVars[tabName] = sv = Tk.StringVar()
-        
         # g.trace(tabName,page,button)
-    
         return page,button
     #@nonl
     #@-node:ekr.20060302083318.2:createTab
@@ -571,7 +567,7 @@ class chapterController:
         self.rmenu = rmenu = Tk.Menu(tmenu,tearoff=0)
         rmenu.configure(postcommand=self.removeChapter)
         tmenu.add_cascade(menu=rmenu,label="Remove Chapter")
-        tmenu.add_command(label="Add/Change Title",command=self.renameChapter)
+        tmenu.add_command(label="Rename Chapter",command=self.renameChapter)
         opmenu = Tk.Menu(tmenu,tearoff=0)
         tmenu.add_cascade(menu=opmenu,label='Node-Chapter Ops')
         cmenu = Tk.Menu(opmenu,tearoff=0)
@@ -676,13 +672,15 @@ class chapterController:
     def setTree (self,name):
     
         cc = self ; c = cc.c
-        sv = cc.getStringVar(name)
+    
+        chapter = self.getChapter(name)
+        sv = chapter and chapter.sv
         if not sv:
             # The page hasn't been fully created yet.
             # This is *not* an error.
             # g.trace('******* no sv attr for page',name,color='red')
             return None
-        chapter = self.getChapter(name)
+    
         chapter.makeCurrent()
         
         # Set body ivars.
@@ -719,7 +717,7 @@ class chapterController:
     def emptyTrash (self):
         
         cc = self ; c = cc.c ; nb = cc.nb
-        pagenames = [self.getStringVar(x) for x in nb.pagenames()]
+        pagenames = [self.getChapter(x).sv for x in nb.pagenames()]
     
         for z in pagenames:
             if z.get().upper() == 'TRASH':
@@ -746,8 +744,7 @@ class chapterController:
     def regexClone (self,name):
     
         c = self.c ; nb = self.nb
-        ###sv = self.getStringVar(name)
-        ###chapter = self.chapters [sv]
+    
         chapter = self.getChapter(name)
         #@    << define cloneWalk callback >>
         #@+node:ekr.20060213023839.101:<< define cloneWalk callback >>
@@ -814,10 +811,9 @@ class chapterController:
         tab2 = nb.tab(name)
         tval1 = tab1.cget('text')
         tval2 = tab2.cget('text')
-        tv1 = cc.getStringVar(cselection)
-        tv2 = cc.getStringVar(name)
+        tv1 = cc.getChapter(cselection).sv
+        tv2 = cc.getChapter(name).sv
         chap1 = cc.currentChapter
-        ### chap2 = self.chapters [tv2]
         chap2 = self.getChapter(name)
         rp, tp, cp = chap2.rp, chap2.tp, chap2.cp
         chap2.rp, chap2.tp, chap2.cp = chap1.rp, chap1.tp, chap1.cp
@@ -957,7 +953,7 @@ class chapterController:
         c = self.c ; nb = self.nb
         self.addPage('Trash')
         pnames = nb.pagenames()
-        sv = self.getStringVar(pnames[-1])
+        sv = self.getChapter(pnames[-1]).sv
         sv.set('Trash')
         self.renumber()
     #@nonl
@@ -1029,13 +1025,11 @@ class chapterController:
         cChapter = cc.currentChapter
         for n, z in enumerate(pagenames):
             n = n + 1
-            ###sv = self.getStringVar(z)
-            ###chapter = self.chapters [sv]
             chapter = self.getChapter(z)
             chapter.setVariables()
             p = chapter.rp
             if p:
-                self._changeTreeToPDF(sv.get(),n,p,c,Story,styles,maxlen)
+                self._changeTreeToPDF(chapter.sv.get(),n,p,c,Story,styles,maxlen)
         #@    << define otherPages callback >>
         #@+node:ekr.20060213023839.62:<< define otherPages callback >>
         def otherPages (canvas,doc,pageinfo=pinfo):
@@ -1127,7 +1121,6 @@ class chapterController:
         
         c = self.c ; nb = self.nb
         page = nb.page(nb.index(name))
-        ###mvChapter = self.chapters [page.sv]
         mvChapter = self.getChapter(page)
         
         c.beginUpdate()
@@ -1149,7 +1142,6 @@ class chapterController:
     
         cc = self ; c = cc.c ; nb = cc.nb
         page = nb.page(nb.index(name))
-        # cpChapter = cc.chapters [page.sv]
         cpChapter = cc.getChapter(name)
     
         c.beginUpdate()
@@ -1174,7 +1166,6 @@ class chapterController:
         if nxt: p.doDelete(nxt)
     
         page,pageName = self.addPage()
-        ###mnChapter = self.chapters [page.sv]
         mnChapter = self.getChapter(pageName)
         c.beginUpdate()
         try:
@@ -1204,9 +1195,6 @@ class chapterController:
         c.beginUpdate()
         try:
             for z in pagenames:
-                ###index = nb.index(z)
-                ###page = nb.page(index)
-                ###chapter = self.chapters [page.sv]
                 chapter = self.getChapter(z)
                 rvNode = chapter.rp
                 while 1:
@@ -1353,22 +1341,18 @@ class chapterController:
             x, y = tup
             if num > 0:
                 page,pageName = self.addPage(x)
-                if 1:
-                    sv = self.getStringVar(pageName)
-                else:
-                    sv = page.sv
+                sv = cc.getChapter(pageName).sv
                 nb.nextpage()
                 cselection = nb.getcurselection()
             else:
                 cselection = nb.getcurselection()
-                sv = self.getStringVar(cselection)
+                sv = cc.getChapter(cselection).sv
             sv.set(x)
             next = cselection
             self.setTree(next)
             c.fileCommands.open(y,sv.get())
             if num == 0: flipto = cselection
         flipto and self.setTree(flipto)
-    #@nonl
     #@-node:ekr.20060213023839.85:insertChapters
     #@-node:ekr.20060213023839.83:Reading
     #@+node:ekr.20060213023839.86:Writing
@@ -1401,7 +1385,7 @@ class chapterController:
         zf = zipfile.ZipFile(fileName,'w',zipfile.ZIP_DEFLATED)
     
         for x, fname in enumerate(pagenames):
-            sv = cc.getStringVar(fname)
+            sv = cc.getChapter(fname).sv
             zif = zipfile.ZipInfo(str(x))
             zif.comment = sv.get() or ''
             zif.compress_type = zipfile.ZIP_DEFLATED
@@ -1413,15 +1397,6 @@ class chapterController:
     #@-node:ekr.20060213023839.86:Writing
     #@-node:ekr.20060213023839.82:Files
     #@+node:ekr.20060228123056:Getters...
-    #@+node:ekr.20060213023839.79:getStringVar
-    def getStringVar (self,pageName):
-    
-        '''return a Tk StrinVar that is a primary identifier.'''
-        
-        cc = self
-        return cc.stringVars.get(pageName)
-    #@nonl
-    #@-node:ekr.20060213023839.79:getStringVar
     #@+node:ekr.20060228123056.1:getChapter
     def getChapter (self,pageName):
         
@@ -1512,7 +1487,7 @@ class chapterController:
     #@+node:ekr.20060213023839.72:buildIndex
     def buildIndex (self,nodes,can,tl,bal,tags):
     
-        c = self.c ; nb = self.nb
+        cc = self ; c = cc.c ; nb = cc.nb
         f = tkFont.Font()
         f.configure(size=-20)
         ltag = None
@@ -1520,12 +1495,10 @@ class chapterController:
             tg = 'abc' + str(i)
             parent = z [1].parent()
             if parent: parent = parent.headString()
-            else:
-                parent = 'No Parent'
-            sv = self.getStringVar(z[2])
+            else: parent = 'No Parent'
+            sv = cc.getChapter(z[2]).sv
             if sv.get(): sv = ' - ' + sv.get()
             else: sv = ''
-    
             tab = nb.tab(z[2])
             tv = tab.cget('text')
             isClone = z [1].isCloned()
@@ -1627,6 +1600,7 @@ class chapterController:
         
         n = cc.nb.getcurselection()
         chapter = cc.chapters.get(n)
+    
         g.trace(n,chapter)
         
         label,label_frame = cc.addHeading(pane)

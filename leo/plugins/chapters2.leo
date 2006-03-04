@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="253" clone_windows="0"/>
 <globals body_outline_ratio="0.492424242424">
-	<global_window_position top="111" left="436" height="660" width="800"/>
+	<global_window_position top="101" left="460" height="660" width="800"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -196,8 +196,9 @@
 </v>
 <v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
 <v t="ekr.20060213023839.16"><vh>new_endEditLabel (leoTkinterTree)</vh></v>
+<v t="ekr.20060213023839.79"><vh>getStringVar</vh></v>
 </v>
-<v t="ekr.20060228081628" a="V"><vh>To do</vh>
+<v t="ekr.20060228081628"><vh>To do</vh>
 <v t="ekr.20060303104124"><vh>Later</vh></v>
 <v t="ekr.20060303083246"><vh>Recent: editors</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
@@ -215,7 +216,12 @@
 </v>
 </v>
 <v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
-<v t="ekr.20060303133111"><vh>Recent: rename</vh>
+<v t="ekr.20060303133111" a="V"><vh>Recent: rename</vh>
+<v t="ekr.20060228123056"><vh>Getters...</vh>
+<v t="ekr.20060228123056.1"><vh>getChapter</vh></v>
+<v t="ekr.20060228123056.3"><vh>nextPageName</vh></v>
+</v>
+<v t="ekr.20060213023839.24"><vh> ctor: Chapter</vh></v>
 <v t="ekr.20060213023839.76"><vh>renumber</vh></v>
 <v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
 <v t="ekr.20060213023839.45"><vh>select</vh></v>
@@ -1566,6 +1572,26 @@ iscStringIO = False
 notebooks = {}
 pbodies = {}
 twidgets = {}</t>
+<t tx="ekr.20060213023839.24">def __init__ (self,cc,c,tree,frame,canvas,page,pageName):
+    
+    g.trace('Chapter',pageName,id(canvas))
+
+    # Set the ivars.
+    self.c = c 
+    self.cc = cc
+    self.canvas = canvas
+    self.frame = frame
+    self.pageName = pageName
+    self.page = page # The Pmw.NoteBook page.
+    self.tree = tree
+    self.treeBar = frame.treeBar
+    
+    # The name of the page.
+    self.sv = Tk.StringVar()
+    self.sv.set(pageName)
+    
+    self.initTree()
+    self.init()</t>
 <t tx="ekr.20060213023839.27">def makeCurrent (self):
 
     # g.trace(self.pageName)
@@ -1595,7 +1621,6 @@ twidgets = {}</t>
     self.editorBodies = {} # Keys are panes, values are leoTkinterBodies.
     self.numberOfEditors = 0
     self.panedBody = None # The present Tk.PanedWidget.
-    self.stringVars = {} # Keys are tab names, values are stringVars.
 
     self.createNoteBook(parentFrame) # sets self.nb</t>
 <t tx="ekr.20060213023839.34">def createNoteBook (self,parentFrame):
@@ -1667,6 +1692,7 @@ twidgets = {}</t>
     
     n = cc.nb.getcurselection()
     chapter = cc.chapters.get(n)
+
     g.trace(n,chapter)
     
     label,label_frame = cc.addHeading(pane)
@@ -1849,6 +1875,15 @@ def hideHeading (self,body):
         return name
     except:
         return nb.getcurselection()</t>
+<t tx="ekr.20060213023839.79">def getStringVar (self,pageName):
+
+    '''return a Tk StrinVar that is a primary identifier.'''
+    
+    cc = self
+
+    chapter = cc.chapters.get(pageName)
+    return chapter and chapter.sv
+</t>
 <t tx="ekr.20060213023839.87">def getMakeStringIO (self,chapList):
 
     '''Insures that data is put in a StringIO instance.'''
@@ -3566,12 +3601,14 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228081537"></t>
 <t tx="ekr.20060228081628">@nocolor
 
+- (done) Moved sv var into Chapters class.
+    - chapter.sv replaces cc.stringVars dict.
+    - replaced cc.getStringVar by cc.getChapter(name).sv
+
 - Make rename work as in old plugin.
     - Almost, but not quite.  Maybe stringvars really are the way to go...
 
 - Remove enumerate.
-
-- Eliminate .sv var?
 
 - Replace all v refs by p refs.  vnd
 
@@ -3586,6 +3623,15 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228085204"></t>
 <t tx="ekr.20060228085204.1">c.save()
 c.redraw_now() # Must be done here.</t>
+<t tx="ekr.20060228123056"></t>
+<t tx="ekr.20060228123056.1">def getChapter (self,pageName):
+    
+    return self.chapters.get(pageName)</t>
+<t tx="ekr.20060228123056.3">def nextPageName (self):
+    
+    n = str(len(self.nb.pagenames()) + 1)
+    # g.trace(n,self.nb.pagenames(),g.callers())
+    return n</t>
 <t tx="ekr.20060302083318">def init (self):
     
     '''Complete the initialization of a chapter
@@ -3599,9 +3645,7 @@ c.redraw_now() # Must be done here.</t>
     hull = nb.component('hull')
     tab = nb.tab(pageName)
     tab.bind('&lt;Button-3&gt;',lambda event,hull=hull: hull.tmenu.post(event.x_root,event.y_root))
-    
-    sv = cc.stringVars.get(pageName)
-    cc.createBalloon(page,sv)
+    cc.createBalloon(page,self.sv)
  
     # The keyhandler won't be defined for the first chapter,
     # but that's ok: we only need to do this for later chapters.
