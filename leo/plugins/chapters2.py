@@ -68,6 +68,11 @@ __version__ = "0.106"
 #     - chapter.sv replaces cc.stringVars dict.
 #     - replaced cc.getStringVar(name) by cc.getChapter(name).sv
 # - Removed nextPageName.
+# 
+# v .107 EKR:
+# - Made rename work as in old plugin.
+#     - Removed computeNodeLabel.
+#     - Use stringvar in editor label.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -320,7 +325,7 @@ class Chapter:
     #@+node:ekr.20060213023839.24: ctor: Chapter
     def __init__ (self,cc,c,tree,frame,canvas,page,pageName):
         
-        g.trace('Chapter',pageName,id(canvas))
+        #g.trace('Chapter',pageName,id(canvas))
     
         # Set the ivars.
         self.c = c 
@@ -340,6 +345,14 @@ class Chapter:
         self.init()
     #@nonl
     #@-node:ekr.20060213023839.24: ctor: Chapter
+    #@+node:ekr.20060304102720:__str__ and __repr__: Chapter
+    def __str__ (self):
+        
+        return '<Chapter %s at %d>' % (self.sv.get(),id(self))
+        
+    __repr__ = __str__
+    #@nonl
+    #@-node:ekr.20060304102720:__str__ and __repr__: Chapter
     #@+node:ekr.20060302083318:init
     def init (self):
         
@@ -363,8 +376,6 @@ class Chapter:
             c.k and self.tree.setBindings()
             for w in (self.canvas,self.tree.bindingWidget):
                 c.k.completeAllBindingsForWidget(w)
-    
-        ### self.canvas.name = pageName ####
     #@nonl
     #@-node:ekr.20060302083318:init
     #@+node:ekr.20060302083318.1:initTree
@@ -532,7 +543,6 @@ class chapterController:
         nb.configure(raisecommand=raiseCallback)
     
         nb.pack(fill='both',expand=1)
-        ### nb.nameMaker = self.nameMaker
         return nb
     #@nonl
     #@-node:ekr.20060213023839.34:createNoteBook
@@ -728,7 +738,6 @@ class chapterController:
     
         for z in pagenames:
             if z.get().upper() == 'TRASH':
-                ### trChapter = self.chapters [z]
                 trChapter = self.getChapter(z)
                 rvND = trChapter.rp
                 c.beginUpdate()
@@ -840,18 +849,6 @@ class chapterController:
     #@-node:ekr.20060213023839.98:swapChapters
     #@-node:ekr.20060213023839.75:Chapter ops
     #@+node:ekr.20060303143328:Utils
-    #@+node:ekr.20060303143328.1:computeNodeLabel
-    def computeNodeLabel (self,chapter,p):
-        
-        cc = self
-        s = cc.chapterNames.get(chapter,'')
-        h = p.headString()
-        if s:
-            return '%s %s' % (s,h)
-        else:
-            return h
-    #@nonl
-    #@-node:ekr.20060303143328.1:computeNodeLabel
     #@+node:ekr.20060228123056.1:getChapter
     def getChapter (self,pageName):
         
@@ -931,8 +928,10 @@ class chapterController:
     #@-node:ekr.20060213023839.55:removeOneChapter
     #@-node:ekr.20060213023839.54:removeChapter & helper
     #@+node:ekr.20060213023839.56:renameChapter
-    # In the original chapters plugin the effect of this was to add a prefix to all labels.
     def renameChapter (self,event=None):
+        
+        '''Insert a entry widget linked to chapter.sv.
+        Changing this Tk.StringVar immediately changes all the chapter's labels.'''
     
         cc = self ; c = cc.c ; nb = cc.nb
         name = nb.getcurselection()
@@ -940,22 +939,19 @@ class chapterController:
         frame = nb.page(name)
         tab = nb.tab(name)
         chapter = cc.chapters.get(name)
-        g.trace(name,index,tab.cget('text'),chapter)
+        g.trace(chapter)
         f = Tk.Frame(frame)
-        e = Tk.Entry(f,background='white')
+        # Elegant code.  Setting e's textvariable to chapter.sv
+        # immediately updates the chapter labels as e changes.
+        e = Tk.Entry(f,background='white',textvariable=chapter.sv)
         b = Tk.Button(f,text="Close")
         f.pack(side='top')
         e.pack(side='left')
         b.pack(side='right')
-        def changeCallback (event=None,chapter=chapter,f=f,tab=tab):
-            s = e.get().strip()
-            cc.chapterNames [chapter] = s
-            for pane in cc.editorBodies.keys():
-                body = cc.editorBodies.get(pane)
-                if body.editorChapter == chapter:
-                    body.editorLabel.configure(text=cc.computeNodeLabel(chapter,body.lastPosition))
+        def changeCallback (event=None,f=f):
             f.pack_forget()
         e.bind('<Return>',changeCallback)
+        e.selection_range(0,'end')
         b.configure(command=changeCallback)
         c.widgetWantsFocusNow(e)
     #@nonl
@@ -1237,36 +1233,42 @@ class chapterController:
     #@-node:ekr.20060213023839.89:Conversions
     #@+node:ekr.20060213023839.64:Editor
     #@+node:ekr.20060213023839.68:add/hide/showHeading
-    def addHeading (self,pane):
-    
+    def addHeading (self,chapter,pane):
+        '''Create a two-part editor label.
+        - The left label tracks the chapter name using a chapter.sv.
+        - The right label is the node's healine.'''
         f = Tk.Frame(pane)
         f.pack(side='top')
-        label = Tk.Label(f)
-        # label.pack(side='left')
-        return label,f
+        left_label = Tk.Label(f)
+        right_label = Tk.Label(f)
+        if 1: # Do this in showHeading only when there is more than one editor.
+            left_label.pack(side='left')
+            right_label.pack(side='right')
+        # Set the label's textvariable so the label tracks the chapter name.
+        left_label.configure(textvariable=chapter.sv)
+        return left_label, right_label, f
     
-    # The editorLabel and editorLabelFrame ivars have been injected into body.
-        
     def showHeading (self,body):
-        body.editorLabel.pack(side='left')
-        
+        if 0:
+            body.editorLeftLabel.pack(side='left')
+            body.editorRightLabel.pack(side='right')
+    
     def hideHeading (self,body):
-        # If we unpack the frame we won't be able to repack it easily.
-        # Setting the height to zero also does not seem to work.
-        # h = body.editorLabelFrame.cget('height')
-        body.editorLabel.pack_forget()
-        # body.editorLabelFrame.configure(height='0')
+        if 0:
+            # If we unpack the frame we won't be able to repack it easily.
+            # Setting the height to zero also does not seem to work.
+            body.editorLabel.pack_forget()
     #@nonl
     #@-node:ekr.20060213023839.68:add/hide/showHeading
     #@+node:ekr.20060213023839.66:activateEditor
     def activateEditor (self,body):
     
         '''Activate an editor.'''
-        
-        cc = self ; c = cc.c ;
-        p = body.lastPosition ; h = p and p.headString()
+    
+        p = body.lastPosition
+        h = p and p.headString() or ''
         chapter = body.editorChapter
-        body.editorLabel.configure(text=cc.computeNodeLabel(chapter,p))
+        body.editorRightLabel.configure(text=h)
         ip = body.lastPosition.t.insertSpot
         body.deleteAllText()
         body.insertAtEnd(p.bodyString())
@@ -1600,11 +1602,13 @@ class chapterController:
     
         g.trace(n,chapter)
         
-        label,label_frame = cc.addHeading(pane)
+        left_label,right_label,label_frame = cc.addHeading(chapter,pane)
         # Inject these ivars into the leoTkinterBody.
-        body.editorLabel = label
+        body.editorRightLabel = right_label
+        body.editorLeftLabel = left_label
         body.editorLabelFrame = label_frame
         body.editorChapter = chapter
+    
         ctrl = old_createControl(body,frame,pane)
         
         if 0: # Create a focus-in event.
@@ -1708,11 +1712,12 @@ class chapterController:
         return_val = old_select(tree,p,updateBeadList)
         c.frame.body.lastChapter = n = nb.getcurselection()
     
-        if hasattr(p.c.frame.body,'editorLabel'):
-            n = cc.nb.getcurselection()
-            chapter = cc.chapters.get(n)
-            s = cc.computeNodeLabel(chapter,p)
-            c.frame.body.editorLabel.configure(text=s)
+        if hasattr(p.c.frame.body,'editorRightLabel'):
+            # n = cc.nb.getcurselection()
+            # chapter = cc.chapters.get(n)
+            # s = cc.computeNodeLabel(chapter,p)
+            h = p.headString() or ''
+            c.frame.body.editorRightLabel.configure(text=h)
     
         return return_val
     #@nonl

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="253" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="254" clone_windows="0"/>
 <globals body_outline_ratio="0.492424242424">
-	<global_window_position top="101" left="460" height="660" width="800"/>
+	<global_window_position top="101" left="461" height="660" width="799"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -11,6 +11,7 @@
 <vnodes>
 <v t="ekr.20060228085204"><vh>Buttons</vh>
 <v t="ekr.20060228085204.1"><vh>@button Save</vh></v>
+<v t="ekr.20060304095654"><vh>@button Beautify</vh></v>
 </v>
 <v t="ekr.20060228081537"><vh>Original code</vh>
 <v t="ekr.20060213023732.1"><vh>chapters.py ORIGINAL</vh>
@@ -198,33 +199,21 @@
 <v t="ekr.20060213023839.16"><vh>new_endEditLabel (leoTkinterTree)</vh></v>
 <v t="ekr.20060213023839.79"><vh>getStringVar</vh></v>
 <v t="ekr.20060228123056.3"><vh>nextPageName</vh></v>
+<v t="ekr.20060303143328.1"><vh>computeNodeLabel</vh></v>
 </v>
-<v t="ekr.20060228081628"><vh>To do</vh>
+<v t="ekr.20060228081628" a="V"><vh>To do</vh>
 <v t="ekr.20060303104124"><vh>Later</vh></v>
-<v t="ekr.20060303083246"><vh>Recent: editors</vh>
+</v>
+<v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060303083246"><vh>Recent: editors &amp; rename</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
-<v t="ekr.20060302083318"><vh>init</vh></v>
-<v t="ekr.20060213023839.67"><vh>removeEditor</vh></v>
-<v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
-<v t="ekr.20060213023839.38"><vh>createEditorPane</vh></v>
-<v t="ekr.20060213023839.41"><vh>createControl</vh></v>
 <v t="ekr.20060213023839.68"><vh>add/hide/showHeading</vh></v>
-</v>
-<v t="ekr.20060303110857"><vh>Recent: move focus out of chapter tabs</vh>
-<v t="ekr.20060303105217"><vh>raisePage</vh></v>
-<v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
-<v t="ekr.20060213023839.34"><vh>createNoteBook</vh></v>
-</v>
-</v>
-<v t="ekr.20060213023839.3" a="E"><vh>@thin chapters2.py</vh></v>
-<v t="ekr.20060303133111" a="E"><vh>Recent: rename</vh>
-<v t="ekr.20060213023839.24"><vh> ctor: Chapter</vh></v>
-<v t="ekr.20060213023839.76"><vh>renumber</vh></v>
+<v t="ekr.20060213023839.41"><vh>createControl</vh></v>
+<v t="ekr.20060213023839.38"><vh>createEditorPane</vh></v>
+<v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
+<v t="ekr.20060213023839.67"><vh>removeEditor</vh></v>
 <v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
 <v t="ekr.20060213023839.45"><vh>select</vh></v>
-<v t="ekr.20060213023839.66"><vh>activateEditor</vh></v>
-<v t="ekr.20060303143328.1"><vh>computeNodeLabel</vh></v>
-<v t="ekr.20060213023839.41"><vh>createControl</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1569,36 +1558,6 @@ iscStringIO = False
 notebooks = {}
 pbodies = {}
 twidgets = {}</t>
-<t tx="ekr.20060213023839.24">def __init__ (self,cc,c,tree,frame,canvas,page,pageName):
-    
-    g.trace('Chapter',pageName,id(canvas))
-
-    # Set the ivars.
-    self.c = c 
-    self.cc = cc
-    self.canvas = canvas
-    self.frame = frame
-    self.pageName = pageName
-    self.page = page # The Pmw.NoteBook page.
-    self.tree = tree
-    self.treeBar = frame.treeBar
-    
-    # The name of the page.
-    self.sv = Tk.StringVar()
-    self.sv.set(pageName)
-    
-    self.initTree()
-    self.init()</t>
-<t tx="ekr.20060213023839.27">def makeCurrent (self):
-
-    # g.trace(self.pageName)
-
-    c = self.c ; cc = self.cc
-    cc.currentChapter._saveInfo()
-    cc.currentChapter = self
-    self.setVariables()
-    c.redraw()
-    c.bodyWantsFocusNow()</t>
 <t tx="ekr.20060213023839.30">def __init__ (self,c,frame,parentFrame):
     
     self.c = c
@@ -1620,26 +1579,6 @@ twidgets = {}</t>
     self.panedBody = None # The present Tk.PanedWidget.
 
     self.createNoteBook(parentFrame) # sets self.nb</t>
-<t tx="ekr.20060213023839.34">def createNoteBook (self,parentFrame):
-
-    '''Construct a NoteBook widget for a frame.'''
-
-    c = self.c
-    self.nb = nb = Pmw.NoteBook(parentFrame,borderwidth=1,pagemargin=0)
-    hull = nb.component('hull')
-    self.makeTabMenu(hull)
-    
-    def lowerCallback(name,self=self):
-        return self.lowerPage(name)
-    nb.configure(lowercommand=lowerCallback)
-    
-    def raiseCallback(name,self=self):
-        return self.raisePage(name)
-    nb.configure(raisecommand=raiseCallback)
-
-    nb.pack(fill='both',expand=1)
-    ### nb.nameMaker = self.nameMaker
-    return nb</t>
 <t tx="ekr.20060213023839.36">def makeNameMaker (self):
 
     '''Create a numbering mechanism for tabs.'''
@@ -1692,11 +1631,13 @@ twidgets = {}</t>
 
     g.trace(n,chapter)
     
-    label,label_frame = cc.addHeading(pane)
+    left_label,right_label,label_frame = cc.addHeading(chapter,pane)
     # Inject these ivars into the leoTkinterBody.
-    body.editorLabel = label
+    body.editorRightLabel = right_label
+    body.editorLeftLabel = left_label
     body.editorLabelFrame = label_frame
     body.editorChapter = chapter
+
     ctrl = old_createControl(body,frame,pane)
     
     if 0: # Create a focus-in event.
@@ -1728,15 +1669,18 @@ twidgets = {}</t>
     return_val = old_select(tree,p,updateBeadList)
     c.frame.body.lastChapter = n = nb.getcurselection()
 
-    if hasattr(p.c.frame.body,'editorLabel'):
-        n = cc.nb.getcurselection()
-        chapter = cc.chapters.get(n)
-        s = cc.computeNodeLabel(chapter,p)
-        c.frame.body.editorLabel.configure(text=s)
+    if hasattr(p.c.frame.body,'editorRightLabel'):
+        # n = cc.nb.getcurselection()
+        # chapter = cc.chapters.get(n)
+        # s = cc.computeNodeLabel(chapter,p)
+        h = p.headString() or ''
+        c.frame.body.editorRightLabel.configure(text=h)
 
     return return_val</t>
-<t tx="ekr.20060213023839.56"># In the original chapters plugin the effect of this was to add a prefix to all labels.
-def renameChapter (self,event=None):
+<t tx="ekr.20060213023839.56">def renameChapter (self,event=None):
+    
+    '''Insert a entry widget linked to chapter.sv.
+    Changing this Tk.StringVar immediately changes all the chapter's labels.'''
 
     cc = self ; c = cc.c ; nb = cc.nb
     name = nb.getcurselection()
@@ -1744,22 +1688,19 @@ def renameChapter (self,event=None):
     frame = nb.page(name)
     tab = nb.tab(name)
     chapter = cc.chapters.get(name)
-    g.trace(name,index,tab.cget('text'),chapter)
+    g.trace(chapter)
     f = Tk.Frame(frame)
-    e = Tk.Entry(f,background='white')
+    # Elegant code.  Setting e's textvariable to chapter.sv
+    # immediately updates the chapter labels as e changes.
+    e = Tk.Entry(f,background='white',textvariable=chapter.sv)
     b = Tk.Button(f,text="Close")
     f.pack(side='top')
     e.pack(side='left')
     b.pack(side='right')
-    def changeCallback (event=None,chapter=chapter,f=f,tab=tab):
-        s = e.get().strip()
-        cc.chapterNames [chapter] = s
-        for pane in cc.editorBodies.keys():
-            body = cc.editorBodies.get(pane)
-            if body.editorChapter == chapter:
-                body.editorLabel.configure(text=cc.computeNodeLabel(chapter,body.lastPosition))
+    def changeCallback (event=None,f=f):
         f.pack_forget()
     e.bind('&lt;Return&gt;',changeCallback)
+    e.selection_range(0,'end')
     b.configure(command=changeCallback)
     c.widgetWantsFocusNow(e)</t>
 <t tx="ekr.20060213023839.65">def selectNodeForEditor (self,body):
@@ -1780,20 +1721,6 @@ def renameChapter (self,event=None):
         c.selectPosition(c.rootPosition())
 
     body.lastPosition = c.currentPosition()</t>
-<t tx="ekr.20060213023839.66">def activateEditor (self,body):
-
-    '''Activate an editor.'''
-    
-    cc = self ; c = cc.c ;
-    p = body.lastPosition ; h = p and p.headString()
-    chapter = body.editorChapter
-    body.editorLabel.configure(text=cc.computeNodeLabel(chapter,p))
-    ip = body.lastPosition.t.insertSpot
-    body.deleteAllText()
-    body.insertAtEnd(p.bodyString())
-    if ip: body.setInsertionPoint(ip)
-    body.colorizer.colorize(p)
-    body.bodyCtrl.update_idletasks()</t>
 <t tx="ekr.20060213023839.67">def removeEditor (self):
     
     cc = self ; c = cc.c
@@ -1816,34 +1743,31 @@ def renameChapter (self,event=None):
     
     g.trace(pane,frame)
     g.trace(cc.editorBodies.keys())</t>
-<t tx="ekr.20060213023839.68">def addHeading (self,pane):
-
+<t tx="ekr.20060213023839.68">def addHeading (self,chapter,pane):
+    '''Create a two-part editor label.
+    - The left label tracks the chapter name using a chapter.sv.
+    - The right label is the node's healine.'''
     f = Tk.Frame(pane)
     f.pack(side='top')
-    label = Tk.Label(f)
-    # label.pack(side='left')
-    return label,f
+    left_label = Tk.Label(f)
+    right_label = Tk.Label(f)
+    if 1: # Do this in showHeading only when there is more than one editor.
+        left_label.pack(side='left')
+        right_label.pack(side='right')
+    # Set the label's textvariable so the label tracks the chapter name.
+    left_label.configure(textvariable=chapter.sv)
+    return left_label, right_label, f
 
-# The editorLabel and editorLabelFrame ivars have been injected into body.
-    
 def showHeading (self,body):
-    body.editorLabel.pack(side='left')
-    
+    if 0:
+        body.editorLeftLabel.pack(side='left')
+        body.editorRightLabel.pack(side='right')
+
 def hideHeading (self,body):
-    # If we unpack the frame we won't be able to repack it easily.
-    # Setting the height to zero also does not seem to work.
-    # h = body.editorLabelFrame.cget('height')
-    body.editorLabel.pack_forget()
-    # body.editorLabelFrame.configure(height='0')</t>
-<t tx="ekr.20060213023839.76">def renumber (self):
-    
-    cc = self ; nb = cc.nb
-        
-    i = 0
-    for name in nb.pagenames():
-        i += 1
-        tab = nb.tab(name)
-        tab.configure(text=str(i))</t>
+    if 0:
+        # If we unpack the frame we won't be able to repack it easily.
+        # Setting the height to zero also does not seem to work.
+        body.editorLabel.pack_forget()</t>
 <t tx="ekr.20060213023839.77">def getGoodPage (self,event,body):
     
     c = self.c ; nb = self.nb
@@ -3598,7 +3522,7 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228081537"></t>
 <t tx="ekr.20060228081628">@nocolor
 
-- Make rename work as in old plugin.
+- Assign correct chapters to all nodes initially.
 
 - Test trash.
 
@@ -3622,51 +3546,11 @@ c.redraw_now() # Must be done here.</t>
     n = str(len(self.nb.pagenames()) + 1)
     # g.trace(n,self.nb.pagenames(),g.callers())
     return n</t>
-<t tx="ekr.20060302083318">def init (self):
-    
-    '''Complete the initialization of a chapter
-    by creating bindings and injecting ivars.
-    
-    Doing this here greatly simplifies the init logic.'''
-
-    c = self.c ; cc = self.cc ; nb = cc.nb
-    pageName = self.pageName ; page = self.page
-    
-    hull = nb.component('hull')
-    tab = nb.tab(pageName)
-    tab.bind('&lt;Button-3&gt;',lambda event,hull=hull: hull.tmenu.post(event.x_root,event.y_root))
-    cc.createBalloon(page,self.sv)
- 
-    # The keyhandler won't be defined for the first chapter,
-    # but that's ok: we only need to do this for later chapters.
-    if c.k:
-        # Same logic as in completeAllBindings, but for the new tree.
-        c.k and self.tree.setBindings()
-        for w in (self.canvas,self.tree.bindingWidget):
-            c.k.completeAllBindingsForWidget(w)
-
-    ### self.canvas.name = pageName ####</t>
 <t tx="ekr.20060303083246"></t>
 <t tx="ekr.20060303104124">- Separate editors from chapters plugin.
     - This really should be part of Leo's core.  It's so useful.
 
 - Build in support for Tabbed outline into Leo's core.</t>
-<t tx="ekr.20060303105217">def raisePage (self,name):
-    
-    cc = self ; c = cc.c
-    
-    # This must be called before queuing up the callback.
-    self.setTree(name)
-    
-    # This can not be called immediately
-    def idleCallback(event=None,c=c):
-        c.invalidateFocus()
-        c.bodyWantsFocusNow()
-        
-    w = c.frame.body and c.frame.body.bodyCtrl
-    w and w.after_idle(idleCallback)</t>
-<t tx="ekr.20060303110857"></t>
-<t tx="ekr.20060303133111"></t>
 <t tx="ekr.20060303143328.1">def computeNodeLabel (self,chapter,p):
     
     cc = self
@@ -3676,5 +3560,6 @@ c.redraw_now() # Must be done here.</t>
         return '%s %s' % (s,h)
     else:
         return h</t>
+<t tx="ekr.20060304095654">c.prettyPrintPythonNode()</t>
 </tnodes>
 </leo_file>
