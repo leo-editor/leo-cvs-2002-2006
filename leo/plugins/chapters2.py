@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.106"
+__version__ = "0.107"
 #@<< version history >>
 #@+node:ekr.20060213023839.5:<< version history >>
 #@@nocolor
@@ -73,6 +73,9 @@ __version__ = "0.106"
 # - Made rename work as in old plugin.
 #     - Removed computeNodeLabel.
 #     - Use stringvar in editor label.
+# - Call nb.selectpage in Chapter.makeCurrent so the proper pane is selected 
+# on startup.
+# - Eliminated extra redraws on startup.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -480,7 +483,6 @@ class chapterController:
         self.chapters = {} # Keys are tab names, values are Chapter objects.
         self.currentChapter = None
         self.editorBodies = {} # Keys are panes, values are leoTkinterBodies.
-        self.opening = False # True if opening a file
         self.numberOfEditors = 0
         self.panedBody = None # The present Tk.PanedWidget.
     
@@ -584,91 +586,152 @@ class chapterController:
         return page,button
     #@nonl
     #@-node:ekr.20060302083318.2:createTab
-    #@+node:ekr.20060213023839.51:makeTabMenu
+    #@+node:ekr.20060213023839.51:makeTabMenu & helpers
     def makeTabMenu (self,widget):
-        '''Creates a tab menu.'''
-        c = self.c ; nb = self.nb
+        
+        '''Create a tab menu.'''
+    
+        cc = self
         tmenu = Tk.Menu(widget,tearoff=0)
         widget.bind('<Button-3>',lambda event: tmenu.post(event.x_root,event.y_root))
         widget.tmenu = tmenu
+        
+        # Create top-level items.
         tmenu.add_command(command=tmenu.unpost)
         tmenu.add_separator()
         tmenu.add_command(label='Add Chapter',command=self.addChapter)
+        
+        # To do: change to: 'Remove This Chapter'
         self.rmenu = rmenu = Tk.Menu(tmenu,tearoff=0)
         rmenu.configure(postcommand=self.removeChapter)
         tmenu.add_cascade(menu=rmenu,label="Remove Chapter")
         tmenu.add_command(label="Rename Chapter",command=self.renameChapter)
+       
+        cc.createOpMenu(tmenu)
+        cc.createEditorMenu(tmenu)
+        cc.createConversionMenu(tmenu)
+        cc.createImportExportMenu(tmenu)
+        cc.createIndexMenu(tmenu)
+        
+        try:
+            import reportlab
+            tmenu.add_command(label='Convert To PDF',command=cc.doPDFConversion)
+        except Exception:
+            pass
+            # g.es("no reportlab")
+    #@nonl
+    #@+node:ekr.20060304174021:createConversionMenu
+    def createConversionMenu (self,tmenu):
+    
+        cc = self
+        
+        m = Tk.Menu(tmenu,tearoff=0)
+        tmenu.add_cascade(menu=m,label='Conversion')
+    
+        m.add_command(
+            label = "Convert To Simple Outline",
+            command=cc.conversionToSimple)
+        
+        m.add_command(
+            label = "Convert Simple Outline into Chapters",
+            command=cc.conversionToChapters)
+    #@-node:ekr.20060304174021:createConversionMenu
+    #@+node:ekr.20060304174021.1:createEditorMenu
+    def createEditorMenu (self,tmenu):
+    
+        cc = self
+    
+        m = Tk.Menu(tmenu,tearoff=0)
+        tmenu.add_cascade(label="Editor",menu=m)
+    
+        m.add_command(label="Add Editor",command=cc.newEditor)
+        m.add_command(label="Remove Editor",command=cc.removeEditor)
+    #@nonl
+    #@-node:ekr.20060304174021.1:createEditorMenu
+    #@+node:ekr.20060304174021.2:createIndexMenu
+    def createIndexMenu (self,tmenu):
+    
+        cc = self
+    
+        m = Tk.Menu(tmenu,tearoff=0)
+        tmenu.add_cascade(label='Index',menu=m)
+    
+        m.add_command(label='Make Index',command=cc.viewIndex)
+        m.add_command(label='Make Regex Index',command=cc.regexViewIndex)
+    #@-node:ekr.20060304174021.2:createIndexMenu
+    #@+node:ekr.20060304174021.3:createImportExportMenu
+    def createImportExportMenu (self,tmenu):
+    
+        cc = self
+    
+        m = Tk.Menu(tmenu,tearoff=0)
+        tmenu.add_cascade(label='Import/Export',menu=m)
+    
+        m.add_command(label="Import Leo File ",command=cc.importLeoFile)
+        m.add_command(label="Export Chapter To Leo File",command=cc.exportLeoFile)
+    #@nonl
+    #@-node:ekr.20060304174021.3:createImportExportMenu
+    #@+node:ekr.20060304173157:createOpMenu
+    def createOpMenu (self,tmenu):
+    
+        cc = self
         opmenu = Tk.Menu(tmenu,tearoff=0)
         tmenu.add_cascade(menu=opmenu,label='Node-Chapter Ops')
+        
         cmenu = Tk.Menu(opmenu,tearoff=0)
         movmenu = Tk.Menu(opmenu,tearoff=0)
         copymenu = Tk.Menu(opmenu,tearoff=0)
         swapmenu = Tk.Menu(opmenu,tearoff=0)
         searchmenu = Tk.Menu(opmenu,tearoff=0)
+        
         opmenu.add_cascade(menu=cmenu,label='Clone To Chapter')
         opmenu.add_cascade(menu=movmenu,label='Move To Chapter')
         opmenu.add_cascade(menu=copymenu,label='Copy To Chapter')
         opmenu.add_cascade(menu=swapmenu,label='Swap With Chapter')
         opmenu.add_cascade(menu=searchmenu,label='Search and Clone To')
-        opmenu.add_command(label="Make Node Into Chapter",command=self.makeNodeIntoChapter)
-        opmenu.add_command(label="Add Trash Barrel",command=self.addTrashBarrel)
-        #lambda c = c: mkTrash(c))
-        opmenu.add_command(label='Empty Trash Barrel',command=self.emptyTrash)
+        opmenu.add_command(label="Make Node Into Chapter",command=cc.makeNodeIntoChapter)
+        opmenu.add_command(label="Add Trash Barrel",command=cc.addTrashBarrel)
+        opmenu.add_command(label='Empty Trash Barrel',command=cc.emptyTrash)
     
-        #lambda self=self: self.emptyTrash(notebook,c))
-        # setupMenu = self.getSetupMenu()
-        # cmenu.configure(
-            # postcommand = lambda menu = cmenu, command = cloneToChapter: setupMenu(menu,command))
-        # movmenu.configure(
-            # postcommand = lambda menu = movmenu, command = moveToChapter: setupMenu(menu,command))
-        # copymenu.configure(
-            # postcommand = lambda menu = copymenu, command = copyToChapter: setupMenu(menu,command))
-        #---
-        def cloneToChapterCallback (self=self,menu=cmenu):
-            self.setupMenu(menu,self.cloneToChapter)
+        def cloneToChapterCallback (cc=cc,menu=cmenu):
+            cc.setupMenu(menu,cc.cloneToChapter)
         cmenu.configure(postcommand=cloneToChapterCallback)
     
-        def moveToChapterCallback(self=self,menu=movmenu):
-            self.setupMenu(menu,self.moveToChapter)
+        def moveToChapterCallback(cc=cc,menu=movmenu):
+            cc.setupMenu(menu,cc.moveToChapter)
         movmenu.configure(postcommand=moveToChapterCallback)
         
-        def copyToChapterCallback(self=self,menu=copymenu):
-            self.setupMenu(menu,self.copyToChapter)
+        def copyToChapterCallback(cc=cc,menu=copymenu):
+            cc.setupMenu(menu,cc.copyToChapter)
         copymenu.configure(postcommand=copyToChapterCallback)
         
-        def swapChaptersCallback  (self=self,menu=swapmenu):
-            self.setupMenu(menu,self.swapChapters)
+        def swapChaptersCallback  (cc=cc,menu=swapmenu):
+            cc.setupMenu(menu,cc.swapChapters)
         swapmenu.configure(postcommand=swapChaptersCallback)
         
-        def searchChaptersCallback  (self=self,menu=searchmenu):
-            self.setupMenu(menu,self.regexClone,all=True)
+        def searchChaptersCallback  (cc=cc,menu=searchmenu):
+            cc.setupMenu(menu,cc.regexClone,all=True)
         searchmenu.configure(postcommand=searchChaptersCallback)
-            
-        edmenu = Tk.Menu(tmenu,tearoff=0)
-        tmenu.add_cascade(label="Editor",menu=edmenu)
-        edmenu.add_command(label="Add Editor",command=self.newEditor)
-        edmenu.add_command(label="Remove Editor",command=self.removeEditor)
-        conmenu = Tk.Menu(tmenu,tearoff=0)
-        tmenu.add_cascade(menu=conmenu,label='Conversion')
-        conmenu.add_command(
-            label = "Convert To Simple Outline",command=self.conversionToSimple)
-        conmenu.add_command(
-            label = "Convert Simple Outline into Chapters",command=self.conversionToChapters)
-        iemenu = Tk.Menu(tmenu,tearoff=0)
-        tmenu.add_cascade(label='Import/Export',menu=iemenu)
-        iemenu.add_command(label="Import Leo File ",command=self.importLeoFile)
-        iemenu.add_command(label="Export Chapter To Leo File",command=self.exportLeoFile)
-        indmen = Tk.Menu(tmenu,tearoff=0)
-        tmenu.add_cascade(label='Index',menu=indmen)
-        indmen.add_command(label='Make Index',command=self.viewIndex)
-        indmen.add_command(label='Make Regex Index',command=self.regexViewIndex)
-        try:
-            import reportlab
-            tmenu.add_command(label='Convert To PDF',command=self.doPDFConversion)
-        except Exception:
-            g.es("no reportlab")
     #@nonl
-    #@-node:ekr.20060213023839.51:makeTabMenu
+    #@-node:ekr.20060304173157:createOpMenu
+    #@+node:ekr.20060213023839.58:setupMenu
+    def setupMenu (self,menu,command,all=False):
+    
+        '''Create a menu.'''
+        
+        cc = self ; nb = cc.nb
+    
+        menu.delete(0,'end')
+        current = nb.getcurselection()
+    
+        for i, name in enumerate(nb.pagenames()):
+            i = i + 1
+            if name == current and not all: continue
+            menu.add_command(
+                label=str(i),command=lambda name=name: command(name))
+    #@nonl
+    #@-node:ekr.20060213023839.58:setupMenu
+    #@-node:ekr.20060213023839.51:makeTabMenu & helpers
     #@-node:ekr.20060213023839.29:Create widgets
     #@+node:ekr.20060303090708:Callbacks
     #@+node:ekr.20060213023839.80:lowerPage
@@ -728,24 +791,19 @@ class chapterController:
     #@-node:ekr.20060213023839.2:setTree
     #@-node:ekr.20060303090708:Callbacks
     #@-node:ekr.20060303073451:Birth
-    #@+node:ekr.20060213023839.75:Chapter ops
-    #@+node:ekr.20060213023839.31:addPage
-    def addPage (self,pageName=None):
+    #@+node:ekr.20060213023839.75:Commands
+    #@+node:ekr.20060304172443:Trash
+    #@+node:ekr.20060213023839.57:addTrashBarrel
+    def addTrashBarrel (self,event=None):
     
-        cc = self ; c = cc.c
-        if not pageName:
-            pageName = str(len(cc.nb.pagenames()) + 1)
-        
-        # g.trace(pageName,cc.chapters.keys())
-        
-        old_chapter = cc.currentChapter
-        junk, page = cc.constructTree(self.frame,pageName)
-            # Creates a canvas, new tab and a new tree.
-    
-        old_chapter.makeCurrent()
-        return page,pageName
+        c = self.c ; nb = self.nb
+        self.addPage('Trash')
+        pnames = nb.pagenames()
+        sv = self.getChapter(pnames[-1]).sv
+        sv.set('Trash')
+        self.renumber()
     #@nonl
-    #@-node:ekr.20060213023839.31:addPage
+    #@-node:ekr.20060213023839.57:addTrashBarrel
     #@+node:ekr.20060213023839.99:emptyTrash
     def emptyTrash (self):
         
@@ -757,14 +815,16 @@ class chapterController:
                 trChapter = self.getChapter(z)
                 rvND = trChapter.rp
                 c.beginUpdate()
-                trChapter.setVariables()
-                nRt = rvND.insertAfter()
-                nRt.moveToRoot()
-                trChapter.rp = c.rootPosition()
-                trChapter.cp = c.currentPosition()
-                trChapter.tp = c.topPosition()
-                cc.currentChapter.setVariables()
-                c.endUpdate(False)
+                try:
+                    trChapter.setVariables()
+                    nRt = rvND.insertAfter()
+                    nRt.moveToRoot()
+                    trChapter.rp = c.rootPosition()
+                    trChapter.cp = c.currentPosition()
+                    trChapter.tp = c.topPosition()
+                    cc.currentChapter.setVariables()
+                finally:
+                    c.endUpdate(False)
                 if cc.currentChapter == trChapter:
                     c.selectPosition(nRt)
                     c.redraw()
@@ -772,126 +832,8 @@ class chapterController:
                 return
     #@nonl
     #@-node:ekr.20060213023839.99:emptyTrash
-    #@+node:ekr.20060213023839.100:regexClone
-    def regexClone (self,name):
-    
-        c = self.c ; nb = self.nb
-    
-        chapter = self.getChapter(name)
-        #@    << define cloneWalk callback >>
-        #@+node:ekr.20060213023839.101:<< define cloneWalk callback >>
-        def cloneWalk (result,entry,widget,self=self):
-            cc = self ; c = cc.c ; nb = cc.nb
-            txt = entry.get()
-            widget.deactivate()
-            widget.destroy()
-            if result == 'Cancel': return None
-            regex = re.compile(txt)
-            rt = chapter.cp
-            chapter.setVariables()
-            stnode = leoNodes.tnode('',txt)
-            snode = leoNodes.vnode(c,stnode)
-            snode = leoNodes.position(c,snode,[])
-            snode.moveAfter(rt)
-            ignorelist = [snode]
-            it = self.walkChapters(ignorelist=ignorelist)
-            for z in it:
-                f = regex.search(z.bodyString())
-                if f:
-                    clone = z.clone(z)
-                    i = snode.numberOfChildren()
-                    clone.moveToNthChildOf(snode,i)
-                    ignorelist.append(clone)
-            cc.currentChapter.setVariables()
-            nb.selectpage(name)
-            c.selectPosition(snode)
-            snode.expand()
-            c.redraw()
-        #@nonl
-        #@-node:ekr.20060213023839.101:<< define cloneWalk callback >>
-        #@nl
-        sd = Pmw.PromptDialog(c.frame.top,
-            title = 'Search and Clone',
-            buttons = ('Search','Cancel'),
-            command = cloneWalk,
-        )
-        entry = sd.component('entry')
-        sd.configure(command=
-            lambda result, entry = entry, widget = sd:
-                cloneWalk(result,entry,widget))
-        sd.activate(geometry='centerscreenalways')
-    #@nonl
-    #@-node:ekr.20060213023839.100:regexClone
-    #@+node:ekr.20060213023839.76:renumber
-    def renumber (self):
-        
-        cc = self ; nb = cc.nb
-            
-        i = 0
-        for name in nb.pagenames():
-            i += 1
-            tab = nb.tab(name)
-            tab.configure(text=str(i))
-    #@nonl
-    #@-node:ekr.20060213023839.76:renumber
-    #@+node:ekr.20060213023839.98:swapChapters
-    def swapChapters (self,name):
-    
-        cc = self ; c = cc.c ; nb = cc.nb
-        cselection = nb.getcurselection()
-        tab1 = nb.tab(cselection)
-        tab2 = nb.tab(name)
-        tval1 = tab1.cget('text')
-        tval2 = tab2.cget('text')
-        tv1 = cc.getChapter(cselection).sv
-        tv2 = cc.getChapter(name).sv
-        chap1 = cc.currentChapter
-        chap2 = self.getChapter(name)
-        rp, tp, cp = chap2.rp, chap2.tp, chap2.cp
-        chap2.rp, chap2.tp, chap2.cp = chap1.rp, chap1.tp, chap1.cp
-        chap1.rp, chap1.tp, chap1.cp = rp, tp, cp
-        chap1.setVariables()
-        c.redraw()
-        chap1.canvas.update_idletasks()
-        val1 = tv1.get()
-        val2 = tv2.get()
-        if val2.isdigit():
-            tv1.set(nb.index(cselection)+1)
-        else: tv1.set(val2)
-        if val1.isdigit():
-            tv2.set(nb.index(name)+1)
-        else: tv2.set(val1)
-    #@nonl
-    #@-node:ekr.20060213023839.98:swapChapters
-    #@-node:ekr.20060213023839.75:Chapter ops
-    #@+node:ekr.20060303143328:Utils
-    #@+node:ekr.20060228123056.1:getChapter
-    def getChapter (self,pageName=None):
-        
-        cc = self
-        
-        if not pageName:
-            pageName = cc.nb.getcurselection()
-    
-        return self.chapters.get(pageName)
-    #@nonl
-    #@-node:ekr.20060228123056.1:getChapter
-    #@+node:ekr.20060213023839.81:walkChapters
-    def walkChapters (self,ignorelist=[],chapname=False):
-    
-        '''A generator that allows one to walk the chapters as one big tree.'''
-    
-        for z in self.nb.pagenames():
-            chapter = self.getChapter(z)
-            for p in chapter.rp.allNodes_iter():
-                if chapname:
-                    if p not in ignorelist: yield p.copy(), z
-                else:
-                    if p not in ignorelist: yield p.copy()
-    #@nonl
-    #@-node:ekr.20060213023839.81:walkChapters
-    #@-node:ekr.20060303143328:Utils
-    #@+node:ekr.20060213023839.52:Commands
+    #@-node:ekr.20060304172443:Trash
+    #@+node:ekr.20060304172443.1:Chapter ops
     #@+node:ekr.20060213023839.53:addChapter
     def addChapter (self,event=None):
         
@@ -900,6 +842,101 @@ class chapterController:
         cc.renumber()
     #@nonl
     #@-node:ekr.20060213023839.53:addChapter
+    #@+node:ekr.20060213023839.96:conversionToChapters
+    def conversionToChapters (self):
+        
+        c = self.c ; nb = self.nb ; p = c.rootPosition()
+        
+        while 1:
+            nxt = p.next()
+            if not nxt: break
+            self.makeNodeIntoChapter(p=nxt)
+    
+        self.setTree(nb.pagenames()[0])
+    #@nonl
+    #@-node:ekr.20060213023839.96:conversionToChapters
+    #@+node:ekr.20060213023839.95:conversionToSimple
+    def conversionToSimple (self):
+        
+        c = self.c ; nb = self.nb ; p = c.rootPosition()
+        while 1:
+            n = p.next()
+            if n == None:   break
+            else:           p = n
+        pagenames = nb.pagenames()
+        current = nb.getcurselection()
+        pagenames.remove(current)
+        c.beginUpdate()
+        try:
+            for z in pagenames:
+                chapter = self.getChapter(z)
+                rvNode = chapter.rp
+                while 1:
+                    nxt = rvNode.next()
+                    rvNode.moveAfter(p)
+                    if nxt: rvNode = nxt
+                    else:   p = rvNode ; break
+                nb.delete(z)
+        finally:
+            c.endUpdate()
+        self.renumber(nb)
+    #@nonl
+    #@-node:ekr.20060213023839.95:conversionToSimple
+    #@+node:ekr.20060213023839.60:exportLeoFile
+    def exportLeoFile (self,event=None):
+    
+        c = self.c
+    
+        name = tkFileDialog.asksaveasfilename()
+    
+        if name:
+            if not name.endswith('.leo'): name = name + '.leo'
+            c.fileCommands.write_LEO_file(name,False,singleChapter=True)
+    #@nonl
+    #@-node:ekr.20060213023839.60:exportLeoFile
+    #@+node:ekr.20060213023839.59:importLeoFile
+    def importLeoFile (self,event=None):
+        
+        cc = self ; c = cc.c ; nb = cc.nb
+    
+        fileName = tkFileDialog.askopenfilename()
+    
+        if fileName:
+            ## page,pageName = cc.addPage(pageName)
+            cc.addPage()
+            ###cc.nb.selectpage(nb.pagenames()[-1])
+            ###cc.nb.selectpage(pageName)
+            c.fileCommands.open(file(fileName,'r'),fileName)
+            cc.currentChapter.makeCurrent()
+            cc.renumber()
+    #@nonl
+    #@-node:ekr.20060213023839.59:importLeoFile
+    #@+node:ekr.20060213023839.93:makeNodeIntoChapter
+    def makeNodeIntoChapter (self,event=None,p=None):
+        
+        cc = self ; c = cc.c
+        renum = p.copy()
+        if p == None: p = c.currentPosition()
+        if p == c.rootPosition() and p.next() == None: return
+        nxt = p.next()
+        if nxt: p.doDelete(nxt)
+    
+        page,pageName = self.addPage()
+        mnChapter = self.getChapter(pageName)
+        c.beginUpdate()
+        try:
+            old_chapter = cc.currentChapter
+            mnChapter.makeCurrent()
+            root = mnChapter.rp
+            p.moveAfter(root)
+            c.setRootPosition(p)
+            old_Chapter.makeCurrent()
+        finally:
+            c.endUpdate()
+        if not renum: self.renumber()
+        c.selectPosition(oChapter.rp)
+    #@nonl
+    #@-node:ekr.20060213023839.93:makeNodeIntoChapter
     #@+node:ekr.20060213023839.54:removeChapter & helper
     def removeChapter (self,event=None):
     
@@ -977,62 +1014,35 @@ class chapterController:
         c.widgetWantsFocusNow(e)
     #@nonl
     #@-node:ekr.20060213023839.56:renameChapter
-    #@+node:ekr.20060213023839.57:addTrashBarrel
-    def addTrashBarrel (self,event=None):
+    #@+node:ekr.20060213023839.98:swapChapters
+    def swapChapters (self,name):
     
-        c = self.c ; nb = self.nb
-        self.addPage('Trash')
-        pnames = nb.pagenames()
-        sv = self.getChapter(pnames[-1]).sv
-        sv.set('Trash')
-        self.renumber()
-    #@nonl
-    #@-node:ekr.20060213023839.57:addTrashBarrel
-    #@+node:ekr.20060213023839.58:setupMenu
-    def setupMenu (self,menu,command,all=False):
-    
-        '''A function that makes a function to populate a menu.'''
-        
-        c = self.c ; nb = self.nb
-    
-        menu.delete(0,'end')
-        current = self.nb.getcurselection()
-        for i, name in enumerate(nb.pagenames()):
-            i = i + 1
-            if name == current and not all: continue
-            menu.add_command(
-                label=str(i),command=lambda c=c,name=name: command(c,name))
-    #@nonl
-    #@-node:ekr.20060213023839.58:setupMenu
-    #@+node:ekr.20060213023839.59:importLeoFile
-    def importLeoFile (self,event=None):
-        
         cc = self ; c = cc.c ; nb = cc.nb
-    
-        fileName = tkFileDialog.askopenfilename()
-    
-        if fileName:
-            ## page,pageName = cc.addPage(pageName)
-            cc.addPage()
-            ###cc.nb.selectpage(nb.pagenames()[-1])
-            ###cc.nb.selectpage(pageName)
-            c.fileCommands.open(file(fileName,'r'),fileName)
-            cc.currentChapter.makeCurrent()
-            cc.renumber()
+        cselection = nb.getcurselection()
+        tab1 = nb.tab(cselection)
+        tab2 = nb.tab(name)
+        tval1 = tab1.cget('text')
+        tval2 = tab2.cget('text')
+        tv1 = cc.getChapter(cselection).sv
+        tv2 = cc.getChapter(name).sv
+        chap1 = cc.currentChapter
+        chap2 = self.getChapter(name)
+        rp, tp, cp = chap2.rp, chap2.tp, chap2.cp
+        chap2.rp, chap2.tp, chap2.cp = chap1.rp, chap1.tp, chap1.cp
+        chap1.rp, chap1.tp, chap1.cp = rp, tp, cp
+        chap1.setVariables()
+        c.redraw()
+        chap1.canvas.update_idletasks()
+        val1 = tv1.get()
+        val2 = tv2.get()
+        if val2.isdigit():
+            tv1.set(nb.index(cselection)+1)
+        else: tv1.set(val2)
+        if val1.isdigit():
+            tv2.set(nb.index(name)+1)
+        else: tv2.set(val1)
     #@nonl
-    #@-node:ekr.20060213023839.59:importLeoFile
-    #@+node:ekr.20060213023839.60:exportLeoFile
-    def exportLeoFile (self,event=None):
-    
-        c = self.c
-    
-        name = tkFileDialog.asksaveasfilename()
-    
-        if name:
-            if not name.endswith('.leo'): name = name + '.leo'
-            c.fileCommands.write_LEO_file(name,False,singleChapter=True)
-    #@nonl
-    #@-node:ekr.20060213023839.60:exportLeoFile
+    #@-node:ekr.20060213023839.98:swapChapters
     #@+node:ekr.20060213023839.61:doPDFConversion & helper
     # Requires reportlab toolkit at http://www.reportlab.org
     
@@ -1127,131 +1137,125 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.63:_changeTreeToPDF
     #@-node:ekr.20060213023839.61:doPDFConversion & helper
-    #@-node:ekr.20060213023839.52:Commands
-    #@+node:ekr.20060213023839.89:Conversions
+    #@-node:ekr.20060304172443.1:Chapter ops
+    #@+node:ekr.20060304175043:Node ops
     #@+node:ekr.20060213023839.90:cloneToChapter
     def cloneToChapter (self,name):
     
-        cc = self ; c = cc.c ; nb = cc.nb
-        page = nb.page(nb.index(name))
+        cc = self ; c = cc.c ; p = c.currentPosition()
     
-        c.beginUpdate()
-        try:
-            clone = c.currentPosition().clone()
-            chapter = self.getChapter(name)
-            p = chapter.cp
+        chapter = self.getChapter(name)
+        back = p.back()
+        if back:
+            clone = p.clone(back)
+            p2 = chapter.cp
             clone.unlink()
-            clone.linkAfter(p)
-        finally:
-            c.endUpdate()
+            clone.linkAfter(p2)
+            chapter.makeCurrent()
+        
+            # Warning: c.begin/endUpdate not valid spanning chapter.makeCurrent()
+            c.beginUpdate()
+            try:
+                c.selectPosition(clone)
+            finally:
+                c.redraw_now()
     #@nonl
     #@-node:ekr.20060213023839.90:cloneToChapter
+    #@+node:ekr.20060213023839.92:copyToChapter
+    def copyToChapter (self,name):
+    
+        cc = self ; c = cc.c ; nb = cc.nb
+        page = nb.page(nb.index(name))
+        chapter = cc.getChapter(name)
+        s = c.fileCommands.putLeoOutline()
+        p = c.fileCommands.getLeoOutline(s)
+        chapter.setVariables()
+        p2 = chapter.cp
+        p.moveAfter(p2)
+        cc.currentChapter.setVariables()
+        chapter.makeCurrent()
+    
+        # Warning: c.begin/endUpdate not valid spanning chapter.makeCurrent()
+        c.beginUpdate()
+        try:
+            c.selectPosition(p)
+        finally:
+            c.redraw_now()
+    #@nonl
+    #@-node:ekr.20060213023839.92:copyToChapter
     #@+node:ekr.20060213023839.91:moveToChapter
     def moveToChapter (self,name):
         
-        c = self.c ; nb = self.nb
-        page = nb.page(nb.index(name))
-        mvChapter = self.getChapter(page)
-        
-        c.beginUpdate()
-        try:
-            p = c.currentPosition()
-            if not p.parent() and not p.back():
-                c.endUpdate()
-                return None
-            vndm = mvChapter.cp
-            p.unlink()
-            p.linkAfter(vndm)
-        finally:
-            c.endUpdate()
-        c.selectPosition(c.rootPosition())
-    
-    #@-node:ekr.20060213023839.91:moveToChapter
-    #@+node:ekr.20060213023839.92:copyToChapter
-    def copyToChapter (c,name):
-    
-        cc = self ; c = cc.c ; nb = cc.nb
-        page = nb.page(nb.index(name))
-        cpChapter = cc.getChapter(name)
-    
-        c.beginUpdate()
-        try:
-            s = c.fileCommands.putLeoOutline()
-            v = c.fileCommands.getLeoOutline(s)
-            cpChapter.setVariables()
-            mvnd = cpChapter.cp
-            v.moveAfter(mvnd)
-            cc.currentChapter.setVariables()
-        finally:
-            c.endUpdate()
-    #@-node:ekr.20060213023839.92:copyToChapter
-    #@+node:ekr.20060213023839.93:makeNodeIntoChapter
-    def makeNodeIntoChapter (self,event=None,p=None):
-        
         cc = self ; c = cc.c
-        renum = p.copy()
-        if p == None: p = c.currentPosition()
-        if p == c.rootPosition() and p.next() == None: return
-        nxt = p.next()
-        if nxt: p.doDelete(nxt)
+        chapter = cc.getChapter(name)
+        
+        p = c.currentPosition()
+        if p.hasParent() or p.hasBack():
+            p2 = chapter.cp
+            p.unlink()
+            p.linkAfter(p2)
+            chapter.makeCurrent()
+            
+            # Warning: c.begin/endUpdate not valid spanning chapter.makeCurrent()
+            c.beginUpdate()
+            try:
+                c.selectPosition(p)
+            finally:
+                c.redraw_now()
+    #@nonl
+    #@-node:ekr.20060213023839.91:moveToChapter
+    #@+node:ekr.20060213023839.100:regexClone
+    def regexClone (self,name):
     
-        page,pageName = self.addPage()
-        mnChapter = self.getChapter(pageName)
-        c.beginUpdate()
-        try:
-            old_chapter = cc.currentChapter
-            mnChapter.makeCurrent()
-            root = mnChapter.rp
-            p.moveAfter(root)
-            c.setRootPosition(p)
-            old_Chapter.makeCurrent()
-        finally:
-            c.endUpdate()
-        if not renum: self.renumber()
-        c.selectPosition(oChapter.rp)
-    #@nonl
-    #@-node:ekr.20060213023839.93:makeNodeIntoChapter
-    #@+node:ekr.20060213023839.95:conversionToSimple
-    def conversionToSimple (self):
-        
-        c = self.c ; nb = self.nb ; p = c.rootPosition()
-        while 1:
-            n = p.next()
-            if n == None:   break
-            else:           p = n
-        pagenames = nb.pagenames()
-        current = nb.getcurselection()
-        pagenames.remove(current)
-        c.beginUpdate()
-        try:
-            for z in pagenames:
-                chapter = self.getChapter(z)
-                rvNode = chapter.rp
-                while 1:
-                    nxt = rvNode.next()
-                    rvNode.moveAfter(p)
-                    if nxt: rvNode = nxt
-                    else:   p = rvNode ; break
-                nb.delete(z)
-        finally:
-            c.endUpdate()
-        self.renumber(nb)
-    #@nonl
-    #@-node:ekr.20060213023839.95:conversionToSimple
-    #@+node:ekr.20060213023839.96:conversionToChapters
-    def conversionToChapters (self):
-        
-        c = self.c ; nb = self.nb ; p = c.rootPosition()
-        
-        while 1:
-            nxt = p.next()
-            if not nxt: break
-            self.makeNodeIntoChapter(p=nxt)
+        c = self.c ; nb = self.nb
     
-        self.setTree(nb.pagenames()[0])
+        chapter = self.getChapter(name)
+        #@    << define cloneWalk callback >>
+        #@+node:ekr.20060213023839.101:<< define cloneWalk callback >>
+        def cloneWalk (result,entry,widget,self=self):
+            cc = self ; c = cc.c ; nb = cc.nb
+            txt = entry.get()
+            widget.deactivate()
+            widget.destroy()
+            if result == 'Cancel': return None
+            regex = re.compile(txt)
+            rt = chapter.cp
+            chapter.setVariables()
+            stnode = leoNodes.tnode('',txt)
+            snode = leoNodes.vnode(c,stnode)
+            snode = leoNodes.position(c,snode,[])
+            snode.moveAfter(rt)
+            ignorelist = [snode]
+            it = self.walkChapters(ignorelist=ignorelist)
+            for z in it:
+                f = regex.search(z.bodyString())
+                if f:
+                    clone = z.clone(z)
+                    i = snode.numberOfChildren()
+                    clone.moveToNthChildOf(snode,i)
+                    ignorelist.append(clone)
+            cc.currentChapter.setVariables()
+            nb.selectpage(name)
+            c.selectPosition(snode)
+            snode.expand()
+            c.redraw()
+        #@nonl
+        #@-node:ekr.20060213023839.101:<< define cloneWalk callback >>
+        #@nl
+        sd = Pmw.PromptDialog(c.frame.top,
+            title = 'Search and Clone',
+            buttons = ('Search','Cancel'),
+            command = cloneWalk,
+        )
+        entry = sd.component('entry')
+        sd.configure(command=
+            lambda result, entry = entry, widget = sd:
+                cloneWalk(result,entry,widget))
+        sd.activate(geometry='centerscreenalways')
     #@nonl
-    #@-node:ekr.20060213023839.96:conversionToChapters
-    #@-node:ekr.20060213023839.89:Conversions
+    #@-node:ekr.20060213023839.100:regexClone
+    #@-node:ekr.20060304175043:Node ops
+    #@-node:ekr.20060213023839.75:Commands
     #@+node:ekr.20060213023839.64:Editor
     #@+node:ekr.20060213023839.68:...Heading
     #@+node:ekr.20060304122235:addHeading
@@ -1760,7 +1764,6 @@ class chapterController:
         cc = self ; c = cc.c
     
         if zipfile.is_zipfile(fileName):
-            cc.opening = True
             c.beginUpdate()
             try:
                 # Set globals for g.os_path_dirname
@@ -1773,7 +1776,6 @@ class chapterController:
                 iscStringIO = False
             finally:
                 c.endUpdate()
-                cc.opening = False
             return True
         else:
             return old_open(fc,file,fileName,readAtFileNodesFlag,silent)
@@ -1811,9 +1813,138 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.48:write_Leo_file
     #@-node:ekr.20060302173735:Overrides
+    #@+node:ekr.20060303143328:Utils
+    #@+node:ekr.20060213023839.31:addPage
+    def addPage (self,pageName=None):
+    
+        cc = self ; c = cc.c
+        if not pageName:
+            pageName = str(len(cc.nb.pagenames()) + 1)
+        
+        # g.trace(pageName,cc.chapters.keys())
+        
+        old_chapter = cc.currentChapter
+        junk, page = cc.constructTree(self.frame,pageName)
+            # Creates a canvas, new tab and a new tree.
+    
+        old_chapter.makeCurrent()
+        return page,pageName
+    #@nonl
+    #@-node:ekr.20060213023839.31:addPage
+    #@+node:ekr.20060228123056.1:getChapter
+    def getChapter (self,pageName=None):
+        
+        cc = self
+        
+        if not pageName:
+            pageName = cc.nb.getcurselection()
+    
+        return self.chapters.get(pageName)
+    #@nonl
+    #@-node:ekr.20060228123056.1:getChapter
+    #@+node:ekr.20060213023839.77:getGoodPage & helpers
+    def getGoodPage (self,event,body):
+        
+        self = cc ; nb = self.nb
+        
+        g.trace(body)
+    
+        body.frame.body = body
+        body.frame.bodyCtrl = body.bodyCtrl
+    
+        if not hasattr(body,'lastChapter'):
+            body.lastChapter = nb.getcurselection()
+            
+        page = self.checkChapterValidity(body.lastChapter)
+        
+        if page != nb.getcurselection():
+            body.lastChapter = page
+            nb.selectpage(page)
+        
+        self.selectNodeForEditor(body)
+        self.activateEditor(body)
+    #@+node:ekr.20060213023839.78:checkChapterValidity
+    def checkChapterValidity (self,name):
+        
+        nb = self.nb
+    
+        try:
+            nb.index(name)
+            return name
+        except:
+            return nb.getcurselection()
+    #@nonl
+    #@-node:ekr.20060213023839.78:checkChapterValidity
+    #@+node:ekr.20060213023839.65:selectNodeForEditor
+    def selectNodeForEditor (self,body):
+    
+        '''Select the next node for the editor.'''
+        
+        c = self.c
+    
+        if not hasattr(body,'lastPosition'):
+            body.lastPosition = c.currentPosition()
+    
+        if body.lastPosition == c.currentPosition():
+            return
+        elif body.lastPosition.exists(c):
+            g.trace('last position does not exist',color='red')
+            c.selectPosition(body.lastPosition)
+        else:
+            c.selectPosition(c.rootPosition())
+    
+        body.lastPosition = c.currentPosition()
+    #@nonl
+    #@-node:ekr.20060213023839.65:selectNodeForEditor
+    #@-node:ekr.20060213023839.77:getGoodPage & helpers
+    #@+node:ekr.20060213023839.76:renumber
+    def renumber (self):
+        
+        cc = self ; nb = cc.nb
+            
+        i = 0
+        for name in nb.pagenames():
+            i += 1
+            tab = nb.tab(name)
+            tab.configure(text=str(i))
+    #@nonl
+    #@-node:ekr.20060213023839.76:renumber
+    #@+node:ekr.20060213023839.81:walkChapters
+    def walkChapters (self,ignorelist=[],chapname=False):
+    
+        '''A generator that allows one to walk the chapters as one big tree.'''
+    
+        for z in self.nb.pagenames():
+            chapter = self.getChapter(z)
+            for p in chapter.rp.allNodes_iter():
+                if chapname:
+                    if p not in ignorelist: yield p.copy(), z
+                else:
+                    if p not in ignorelist: yield p.copy()
+    #@nonl
+    #@-node:ekr.20060213023839.81:walkChapters
+    #@-node:ekr.20060303143328:Utils
     #@-others
 #@nonl
 #@-node:ekr.20060213023839.28:class chapterController
+#@+node:ekr.20060304171551:class editor
+class editor:
+    
+    '''A class representing an editor bound either to a particular position
+    or to the current position of the current chapter.'''
+    
+    #@    @+others
+    #@+node:ekr.20060304171551.1: ctor: editor
+    def __init__ (self,chapter,p):
+        
+        self.chapter = chapter
+        self.cc = chapter.cc
+        self.p = p
+        
+    #@-node:ekr.20060304171551.1: ctor: editor
+    #@-others
+#@nonl
+#@-node:ekr.20060304171551:class editor
 #@-others
 #@nonl
 #@-node:ekr.20060213023839.3:@thin chapters2.py
