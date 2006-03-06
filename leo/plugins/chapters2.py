@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.109"
+__version__ = "0.110"
 #@<< version history >>
 #@+node:ekr.20060213023839.5:<< version history >>
 #@@nocolor
@@ -94,6 +94,9 @@ __version__ = "0.109"
 # - Clone Find All works, and applies to the present chapter.
 # - The 'Search' button is now the deafult button in the Clone Find All 
 # dialog.
+# - All ops that change the outline call c.setChanged(True)
+# - Support foreground/background/selected/unselected tab colors.
+# - Pychecker reports no problems.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -141,7 +144,6 @@ import zipfile
 old_createCanvas            = leoTkinterFrame.leoTkinterFrame.createCanvas
 old_createControl           = leoTkinterFrame.leoTkinterBody.createControl
 old_doDelete                = leoNodes.position.doDelete
-# old_editLabel               = leoTkinterTree.leoTkinterTree.endEditLabel
 old_getLeoFile              = leoFileCommands.fileCommands.getLeoFile
 old_open                    = leoFileCommands.fileCommands.open
 old_os_path_dirname         = g.os_path_dirname
@@ -181,7 +183,6 @@ def init ():
             leoTkinterFrame.leoTkinterFrame.createCanvas    = new_createCanvas
             leoTkinterFrame.leoTkinterBody.createControl    = new_createControl
             leoNodes.position.doDelete                      = new_doDelete
-            # leoTkinterTree.leoTkinterTree.endEditLabel      = new_endEditLabel
             leoFileCommands.fileCommands.getLeoFile         = new_getLeoFile
             leoFileCommands.fileCommands.open               = new_open
             leoTkinterTree.leoTkinterTree.select            = new_select
@@ -510,7 +511,14 @@ class chapterController:
         self.frame = frame
         self.parentFrame = parentFrame
         
-        self.selectedTabColor = c.config.getColor('selected_chapter_tab_color') or 'LightSteelBlue2'
+        self.selectedTabBackgroundColor = c.config.getColor(
+            'selected_chapter_tab_background_color') or 'LightSteelBlue2'
+        self.selectedTabForegroundColor = c.config.getColor(
+            'selected_chapter_tab_foreground_color') or 'black'
+        self.unselectedTabBackgroundColor = c.config.getColor(
+            'unselected_chapter_tab_background_color') or 'lightgrey'
+        self.unselectedTabForegroundColor = c.config.getColor(
+            'unselected_chapter_tab_foreground_color') or 'black'
         
         # Ivars for communication between cc.createCanvas and cc.treeInit.
         # This greatly simplifies the init logic.
@@ -620,7 +628,9 @@ class chapterController:
         page = nb.add(tabName) # page is a Tk.Frame.
         button = nb.tab(tabName) # tab is a Tk.Button.
     
-        button.configure(background=self.selectedTabColor,foreground='white')
+        button.configure(
+            background=cc.selectedTabBackgroundColor,
+            foreground=cc.selectedTabForegroundColor)
         
         # g.trace(tabName,page,button)
         return page,button
@@ -811,18 +821,23 @@ class chapterController:
     
         '''Set a lowered tabs color.'''
     
-        cc = self ; c = cc.c ; tab = cc.nb.tab(name)
+        cc = self ; tab = cc.nb.tab(name)
     
-        tab.configure(background='lightgrey',foreground='black')
+        # tab.configure(background='lightgrey',foreground='black')
+        
+        tab.configure(
+            background=cc.unselectedTabBackgroundColor,
+            foreground=cc.unselectedTabForegroundColor)
     #@nonl
     #@-node:ekr.20060213023839.80:lowerPage
     #@+node:ekr.20060303105217:raisePage
     def raisePage (self,name):
         
-        cc = self ; c = cc.c
-        
-        tab = cc.nb.tab(name)
-        tab.configure(background=self.selectedTabColor,foreground='black')
+        cc = self ; c = cc.c ; tab = cc.nb.tab(name)
+    
+        tab.configure(
+            background=cc.selectedTabBackgroundColor,
+            foreground=cc.selectedTabForegroundColor)
         
         # This must be called before queuing up the callback.
         self.setTree(name)
@@ -834,7 +849,6 @@ class chapterController:
             
         w = c.frame.body and c.frame.body.bodyCtrl
         w and w.after_idle(idleCallback)
-    #@nonl
     #@-node:ekr.20060303105217:raisePage
     #@+node:ekr.20060213023839.2:setTree
     def setTree (self,name):
@@ -1383,9 +1397,9 @@ class chapterController:
             c.beginUpdate()
             try:
                 c.selectPosition(clone)
+                c.setChanged(True)
             finally:
                 c.endUpdate()
-    #@nonl
     #@-node:ekr.20060213023839.90:cloneToChapter
     #@+node:ekr.20060213023839.92:copyToChapter
     def copyToChapter (self,name):
@@ -1405,6 +1419,7 @@ class chapterController:
         c.beginUpdate()
         try:
             c.selectPosition(p)
+            c.setChanged(True)
         finally:
             c.endUpdate()
     #@nonl
@@ -1426,6 +1441,7 @@ class chapterController:
             c.beginUpdate()
             try:
                 c.selectPosition(p)
+                c.setChanged(True)
             finally:
                 c.endUpdate()
     #@nonl
@@ -1477,6 +1493,7 @@ class chapterController:
         c.beginUpdate()
         try:
             p.moveToRoot(root)
+            c.setChanged(True)
             c.selectPosition(p)
             p.expand()
         finally:
@@ -1771,19 +1788,6 @@ class chapterController:
             return old_doDelete(p)
     #@nonl
     #@-node:ekr.20060213023839.42:doDelete
-    #@+node:ekr.20060213023839.43:endEditLabel (to be removed)
-    def endEditLabel (self,tree):
-        
-        c = self.c ; p = c.currentPosition() ; h = p.headString()
-        
-        if 0:
-    
-            if p and h and hasattr(c.frame.body,'editorLabel'):
-                c.frame.body.editorLabel.configure(text=h)
-    
-        return old_editLabel(tree)
-    #@nonl
-    #@-node:ekr.20060213023839.43:endEditLabel (to be removed)
     #@+node:ekr.20060213023839.44:getLeoFile
     def getLeoFile (self,fc,fileName,readAtFileNodesFlag=True,silent=False):
         

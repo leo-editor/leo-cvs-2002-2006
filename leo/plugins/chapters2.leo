@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="255" clone_windows="0"/>
 <globals body_outline_ratio="0.492424242424">
-	<global_window_position top="60" left="298" height="781" width="891"/>
+	<global_window_position top="68" left="372" height="781" width="891"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -197,8 +197,9 @@
 <v t="ekr.20060228123056.3"><vh>nextPageName</vh></v>
 <v t="ekr.20060303143328.1"><vh>computeNodeLabel</vh></v>
 <v t="ekr.20060213023839.54"><vh>createRemoveChapterMenu (no longer used)</vh></v>
+<v t="ekr.20060213023839.43"><vh>endEditLabel</vh></v>
 </v>
-<v t="ekr.20060228081628" a="V"><vh>To do</vh>
+<v t="ekr.20060228081628"><vh>To do</vh>
 <v t="ekr.20060303104124"><vh>Later</vh></v>
 <v t="ekr.20060303083246"><vh>Recent: editors &amp; rename</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
@@ -220,43 +221,13 @@
 <v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20060213023839.3" a="ETV"><vh>@thin chapters2.py</vh></v>
 <v t="ekr.20060305100737"><vh>Recent: tab colors</vh>
+<v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
 <v t="ekr.20060302083318.2"><vh>createTab</vh></v>
 <v t="ekr.20060213023839.80"><vh>lowerPage</vh></v>
 <v t="ekr.20060303105217"><vh>raisePage</vh></v>
-</v>
-<v t="ekr.20060305083145"><vh>Recent: test chapter ops</vh>
-<v t="ekr.20060213023839.51"><vh>makeTabMenu &amp; helpers</vh>
-<v t="ekr.20060305080649"><vh>createTopLevelMenuItems</vh></v>
-<v t="ekr.20060304174021"><vh>createConvertMenu</vh></v>
-<v t="ekr.20060304174021.1"><vh>createEditorMenu</vh></v>
-<v t="ekr.20060304174021.3"><vh>createImportExportMenu</vh></v>
-<v t="ekr.20060304174021.2"><vh>createIndexMenu</vh></v>
-<v t="ekr.20060304173157"><vh>createNodeMenu</vh></v>
-<v t="ekr.20060305075851"><vh>createTrashMenu</vh></v>
-<v t="ekr.20060213023839.58"><vh>setupMenu</vh></v>
-</v>
-<v t="ekr.20060304172443.1"><vh>Chapter ops</vh>
-<v t="ekr.20060213023839.53"><vh>addChapter</vh></v>
-<v t="ekr.20060213023839.96"><vh>convertTopLevelToChapters</vh></v>
-<v t="ekr.20060213023839.95"><vh>conversionToSimple</vh></v>
-<v t="ekr.20060213023839.61"><vh>doPDFConversion &amp; helper</vh>
-<v t="ekr.20060213023839.62"><vh>&lt;&lt; define otherPages callback &gt;&gt;</vh></v>
-<v t="ekr.20060213023839.63"><vh>_changeTreeToPDF</vh></v>
-</v>
-<v t="ekr.20060213023839.60"><vh>exportLeoFile</vh></v>
-<v t="ekr.20060213023839.59"><vh>importLeoFile</vh></v>
-<v t="ekr.20060213023839.93"><vh>makeNodeIntoChapter</vh></v>
-<v t="ekr.20060213023839.55"><vh>removeChapter</vh></v>
-<v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
-<v t="ekr.20060213023839.98"><vh>swapChapters</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20060213023839.3" a="E"
-expanded="ekr.20060213023839.69,ekr.20060304175043,ekr.20060213023839.100,"><vh>@thin chapters2.py</vh></v>
-<v t="ekr.20060213023839.100" a="E"><vh>regexClone &amp; helper</vh>
-<v t="ekr.20060213023839.101"><vh>cloneWalk</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1643,7 +1614,14 @@ twidgets = {}</t>
     self.frame = frame
     self.parentFrame = parentFrame
     
-    self.selectedTabColor = c.config.getColor('selected_chapter_tab_color') or 'LightSteelBlue2'
+    self.selectedTabBackgroundColor = c.config.getColor(
+        'selected_chapter_tab_background_color') or 'LightSteelBlue2'
+    self.selectedTabForegroundColor = c.config.getColor(
+        'selected_chapter_tab_foreground_color') or 'black'
+    self.unselectedTabBackgroundColor = c.config.getColor(
+        'unselected_chapter_tab_background_color') or 'lightgrey'
+    self.unselectedTabForegroundColor = c.config.getColor(
+        'unselected_chapter_tab_foreground_color') or 'black'
     
     # Ivars for communication between cc.createCanvas and cc.treeInit.
     # This greatly simplifies the init logic.
@@ -1748,6 +1726,16 @@ twidgets = {}</t>
             cc.showHeading(body)
 
     return ctrl</t>
+<t tx="ekr.20060213023839.43">def endEditLabel (self,tree):
+    
+    c = self.c ; p = c.currentPosition() ; h = p.headString()
+    
+    if 0:
+
+        if p and h and hasattr(c.frame.body,'editorLabel'):
+            c.frame.body.editorLabel.configure(text=h)
+
+    return old_editLabel(tree)</t>
 <t tx="ekr.20060213023839.46">def open (self,fc,file,fileName,readAtFileNodesFlag=True,silent=False):
 
     cc = self ; c = cc.c
@@ -1768,32 +1756,6 @@ twidgets = {}</t>
         return True
     else:
         return old_open(fc,file,fileName,readAtFileNodesFlag,silent)</t>
-<t tx="ekr.20060213023839.51">def makeTabMenu (self,widget):
-    
-    '''Create a tab menu.'''
-
-    cc = self
-    tmenu = Tk.Menu(widget,tearoff=0)
-    widget.bind('&lt;Button-3&gt;',lambda event: tmenu.post(event.x_root,event.y_root))
-    widget.tmenu = tmenu
-    
-    # Huh?
-    # tmenu.add_command(command=tmenu.unpost)
-
-    cc.createTopLevelMenuItems(tmenu)
-    tmenu.add_separator()
-
-    cc.createConvertMenu(tmenu)
-    cc.createEditorMenu(tmenu)
-    cc.createImportExportMenu(tmenu)
-    cc.createIndexMenu(tmenu)
-    cc.createNodeMenu(tmenu)
-    cc.createTrashMenu(tmenu)</t>
-<t tx="ekr.20060213023839.53">def addChapter (self,event=None):
-    
-    cc = self
-    cc.addPage()
-    cc.renumber()</t>
 <t tx="ekr.20060213023839.54">def createRemoveChapterMenu (self,event=None):
 
     c = self.c ; nb = self.nb ; rmenu = self.rmenu
@@ -1805,39 +1767,6 @@ twidgets = {}</t>
         def removeCallback(self=self,z=z):
             self.removeOneChapter(name=z)
         rmenu.add_command(label=str(i),command=removeCallback)</t>
-<t tx="ekr.20060213023839.55">def removeChapter (self,name):
-    
-    g.trace(name)
-    
-    cc = self ; c = self.c ; nb = cc.nb
-    if len(nb.pagenames()) == 1: return
-    
-    chapter = self.getChapter(name)
-    # g.trace(name,chapter)
-    p = chapter.rp
-    tree = chapter.tree
-    old_tree = cc.currentChapter.tree
-    current = cc.currentChapter.cp
-    c.beginUpdate()
-    try:
-        c.frame.tree = chapter.tree
-        newNode = p and (p.visBack() or p.next()) # *not* p.visNext(): we are at the top level.
-        if newNode:
-            p.doDelete()
-            c.selectPosition(newNode)
-        c.frame.tree = old_tree
-    finally:
-        c.endUpdate()
-    nb.delete(name)
-
-    if tree == old_tree:
-        pnames = nb.pagenames()
-        nb.selectpage(pnames[0])
-        c.selectPosition(c.currentPosition())
-        c.redraw()
-    else:
-        c.selectPosition(current)
-    self.renumber()</t>
 <t tx="ekr.20060213023839.56">def renameChapter (self,event=None):
     
     '''Insert a entry widget linked to chapter.sv.
@@ -1864,124 +1793,6 @@ twidgets = {}</t>
     e.selection_range(0,'end')
     b.configure(command=changeCallback)
     c.widgetWantsFocusNow(e)</t>
-<t tx="ekr.20060213023839.58">def setupMenu (self,menu,command,all=False):
-
-    '''Create a menu.'''
-    
-    cc = self ; nb = cc.nb
-
-    menu.delete(0,'end')
-    current = nb.getcurselection()
-
-    for i, name in enumerate(nb.pagenames()):
-        i = i + 1
-        if name == current and not all: continue
-        menu.add_command(
-            label=str(i),command=lambda name=name: command(name))</t>
-<t tx="ekr.20060213023839.59">def importLeoFile (self,event=None):
-    
-    cc = self ; c = cc.c ; nb = cc.nb
-
-    fileName = tkFileDialog.askopenfilename()
-
-    if fileName:
-        cc.addPage()
-        c.fileCommands.open(file(fileName,'r'),fileName)
-        cc.currentChapter.makeCurrent()
-        cc.renumber()</t>
-<t tx="ekr.20060213023839.60">def exportLeoFile (self,event=None):
-
-    c = self.c
-
-    name = tkFileDialog.asksaveasfilename()
-
-    if name:
-        if not name.endswith('.leo'): name = name + '.leo'
-        c.fileCommands.write_Leo_file(name,False,singleChapter=True)</t>
-<t tx="ekr.20060213023839.61"># Requires reportlab toolkit at http://www.reportlab.org
-
-def doPDFConversion (self,event=None):
-    cc = self ; c = cc.c ; nb = cc.nb
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-    from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.lib.units import inch
-    from reportlab.rl_config import defaultPageSize
-    PAGE_HEIGHT = defaultPageSize [1]
-    PAGE_WIDTH = defaultPageSize [0]
-    maxlen = 100
-    styles = getSampleStyleSheet()
-    pinfo = c.frame.shortFileName()
-    pinfo1 = pinfo.rstrip('.leo')
-    cs = cStringIO.StringIO()
-    doc = SimpleDocTemplate(cs,showBoundary=1)
-    Story = [Spacer(1,2*inch)]
-    pagenames = nb.pagenames()
-    cChapter = cc.currentChapter
-    for n, z in enumerate(pagenames):
-        n = n + 1
-        chapter = self.getChapter(z)
-        chapter.setVariables()
-        p = chapter.rp
-        if p:
-            self._changeTreeToPDF(chapter.sv.get(),n,p,c,Story,styles,maxlen)
-    &lt;&lt; define otherPages callback &gt;&gt;
-    cChapter.setVariables()
-        # This sets the nodes back to the cChapter.
-        # If we didnt the makeCurrent would point to the wrong positions
-    cChapter.makeCurrent()
-    doc.build(Story,onLaterPages=otherPages)
-    f = open('%s.pdf' % pinfo1,'w')
-    cs.seek(0)
-    f.write(cs.read())
-    f.close()
-    cs.close()</t>
-<t tx="ekr.20060213023839.62">def otherPages (canvas,doc,pageinfo=pinfo):
-
-    canvas.saveState()
-    canvas.setFont('Times-Roman',9)
-    canvas.drawString(inch,0.75*inch,"Page %d %s" % (doc.page,pageinfo))
-    canvas.restoreState()</t>
-<t tx="ekr.20060213023839.63">def _changeTreeToPDF (self,name,num,p,Story,styles,maxlen):
-    
-    c = self.c ; nb = self.nb
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, XPreformatted
-    from reportlab.lib.units import inch
-    from reportlab.rl_config import defaultPageSize
-    enc = c.importCommands.encoding
-    hstyle = styles ['title']
-    Story.append(Paragraph('Chapter %s: %s' % (num,name),hstyle))
-    style = styles ['Normal']
-    for p in p.allNodes_iter():
-        head = p.moreHead(0)
-        head = g.toEncodedString(head,enc,reportErrors=True)
-        s = head + '\n'
-        body = p2.moreBody() # Inserts escapes.
-        if len(body) &gt; 0:
-            body = g.toEncodedString(body,enc,reportErrors=True)
-            s = s + body
-            s = s.split('\n')
-            s2 = []
-            for z in s:
-                if len(z) &lt; maxlen:
-                    s2.append(z)
-                else:
-                    while 1:
-                        s2.append(z[: maxlen])
-                        if len(z[maxlen:]) &gt; maxlen:
-                            z = z [maxlen:]
-                        else:
-                            s2.append(z[maxlen:])
-                            break
-            s = '\n'.join(s2)
-            s = s.replace('&amp;','&amp;amp;')
-            s = s.replace('&lt;','&amp;lt;')
-            s = s.replace('&gt;','&amp;gt;')
-            s = s.replace('"','&amp;quot;')
-            s = s.replace("`",'&amp;apos;')
-            Story.append(XPreformatted(s,style))
-            Story.append(Spacer(1,0.2*inch))
-
-    Story.append(PageBreak())</t>
 <t tx="ekr.20060213023839.65">def selectNodeForEditor (self,body):
 
     '''Select the next node for the editor.'''
@@ -2066,9 +1877,13 @@ def doPDFConversion (self,event=None):
 
     '''Set a lowered tabs color.'''
 
-    cc = self ; c = cc.c ; tab = cc.nb.tab(name)
+    cc = self ; tab = cc.nb.tab(name)
 
-    tab.configure(background='lightgrey',foreground='black')</t>
+    # tab.configure(background='lightgrey',foreground='black')
+    
+    tab.configure(
+        background=cc.unselectedTabBackgroundColor,
+        foreground=cc.unselectedTabForegroundColor)</t>
 <t tx="ekr.20060213023839.85">def insertChapters (self,chapters):
 
     cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
@@ -2111,152 +1926,6 @@ def doPDFConversion (self,event=None):
             self.__dict__ [name] = value
 
     return makeStringIO</t>
-<t tx="ekr.20060213023839.93">def makeNodeIntoChapter (self,p=None,redraw=True):
-    
-    cc = self ; c = cc.c
-    renum = p and p.copy()
-    if not p: p = c.currentPosition()
-    
-    if p == c.rootPosition() and not p.next(): return
-    
-    c.beginUpdate()
-    try:
-        p.doDelete()
-    finally:
-        c.endUpdate(False)
-    
-    page,pageName = self.addPage()
-    mnChapter = self.getChapter(pageName)
-    oldChapter = cc.currentChapter
-    mnChapter.makeCurrent()
-    root = mnChapter.rp
-    p.moveAfter(root)
-    c.setRootPosition(p)
-    oldChapter.makeCurrent()
-   
-    c.beginUpdate()
-    try:
-        if not renum: self.renumber()
-        c.selectPosition(oldChapter.rp)
-    finally:
-        c.endUpdate(redraw)
-        if redraw: cc.nb.selectpage(pageName)</t>
-<t tx="ekr.20060213023839.95">def conversionToSimple (self):
-    
-    cc = self ; c = cc.c ; nb = cc.nb
-    
-    # Set last to the last top-level node.
-    for p in c.rootPosition().self_and_siblings_iter():
-        last = p.copy()
-
-    pagenames = nb.pagenames()
-    current = nb.getcurselection()
-    pagenames.remove(current)
-   
-    for pageName in pagenames:
-        chapter = self.getChapter(pageName)
-        # We can't use an iterator here because we are moving nodes.
-        p = chapter.rp
-        while p:
-            next = p.next()
-            p.moveAfter(last)
-            last = p.copy() ; p = next
-        nb.delete(pageName)
-    
-    nb.selectpage(current)
-    self.renumber()
-    c.redraw_now()</t>
-<t tx="ekr.20060213023839.96">def convertTopLevelToChapters (self):
-    
-    cc = self ; c = cc.c
-
-    # It's more intuitive to leave the root position where it is.
-    p = c.rootPosition().next()
-    
-    # Dont' use an iterator here! makeNodeIntoChapter deletes nodes.
-    while p:
-        next = p.next()
-        g.trace(p.headString())
-        self.makeNodeIntoChapter(p=p,redraw=False)
-        p = next
-
-    cc.setTree(cc.nb.pagenames()[0])
-    c.redraw_now()</t>
-<t tx="ekr.20060213023839.98">def swapChapters (self,name):
-
-    cc = self ; c = cc.c ; nb = cc.nb
-    cselection = nb.getcurselection()
-    tab1 = nb.tab(cselection)
-    tab2 = nb.tab(name)
-    tval1 = tab1.cget('text')
-    tval2 = tab2.cget('text')
-    tv1 = cc.getChapter(cselection).sv
-    tv2 = cc.getChapter(name).sv
-    chap1 = cc.currentChapter
-    chap2 = self.getChapter(name)
-    rp, tp, cp = chap2.rp, chap2.tp, chap2.cp
-    chap2.rp, chap2.tp, chap2.cp = chap1.rp, chap1.tp, chap1.cp
-    chap1.rp, chap1.tp, chap1.cp = rp, tp, cp
-    chap1.setVariables()
-    c.redraw_now()
-    val1 = tv1.get()
-    val2 = tv2.get()
-    if val2.isdigit():
-        tv1.set(nb.index(cselection)+1)
-    else: tv1.set(val2)
-    if val1.isdigit():
-        tv2.set(nb.index(name)+1)
-    else: tv2.set(val1)</t>
-<t tx="ekr.20060213023839.100">def regexClone (self,name=None):
-
-    cc = self ; c = cc.c ; nb = cc.nb
-
-    chapter = self.getChapter(name)
-
-    d = Pmw.PromptDialog(c.frame.top,
-        title = 'Search and Clone',
-        buttons = ('Search','Cancel'),
-        defaultbutton = 'Search',
-    )
-    e = d.component('entry')
-    e.bind
-
-    def regexCloneCallback (result,cc=cc,e=e,d=d,chapter=chapter):
-        s = e.get() # Do this before destroying d.d
-        d.deactivate() ; d.destroy()
-        if result != 'Cancel':
-            cc.cloneWalk(chapter,s)
-
-    d.configure(command=regexCloneCallback)
-    d.activate(geometry='centerscreenalways')
-</t>
-<t tx="ekr.20060213023839.101">def cloneWalk (self,chapter,s):
-    cc = self ; c = cc.c ; nb = cc.nb
-    regex = re.compile(s)
-    root = chapter.cp
-    chapter.setVariables()
-    t = leoNodes.tnode('',s)
-    v = leoNodes.vnode(c,t)
-    p = leoNodes.position(c,v,[])
-    p.moveAfter(root)
-    ignorelist = [p.v.t]
-    it = self.walkChapters(ignorelist=ignorelist)
-    for z in it:
-        f = regex.search(z.bodyString())
-        if f:
-            clone = z.clone(z)
-            i = p.numberOfChildren()
-            clone.moveToNthChildOf(p,i)
-            ignorelist.append(clone.v.t)
-    cc.currentChapter.setVariables()
-    nb.selectpage(chapter.pageName)
-    c.beginUpdate()
-    try:
-        p.moveToRoot(root)
-        c.selectPosition(p)
-        p.expand()
-    finally:
-        c.endUpdate()</t>
 <t tx="ekr.20060228072530">@ignore
 
 from __future__ import generators
@@ -3956,8 +3625,7 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228081537"></t>
 <t tx="ekr.20060228081628">@nocolor
 
-- Test Find/Change.
-- Chapter ops should set commander changed.
+- Make all editors functional: connect enter callback.
 
 Cleanup
 
@@ -3982,7 +3650,9 @@ c.redraw_now() # Must be done here.</t>
     page = nb.add(tabName) # page is a Tk.Frame.
     button = nb.tab(tabName) # tab is a Tk.Button.
 
-    button.configure(background=self.selectedTabColor,foreground='white')
+    button.configure(
+        background=cc.selectedTabBackgroundColor,
+        foreground=cc.selectedTabForegroundColor)
     
     # g.trace(tabName,page,button)
     return page,button</t>
@@ -3995,10 +3665,11 @@ c.redraw_now() # Must be done here.</t>
 - Build in support for Tabbed outline into Leo's core.</t>
 <t tx="ekr.20060303105217">def raisePage (self,name):
     
-    cc = self ; c = cc.c
-    
-    tab = cc.nb.tab(name)
-    tab.configure(background=self.selectedTabColor,foreground='black')
+    cc = self ; c = cc.c ; tab = cc.nb.tab(name)
+
+    tab.configure(
+        background=cc.selectedTabBackgroundColor,
+        foreground=cc.selectedTabForegroundColor)
     
     # This must be called before queuing up the callback.
     self.setTree(name)
@@ -4009,7 +3680,8 @@ c.redraw_now() # Must be done here.</t>
         c.bodyWantsFocusNow()
         
     w = c.frame.body and c.frame.body.bodyCtrl
-    w and w.after_idle(idleCallback)</t>
+    w and w.after_idle(idleCallback)
+</t>
 <t tx="ekr.20060303143328.1">def computeNodeLabel (self,chapter,p):
     
     cc = self
@@ -4045,126 +3717,6 @@ def hideHeading (self,body):
         # If we unpack the frame we won't be able to repack it easily.
         # Setting the height to zero also does not seem to work.
         body.editorLabel.pack_forget()</t>
-<t tx="ekr.20060304172443.1"></t>
-<t tx="ekr.20060304173157">def createNodeMenu (self,tmenu):
-
-    cc = self
-    opmenu = Tk.Menu(tmenu,tearoff=0)
-    tmenu.add_cascade(menu=opmenu,label='Node')
-    
-    cmenu = Tk.Menu(opmenu,tearoff=0)
-    movmenu = Tk.Menu(opmenu,tearoff=0)
-    copymenu = Tk.Menu(opmenu,tearoff=0)
-    searchmenu = Tk.Menu(opmenu,tearoff=0)
-    
-    opmenu.add_cascade(menu=cmenu,label='Clone To Chapter')
-    opmenu.add_cascade(menu=movmenu,label='Move To Chapter')
-    opmenu.add_cascade(menu=copymenu,label='Copy To Chapter')
-    
-
-    def cloneToChapterCallback (cc=cc,menu=cmenu):
-        cc.setupMenu(menu,cc.cloneToChapter)
-    cmenu.configure(postcommand=cloneToChapterCallback)
-
-    def moveToChapterCallback(cc=cc,menu=movmenu):
-        cc.setupMenu(menu,cc.moveToChapter)
-    movmenu.configure(postcommand=moveToChapterCallback)
-    
-    def copyToChapterCallback(cc=cc,menu=copymenu):
-        cc.setupMenu(menu,cc.copyToChapter)
-    copymenu.configure(postcommand=copyToChapterCallback)</t>
-<t tx="ekr.20060304174021">def createConvertMenu (self,tmenu):
-
-    cc = self ; m = Tk.Menu(tmenu,tearoff=0)
-    tmenu.add_cascade(menu=m,label='Convert')
-
-    m.add_command(
-        label="Convert Node To Chapter",
-        command=cc.makeNodeIntoChapter)
-    m.add_command(
-        label = "Convert Chapters To Simple Outline",
-        command=cc.conversionToSimple)
-    m.add_command(
-        label = "Convert Top Nodes to Chapters",
-        command=cc.convertTopLevelToChapters)
-    try:
-        import reportlab
-        tmenu.add_command(label='Convert To PDF',command=cc.doPDFConversion)
-    except Exception:
-        pass
-        # g.es("no reportlab")</t>
-<t tx="ekr.20060304174021.1">def createEditorMenu (self,tmenu):
-
-    cc = self
-
-    m = Tk.Menu(tmenu,tearoff=0)
-    tmenu.add_cascade(label="Editor",menu=m)
-
-    m.add_command(label="Add Editor",command=cc.newEditor)
-    m.add_command(label="Remove Editor",command=cc.removeEditor)</t>
-<t tx="ekr.20060304174021.2">def createIndexMenu (self,tmenu):
-
-    cc = self
-
-    m = Tk.Menu(tmenu,tearoff=0)
-    tmenu.add_cascade(label='Index',menu=m)
-
-    m.add_command(label='Make Index',command=cc.viewIndex)
-    m.add_command(label='Make Regex Index',command=cc.regexViewIndex)
-</t>
-<t tx="ekr.20060304174021.3">def createImportExportMenu (self,tmenu):
-
-    cc = self
-
-    m = Tk.Menu(tmenu,tearoff=0)
-    tmenu.add_cascade(label='Import/Export',menu=m)
-
-    m.add_command(label="Import Leo File To Chapter",command=cc.importLeoFile)
-    m.add_command(label="Export Chapter to Leo File",command=cc.exportLeoFile)</t>
-<t tx="ekr.20060305075851">def createTrashMenu (self,tmenu):
-
-    cc = self
-
-    m = Tk.Menu(tmenu,tearoff=0)
-    tmenu.add_cascade(menu=m,label='Trash')
-    
-    m.add_command(label="Add Trash Barrel",command=cc.addTrashBarrel)
-    m.add_command(label='Empty Trash Barrel',command=cc.emptyTrash)</t>
-<t tx="ekr.20060305080649">def createTopLevelMenuItems (self,tmenu):
-    
-    cc = self
-    tmenu.add_command(label='Add Chapter',command=cc.addChapter)
-    
-    if 1: # 'Remove This Chapter'
-        def removeChapterCallback(event=None,cc=cc):
-            return cc.removeChapter(cc.nb.getcurselection())
-        tmenu.add_command(label='Remove This Chapter',command=removeChapterCallback)
-    else: # Create submenu of all chapters.
-        cc.rmenu = rmenu = Tk.Menu(tmenu,tearoff=0)
-        rmenu.configure(postcommand=cc.createRemoveChapterMenu)
-        tmenu.add_cascade(menu=rmenu,label="Remove This Chapter")
-
-    tmenu.add_command(
-        label="Rename This Chapter",
-        command=cc.renameChapter)
-        
-    swapmenu = Tk.Menu(tmenu,tearoff=0)
-    tmenu.add_cascade(menu=swapmenu,label='Swap With Chapter')
-        
-    def swapChaptersCallback  (cc=cc,menu=swapmenu):
-        cc.setupMenu(menu,cc.swapChapters)
-    swapmenu.configure(postcommand=swapChaptersCallback)
-    
-    tmenu.add_command(
-        label="Clone Find All",
-        command=cc.regexClone)
-    
-    # opmenu.add_cascade(menu=searchmenu,label='Search and Clone To')
-    # 
-    # def searchChaptersCallback  (cc=cc,menu=searchmenu):
-        # cc.setupMenu(menu,cc.regexClone,all=True)
-    # searchmenu.configure(postcommand=searchChaptersCallback)</t>
-<t tx="ekr.20060305083145"></t>
 <t tx="ekr.20060305100737"></t>
 </tnodes>
 </leo_file>
