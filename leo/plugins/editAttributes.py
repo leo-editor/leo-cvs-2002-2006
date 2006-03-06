@@ -26,7 +26,7 @@ Pmw = g.importExtension('Pmw',pluginName=__name__,verbose=True,required=True)
 #@-node:mork.20041018162155.2:<< imports >>
 #@nl
 
-__version__ = ".4"
+__version__ = ".5"
 #@<< version history >>
 #@+node:ekr.20050226091502.1:<< version history >>
 #@@killcolor
@@ -52,7 +52,9 @@ __version__ = ".4"
 #@+node:ekr.20050226091648:init
 def init ():
     
-    ok = Pmw is not None
+    # At present there is a problem with the interaction of this plugin and the chapters2 plugin.
+    ok = Pmw is not None # and 'chapters2' not in leoPlugins.loadedModules
+
     if ok:
         g.plugin_signon( __name__ )
     return ok
@@ -159,34 +161,41 @@ class AttrEditor:
 #@+node:mork.20041018193158:newCreateCanvas
 olCreateCanvas = leoTkinterFrame.leoTkinterFrame.createCanvas
 
-def newCreateCanvas( self, parentFrame ):
+def newCreateCanvas (self,parentFrame,pageName=None):
     
-    can = olCreateCanvas( self, parentFrame )
+    # g.trace('editAttributes plugin',pageName)
     
-    def hit( event, self = self ):
-        
+    if pageName:
+        # Support the chapters2 plugin.
+        can = olCreateCanvas(self,parentFrame,pageName=pageName)
+    else:
+        can = olCreateCanvas(self,parentFrame)
+
+    def hit (event,self=self):
+
         c = self.c
         tree = c.frame.tree
         iddict = tree.iconIds
         # g.printDict(iddict)
         can = event.widget
-        x = can.canvasx( event.x )
-        y = can.canvasy( event.y )
-        olap = can.find_overlapping( x, y, x, y)
+        x = can.canvasx(event.x)
+        y = can.canvasy(event.y)
+        olap = can.find_overlapping(x,y,x,y)
         # g.trace(olap)
-        id = olap[1]
+        id = olap [1]
         if olap:
             data = iddict.get(id)
             if data:
-                p,junk = data
+                p, junk = data
                 return AttrEditor(c,p)
-            
-    can.bind( '<Button-2>', hit, '+' )
-    can.bind( '<Button-3>', hit, '+' )
-    
+
+    can.bind('<Button-2>',hit,'+')
+    can.bind('<Button-3>',hit,'+')
+
     return can
 
 leoTkinterFrame.leoTkinterFrame.createCanvas = newCreateCanvas
+
 #@-node:mork.20041018193158:newCreateCanvas
 #@-others
 #@-node:mork.20041018162155.1:@thin EditAttributes.py
