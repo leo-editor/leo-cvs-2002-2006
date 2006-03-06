@@ -188,18 +188,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060228082602"><vh>No longer used</vh>
-<v t="ekr.20060213023839.22"><vh>&lt;&lt; globals &gt;&gt;</vh></v>
-<v t="ekr.20060213023839.36"><vh>makeNameMaker</vh></v>
-<v t="ekr.20060213023839.87"><vh>getMakeStringIO</vh></v>
-<v t="ekr.20060213023839.16"><vh>new_endEditLabel (leoTkinterTree)</vh></v>
-<v t="ekr.20060213023839.43"><vh>endEditLabel</vh></v>
-<v t="ekr.20060213023839.79"><vh>getStringVar</vh></v>
-<v t="ekr.20060228123056.3"><vh>nextPageName</vh></v>
-<v t="ekr.20060303143328.1"><vh>computeNodeLabel</vh></v>
-<v t="ekr.20060213023839.54"><vh>createRemoveChapterMenu (no longer used)</vh></v>
-</v>
-<v t="ekr.20060228081628" a="V"><vh>To do</vh>
+<v t="ekr.20060228081628" a="TV"><vh>To do</vh>
 <v t="ekr.20060303104124"><vh>Later</vh></v>
 <v t="ekr.20060305100737"><vh>Recent: tab colors</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
@@ -226,6 +215,20 @@
 <v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
 </v>
 <v t="ekr.20060213023839.66"><vh>activateEditor</vh></v>
+</v>
+<v t="ekr.20060306070648"><vh>Recent: Find problem</vh>
+<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
+<v t="ekr.20060213023839.66"><vh>activateEditor</vh></v>
+<v t="ekr.20060213023839.77"><vh>onFocusIn &amp; helpers</vh>
+<v t="ekr.20060213023839.78"><vh>getValidChapterName</vh></v>
+<v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
+</v>
+<v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
+</v>
+</v>
+<v t="ekr.20060306073617"><vh>Not used</vh>
+<v t="ekr.20060304171551"><vh>class editor (not used yet)</vh>
+<v t="ekr.20060304171551.1"><vh> ctor: editor</vh></v>
 </v>
 </v>
 <v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
@@ -1562,6 +1565,8 @@ couldn't think of any parent node to group these under.
     chapter = self.getChapter(name)
     sv = chapter and chapter.sv
     
+    # g.trace(name,g.callers())
+    
     if not sv:
         # The page hasn't been fully created yet.  This is *not* an error.
         return None
@@ -1576,22 +1581,6 @@ couldn't think of any parent node to group these under.
     # Configure the tab.
     tab = cc.nb.tab(name)
     self.activateEditor(c.frame.body)</t>
-<t tx="ekr.20060213023839.16">def new_endEditLabel (self):
-    
-    # self is a c.frame.tree
-    if g.app.unitTesting:
-        # global old_editLabel
-        return old_editLabel(self)
-    else:
-        cc = controllers.get(self.c)
-        return cc.endEditLabel(self)</t>
-<t tx="ekr.20060213023839.22">chapters = {}
-editorNames = {}
-frames = {}
-iscStringIO = False
-notebooks = {}
-pbodies = {}
-twidgets = {}</t>
 <t tx="ekr.20060213023839.30">def __init__ (self,c,frame,parentFrame):
     
     self.c = c
@@ -1621,18 +1610,6 @@ twidgets = {}</t>
     self.panedBody = None # The present Tk.PanedWidget.
 
     self.createNoteBook(parentFrame) # sets self.nb</t>
-<t tx="ekr.20060213023839.36">def makeNameMaker (self):
-
-    '''Create a numbering mechanism for tabs.'''
-
-    def nameMaker ():
-        i = 0
-        while 1:
-            if len(self.nb.pagenames())== 0: i = 0
-            i += 1
-            yield str(i)
-
-    return nameMaker()</t>
 <t tx="ekr.20060213023839.37">def newEditor (self):
 
     cc = self ; c = cc.c
@@ -1641,7 +1618,9 @@ twidgets = {}</t>
     body = leoTkinterBody(self.frame,pane)
     c.frame.bodyCtrl = body.bodyCtrl # Make body the 'official' body.
     body.setFontFromConfig()
+    body.setColorFromConfig()
     body.createBindings()
+    c.k.completeAllBindingsForWidget(body.bodyCtrl)
     body.bodyCtrl.focus_set()
     body.lastPosition = c.currentPosition()
     cc.activateEditor(body)
@@ -1721,16 +1700,6 @@ twidgets = {}</t>
             cc.showHeading(body)
 
     return ctrl</t>
-<t tx="ekr.20060213023839.43">def endEditLabel (self,tree):
-    
-    c = self.c ; p = c.currentPosition() ; h = p.headString()
-    
-    if 0:
-
-        if p and h and hasattr(c.frame.body,'editorLabel'):
-            c.frame.body.editorLabel.configure(text=h)
-
-    return old_editLabel(tree)</t>
 <t tx="ekr.20060213023839.45">def select (self,tree,p,updateBeadList=True):
 
     cc = self ; c = p.v.c ; h = p.headString() ; nb = cc.nb
@@ -1746,17 +1715,6 @@ twidgets = {}</t>
         c.frame.body.editorRightLabel.configure(text=h)
 
     return return_val</t>
-<t tx="ekr.20060213023839.54">def createRemoveChapterMenu (self,event=None):
-
-    c = self.c ; nb = self.nb ; rmenu = self.rmenu
-
-    rmenu.delete(0,'end')
-    pn = nb.pagenames()
-    for i, z in enumerate(pn):
-        i += 1
-        def removeCallback(self=self,z=z):
-            self.removeOneChapter(name=z)
-        rmenu.add_command(label=str(i),command=removeCallback)</t>
 <t tx="ekr.20060213023839.56">def renameChapter (self,event=None):
     
     '''Insert a entry widget linked to chapter.sv.
@@ -1843,6 +1801,8 @@ twidgets = {}</t>
     
     # g.trace(event,id(body),id(bodyCtrl))
     
+    changeCtrl = body.frame.bodyCtrl != bodyCtrl
+    
     # Original code
     body.frame.body = body
     body.frame.bodyCtrl = body.bodyCtrl
@@ -1852,12 +1812,15 @@ twidgets = {}</t>
         
     # Select body.lastChapter if it exists, or the present chapter otherwise.
     pageName = cc.getValidChapterName(body.lastChapter)
-    if pageName != nb.getcurselection():
+    changePage = pageName != nb.getcurselection()
+    if changePage:
         body.lastChapter = pageName
         nb.selectpage(pageName)
     
     cc.selectNodeForEditor(body)
-    cc.activateEditor(body)</t>
+    if changePage or changeCtrl:
+        # Do this only if necessary: it interferes with the Find command.
+        cc.activateEditor(body)</t>
 <t tx="ekr.20060213023839.78">def getValidChapterName (self,name):
     
     '''Return name if its chapter still exists.
@@ -1872,15 +1835,6 @@ twidgets = {}</t>
         
     # g.trace(name)
     return name</t>
-<t tx="ekr.20060213023839.79">def getStringVar (self,pageName):
-
-    '''return a Tk StrinVar that is a primary identifier.'''
-    
-    cc = self
-
-    chapter = cc.chapters.get(pageName)
-    return chapter and chapter.sv
-</t>
 <t tx="ekr.20060213023839.80">def lowerPage (self,name):
 
     '''Set a lowered tabs color.'''
@@ -1892,24 +1846,6 @@ twidgets = {}</t>
     tab.configure(
         background=cc.unselectedTabBackgroundColor,
         foreground=cc.unselectedTabForegroundColor)</t>
-<t tx="ekr.20060213023839.87">def getMakeStringIO (self,chapList):
-
-    '''Insures that data is put in a StringIO instance.'''
-    
-    cc = self
-
-    def makeStringIO (self,name,value,cList=chapList):
-        if name == 'outputFile' and value != None:
-            cS = cStringIO.StringIO()
-            cS.close = lambda: None
-            self.__dict__ [name] = cS
-            cList.append(cS)
-        elif name == 'outputFile' and value == None:
-            self.__dict__ [name] = None
-        else:
-            self.__dict__ [name] = value
-
-    return makeStringIO</t>
 <t tx="ekr.20060228072530">@ignore
 
 from __future__ import generators
@@ -3614,15 +3550,9 @@ swing.JOptionPane.YES_NO_OPTION )
 - Create unit tests.
 
 @color</t>
-<t tx="ekr.20060228082602"></t>
 <t tx="ekr.20060228085204"></t>
 <t tx="ekr.20060228085204.1">c.save()
 c.redraw_now() # Must be done here.</t>
-<t tx="ekr.20060228123056.3">def nextPageName (self):
-    
-    n = str(len(self.nb.pagenames()) + 1)
-    # g.trace(n,self.nb.pagenames(),g.callers())
-    return n</t>
 <t tx="ekr.20060302083318.2">def createTab (self,tabName):
     
     cc = self ; nb = cc.nb
@@ -3662,15 +3592,6 @@ c.redraw_now() # Must be done here.</t>
     w = c.frame.body and c.frame.body.bodyCtrl
     w and w.after_idle(idleCallback)
 </t>
-<t tx="ekr.20060303143328.1">def computeNodeLabel (self,chapter,p):
-    
-    cc = self
-    s = cc.chapterNames.get(chapter,'')
-    h = p.headString()
-    if s:
-        return '%s %s' % (s,h)
-    else:
-        return h</t>
 <t tx="ekr.20060304095654">c.prettyPrintPythonNode()</t>
 <t tx="ekr.20060304122235">def addHeading (self,parentFrame):
     '''Create a two-part editor label.
@@ -3697,6 +3618,21 @@ def hideHeading (self,body):
         # If we unpack the frame we won't be able to repack it easily.
         # Setting the height to zero also does not seem to work.
         body.editorLabel.pack_forget()</t>
+<t tx="ekr.20060304171551">class editor:
+    
+    '''A class representing an editor bound either to a particular position
+    or to the current position of the current chapter.'''
+    
+    @others</t>
+<t tx="ekr.20060304171551.1">def __init__ (self,chapter,p):
+    
+    self.chapter = chapter
+    self.cc = chapter.cc
+    self.p = p
+    
+</t>
 <t tx="ekr.20060305100737"></t>
+<t tx="ekr.20060306070648"></t>
+<t tx="ekr.20060306073617"></t>
 </tnodes>
 </leo_file>

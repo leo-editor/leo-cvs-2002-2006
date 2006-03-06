@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.110"
+__version__ = "0.112"
 #@<< version history >>
 #@+node:ekr.20060213023839.5:<< version history >>
 #@@nocolor
@@ -102,6 +102,13 @@ __version__ = "0.110"
 # - Made all editors functional by connecting FocusIn callback in 
 # tkBody.createControl.
 #   Editors now act as in original plugin, and in an intuitive manner.
+# 
+# v .112 EKR:
+# - Removed call to activateEditor in onFocusIn so successful Find sets focus 
+# properly.
+# - Call body.setColorFromConfig and k.completeAllBindingsForWidget in 
+# newEditor.
+# - ** No known bugs remain!
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -400,7 +407,7 @@ class Chapter:
         # The keyhandler won't be defined for the first chapter,
         # but that's ok: we only need to do this for later chapters.
         if c.k:
-            # Same logic as in completeAllBindings, but for the new tree.
+            # Same logic as in k.completeAllBindings, but for the new tree.
             c.k and self.tree.setBindings()
             for w in (self.canvas,self.tree.bindingWidget):
                 c.k.completeAllBindingsForWidget(w)
@@ -484,24 +491,6 @@ class Chapter:
     #@-others
 #@nonl
 #@-node:ekr.20060213023839.23:class Chapter
-#@+node:ekr.20060304171551:class editor (not used yet)
-class editor:
-    
-    '''A class representing an editor bound either to a particular position
-    or to the current position of the current chapter.'''
-    
-    #@    @+others
-    #@+node:ekr.20060304171551.1: ctor: editor
-    def __init__ (self,chapter,p):
-        
-        self.chapter = chapter
-        self.cc = chapter.cc
-        self.p = p
-        
-    #@-node:ekr.20060304171551.1: ctor: editor
-    #@-others
-#@nonl
-#@-node:ekr.20060304171551:class editor (not used yet)
 #@+node:ekr.20060213023839.28:class chapterController
 class chapterController:
     
@@ -820,6 +809,7 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.58:setupMenu
     #@-node:ekr.20060213023839.51:makeTabMenu & helpers
+    #@-node:ekr.20060303073451:Birth
     #@+node:ekr.20060303090708:Callbacks
     #@+node:ekr.20060213023839.80:lowerPage
     def lowerPage (self,name):
@@ -835,6 +825,76 @@ class chapterController:
             foreground=cc.unselectedTabForegroundColor)
     #@nonl
     #@-node:ekr.20060213023839.80:lowerPage
+    #@+node:ekr.20060213023839.77:onFocusIn & helpers
+    def onFocusIn (self,event,body,bodyCtrl):
+        
+        '''Set the focus to the proper body and bodyCtrl.'''
+        
+        cc = self ; c = cc.c ; nb = cc.nb
+        
+        # g.trace(event,id(body),id(bodyCtrl))
+        
+        changeCtrl = body.frame.bodyCtrl != bodyCtrl
+        
+        # Original code
+        body.frame.body = body
+        body.frame.bodyCtrl = body.bodyCtrl
+    
+        if not hasattr(body,'lastChapter'):
+            body.lastChapter = nb.getcurselection()
+            
+        # Select body.lastChapter if it exists, or the present chapter otherwise.
+        pageName = cc.getValidChapterName(body.lastChapter)
+        changePage = pageName != nb.getcurselection()
+        if changePage:
+            body.lastChapter = pageName
+            nb.selectpage(pageName)
+        
+        cc.selectNodeForEditor(body)
+        if changePage or changeCtrl:
+            # Do this only if necessary: it interferes with the Find command.
+            cc.activateEditor(body)
+    #@nonl
+    #@+node:ekr.20060213023839.78:getValidChapterName
+    def getValidChapterName (self,name):
+        
+        '''Return name if its chapter still exists.
+        Otherwise return the name of the presently selected tab.'''
+        
+        cc = self ; nb = cc.nb
+    
+        try:
+            nb.index(name)
+        except:
+            name = nb.getcurselection()
+            
+        # g.trace(name)
+        return name
+    #@nonl
+    #@-node:ekr.20060213023839.78:getValidChapterName
+    #@+node:ekr.20060213023839.65:selectNodeForEditor
+    def selectNodeForEditor (self,body):
+    
+        '''Select the next node for the editor.'''
+        
+        cc = self ; c = cc.c
+    
+        if not hasattr(body,'lastPosition'):
+            body.lastPosition = c.currentPosition()
+    
+        if body.lastPosition == c.currentPosition():
+            pass
+        elif body.lastPosition.exists(c):
+            c.selectPosition(body.lastPosition)
+        else:
+            g.trace('last position does not exist',color='red')
+            c.selectPosition(c.rootPosition())
+    
+        body.lastPosition = c.currentPosition()
+        # g.trace(body.lastPosition.headString())
+    #@nonl
+    #@-node:ekr.20060213023839.65:selectNodeForEditor
+    #@-node:ekr.20060213023839.77:onFocusIn & helpers
     #@+node:ekr.20060303105217:raisePage
     def raisePage (self,name):
         
@@ -862,6 +922,8 @@ class chapterController:
         chapter = self.getChapter(name)
         sv = chapter and chapter.sv
         
+        # g.trace(name,g.callers())
+        
         if not sv:
             # The page hasn't been fully created yet.  This is *not* an error.
             return None
@@ -879,7 +941,6 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.2:setTree
     #@-node:ekr.20060303090708:Callbacks
-    #@-node:ekr.20060303073451:Birth
     #@+node:ekr.20060213023839.75:Commands
     #@+node:ekr.20060304172443:Trash
     #@+node:ekr.20060213023839.57:addTrashBarrel
@@ -1563,7 +1624,9 @@ class chapterController:
         body = leoTkinterBody(self.frame,pane)
         c.frame.bodyCtrl = body.bodyCtrl # Make body the 'official' body.
         body.setFontFromConfig()
+        body.setColorFromConfig()
         body.createBindings()
+        c.k.completeAllBindingsForWidget(body.bodyCtrl)
         body.bodyCtrl.focus_set()
         body.lastPosition = c.currentPosition()
         cc.activateEditor(body)
@@ -1911,71 +1974,6 @@ class chapterController:
         return self.chapters.get(pageName)
     #@nonl
     #@-node:ekr.20060228123056.1:getChapter
-    #@+node:ekr.20060213023839.77:onFocusIn & helpers
-    def onFocusIn (self,event,body,bodyCtrl):
-        
-        '''Set the focus to the proper body and bodyCtrl.'''
-        
-        cc = self ; c = cc.c ; nb = cc.nb
-        
-        # g.trace(event,id(body),id(bodyCtrl))
-        
-        # Original code
-        body.frame.body = body
-        body.frame.bodyCtrl = body.bodyCtrl
-    
-        if not hasattr(body,'lastChapter'):
-            body.lastChapter = nb.getcurselection()
-            
-        # Select body.lastChapter if it exists, or the present chapter otherwise.
-        pageName = cc.getValidChapterName(body.lastChapter)
-        if pageName != nb.getcurselection():
-            body.lastChapter = pageName
-            nb.selectpage(pageName)
-        
-        cc.selectNodeForEditor(body)
-        cc.activateEditor(body)
-    #@nonl
-    #@+node:ekr.20060213023839.78:getValidChapterName
-    def getValidChapterName (self,name):
-        
-        '''Return name if its chapter still exists.
-        Otherwise return the name of the presently selected tab.'''
-        
-        cc = self ; nb = cc.nb
-    
-        try:
-            nb.index(name)
-        except:
-            name = nb.getcurselection()
-            
-        # g.trace(name)
-        return name
-    #@nonl
-    #@-node:ekr.20060213023839.78:getValidChapterName
-    #@+node:ekr.20060213023839.65:selectNodeForEditor
-    def selectNodeForEditor (self,body):
-    
-        '''Select the next node for the editor.'''
-        
-        cc = self ; c = cc.c
-    
-        if not hasattr(body,'lastPosition'):
-            body.lastPosition = c.currentPosition()
-    
-        if body.lastPosition == c.currentPosition():
-            pass
-        elif body.lastPosition.exists(c):
-            c.selectPosition(body.lastPosition)
-        else:
-            g.trace('last position does not exist',color='red')
-            c.selectPosition(c.rootPosition())
-    
-        body.lastPosition = c.currentPosition()
-        # g.trace(body.lastPosition.headString())
-    #@nonl
-    #@-node:ekr.20060213023839.65:selectNodeForEditor
-    #@-node:ekr.20060213023839.77:onFocusIn & helpers
     #@+node:ekr.20060213023839.76:renumber
     def renumber (self):
         
