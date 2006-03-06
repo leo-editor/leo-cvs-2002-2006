@@ -30,11 +30,13 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.112"
+__version__ = "0.200"
 #@<< version history >>
 #@+node:ekr.20060213023839.5:<< version history >>
 #@@nocolor
 
+#@<< Before version .200 >>
+#@+node:ekr.20060306081250:<< Before version .200 >>
 #@+at 
 # v .101 EKR: 2-13-06 Created from chapters.py.
 # - This will be the new working version of the chapters plugin.
@@ -109,6 +111,15 @@ __version__ = "0.112"
 # - Call body.setColorFromConfig and k.completeAllBindingsForWidget in 
 # newEditor.
 # - ** No known bugs remain!
+#@-at
+#@nonl
+#@-node:ekr.20060306081250:<< Before version .200 >>
+#@nl
+
+#@+at
+# v .200 EKR:
+# - Removed all enumerates for compatibility with Python 2.2.
+# - Make balloons work.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -224,7 +235,7 @@ def new_createCanvas (self,parentFrame,pageName='1'):
     # self is c.frame
     c = self.c
     if g.app.unitTesting:
-        # global old_createCanvas
+        global old_createCanvas
         return old_createCanvas(self,parentFrame)
     else:
         global controllers
@@ -402,7 +413,7 @@ class Chapter:
         hull = nb.component('hull')
         tab = nb.tab(pageName)
         tab.bind('<Button-3>',lambda event,hull=hull: hull.tmenu.post(event.x_root,event.y_root))
-        cc.createBalloon(page,self.sv)
+        cc.createBalloon(tab,self.sv)
      
         # The keyhandler won't be defined for the first chapter,
         # but that's ok: we only need to do this for later chapters.
@@ -553,9 +564,9 @@ class chapterController:
     #@+node:ekr.20060213023839.33:createBalloon
     def createBalloon (self,tab,sv):
     
-        '''Create a balloon for a widget.'''
+        '''Create a balloon showing the present chapter name for a tab.'''
         
-        return
+        # g.trace(tab,sv.get())
     
         balloon = Pmw.Balloon(tab,initwait=100)
         balloon.bind(tab,'')
@@ -683,12 +694,6 @@ class chapterController:
         tmenu.add_command(
             label="Clone Find All",
             command=cc.regexClone)
-        
-        # opmenu.add_cascade(menu=searchmenu,label='Search and Clone To')
-        # 
-        # def searchChaptersCallback  (cc=cc,menu=searchmenu):
-            # cc.setupMenu(menu,cc.regexClone,all=True)
-        # searchmenu.configure(postcommand=searchChaptersCallback)
     #@nonl
     #@-node:ekr.20060305080649:createTopLevelMenuItems
     #@+node:ekr.20060304174021:createConvertMenu
@@ -764,7 +769,6 @@ class chapterController:
         opmenu.add_cascade(menu=cmenu,label='Clone To Chapter')
         opmenu.add_cascade(menu=movmenu,label='Move To Chapter')
         opmenu.add_cascade(menu=copymenu,label='Copy To Chapter')
-        
     
         def cloneToChapterCallback (cc=cc,menu=cmenu):
             cc.setupMenu(menu,cc.cloneToChapter)
@@ -801,7 +805,8 @@ class chapterController:
         menu.delete(0,'end')
         current = nb.getcurselection()
     
-        for i, name in enumerate(nb.pagenames()):
+        i = 0
+        for name in nb.pagenames():
             i = i + 1
             if name == current and not all: continue
             menu.add_command(
@@ -817,8 +822,6 @@ class chapterController:
         '''Set a lowered tabs color.'''
     
         cc = self ; tab = cc.nb.tab(name)
-    
-        # tab.configure(background='lightgrey',foreground='black')
         
         tab.configure(
             background=cc.unselectedTabBackgroundColor,
@@ -836,7 +839,7 @@ class chapterController:
         
         changeCtrl = body.frame.bodyCtrl != bodyCtrl
         
-        # Original code
+        # Switch the injected ivars.
         body.frame.body = body
         body.frame.bodyCtrl = body.bodyCtrl
     
@@ -981,7 +984,6 @@ class chapterController:
             c.selectPosition(p)
         finally:
             c.endUpdate()
-       
     #@nonl
     #@-node:ekr.20060213023839.99:emptyTrash
     #@-node:ekr.20060304172443:Trash
@@ -1061,13 +1063,14 @@ class chapterController:
         Story = [Spacer(1,2*inch)]
         pagenames = nb.pagenames()
         cChapter = cc.currentChapter
-        for n, z in enumerate(pagenames):
-            n = n + 1
+        n = 0
+        for z in pagenames:
             chapter = self.getChapter(z)
             chapter.setVariables()
             p = chapter.rp
             if p:
                 self._changeTreeToPDF(chapter.sv.get(),n,p,c,Story,styles,maxlen)
+            n += 1
         #@    << define otherPages callback >>
         #@+node:ekr.20060213023839.62:<< define otherPages callback >>
         def otherPages (canvas,doc,pageinfo=pinfo):
@@ -1357,6 +1360,7 @@ class chapterController:
             #@nl
             e.bind('<Key>',scTo)
             e.focus_set()
+    #@nonl
     #@-node:ekr.20060213023839.70:viewIndex
     #@+node:ekr.20060213023839.72:buildIndex
     def buildIndex (self,nodes,can,tl,bal,tags):
@@ -1365,7 +1369,9 @@ class chapterController:
         f = tkFont.Font()
         f.configure(size=-20)
         ltag = None
-        for i, z in enumerate(nodes):
+        i = 0
+        for z in nodes:
+            i += 1
             tg = 'abc' + str(i)
             parent = z [1].parent()
             if parent: parent = parent.headString()
@@ -1696,9 +1702,10 @@ class chapterController:
         flipto = None
         c.beginUpdate()
         try:
-            for num, tup in enumerate(chapters):
+            i = 0
+            for tup in chapters:
                 x, y = tup
-                if num > 0:
+                if i > 0:
                     page,pageName = self.addPage(x)
                     sv = cc.getChapter(pageName).sv
                     nb.nextpage()
@@ -1710,7 +1717,8 @@ class chapterController:
                 next = cselection
                 self.setTree(next)
                 c.fileCommands.open(y,sv.get())
-                if num == 0: flipto = cselection
+                if i == 0: flipto = cselection
+                i += 1
             self.setTree(flipto)
         finally:
             c.endUpdate()
@@ -1746,12 +1754,14 @@ class chapterController:
     
         zf = zipfile.ZipFile(fileName,'w',zipfile.ZIP_DEFLATED)
     
-        for x, fname in enumerate(pagenames):
-            sv = cc.getChapter(fname).sv
-            zif = zipfile.ZipInfo(str(x))
+        i = 0
+        for pageName in pagenames:
+            sv = cc.getChapter(pageName).sv
+            zif = zipfile.ZipInfo(str(i))
             zif.comment = sv.get() or ''
             zif.compress_type = zipfile.ZIP_DEFLATED
-            zf.writestr(zif,chapList[x])
+            zf.writestr(zif,chapList[i])
+            i += 1
     
         zf.close()
     #@nonl
@@ -1967,11 +1977,8 @@ class chapterController:
     def getChapter (self,pageName=None):
         
         cc = self
-        
-        if not pageName:
-            pageName = cc.nb.getcurselection()
     
-        return self.chapters.get(pageName)
+        return self.chapters.get(pageName or cc.nb.getcurselection())
     #@nonl
     #@-node:ekr.20060228123056.1:getChapter
     #@+node:ekr.20060213023839.76:renumber

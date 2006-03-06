@@ -24,7 +24,6 @@ plugins_menu.py
 #open_shell.py
 #at_view.py
 #fastGotoNode.py
-
 #newButtons.py
 #UniversalScrolling.py
 #mod_http.py
@@ -32,6 +31,7 @@ plugins_menu.py
 #################
 #vim.py
 #chapters.py
+chapters2.py
 #bibtex.py
 #autotrees.py
 #mod_autosave.py

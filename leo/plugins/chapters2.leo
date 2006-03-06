@@ -188,7 +188,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060228081628" a="TV"><vh>To do</vh>
+<v t="ekr.20060228081628"><vh>To do</vh>
 <v t="ekr.20060303104124"><vh>Later</vh></v>
 <v t="ekr.20060305100737"><vh>Recent: tab colors</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
@@ -231,7 +231,7 @@
 <v t="ekr.20060304171551.1"><vh> ctor: editor</vh></v>
 </v>
 </v>
-<v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060213023839.3" a="E"><vh>@thin chapters2.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20060213023732.1">&lt;&lt;docstring&gt;&gt;
@@ -1803,7 +1803,7 @@ couldn't think of any parent node to group these under.
     
     changeCtrl = body.frame.bodyCtrl != bodyCtrl
     
-    # Original code
+    # Switch the injected ivars.
     body.frame.body = body
     body.frame.bodyCtrl = body.bodyCtrl
 
@@ -1840,8 +1840,6 @@ couldn't think of any parent node to group these under.
     '''Set a lowered tabs color.'''
 
     cc = self ; tab = cc.nb.tab(name)
-
-    # tab.configure(background='lightgrey',foreground='black')
     
     tab.configure(
         background=cc.unselectedTabBackgroundColor,
@@ -3545,8 +3543,7 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228081537"></t>
 <t tx="ekr.20060228081628">@nocolor
 
-- (done?) Replace all v refs by p refs.
-- Remove all enumerates or use from future import.
+- Test doPDFConversion.
 - Create unit tests.
 
 @color</t>
