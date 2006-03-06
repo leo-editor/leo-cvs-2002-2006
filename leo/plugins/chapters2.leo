@@ -231,7 +231,8 @@
 <v t="ekr.20060304171551.1"><vh> ctor: editor</vh></v>
 </v>
 </v>
-<v t="ekr.20060213023839.3" a="E"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060213023839.3" a="E"
+expanded="ekr.20060213023839.28,ekr.20060302173735,"><vh>@thin chapters2.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20060213023732.1">&lt;&lt;docstring&gt;&gt;
@@ -1587,6 +1588,10 @@ couldn't think of any parent node to group these under.
     self.frame = frame
     self.parentFrame = parentFrame
     
+    self.editorLabelBackgroundColor = c.config.getColor(
+        'editor_label_background_color') or 'lightgrey'
+    self.editorLabelForegroundColor = c.config.getColor(
+        'editor_label_foreground_color') or 'black'
     self.selectedTabBackgroundColor = c.config.getColor(
         'selected_chapter_tab_background_color') or 'LightSteelBlue2'
     self.selectedTabForegroundColor = c.config.getColor(
@@ -1653,7 +1658,6 @@ couldn't think of any parent node to group these under.
     cc.newCanvas = canvas = old_createCanvas(frame,page) 
 
     # g.trace(pageName,id(canvas))
-
     return canvas</t>
 <t tx="ekr.20060213023839.41">def createControl(self,body,frame,parentFrame):
     
@@ -1703,12 +1707,13 @@ couldn't think of any parent node to group these under.
 <t tx="ekr.20060213023839.45">def select (self,tree,p,updateBeadList=True):
 
     cc = self ; c = p.v.c ; h = p.headString() ; nb = cc.nb
-    
-    # g.trace(p.headString(),tree)
 
-    c.frame.body.lastPosition = p
+    c.frame.body.lastPosition = p.copy()
     return_val = old_select(tree,p,updateBeadList)
-    c.frame.body.lastChapter = nb.getcurselection()
+
+    c.frame.body.lastChapter = n = nb.getcurselection()
+    chapter = cc.getChapter(n)
+    chapter._saveInfo()
 
     if hasattr(p.c.frame.body,'editorRightLabel'):
         h = p.headString() or ''
@@ -3604,6 +3609,12 @@ c.redraw_now() # Must be done here.</t>
     # chapter.updateHeadingSV changes this textvariable when chapters change.
     chapter = cc.getChapter()
     lt_label.configure(textvariable=chapter.sv)
+    
+    for w in (lt_label,rt_label,f,parentFrame):
+        w.configure(bg=cc.editorLabelBackgroundColor)
+    for w in (lt_label,rt_label):
+         w.configure(fg=cc.editorLabelForegroundColor)
+
     return lt_label, rt_label, f</t>
 <t tx="ekr.20060304122235.1">def showHeading (self,body):
     if 0:

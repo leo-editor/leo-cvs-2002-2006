@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.200"
+__version__ = "0.201"
 #@<< version history >>
 #@+node:ekr.20060213023839.5:<< version history >>
 #@@nocolor
@@ -120,6 +120,10 @@ __version__ = "0.200"
 # v .200 EKR:
 # - Removed all enumerates for compatibility with Python 2.2.
 # - Made balloons work.
+# v .201
+# - Supported @color editor_label_foreground/background_color
+# - Call chapter._saveInfo in select. This solves a problem with changed 
+# selections after a save.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -440,18 +444,20 @@ class Chapter:
             self.tp = p.copy()
         else:
             cc.currentChapter = self
-            self.cp = c._currentPosition or c.nullPosition()
-            self.tp = c._topPosition or c.nullPosition()
-            self.rp = c._rootPosition or c.nullPosition()
+            self.cp = c._currentPosition and c._currentPosition.copy() or c.nullPosition()
+            self.tp = c._topPosition and c._topPosition.copy() or c.nullPosition()
+            self.rp = c._rootPosition and c._rootPosition.copy() or c.nullPosition()
     #@nonl
     #@-node:ekr.20060302083318.1:initTree
     #@+node:ekr.20060213023839.25:_saveInfo
     def _saveInfo (self):
     
         c = self.c
-        self.cp = c._currentPosition or c.nullPosition()
-        self.rp = c._rootPosition or c.nullPosition()
-        self.tp = c._topPosition or c.nullPosition()
+        self.cp = c._currentPosition and c._currentPosition.copy() or c.nullPosition()
+        self.rp = c._rootPosition and c._rootPosition.copy() or c.nullPosition()
+        self.tp = c._topPosition and c._topPosition.copy() or c.nullPosition()
+        
+        # g.trace(self.cp)
     #@nonl
     #@-node:ekr.20060213023839.25:_saveInfo
     #@+node:ekr.20060213023839.26:setVariables
@@ -468,9 +474,11 @@ class Chapter:
         frame.canvas = self.canvas
         frame.treeBar = self.treeBar
     
-        c._currentPosition = self.cp
-        c._rootPosition = self.rp
-        c._topPosition = self.tp
+        c._currentPosition = self.cp and self.cp.copy() or c.nullPosition()
+        c._rootPosition    = self.rp and self.rp.copy() or c.nullPosition()
+        c._topPosition     = self.tp and self.tp.copy() or c.nullPosition()
+        
+        # g.trace(self.cp)
     #@nonl
     #@-node:ekr.20060213023839.26:setVariables
     #@+node:ekr.20060213023839.27:makeCurrent
@@ -515,6 +523,10 @@ class chapterController:
         self.frame = frame
         self.parentFrame = parentFrame
         
+        self.editorLabelBackgroundColor = c.config.getColor(
+            'editor_label_background_color') or 'lightgrey'
+        self.editorLabelForegroundColor = c.config.getColor(
+            'editor_label_foreground_color') or 'black'
         self.selectedTabBackgroundColor = c.config.getColor(
             'selected_chapter_tab_background_color') or 'LightSteelBlue2'
         self.selectedTabForegroundColor = c.config.getColor(
@@ -1006,7 +1018,7 @@ class chapterController:
         # Dont' use an iterator here! makeNodeIntoChapter deletes nodes.
         while p:
             next = p.next()
-            g.trace(p.headString())
+            # g.trace(p.headString())
             self.makeNodeIntoChapter(p=p,redraw=False)
             p = next
     
@@ -1198,9 +1210,7 @@ class chapterController:
     #@-node:ekr.20060213023839.93:makeNodeIntoChapter
     #@+node:ekr.20060213023839.55:removeChapter
     def removeChapter (self,name):
-        
-        g.trace(name)
-        
+    
         cc = self ; c = self.c ; nb = cc.nb
         if len(nb.pagenames()) == 1: return
         
@@ -1587,6 +1597,12 @@ class chapterController:
         # chapter.updateHeadingSV changes this textvariable when chapters change.
         chapter = cc.getChapter()
         lt_label.configure(textvariable=chapter.sv)
+        
+        for w in (lt_label,rt_label,f,parentFrame):
+            w.configure(bg=cc.editorLabelBackgroundColor)
+        for w in (lt_label,rt_label):
+             w.configure(fg=cc.editorLabelForegroundColor)
+    
         return lt_label, rt_label, f
     #@nonl
     #@-node:ekr.20060304122235:addHeading
@@ -1782,7 +1798,6 @@ class chapterController:
         cc.newCanvas = canvas = old_createCanvas(frame,page) 
     
         # g.trace(pageName,id(canvas))
-    
         return canvas
     #@nonl
     #@-node:ekr.20060213023839.40:createCanvas (injects ivars for treeInit)
@@ -1883,12 +1898,13 @@ class chapterController:
     def select (self,tree,p,updateBeadList=True):
     
         cc = self ; c = p.v.c ; h = p.headString() ; nb = cc.nb
-        
-        # g.trace(p.headString(),tree)
     
-        c.frame.body.lastPosition = p
+        c.frame.body.lastPosition = p.copy()
         return_val = old_select(tree,p,updateBeadList)
-        c.frame.body.lastChapter = nb.getcurselection()
+    
+        c.frame.body.lastChapter = n = nb.getcurselection()
+        chapter = cc.getChapter(n)
+        chapter._saveInfo()
     
         if hasattr(p.c.frame.body,'editorRightLabel'):
             h = p.headString() or ''
