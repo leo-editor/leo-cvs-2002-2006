@@ -1,42 +1,41 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20060213023839.3:@thin chapters2.py
+#@+node:ekr.20060306151759.1:@thin chapters2.py
 #@<<docstring>>
-#@+node:ekr.20060213023839.4:<<docstring>>
-'''This plugin creates separate outlines called "chapters" within a single .leo file.  Clones work between Chapters.
+#@+node:ekr.20060306151759.2:<<docstring>>
+'''This plugin creates separate outlines called chapters within a single .leo file.
 
-**Warning**: This plugin must be considered **buggy** and **unsafe**.  Use with extreme caution.
+Requires Leo 4.2 or above.
 
-Requires Python Mega Widgets and Leo 4.2 or above.
-
-Numbered tabs at the top of the body pane represent each chapter.  Right clicking the tab will show a popup menu containing commands.  These commands allow you to:
+Numbered tabs at the top of the body pane represent each chapter. Right clicking
+the tab will show a popup menu containing commands to:
     
 - insert and delete chapters.
-- add names to chapters.
-- split the body pane to create multiple "editors".
-- create a "trash barrel that hold all deleted nodes.
+- move nodes between chapters.
+- split the body pane into multiple editors.
+- create a trash barrel that hold all deleted nodes.
 - import and export outlines and chapters.
 - create a pdf file from your chapters (requires reportlab toolkit at http://www.reportlab.org).
 - and more...
  
-Warnings:
-    
-- This plugin makes substantial changes to Leo's core.
-- Outlines containing multiple chapters are stored as a zipped file that can only be read when this plugin has been enabled.
+Warning: Outlines containing multiple chapters are stored as a zipped file that
+can only be read when this plugin has been enabled.
 '''
 #@nonl
-#@-node:ekr.20060213023839.4:<<docstring>>
+#@-node:ekr.20060306151759.2:<<docstring>>
 #@nl
+
+# To do: Test doPDFConversion.
 
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.201"
+__version__ = "0.2021"
 #@<< version history >>
-#@+node:ekr.20060213023839.5:<< version history >>
+#@+node:ekr.20060306151759.3:<< version history >>
 #@@nocolor
 
 #@<< Before version .200 >>
-#@+node:ekr.20060306081250:<< Before version .200 >>
+#@+node:ekr.20060306151759.4:<< Before version .200 >>
 #@+at 
 # v .101 EKR: 2-13-06 Created from chapters.py.
 # - This will be the new working version of the chapters plugin.
@@ -113,7 +112,7 @@ __version__ = "0.201"
 # - ** No known bugs remain!
 #@-at
 #@nonl
-#@-node:ekr.20060306081250:<< Before version .200 >>
+#@-node:ekr.20060306151759.4:<< Before version .200 >>
 #@nl
 
 #@+at
@@ -124,13 +123,16 @@ __version__ = "0.201"
 # - Supported @color editor_label_foreground/background_color
 # - Call chapter._saveInfo in select. This solves a problem with changed 
 # selections after a save.
+# v .202
+# - Improved doc string.
+# - Moved the code back into leoPlugins.leo.
 #@-at
 #@nonl
-#@-node:ekr.20060213023839.5:<< version history >>
+#@-node:ekr.20060306151759.3:<< version history >>
 #@nl
 #@<< imports >>
-#@+middle:ekr.20060213023839.8:Module level
-#@+node:ekr.20060213023839.7:<< imports >>
+#@+middle:ekr.20060306151759.5:Module level
+#@+node:ekr.20060306151759.6:<< imports >>
 import leoGlobals as g
 import leoColor
 import leoCommands
@@ -159,12 +161,12 @@ import tkFileDialog
 import tkFont
 import zipfile
 #@nonl
-#@-node:ekr.20060213023839.7:<< imports >>
-#@-middle:ekr.20060213023839.8:Module level
+#@-node:ekr.20060306151759.6:<< imports >>
+#@-middle:ekr.20060306151759.5:Module level
 #@nl
 #@<< remember the originals for decorated methods >>
-#@+middle:ekr.20060213023839.8:Module level
-#@+node:ekr.20060213023839.1:<< remember the originals for decorated methods >>
+#@+middle:ekr.20060306151759.5:Module level
+#@+node:ekr.20060306151759.7:<< remember the originals for decorated methods >>
 # Remember the originals of the 10 overridden methods...
 
 # Define these at the module level so they are defined early in the load process.
@@ -178,8 +180,8 @@ old_select                  = leoTkinterTree.leoTkinterTree.select
 old_tree_init               = leoTkinterTree.leoTkinterTree.__init__
 old_write_Leo_file          = leoFileCommands.fileCommands.write_Leo_file
 #@nonl
-#@-node:ekr.20060213023839.1:<< remember the originals for decorated methods >>
-#@-middle:ekr.20060213023839.8:Module level
+#@-node:ekr.20060306151759.7:<< remember the originals for decorated methods >>
+#@-middle:ekr.20060306151759.5:Module level
 #@nl
 
 # The global data.
@@ -188,8 +190,8 @@ iscStringIO = False # Used by g.os_path_dirname
 stringIOCommander = None # Used by g.os_path_dirname
 
 #@+others
-#@+node:ekr.20060213023839.8:Module level
-#@+node:ekr.20060213023839.9:init
+#@+node:ekr.20060306151759.5:Module level
+#@+node:ekr.20060306151759.8:init
 def init ():
     
     # This code will work only on the 4.x code base.
@@ -206,7 +208,7 @@ def init ():
     
         if g.app.gui.guiName() == "tkinter":
             #@            << override various methods >>
-            #@+node:ekr.20060213023839.10:<< override various methods >>
+            #@+node:ekr.20060306151759.9:<< override various methods >>
             leoTkinterFrame.leoTkinterFrame.createCanvas    = new_createCanvas
             leoTkinterFrame.leoTkinterBody.createControl    = new_createControl
             leoNodes.position.doDelete                      = new_doDelete
@@ -217,15 +219,15 @@ def init ():
             g.os_path_dirname                               = new_os_path_dirname
             leoFileCommands.fileCommands.write_Leo_file     = new_write_Leo_file
             #@nonl
-            #@-node:ekr.20060213023839.10:<< override various methods >>
+            #@-node:ekr.20060306151759.9:<< override various methods >>
             #@nl
             g.plugin_signon( __name__ )
             
     return ok
 #@nonl
-#@-node:ekr.20060213023839.9:init
-#@+node:ekr.20060213023839.11:decorated Leo functions
-#@+node:ekr.20060213023839.12:new_createCanvas (tkFrame)  (chapterControllers & tabs)
+#@-node:ekr.20060306151759.8:init
+#@+node:ekr.20060306151759.10:decorated Leo functions
+#@+node:ekr.20060306151759.11:new_createCanvas (tkFrame)  (chapterControllers & tabs)
 def new_createCanvas (self,parentFrame,pageName='1'):
     
     # self is c.frame
@@ -242,8 +244,8 @@ def new_createCanvas (self,parentFrame,pageName='1'):
             # g.trace('created controller',cc)
         return cc.createCanvas(self,parentFrame,pageName)
 #@nonl
-#@-node:ekr.20060213023839.12:new_createCanvas (tkFrame)  (chapterControllers & tabs)
-#@+node:ekr.20060213023839.13:new_os_path_dirname (leoGlobals) (ok)
+#@-node:ekr.20060306151759.11:new_createCanvas (tkFrame)  (chapterControllers & tabs)
+#@+node:ekr.20060306151759.12:new_os_path_dirname (leoGlobals) (ok)
 def new_os_path_dirname (path,encoding=None):
     
     # These must be globals because they are used in g.os_path_dirname.
@@ -256,8 +258,8 @@ def new_os_path_dirname (path,encoding=None):
         global old_os_path_dirname
         return old_os_path_dirname(path,encoding)
 #@nonl
-#@-node:ekr.20060213023839.13:new_os_path_dirname (leoGlobals) (ok)
-#@+node:ekr.20060213023839.14:new_createControl (leoTkinterBody)
+#@-node:ekr.20060306151759.12:new_os_path_dirname (leoGlobals) (ok)
+#@+node:ekr.20060306151759.13:new_createControl (leoTkinterBody)
 def new_createControl (self,frame,parentFrame):
 
     # self is c.frame.body
@@ -270,8 +272,8 @@ def new_createControl (self,frame,parentFrame):
         cc = controllers.get(self.c)
         return cc.createControl(self,frame,parentFrame)
 #@nonl
-#@-node:ekr.20060213023839.14:new_createControl (leoTkinterBody)
-#@+node:ekr.20060213023839.15:new_doDelete (position)
+#@-node:ekr.20060306151759.13:new_createControl (leoTkinterBody)
+#@+node:ekr.20060306151759.14:new_doDelete (position)
 def new_doDelete (self):
     
     # self is position.
@@ -284,8 +286,8 @@ def new_doDelete (self):
         cc = controllers.get(self.c)
         return cc.doDelete(self)
 #@nonl
-#@-node:ekr.20060213023839.15:new_doDelete (position)
-#@+node:ekr.20060213023839.17:new_getLeoFile (fileCommands)
+#@-node:ekr.20060306151759.14:new_doDelete (position)
+#@+node:ekr.20060306151759.15:new_getLeoFile (fileCommands)
 def new_getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     
     # self is c.fileCommands
@@ -298,8 +300,8 @@ def new_getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
         cc = controllers.get(self.c)
         return cc.getLeoFile(self,fileName,readAtFileNodesFlag,silent)
 #@nonl
-#@-node:ekr.20060213023839.17:new_getLeoFile (fileCommands)
-#@+node:ekr.20060213023839.18:new_open (fileCommands)
+#@-node:ekr.20060306151759.15:new_getLeoFile (fileCommands)
+#@+node:ekr.20060306151759.16:new_open (fileCommands)
 def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
     
     # self = fileCommands
@@ -321,8 +323,8 @@ def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
             # g.trace('controller not created',g.callers())
             return
 #@nonl
-#@-node:ekr.20060213023839.18:new_open (fileCommands)
-#@+node:ekr.20060213023839.19:new_select (leoTkinterTree)
+#@-node:ekr.20060306151759.16:new_open (fileCommands)
+#@+node:ekr.20060306151759.17:new_select (leoTkinterTree)
 def new_select (self,p,updateBeadList=True):
     
     # self is c.frame.tree
@@ -335,8 +337,8 @@ def new_select (self,p,updateBeadList=True):
         cc = controllers.get(self.c)
         return cc.select(self,p,updateBeadList)
 #@nonl
-#@-node:ekr.20060213023839.19:new_select (leoTkinterTree)
-#@+node:ekr.20060213023839.20:new_tree_init (tkTree)
+#@-node:ekr.20060306151759.17:new_select (leoTkinterTree)
+#@+node:ekr.20060306151759.18:new_tree_init (tkTree)
 def new_tree_init (self,c,frame,canvas):
     
     # self is c.frame.tree
@@ -349,8 +351,8 @@ def new_tree_init (self,c,frame,canvas):
         cc = controllers.get(c)
         return cc.treeInit(self,c,frame,canvas)
 #@nonl
-#@-node:ekr.20060213023839.20:new_tree_init (tkTree)
-#@+node:ekr.20060213023839.21:new_write_Leo_file
+#@-node:ekr.20060306151759.18:new_tree_init (tkTree)
+#@+node:ekr.20060306151759.19:new_write_Leo_file
 def new_write_Leo_file (self,fileName,outlineOnlyFlag,singleChapter=False):
     
     # self is c.frame.tree
@@ -362,16 +364,16 @@ def new_write_Leo_file (self,fileName,outlineOnlyFlag,singleChapter=False):
         cc = controllers.get(self.c)
         return cc.write_Leo_file(self,fileName,outlineOnlyFlag,singleChapter=singleChapter)
 #@nonl
-#@-node:ekr.20060213023839.21:new_write_Leo_file
-#@-node:ekr.20060213023839.11:decorated Leo functions
-#@-node:ekr.20060213023839.8:Module level
-#@+node:ekr.20060213023839.23:class Chapter
+#@-node:ekr.20060306151759.19:new_write_Leo_file
+#@-node:ekr.20060306151759.10:decorated Leo functions
+#@-node:ekr.20060306151759.5:Module level
+#@+node:ekr.20060306151759.20:class Chapter
 class Chapter:
     '''The fundamental abstraction in the Chapters plugin.
        It enables the tracking of Chapters tree information.'''
        
     #@    @+others
-    #@+node:ekr.20060213023839.24: ctor: Chapter
+    #@+node:ekr.20060306151759.21: ctor: Chapter
     def __init__ (self,cc,c,tree,frame,canvas,page,pageName):
         
         # g.trace('Chapter',pageName,id(canvas))
@@ -393,16 +395,16 @@ class Chapter:
         self.initTree()
         self.init()
     #@nonl
-    #@-node:ekr.20060213023839.24: ctor: Chapter
-    #@+node:ekr.20060304102720:__str__ and __repr__: Chapter
+    #@-node:ekr.20060306151759.21: ctor: Chapter
+    #@+node:ekr.20060306151759.22:__str__ and __repr__: Chapter
     def __str__ (self):
         
         return '<Chapter %s at %d>' % (self.sv.get(),id(self))
         
     __repr__ = __str__
     #@nonl
-    #@-node:ekr.20060304102720:__str__ and __repr__: Chapter
-    #@+node:ekr.20060302083318:init
+    #@-node:ekr.20060306151759.22:__str__ and __repr__: Chapter
+    #@+node:ekr.20060306151759.23:init
     def init (self):
         
         '''Complete the initialization of a chapter
@@ -426,8 +428,8 @@ class Chapter:
             for w in (self.canvas,self.tree.bindingWidget):
                 c.k.completeAllBindingsForWidget(w)
     #@nonl
-    #@-node:ekr.20060302083318:init
-    #@+node:ekr.20060302083318.1:initTree
+    #@-node:ekr.20060306151759.23:init
+    #@+node:ekr.20060306151759.24:initTree
     def initTree (self):
         
         '''Initialize the tree for this chapter.'''
@@ -448,8 +450,8 @@ class Chapter:
             self.tp = c._topPosition and c._topPosition.copy() or c.nullPosition()
             self.rp = c._rootPosition and c._rootPosition.copy() or c.nullPosition()
     #@nonl
-    #@-node:ekr.20060302083318.1:initTree
-    #@+node:ekr.20060213023839.25:_saveInfo
+    #@-node:ekr.20060306151759.24:initTree
+    #@+node:ekr.20060306151759.25:_saveInfo
     def _saveInfo (self):
     
         c = self.c
@@ -459,8 +461,8 @@ class Chapter:
         
         # g.trace(self.cp)
     #@nonl
-    #@-node:ekr.20060213023839.25:_saveInfo
-    #@+node:ekr.20060213023839.26:setVariables
+    #@-node:ekr.20060306151759.25:_saveInfo
+    #@+node:ekr.20060306151759.26:setVariables
     def setVariables (self):
         
         '''Switch variables in Leo's core to represent this chapter.'''
@@ -480,8 +482,8 @@ class Chapter:
         
         # g.trace(self.cp)
     #@nonl
-    #@-node:ekr.20060213023839.26:setVariables
-    #@+node:ekr.20060213023839.27:makeCurrent
+    #@-node:ekr.20060306151759.26:setVariables
+    #@+node:ekr.20060306151759.27:makeCurrent
     def makeCurrent (self):
     
         c = self.c ; cc = self.cc
@@ -495,8 +497,8 @@ class Chapter:
         c.redraw()
         c.bodyWantsFocusNow()
     #@nonl
-    #@-node:ekr.20060213023839.27:makeCurrent
-    #@+node:ekr.20060304125815:updateHeadingSV
+    #@-node:ekr.20060306151759.27:makeCurrent
+    #@+node:ekr.20060306151759.28:updateHeadingSV
     def updateHeadingSV (self,sv):
         
         body = self.c.frame.body
@@ -505,18 +507,18 @@ class Chapter:
             # g.trace(self)
             body.editorLeftLabel.configure(textvariable=sv)
     #@nonl
-    #@-node:ekr.20060304125815:updateHeadingSV
+    #@-node:ekr.20060306151759.28:updateHeadingSV
     #@-others
 #@nonl
-#@-node:ekr.20060213023839.23:class Chapter
-#@+node:ekr.20060213023839.28:class chapterController
+#@-node:ekr.20060306151759.20:class Chapter
+#@+node:ekr.20060306151759.29:class chapterController
 class chapterController:
     
     '''A per-commander controller.'''
     
     #@    @+others
-    #@+node:ekr.20060303073451:Birth
-    #@+node:ekr.20060213023839.30: ctor: chapterController
+    #@+node:ekr.20060306151759.30:Birth
+    #@+node:ekr.20060306151759.31: ctor: chapterController
     def __init__ (self,c,frame,parentFrame):
         
         self.c = c
@@ -551,9 +553,9 @@ class chapterController:
     
         self.createNoteBook(parentFrame) # sets self.nb
     #@nonl
-    #@-node:ekr.20060213023839.30: ctor: chapterController
-    #@+node:ekr.20060213023839.29:Create widgets
-    #@+node:ekr.20060213023839.32:constructTree
+    #@-node:ekr.20060306151759.31: ctor: chapterController
+    #@+node:ekr.20060306151759.32:Create widgets
+    #@+node:ekr.20060306151759.33:constructTree
     def constructTree (self,frame,pageName):
         
         # g.trace(pageName)
@@ -571,8 +573,8 @@ class chapterController:
     
         return tree, cc.newPage
     #@nonl
-    #@-node:ekr.20060213023839.32:constructTree
-    #@+node:ekr.20060213023839.33:createBalloon
+    #@-node:ekr.20060306151759.33:constructTree
+    #@+node:ekr.20060306151759.34:createBalloon
     def createBalloon (self,tab,sv):
     
         '''Create a balloon showing the present chapter name for a tab.'''
@@ -588,8 +590,8 @@ class chapterController:
         hull.bind('<Expose>',blockExpose,'+')
         balloon._label.configure(textvariable=sv)
     #@nonl
-    #@-node:ekr.20060213023839.33:createBalloon
-    #@+node:ekr.20060213023839.38:createEditorPane
+    #@-node:ekr.20060306151759.34:createBalloon
+    #@+node:ekr.20060306151759.35:createEditorPane
     def createEditorPane (self):
         
         '''Create a new pane with a unique name.'''
@@ -602,8 +604,8 @@ class chapterController:
         # g.trace(pane)
         return pane
     #@nonl
-    #@-node:ekr.20060213023839.38:createEditorPane
-    #@+node:ekr.20060213023839.34:createNoteBook
+    #@-node:ekr.20060306151759.35:createEditorPane
+    #@+node:ekr.20060306151759.36:createNoteBook
     def createNoteBook (self,parentFrame):
     
         '''Construct a NoteBook widget for a frame.'''
@@ -624,8 +626,8 @@ class chapterController:
         nb.pack(fill='both',expand=1)
         return nb
     #@nonl
-    #@-node:ekr.20060213023839.34:createNoteBook
-    #@+node:ekr.20060213023839.35:createPanedWidget
+    #@-node:ekr.20060306151759.36:createNoteBook
+    #@+node:ekr.20060306151759.37:createPanedWidget
     def createPanedWidget (self,parentFrame):
     
         '''Construct a new panedwidget for a frame.'''
@@ -635,8 +637,8 @@ class chapterController:
         # g.trace('creating',panedBody)
         panedBody.pack(expand=1,fill='both')
     #@nonl
-    #@-node:ekr.20060213023839.35:createPanedWidget
-    #@+node:ekr.20060302083318.2:createTab
+    #@-node:ekr.20060306151759.37:createPanedWidget
+    #@+node:ekr.20060306151759.38:createTab
     def createTab (self,tabName):
         
         cc = self ; nb = cc.nb
@@ -651,9 +653,9 @@ class chapterController:
         # g.trace(tabName,page,button)
         return page,button
     #@nonl
-    #@-node:ekr.20060302083318.2:createTab
-    #@-node:ekr.20060213023839.29:Create widgets
-    #@+node:ekr.20060213023839.51:makeTabMenu & helpers
+    #@-node:ekr.20060306151759.38:createTab
+    #@-node:ekr.20060306151759.32:Create widgets
+    #@+node:ekr.20060306151759.39:makeTabMenu & helpers
     def makeTabMenu (self,widget):
         
         '''Create a tab menu.'''
@@ -676,7 +678,7 @@ class chapterController:
         cc.createNodeMenu(tmenu)
         cc.createTrashMenu(tmenu)
     #@nonl
-    #@+node:ekr.20060305080649:createTopLevelMenuItems
+    #@+node:ekr.20060306151759.40:createTopLevelMenuItems
     def createTopLevelMenuItems (self,tmenu):
         
         cc = self
@@ -706,8 +708,8 @@ class chapterController:
             label="Clone Find All",
             command=cc.regexClone)
     #@nonl
-    #@-node:ekr.20060305080649:createTopLevelMenuItems
-    #@+node:ekr.20060304174021:createConvertMenu
+    #@-node:ekr.20060306151759.40:createTopLevelMenuItems
+    #@+node:ekr.20060306151759.41:createConvertMenu
     def createConvertMenu (self,tmenu):
     
         cc = self ; m = Tk.Menu(tmenu,tearoff=0)
@@ -729,8 +731,8 @@ class chapterController:
             pass
             # g.es("no reportlab")
     #@nonl
-    #@-node:ekr.20060304174021:createConvertMenu
-    #@+node:ekr.20060304174021.1:createEditorMenu
+    #@-node:ekr.20060306151759.41:createConvertMenu
+    #@+node:ekr.20060306151759.42:createEditorMenu
     def createEditorMenu (self,tmenu):
     
         cc = self
@@ -741,8 +743,8 @@ class chapterController:
         m.add_command(label="Add Editor",command=cc.newEditor)
         m.add_command(label="Remove Editor",command=cc.removeEditor)
     #@nonl
-    #@-node:ekr.20060304174021.1:createEditorMenu
-    #@+node:ekr.20060304174021.3:createImportExportMenu
+    #@-node:ekr.20060306151759.42:createEditorMenu
+    #@+node:ekr.20060306151759.43:createImportExportMenu
     def createImportExportMenu (self,tmenu):
     
         cc = self
@@ -753,8 +755,8 @@ class chapterController:
         m.add_command(label="Import Leo File To Chapter",command=cc.importLeoFile)
         m.add_command(label="Export Chapter to Leo File",command=cc.exportLeoFile)
     #@nonl
-    #@-node:ekr.20060304174021.3:createImportExportMenu
-    #@+node:ekr.20060304174021.2:createIndexMenu
+    #@-node:ekr.20060306151759.43:createImportExportMenu
+    #@+node:ekr.20060306151759.44:createIndexMenu
     def createIndexMenu (self,tmenu):
     
         cc = self
@@ -764,8 +766,8 @@ class chapterController:
     
         m.add_command(label='Make Index',command=cc.viewIndex)
         m.add_command(label='Make Regex Index',command=cc.regexViewIndex)
-    #@-node:ekr.20060304174021.2:createIndexMenu
-    #@+node:ekr.20060304173157:createNodeMenu
+    #@-node:ekr.20060306151759.44:createIndexMenu
+    #@+node:ekr.20060306151759.45:createNodeMenu
     def createNodeMenu (self,tmenu):
     
         cc = self
@@ -793,8 +795,8 @@ class chapterController:
             cc.setupMenu(menu,cc.copyToChapter)
         copymenu.configure(postcommand=copyToChapterCallback)
     #@nonl
-    #@-node:ekr.20060304173157:createNodeMenu
-    #@+node:ekr.20060305075851:createTrashMenu
+    #@-node:ekr.20060306151759.45:createNodeMenu
+    #@+node:ekr.20060306151759.46:createTrashMenu
     def createTrashMenu (self,tmenu):
     
         cc = self
@@ -805,8 +807,8 @@ class chapterController:
         m.add_command(label="Add Trash Barrel",command=cc.addTrashBarrel)
         m.add_command(label='Empty Trash Barrel',command=cc.emptyTrash)
     #@nonl
-    #@-node:ekr.20060305075851:createTrashMenu
-    #@+node:ekr.20060213023839.58:setupMenu
+    #@-node:ekr.20060306151759.46:createTrashMenu
+    #@+node:ekr.20060306151759.47:setupMenu
     def setupMenu (self,menu,command,all=False):
     
         '''Create a menu.'''
@@ -823,11 +825,11 @@ class chapterController:
             menu.add_command(
                 label=str(i),command=lambda name=name: command(name))
     #@nonl
-    #@-node:ekr.20060213023839.58:setupMenu
-    #@-node:ekr.20060213023839.51:makeTabMenu & helpers
-    #@-node:ekr.20060303073451:Birth
-    #@+node:ekr.20060303090708:Callbacks
-    #@+node:ekr.20060213023839.80:lowerPage
+    #@-node:ekr.20060306151759.47:setupMenu
+    #@-node:ekr.20060306151759.39:makeTabMenu & helpers
+    #@-node:ekr.20060306151759.30:Birth
+    #@+node:ekr.20060306151759.48:Callbacks
+    #@+node:ekr.20060306151759.49:lowerPage
     def lowerPage (self,name):
     
         '''Set a lowered tabs color.'''
@@ -838,8 +840,8 @@ class chapterController:
             background=cc.unselectedTabBackgroundColor,
             foreground=cc.unselectedTabForegroundColor)
     #@nonl
-    #@-node:ekr.20060213023839.80:lowerPage
-    #@+node:ekr.20060213023839.77:onFocusIn & helpers
+    #@-node:ekr.20060306151759.49:lowerPage
+    #@+node:ekr.20060306151759.50:onFocusIn & helpers
     def onFocusIn (self,event,body,bodyCtrl):
         
         '''Set the focus to the proper body and bodyCtrl.'''
@@ -869,7 +871,7 @@ class chapterController:
             # Do this only if necessary: it interferes with the Find command.
             cc.activateEditor(body)
     #@nonl
-    #@+node:ekr.20060213023839.78:getValidChapterName
+    #@+node:ekr.20060306151759.51:getValidChapterName
     def getValidChapterName (self,name):
         
         '''Return name if its chapter still exists.
@@ -885,8 +887,8 @@ class chapterController:
         # g.trace(name)
         return name
     #@nonl
-    #@-node:ekr.20060213023839.78:getValidChapterName
-    #@+node:ekr.20060213023839.65:selectNodeForEditor
+    #@-node:ekr.20060306151759.51:getValidChapterName
+    #@+node:ekr.20060306151759.52:selectNodeForEditor
     def selectNodeForEditor (self,body):
     
         '''Select the next node for the editor.'''
@@ -907,9 +909,9 @@ class chapterController:
         body.lastPosition = c.currentPosition()
         # g.trace(body.lastPosition.headString())
     #@nonl
-    #@-node:ekr.20060213023839.65:selectNodeForEditor
-    #@-node:ekr.20060213023839.77:onFocusIn & helpers
-    #@+node:ekr.20060303105217:raisePage
+    #@-node:ekr.20060306151759.52:selectNodeForEditor
+    #@-node:ekr.20060306151759.50:onFocusIn & helpers
+    #@+node:ekr.20060306151759.53:raisePage
     def raisePage (self,name):
         
         cc = self ; c = cc.c ; tab = cc.nb.tab(name)
@@ -928,8 +930,8 @@ class chapterController:
             
         w = c.frame.body and c.frame.body.bodyCtrl
         w and w.after_idle(idleCallback)
-    #@-node:ekr.20060303105217:raisePage
-    #@+node:ekr.20060213023839.2:setTree
+    #@-node:ekr.20060306151759.53:raisePage
+    #@+node:ekr.20060306151759.54:setTree
     def setTree (self,name):
     
         cc = self ; c = cc.c
@@ -953,11 +955,11 @@ class chapterController:
         tab = cc.nb.tab(name)
         self.activateEditor(c.frame.body)
     #@nonl
-    #@-node:ekr.20060213023839.2:setTree
-    #@-node:ekr.20060303090708:Callbacks
-    #@+node:ekr.20060213023839.75:Commands
-    #@+node:ekr.20060304172443:Trash
-    #@+node:ekr.20060213023839.57:addTrashBarrel
+    #@-node:ekr.20060306151759.54:setTree
+    #@-node:ekr.20060306151759.48:Callbacks
+    #@+node:ekr.20060306151759.55:Commands
+    #@+node:ekr.20060306151759.56:Trash
+    #@+node:ekr.20060306151759.57:addTrashBarrel
     def addTrashBarrel (self,event=None):
     
         c = self.c ; trash = 'Trash'
@@ -971,8 +973,8 @@ class chapterController:
         chapter.rp.setHeadString(trash+' barrel')
         self.renumber()
     #@nonl
-    #@-node:ekr.20060213023839.57:addTrashBarrel
-    #@+node:ekr.20060213023839.99:emptyTrash
+    #@-node:ekr.20060306151759.57:addTrashBarrel
+    #@+node:ekr.20060306151759.58:emptyTrash
     def emptyTrash (self):
         
         cc = self ; c = cc.c ; trash = 'Trash'
@@ -996,18 +998,18 @@ class chapterController:
         finally:
             c.endUpdate()
     #@nonl
-    #@-node:ekr.20060213023839.99:emptyTrash
-    #@-node:ekr.20060304172443:Trash
-    #@+node:ekr.20060304172443.1:Chapter ops
-    #@+node:ekr.20060213023839.53:addChapter
+    #@-node:ekr.20060306151759.58:emptyTrash
+    #@-node:ekr.20060306151759.56:Trash
+    #@+node:ekr.20060306151759.59:Chapter ops
+    #@+node:ekr.20060306151759.60:addChapter
     def addChapter (self,event=None):
         
         cc = self
         cc.addPage()
         cc.renumber()
     #@nonl
-    #@-node:ekr.20060213023839.53:addChapter
-    #@+node:ekr.20060213023839.96:convertTopLevelToChapters
+    #@-node:ekr.20060306151759.60:addChapter
+    #@+node:ekr.20060306151759.61:convertTopLevelToChapters
     def convertTopLevelToChapters (self):
         
         cc = self ; c = cc.c
@@ -1025,8 +1027,8 @@ class chapterController:
         cc.setTree(cc.nb.pagenames()[0])
         c.redraw_now()
     #@nonl
-    #@-node:ekr.20060213023839.96:convertTopLevelToChapters
-    #@+node:ekr.20060213023839.95:conversionToSimple
+    #@-node:ekr.20060306151759.61:convertTopLevelToChapters
+    #@+node:ekr.20060306151759.62:conversionToSimple
     def conversionToSimple (self):
         
         cc = self ; c = cc.c ; nb = cc.nb
@@ -1053,8 +1055,8 @@ class chapterController:
         self.renumber()
         c.redraw_now()
     #@nonl
-    #@-node:ekr.20060213023839.95:conversionToSimple
-    #@+node:ekr.20060213023839.61:doPDFConversion & helper
+    #@-node:ekr.20060306151759.62:conversionToSimple
+    #@+node:ekr.20060306151759.63:doPDFConversion & helper
     # Requires reportlab toolkit at http://www.reportlab.org
     
     def doPDFConversion (self,event=None):
@@ -1083,7 +1085,7 @@ class chapterController:
                 self._changeTreeToPDF(chapter.sv.get(),n,p,c,Story,styles,maxlen)
             n += 1
         #@    << define otherPages callback >>
-        #@+node:ekr.20060213023839.62:<< define otherPages callback >>
+        #@+node:ekr.20060306151759.64:<< define otherPages callback >>
         def otherPages (canvas,doc,pageinfo=pinfo):
         
             canvas.saveState()
@@ -1091,7 +1093,7 @@ class chapterController:
             canvas.drawString(inch,0.75*inch,"Page %d %s" % (doc.page,pageinfo))
             canvas.restoreState()
         #@nonl
-        #@-node:ekr.20060213023839.62:<< define otherPages callback >>
+        #@-node:ekr.20060306151759.64:<< define otherPages callback >>
         #@nl
         cChapter.setVariables()
             # This sets the nodes back to the cChapter.
@@ -1104,7 +1106,7 @@ class chapterController:
         f.close()
         cs.close()
     #@nonl
-    #@+node:ekr.20060213023839.63:_changeTreeToPDF
+    #@+node:ekr.20060306151759.65:_changeTreeToPDF
     def _changeTreeToPDF (self,name,num,p,Story,styles,maxlen):
         
         c = self.c ; nb = self.nb
@@ -1147,9 +1149,9 @@ class chapterController:
     
         Story.append(PageBreak())
     #@nonl
-    #@-node:ekr.20060213023839.63:_changeTreeToPDF
-    #@-node:ekr.20060213023839.61:doPDFConversion & helper
-    #@+node:ekr.20060213023839.60:exportLeoFile
+    #@-node:ekr.20060306151759.65:_changeTreeToPDF
+    #@-node:ekr.20060306151759.63:doPDFConversion & helper
+    #@+node:ekr.20060306151759.66:exportLeoFile
     def exportLeoFile (self,event=None):
     
         c = self.c
@@ -1160,8 +1162,8 @@ class chapterController:
             if not name.endswith('.leo'): name = name + '.leo'
             c.fileCommands.write_Leo_file(name,False,singleChapter=True)
     #@nonl
-    #@-node:ekr.20060213023839.60:exportLeoFile
-    #@+node:ekr.20060213023839.59:importLeoFile
+    #@-node:ekr.20060306151759.66:exportLeoFile
+    #@+node:ekr.20060306151759.67:importLeoFile
     def importLeoFile (self,event=None):
         
         cc = self ; c = cc.c ; nb = cc.nb
@@ -1174,8 +1176,8 @@ class chapterController:
             cc.currentChapter.makeCurrent()
             cc.renumber()
     #@nonl
-    #@-node:ekr.20060213023839.59:importLeoFile
-    #@+node:ekr.20060213023839.93:makeNodeIntoChapter
+    #@-node:ekr.20060306151759.67:importLeoFile
+    #@+node:ekr.20060306151759.68:makeNodeIntoChapter
     def makeNodeIntoChapter (self,p=None,redraw=True):
         
         cc = self ; c = cc.c
@@ -1207,8 +1209,8 @@ class chapterController:
             c.endUpdate(redraw)
             if redraw: cc.nb.selectpage(pageName)
     #@nonl
-    #@-node:ekr.20060213023839.93:makeNodeIntoChapter
-    #@+node:ekr.20060213023839.55:removeChapter
+    #@-node:ekr.20060306151759.68:makeNodeIntoChapter
+    #@+node:ekr.20060306151759.69:removeChapter
     def removeChapter (self,name):
     
         cc = self ; c = self.c ; nb = cc.nb
@@ -1241,8 +1243,8 @@ class chapterController:
             c.selectPosition(current)
         self.renumber()
     #@nonl
-    #@-node:ekr.20060213023839.55:removeChapter
-    #@+node:ekr.20060213023839.56:renameChapter
+    #@-node:ekr.20060306151759.69:removeChapter
+    #@+node:ekr.20060306151759.70:renameChapter
     def renameChapter (self,event=None):
         
         '''Insert a entry widget linked to chapter.sv.
@@ -1270,8 +1272,8 @@ class chapterController:
         b.configure(command=changeCallback)
         c.widgetWantsFocusNow(e)
     #@nonl
-    #@-node:ekr.20060213023839.56:renameChapter
-    #@+node:ekr.20060213023839.98:swapChapters
+    #@-node:ekr.20060306151759.70:renameChapter
+    #@+node:ekr.20060306151759.71:swapChapters
     def swapChapters (self,name):
     
         cc = self ; c = cc.c ; nb = cc.nb
@@ -1298,16 +1300,16 @@ class chapterController:
             tv2.set(nb.index(name)+1)
         else: tv2.set(val1)
     #@nonl
-    #@-node:ekr.20060213023839.98:swapChapters
-    #@-node:ekr.20060304172443.1:Chapter ops
-    #@+node:ekr.20060213023839.69:Indexing
+    #@-node:ekr.20060306151759.71:swapChapters
+    #@-node:ekr.20060306151759.59:Chapter ops
+    #@+node:ekr.20060306151759.72:Indexing
     #@+at
     # Indexing is complementary to find, it provides a gui Index of nodes.
     # 
     # In comparison to regular find which bounces you around the tree,
     # you can preview the node before you go to it.
     #@-at
-    #@+node:ekr.20060213023839.70:viewIndex
+    #@+node:ekr.20060306151759.73:viewIndex
     def viewIndex (self,nodes=None,tle=''):
         c = self.c
         if nodes == None:
@@ -1346,7 +1348,7 @@ class chapterController:
             self.buildIndex(nodes,can,tl,bal,tags)
             sc.resizescrollregion()
             #@        << define scTo callback >>
-            #@+node:ekr.20060213023839.71:<< define scTo callback >>
+            #@+node:ekr.20060306151759.74:<< define scTo callback >>
             def scTo (event,nodes=nodes,sve=sve,can=can,tags=tags):
             
                 t = sve.get()
@@ -1365,13 +1367,13 @@ class chapterController:
                             can.yview('moveto',ncor)
                             return
             #@nonl
-            #@-node:ekr.20060213023839.71:<< define scTo callback >>
+            #@-node:ekr.20060306151759.74:<< define scTo callback >>
             #@nl
             e.bind('<Key>',scTo)
             e.focus_set()
     #@nonl
-    #@-node:ekr.20060213023839.70:viewIndex
-    #@+node:ekr.20060213023839.72:buildIndex
+    #@-node:ekr.20060306151759.73:viewIndex
+    #@+node:ekr.20060306151759.75:buildIndex
     def buildIndex (self,nodes,can,tl,bal,tags):
     
         cc = self ; c = cc.c ; nb = cc.nb
@@ -1400,7 +1402,7 @@ class chapterController:
             if bs.strip() != '':
                 bal.tagbind(can,tg,bs)
             #@        << def callbacks >>
-            #@+node:ekr.20060213023839.73:<< def callbacks >>
+            #@+node:ekr.20060306151759.76:<< def callbacks >>
             def goto (event,self=self,z=z,tl=tl):
                 c = self.c ; nb = self.nb
                 nb.selectpage(z[2])
@@ -1416,14 +1418,14 @@ class chapterController:
             def colorBl (event,tg=ltag,can=can):
                 can.itemconfig(tg,fill='blue')
             #@nonl
-            #@-node:ekr.20060213023839.73:<< def callbacks >>
+            #@-node:ekr.20060306151759.76:<< def callbacks >>
             #@nl
             can.tag_bind(tg,'<Button-1>',goto)
             can.tag_bind(tg,'<Enter>',colorRd,'+')
             can.tag_bind(tg,'<Leave>',colorBl,'+')
     #@nonl
-    #@-node:ekr.20060213023839.72:buildIndex
-    #@+node:ekr.20060213023839.74:regexViewIndex
+    #@-node:ekr.20060306151759.75:buildIndex
+    #@+node:ekr.20060306151759.77:regexViewIndex
     def regexViewIndex (self):
         
         c = self.c ; nb = self.nb
@@ -1453,10 +1455,10 @@ class chapterController:
                 regexWalk(result,entry,widget))
         sd.activate(geometry='centerscreenalways')
     #@nonl
-    #@-node:ekr.20060213023839.74:regexViewIndex
-    #@-node:ekr.20060213023839.69:Indexing
-    #@+node:ekr.20060304175043:Node ops
-    #@+node:ekr.20060213023839.90:cloneToChapter
+    #@-node:ekr.20060306151759.77:regexViewIndex
+    #@-node:ekr.20060306151759.72:Indexing
+    #@+node:ekr.20060306151759.78:Node ops
+    #@+node:ekr.20060306151759.79:cloneToChapter
     def cloneToChapter (self,name):
     
         cc = self ; c = cc.c ; p = c.currentPosition()
@@ -1477,8 +1479,8 @@ class chapterController:
                 c.setChanged(True)
             finally:
                 c.endUpdate()
-    #@-node:ekr.20060213023839.90:cloneToChapter
-    #@+node:ekr.20060213023839.92:copyToChapter
+    #@-node:ekr.20060306151759.79:cloneToChapter
+    #@+node:ekr.20060306151759.80:copyToChapter
     def copyToChapter (self,name):
     
         cc = self ; c = cc.c ; nb = cc.nb
@@ -1500,8 +1502,8 @@ class chapterController:
         finally:
             c.endUpdate()
     #@nonl
-    #@-node:ekr.20060213023839.92:copyToChapter
-    #@+node:ekr.20060213023839.91:moveToChapter
+    #@-node:ekr.20060306151759.80:copyToChapter
+    #@+node:ekr.20060306151759.81:moveToChapter
     def moveToChapter (self,name):
         
         cc = self ; c = cc.c
@@ -1522,8 +1524,8 @@ class chapterController:
             finally:
                 c.endUpdate()
     #@nonl
-    #@-node:ekr.20060213023839.91:moveToChapter
-    #@+node:ekr.20060213023839.100:regexClone & helper
+    #@-node:ekr.20060306151759.81:moveToChapter
+    #@+node:ekr.20060306151759.82:regexClone & helper
     def regexClone (self,name=None):
     
         cc = self ; c = cc.c ; nb = cc.nb
@@ -1546,7 +1548,7 @@ class chapterController:
     
         d.configure(command=regexCloneCallback)
         d.activate(geometry='centerscreenalways')
-    #@+node:ekr.20060213023839.101:cloneWalk
+    #@+node:ekr.20060306151759.83:cloneWalk
     def cloneWalk (self,chapter,s):
         cc = self ; c = cc.c ; nb = cc.nb
         regex = re.compile(s)
@@ -1576,13 +1578,13 @@ class chapterController:
         finally:
             c.endUpdate()
     #@nonl
-    #@-node:ekr.20060213023839.101:cloneWalk
-    #@-node:ekr.20060213023839.100:regexClone & helper
-    #@-node:ekr.20060304175043:Node ops
-    #@-node:ekr.20060213023839.75:Commands
-    #@+node:ekr.20060213023839.64:Editor
-    #@+node:ekr.20060213023839.68:...Heading
-    #@+node:ekr.20060304122235:addHeading
+    #@-node:ekr.20060306151759.83:cloneWalk
+    #@-node:ekr.20060306151759.82:regexClone & helper
+    #@-node:ekr.20060306151759.78:Node ops
+    #@-node:ekr.20060306151759.55:Commands
+    #@+node:ekr.20060306151759.84:Editor
+    #@+node:ekr.20060306151759.85:...Heading
+    #@+node:ekr.20060306151759.86:addHeading
     def addHeading (self,parentFrame):
         '''Create a two-part editor label.
         - The left label tracks the chapter name using a chapter.sv.
@@ -1605,8 +1607,8 @@ class chapterController:
     
         return lt_label, rt_label, f
     #@nonl
-    #@-node:ekr.20060304122235:addHeading
-    #@+node:ekr.20060304122235.1:hide/showHeading
+    #@-node:ekr.20060306151759.86:addHeading
+    #@+node:ekr.20060306151759.87:hide/showHeading
     def showHeading (self,body):
         if 0:
             body.editorLeftLabel.pack(side='left')
@@ -1618,9 +1620,9 @@ class chapterController:
             # Setting the height to zero also does not seem to work.
             body.editorLabel.pack_forget()
     #@nonl
-    #@-node:ekr.20060304122235.1:hide/showHeading
-    #@-node:ekr.20060213023839.68:...Heading
-    #@+node:ekr.20060213023839.66:activateEditor
+    #@-node:ekr.20060306151759.87:hide/showHeading
+    #@-node:ekr.20060306151759.85:...Heading
+    #@+node:ekr.20060306151759.88:activateEditor
     def activateEditor (self,body):
     
         '''Activate an editor.'''
@@ -1635,8 +1637,8 @@ class chapterController:
         body.colorizer.colorize(p)
         # g.trace(id(body.bodyCtrl),p.headString())
     #@nonl
-    #@-node:ekr.20060213023839.66:activateEditor
-    #@+node:ekr.20060213023839.37:newEditor
+    #@-node:ekr.20060306151759.88:activateEditor
+    #@+node:ekr.20060306151759.89:newEditor
     def newEditor (self):
     
         cc = self ; c = cc.c
@@ -1657,8 +1659,8 @@ class chapterController:
         body.editorLeftLabel.configure(textvariable=chapter.sv)
         body.editorRightLabel.configure(text=c.currentPosition().headString())
     #@nonl
-    #@-node:ekr.20060213023839.37:newEditor
-    #@+node:ekr.20060213023839.67:removeEditor
+    #@-node:ekr.20060306151759.89:newEditor
+    #@+node:ekr.20060306151759.90:removeEditor
     def removeEditor (self):
         
         cc = self ; c = cc.c
@@ -1679,9 +1681,9 @@ class chapterController:
             body = cc.editorBodies.get(frame)
             cc.hideHeading(body)
     #@nonl
-    #@-node:ekr.20060213023839.67:removeEditor
-    #@-node:ekr.20060213023839.64:Editor
-    #@+node:ekr.20060213023839.82:Files
+    #@-node:ekr.20060306151759.90:removeEditor
+    #@-node:ekr.20060306151759.84:Editor
+    #@+node:ekr.20060306151759.91:Files
     #@+at 
     #@nonl
     # We need to decorate and be tricky here, since a Chapters leo file is a 
@@ -1690,8 +1692,8 @@ class chapterController:
     # These functions are easy to break in my experience. :)
     #@-at
     #@nonl
-    #@+node:ekr.20060213023839.83:Reading
-    #@+node:ekr.20060213023839.84:openChaptersFile
+    #@+node:ekr.20060306151759.92:Reading
+    #@+node:ekr.20060306151759.93:openChaptersFile
     def openChaptersFile (self,fileName):
     
         zf = zipfile.ZipFile(fileName)
@@ -1709,8 +1711,8 @@ class chapterController:
         csfiles = zip(csfiles[0],csfiles[1])
         return csfiles
     
-    #@-node:ekr.20060213023839.84:openChaptersFile
-    #@+node:ekr.20060213023839.85:insertChapters
+    #@-node:ekr.20060306151759.93:openChaptersFile
+    #@+node:ekr.20060306151759.94:insertChapters
     def insertChapters (self,chapters):
     
         cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
@@ -1738,10 +1740,10 @@ class chapterController:
         finally:
             c.endUpdate()
     #@nonl
-    #@-node:ekr.20060213023839.85:insertChapters
-    #@-node:ekr.20060213023839.83:Reading
-    #@+node:ekr.20060213023839.86:Writing
-    #@+node:ekr.20060213023839.49:writeChapters
+    #@-node:ekr.20060306151759.94:insertChapters
+    #@-node:ekr.20060306151759.92:Reading
+    #@+node:ekr.20060306151759.95:Writing
+    #@+node:ekr.20060306151759.96:writeChapters
     def writeChapters (self,fc,fileName,pagenames,outlineOnlyFlag):
     
         '''Writes Chapters to StringIO instances.'''
@@ -1759,8 +1761,8 @@ class chapterController:
         cc.currentChapter.setVariables()
         return rv,chapterList
     #@nonl
-    #@-node:ekr.20060213023839.49:writeChapters
-    #@+node:ekr.20060213023839.88:zipChapters
+    #@-node:ekr.20060306151759.96:writeChapters
+    #@+node:ekr.20060306151759.97:zipChapters
     def zipChapters (self,fileName,pagenames,chapList):
     
         '''Writes StringIO instances to a zipped file.'''
@@ -1780,11 +1782,11 @@ class chapterController:
     
         zf.close()
     #@nonl
-    #@-node:ekr.20060213023839.88:zipChapters
-    #@-node:ekr.20060213023839.86:Writing
-    #@-node:ekr.20060213023839.82:Files
-    #@+node:ekr.20060302173735:Overrides
-    #@+node:ekr.20060213023839.40:createCanvas (injects ivars for treeInit)
+    #@-node:ekr.20060306151759.97:zipChapters
+    #@-node:ekr.20060306151759.95:Writing
+    #@-node:ekr.20060306151759.91:Files
+    #@+node:ekr.20060306151759.98:Overrides
+    #@+node:ekr.20060306151759.99:createCanvas (injects ivars for treeInit)
     def createCanvas (self,frame,parentFrame,pageName):
         
         cc = self
@@ -1800,8 +1802,8 @@ class chapterController:
         # g.trace(pageName,id(canvas))
         return canvas
     #@nonl
-    #@-node:ekr.20060213023839.40:createCanvas (injects ivars for treeInit)
-    #@+node:ekr.20060213023839.41:createControl (tkBody)
+    #@-node:ekr.20060306151759.99:createCanvas (injects ivars for treeInit)
+    #@+node:ekr.20060306151759.100:createControl (tkBody)
     def createControl(self,body,frame,parentFrame):
         
         '''Override for tkBody.createControl.
@@ -1848,8 +1850,8 @@ class chapterController:
     
         return ctrl
     #@nonl
-    #@-node:ekr.20060213023839.41:createControl (tkBody)
-    #@+node:ekr.20060213023839.42:doDelete
+    #@-node:ekr.20060306151759.100:createControl (tkBody)
+    #@+node:ekr.20060306151759.101:doDelete
     def doDelete (self,p):
         
         '''Override p.doDelete to add nodes to the trash if it exists.'''
@@ -1872,8 +1874,8 @@ class chapterController:
         else:
             return old_doDelete(p)
     #@nonl
-    #@-node:ekr.20060213023839.42:doDelete
-    #@+node:ekr.20060213023839.44:getLeoFile
+    #@-node:ekr.20060306151759.101:doDelete
+    #@+node:ekr.20060306151759.102:getLeoFile
     def getLeoFile (self,fc,fileName,readAtFileNodesFlag=True,silent=False):
         
         global iscStringIO # For communication with g.os_path_dirname
@@ -1893,8 +1895,8 @@ class chapterController:
     
         return rt
     #@nonl
-    #@-node:ekr.20060213023839.44:getLeoFile
-    #@+node:ekr.20060213023839.45:select
+    #@-node:ekr.20060306151759.102:getLeoFile
+    #@+node:ekr.20060306151759.103:select
     def select (self,tree,p,updateBeadList=True):
     
         cc = self ; c = p.v.c ; h = p.headString() ; nb = cc.nb
@@ -1912,8 +1914,8 @@ class chapterController:
     
         return return_val
     #@nonl
-    #@-node:ekr.20060213023839.45:select
-    #@+node:ekr.20060213023839.46:open
+    #@-node:ekr.20060306151759.103:select
+    #@+node:ekr.20060306151759.104:open
     def open (self,fc,file,fileName,readAtFileNodesFlag=True,silent=False):
     
         cc = self ; c = cc.c
@@ -1935,8 +1937,8 @@ class chapterController:
         else:
             return old_open(fc,file,fileName,readAtFileNodesFlag,silent)
     #@nonl
-    #@-node:ekr.20060213023839.46:open
-    #@+node:ekr.20060213023839.47:treeInit (creates Chapter)
+    #@-node:ekr.20060306151759.104:open
+    #@+node:ekr.20060306151759.105:treeInit (creates Chapter)
     def treeInit (self,tree,c,frame,canvas):
         
         cc = self
@@ -1952,8 +1954,8 @@ class chapterController:
         cc.chapters [pageName] = Chapter(cc,c,tree,frame,canvas,page,pageName)
         
         # g.trace(pageName,id(canvas),cc.chapters.keys())
-    #@-node:ekr.20060213023839.47:treeInit (creates Chapter)
-    #@+node:ekr.20060213023839.48:write_Leo_file
+    #@-node:ekr.20060306151759.105:treeInit (creates Chapter)
+    #@+node:ekr.20060306151759.106:write_Leo_file
     def write_Leo_file (self,fc,fileName,outlineOnlyFlag,singleChapter=False):
     
         cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
@@ -1966,10 +1968,10 @@ class chapterController:
             global old_write_Leo_file
             return old_write_Leo_file(fc,fileName,outlineOnlyFlag)
     #@nonl
-    #@-node:ekr.20060213023839.48:write_Leo_file
-    #@-node:ekr.20060302173735:Overrides
-    #@+node:ekr.20060303143328:Utils
-    #@+node:ekr.20060213023839.31:addPage
+    #@-node:ekr.20060306151759.106:write_Leo_file
+    #@-node:ekr.20060306151759.98:Overrides
+    #@+node:ekr.20060306151759.107:Utils
+    #@+node:ekr.20060306151759.108:addPage
     def addPage (self,pageName=None):
     
         cc = self ; c = cc.c
@@ -1987,16 +1989,16 @@ class chapterController:
         chapter.makeCurrent()
         return page,pageName
     #@nonl
-    #@-node:ekr.20060213023839.31:addPage
-    #@+node:ekr.20060228123056.1:getChapter
+    #@-node:ekr.20060306151759.108:addPage
+    #@+node:ekr.20060306151759.109:getChapter
     def getChapter (self,pageName=None):
         
         cc = self
     
         return self.chapters.get(pageName or cc.nb.getcurselection())
     #@nonl
-    #@-node:ekr.20060228123056.1:getChapter
-    #@+node:ekr.20060213023839.76:renumber
+    #@-node:ekr.20060306151759.109:getChapter
+    #@+node:ekr.20060306151759.110:renumber
     def renumber (self):
         
         cc = self ; nb = cc.nb
@@ -2007,8 +2009,8 @@ class chapterController:
             tab = nb.tab(name)
             tab.configure(text=str(i))
     #@nonl
-    #@-node:ekr.20060213023839.76:renumber
-    #@+node:ekr.20060213023839.81:walkChapters
+    #@-node:ekr.20060306151759.110:renumber
+    #@+node:ekr.20060306151759.111:walkChapters
     def walkChapters (self,ignorelist=[],chapname=False):
     
         '''A generator that allows one to walk the chapters as one big tree.'''
@@ -2021,12 +2023,12 @@ class chapterController:
                 else:
                     if p.v.t not in ignorelist: yield p.copy()
     #@nonl
-    #@-node:ekr.20060213023839.81:walkChapters
-    #@-node:ekr.20060303143328:Utils
+    #@-node:ekr.20060306151759.111:walkChapters
+    #@-node:ekr.20060306151759.107:Utils
     #@-others
 #@nonl
-#@-node:ekr.20060213023839.28:class chapterController
+#@-node:ekr.20060306151759.29:class chapterController
 #@-others
 #@nonl
-#@-node:ekr.20060213023839.3:@thin chapters2.py
+#@-node:ekr.20060306151759.1:@thin chapters2.py
 #@-leo
