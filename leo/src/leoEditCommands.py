@@ -155,7 +155,7 @@ class baseEditCommandsClass:
     def oops (self):
     
         print("baseEditCommandsClass oops:",
-            g.callerName(2),
+            g.callers(),
             "must be overridden in subclass")
     #@nonl
     #@-node:ekr.20050920084036.7:oops
@@ -1087,7 +1087,7 @@ class debugCommandsClass (baseEditCommandsClass):
         c = self.c
         
         c.frame.tree.destroyWidgets()
-        c.redraw()
+        c.redraw_now()
     #@nonl
     #@-node:ekr.20060202154734:freeTreeWidgets
     #@+node:ekr.20060210100432:printFocus

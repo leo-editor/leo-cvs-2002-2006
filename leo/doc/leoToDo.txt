@@ -1,16 +1,1017 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
-#@+node:ekr.20060226131603:To do 4.4b3
-#@+node:ekr.20060227163504:First
+#@+node:ekr.20060301102950:To do 4.4 b3
+#@+node:ekr.20060305110016:**** autocompleter text not always sticking
+#@-node:ekr.20060305110016:**** autocompleter text not always sticking
+#@+node:ekr.20060305073002:Separate config setting for self completion
+#@-node:ekr.20060305073002:Separate config setting for self completion
+#@+node:ekr.20060301102950.1:Get chapters plugin working
+#@-node:ekr.20060301102950.1:Get chapters plugin working
 #@+node:ekr.20060227123644:There are still problems with focus: remove the optimizations
 @ It's much better to call g.app.gui.set_focus a few extra times than to mess up the focus!
 
 - Make c.invalidateFocus a do-nothing method.
 #@nonl
 #@-node:ekr.20060227123644:There are still problems with focus: remove the optimizations
+#@+node:ekr.20060228071700:Ignore autocompletion for number.
+#@-node:ekr.20060228071700:Ignore autocompletion for number.
 #@+node:ekr.20060227133940:Post re breaking @ref links
 #@-node:ekr.20060227133940:Post re breaking @ref links
+#@+node:ekr.20060306082003:Create balloons for widgets
+#@+node:ekr.20060306082003.1:createBalloon
+def createBalloon (self,tab,sv):
+
+    '''Create a balloon showing the present chapter name for a tab.'''
+    
+    # g.trace(tab,sv.get())
+
+    balloon = Pmw.Balloon(tab,initwait=100)
+    balloon.bind(tab,'')
+    hull = balloon.component('hull')
+    def blockExpose (event):
+        if sv.get() == '':
+             hull.withdraw()
+    hull.bind('<Expose>',blockExpose,'+')
+    balloon._label.configure(textvariable=sv)
+#@nonl
+#@-node:ekr.20060306082003.1:createBalloon
+#@-node:ekr.20060306082003:Create balloons for widgets
+#@-node:ekr.20060301102950:To do 4.4 b3
+#@+node:ekr.20060226131603:To do 4.4 b4
+#@+node:ekr.20060301080026:Add support for chapters to Leo's core
+#@+node:ekr.20060301080738:File
+#@+node:ekr.20060301080433.1:getLeoFile
+#@+node:ekr.20060301075130.190:getLeoFile  (chapters)
+def getLeoFile (self,fc,fileName,readAtFileNodesFlag=True,silent=False):
+    
+    global iscStringIO # For communication with g.os_path_dirname
+
+    if iscStringIO:
+        def dontSetReadOnly (self,name,value):
+            if name not in ('read_only','tnodesDict'):
+                self.__dict__ [name] = value
+
+        self.read_only = False
+        self.__class__.__setattr__ = dontSetReadOnly
+
+    rt = old_getLeoFile(fc,fileName,readAtFileNodesFlag,silent)
+
+    if iscStringIO:
+        del self.__class__.__setattr__
+
+    return rt
+#@nonl
+#@-node:ekr.20060301075130.190:getLeoFile  (chapters)
+#@+node:ekr.20031218072017.1553:getLeoFile
+# The caller should enclose this in begin/endUpdate.
+
+def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c
+    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
+    << warn on read-only files >>
+    self.mFileName = c.mFileName
+    self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.descendentUnknownAttributesDictList = []
+    ok = True
+    c.loading = True # disable c.changed
+    
+    try:
+        << scan all the xml elements >>
+    except BadLeoFile, message:
+        if not silent:
+            << raise an alert >>
+        ok = False
+
+    if ok and readAtFileNodesFlag:
+        # Redraw before reading the @file nodes so the screen isn't blank.
+        # This is important for big files like LeoPy.leo.
+        c.redraw_now()
+        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+        
+    # g.trace(c.currentPosition())
+    
+    # New in 4.3.1: do this after reading derived files.
+    if not self.usingClipboard:
+        << set current and top positions >>
+
+    if not c.currentPosition():
+        c.setCurrentPosition(c.rootPosition())
+
+    c.selectVnode(c.currentPosition()) # load body pane
+    c.loading = False # reenable c.changed
+    c.setChanged(c.changed) # Refresh the changed marker.
+    << restore attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.tnodesDict = {}
+    return ok, self.ratio
+#@nonl
+#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
+# os.access may not exist on all platforms.
+
+try:
+    self.read_only = not os.access(fileName,os.W_OK)
+except AttributeError:
+    self.read_only = False
+except UnicodeError:
+    self.read_only = False
+        
+if self.read_only:
+    g.es("read only: " + fileName,color="red")
+#@nonl
+#@-node:ekr.20031218072017.1554:<< warn on read-only files >>
+#@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
+self.getXmlVersionTag()
+self.getXmlStylesheetTag()
+
+self.getTag("<leo_file>") # Must match exactly.
+self.getLeoHeader()
+self.getGlobals()
+self.getPrefs()
+self.getFindPanelSettings()
+
+# Causes window to appear.
+c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
+if not silent:
+    g.es("reading: " + fileName)
+
+self.getVnodes()
+self.getTnodes()
+self.getCloneWindows()
+self.getTag("</leo_file>")
+#@nonl
+#@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
+#@+node:ekr.20031218072017.1556:<< raise an alert >>
+# All other exceptions are Leo bugs.
+
+g.es_exception()
+g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
+#@nonl
+#@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:ekr.20040326054052:<< set current and top positions >>
+current = self.convertStackToPosition(self.currentVnodeStack)
+if current:
+    # g.trace('using convertStackToPosition',current)
+    c.setCurrentPosition(current)
+else:
+    # g.trace(self.currentVnodeStack)
+    c.setCurrentPosition(c.rootPosition())
+    
+# At present this is useless: the drawing code doesn't set the top position properly.
+if 0:
+    top = self.convertStackToPosition(self.topVnodeStack)
+    if top:
+        c.setTopPosition(top)
+#@nonl
+#@-node:ekr.20040326054052:<< set current and top positions >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t: t.unknownAttributes = resultDict[gnx]
+        # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = {} ; expanded = {}
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+
+if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
+    for p in c.all_positions_iter():
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
+            p.expand()
+#@nonl
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@-node:ekr.20031218072017.1553:getLeoFile
+#@-node:ekr.20060301080433.1:getLeoFile
+#@+node:ekr.20060301080433.3:open
+#@+node:ekr.20060301075130.192:open (chapters)
+def open (self,fc,file,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c
+
+    if zipfile.is_zipfile(fileName):
+        # Set globals for g.os_path_dirname
+        global iscStringIO, stringIOCommander
+        iscStringIO = True ; stringIOCommander = c
+        chapters = openChaptersFile(fileName)
+        g.es(str(len(chapters))+" Chapters To Read",color='blue')
+        self.insertChapters(chapters)
+        g.es("Finished Reading Chapters",color='blue')
+        iscStringIO = False
+        return True
+    else:
+        return old_open(fc,file,fileName,readAtFileNodesFlag,silent)
+#@nonl
+#@-node:ekr.20060301075130.192:open (chapters)
+#@+node:ekr.20031218072017.2297:open (leoFileCommands)
+def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c ; frame = c.frame
+    # Read the entire file into the buffer
+    self.fileBuffer = theFile.read() ; theFile.close()
+    self.fileIndex = 0
+    << Set the default directory >>
+    self.topPosition = None
+    ok, ratio = self.getLeoFile(
+        fileName,
+        readAtFileNodesFlag=readAtFileNodesFlag,
+        silent=silent)
+    frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+    if 0: # 1/30/04: this is useless.
+        if self.topPosition: 
+            c.setTopVnode(self.topPosition)
+    # Delete the file buffer
+    self.fileBuffer = ""
+    return ok
+#@nonl
+#@+node:ekr.20031218072017.2298:<< Set the default directory >>
+@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
+@c
+
+theDir = g.os_path_dirname(fileName)
+
+if len(theDir) > 0:
+    c.openDirectory = theDir
+#@nonl
+#@-node:ekr.20031218072017.2298:<< Set the default directory >>
+#@-node:ekr.20031218072017.2297:open (leoFileCommands)
+#@-node:ekr.20060301080433.3:open
+#@+node:ekr.20060301080738.1:write_Leo_file
+#@+node:ekr.20060301075130.194:write_Leo_file & helper (chapters)
+def write_Leo_file (self,fc,fileName,outlineOnlyFlag,singleChapter=False):
+
+    c = self.c ; nb = self.nb ; pagenames = nb.pagenames()
+
+    if len(pagenames) > 1 and not singleChapter:
+        chapList = []
+        fc.__class__.__setattr__ = getMakeStringIO(chapList)
+        rv = self.writeChapters(fc,fileName,pagenames,c,outlineOnlyFlag)
+        if rv: zipChapters(fileName,pagenames,c,chapList)
+        del self.__class__.__setattr__
+        return rv
+    else:
+        global old_write_Leo_file
+        return old_write_Leo_file(fc,fileName,outlineOnlyFlag)
+#@nonl
+#@+node:ekr.20060301075130.195:writeChapters
+def writeChapters (self,fc,fileName,pagenames,outlineOnlyFlag):
+
+    '''Writes Chapters to StringIO instances.'''
+    
+    c = self.c
+
+    for z in pagenames:
+        ###sv = self.getStringVar(z)
+        ###chapter = self.chapters [sv]
+        chapter = self.getChapter(z)
+        chapter.setVariables()
+        rv = old_write_Leo_file(fc,fileName,outlineOnlyFlag)
+
+    c.cChapter.setVariables()
+    return rv
+#@nonl
+#@-node:ekr.20060301075130.195:writeChapters
+#@-node:ekr.20060301075130.194:write_Leo_file & helper (chapters)
+#@+node:ekr.20031218072017.3046:write_Leo_file
+def write_Leo_file(self,fileName,outlineOnlyFlag,toString=False):
+
+    c = self.c
+    self.assignFileIndices()
+    if not outlineOnlyFlag:
+        # Update .leoRecentFiles.txt if possible.
+        g.app.config.writeRecentFilesFile(c)
+        << write all @file nodes >>
+    << return if the .leo file is read-only >>
+    try:
+        theActualFile = None
+        if not toString:
+            << create backup file >>
+        self.mFileName = fileName
+        self.outputFile = cStringIO.StringIO() # or g.fileLikeObject()
+        if not toString:
+            theActualFile = open(fileName, 'wb')
+        << put the .leo file >>
+        s = self.outputFile.getvalue()
+        if toString:
+            # For support of chapters plugin.
+            g.app.write_Leo_file_string = s
+        else:
+            theActualFile.write(s)
+            theActualFile.close()
+            << delete backup file >>
+        self.outputFile = None
+        return True
+    except Exception:
+        g.es("exception writing: " + fileName)
+        g.es_exception(full=False)
+        if theActualFile: theActualFile.close()
+        self.outputFile = None
+        << delete fileName >>
+        << rename backupName to fileName >>
+        return False
+
+write_LEO_file = write_Leo_file # For compatibility with old plugins.
+#@nonl
+#@+node:ekr.20040324080359:<< write all @file nodes >>
+try:
+    # Write all @file nodes and set orphan bits.
+    c.atFileCommands.writeAll()
+except Exception:
+    g.es_error("exception writing derived files")
+    g.es_exception()
+    return False
+#@nonl
+#@-node:ekr.20040324080359:<< write all @file nodes >>
+#@+node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+# self.read_only is not valid for Save As and Save To commands.
+
+if g.os_path_exists(fileName):
+    try:
+        if not os.access(fileName,os.W_OK):
+            g.es("can not create: read only: " + fileName,color="red")
+            return False
+    except:
+        pass # os.access() may not exist on all platforms.
+#@nonl
+#@-node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+#@+node:ekr.20031218072017.3047:<< create backup file >>
+# rename fileName to fileName.bak if fileName exists.
+if g.os_path_exists(fileName):
+    backupName = g.os_path_join(g.app.loadDir,fileName)
+    backupName = fileName + ".bak"
+    if g.os_path_exists(backupName):
+        g.utils_remove(backupName)
+    ok = g.utils_rename(fileName,backupName)
+    if not ok:
+        if self.read_only:
+            g.es("read only",color="red")
+        return False
+else:
+    backupName = None
+#@nonl
+#@-node:ekr.20031218072017.3047:<< create backup file >>
+#@+node:ekr.20040324080819.1:<< put the .leo file >>
+self.putProlog()
+self.putHeader()
+self.putGlobals()
+self.putPrefs()
+self.putFindSettings()
+#start = g.getTime()
+self.putVnodes()
+#start = g.printDiffTime("vnodes ",start)
+self.putTnodes()
+#start = g.printDiffTime("tnodes ",start)
+self.putPostlog()
+#@nonl
+#@-node:ekr.20040324080819.1:<< put the .leo file >>
+#@+node:ekr.20031218072017.3048:<< delete backup file >>
+if backupName and g.os_path_exists(backupName):
+
+    self.deleteFileWithMessage(backupName,'backup')
+#@nonl
+#@-node:ekr.20031218072017.3048:<< delete backup file >>
+#@+node:ekr.20050405103712:<< delete fileName >>
+if fileName and g.os_path_exists(fileName):
+    self.deleteFileWithMessage(fileName,'')
+#@-node:ekr.20050405103712:<< delete fileName >>
+#@+node:ekr.20050405103712.1:<< rename backupName to fileName >>
+if backupName:
+    g.es("restoring " + fileName + " from " + backupName)
+    g.utils_rename(backupName,fileName)
+#@nonl
+#@-node:ekr.20050405103712.1:<< rename backupName to fileName >>
+#@-node:ekr.20031218072017.3046:write_Leo_file
+#@-node:ekr.20060301080738.1:write_Leo_file
+#@-node:ekr.20060301080738:File
+#@+node:ekr.20060301080828:Positions
+#@+node:ekr.20060301075130.188:doDelete  (chapters)
+def doDelete (self,p):
+    
+    c = self.c ### ; nb = self.nb ; pagenames = nb.pagenames()
+    
+    if p.hasVisBack(): newNode = p.visBack()
+    else: newNode = p.next() # _not_ p.visNext(): we are at the top level.
+    if not newNode: return
+    
+    # pagenames = [self.setStringVar(x).get().upper() for x in pagenames]
+    # nbnam = nb.getcurselection()
+    # if nbnam != None:
+        # name = self.getStringVar(nb.getcurselection()).get().upper()
+    # else: name = 'TRASH'
+    # tsh = 'TRASH'
+    
+    name = self.nb.getcurselection()
+    
+    trash = 'Trash'
+    # if name != tsh and tsh in pagenames:
+    if name != trash and trash in self.nb.pagenames():
+        index = pagenames.index(tsh)
+        ### trchapter = self.chapters [self.getStringVar(index)]
+        trchapter = self.getChapter(trash)
+        trashnode = trchapter.rp
+        trchapter.setVariables()
+        p.moveAfter(trashnode)
+        c.cChapter.setVariables()
+        c.selectPosition(newNode)
+        return p
+    else:
+        return old_doDelete(p)
+#@nonl
+#@-node:ekr.20060301075130.188:doDelete  (chapters)
+#@+node:ekr.20040303175026.2:p.doDelete
+@ This is the main delete routine.  It deletes the receiver's entire tree from the screen.  Because of the undo command we never actually delete vnodes or tnodes.
+@c
+
+def doDelete (self):
+
+    """Deletes position p from the outline.  May be undone.
+
+    Returns newPosition."""
+
+    p = self ; c = p.c
+    p.setDirty() # Mark @file nodes dirty!
+    p.unlink()
+    p.deleteLinksInTree()
+#@nonl
+#@-node:ekr.20040303175026.2:p.doDelete
+#@-node:ekr.20060301080828:Positions
+#@+node:ekr.20060301080738.2:Gui
+#@+node:ekr.20060301080433.2:tree select
+#@+node:ekr.20060301075130.191:select (chapters)
+def select (self,tree,p,updateBeadList=True):
+
+    c = p.v.c ; h = p.headString() ; nb = self.nb
+
+    c.frame.body.lastPosition = p
+    return_val = old_select(tree,p,updateBeadList)
+    c.frame.body.lastChapter = nb.getcurselection()
+
+    if hasattr(p.c.frame.body,'r'):
+        c.frame.body.r.configure(text=h)
+
+    return return_val
+#@nonl
+#@-node:ekr.20060301075130.191:select (chapters)
+#@+node:ekr.20040803072955.128:tree.select
+#  Do **not** try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+    if not p or not p.exists(c): return # Not an error.
+    
+    if self.trace_select and not g.app.unitTesting: g.trace(g.callers())
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        if old_p:
+            << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # Suppress duplicate call.
+            try: # may fail during initialization.
+                # p is NOT c.currentPosition() here!
+                self.canvas.update_idletasks() # Essential.
+                self.scrollTo(p)
+            except Exception: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    c.setCurrentPosition(p)
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    return 'break' # Supresses unwanted selection.
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >>
+# Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p != p:
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p) # 12/17/04
+
+if old_p.edit_widget():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20040803072955.129:<< unselect the old node >>
+#@+node:ekr.20040803072955.130:<< select the new node >>
+# Bug fix: we must always set this, even if we never edit the node.
+self.revertHeadline = p.headString()
+
+frame.setWrap(p)
+    
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(0,body,s)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+# c.beadList is the list of nodes for the back and forward commands.
+
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by p and make p the present node.
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+        # New in Leo 4.4: limit this list to 100 items.
+        if 0: # Doesn't work yet.
+            c.beadList = c.beadList [-100:]
+            g.trace('len(c.beadList)',len(c.beadList))
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# The test 'p in c.visitedList' calls p.__cmp__, so this code *is* valid.
+
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+
+# g.trace('len(c.visitedList)',len(c.visitedList))
+# g.trace([z.headString()[:10] for z in c.visitedList]) # don't assign to p!
+#@nonl
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+if self.stayInTree:
+    c.treeWantsFocus()
+else:
+    c.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
+#@-node:ekr.20060301080433.2:tree select
+#@+node:ekr.20060301080433:endEditLabel
+#@+node:ekr.20060301075130.189:endEditLabel  (chapters)
+def endEditLabel (self,tree):
+    
+    c = self.c ; p = c.currentPosition() ; h = p.headString()
+
+    if p and h and hasattr(c.frame.body,'r'):
+         c.frame.body.r.configure(text=h)
+
+    return old_editLabel(tree)
+#@nonl
+#@-node:ekr.20060301075130.189:endEditLabel  (chapters)
+#@+node:ekr.20040803072955.126:tree.endEditLabel
+def endEditLabel (self):
+    
+    '''End editing of a headline and update p.headString().'''
+
+    c = self.c ; k = c.k ; p = c.currentPosition()
+
+    self.setEditPosition(None) # That is, self._editPosition = None
+    
+    if k:
+        k.setDefaultUnboundKeyAction()
+        # k.showStateAndMode() # Destroys UNL info.
+    
+    # Important: this will redraw if necessary.
+    self.onHeadChanged(p)
+#@nonl
+#@-node:ekr.20040803072955.126:tree.endEditLabel
+#@-node:ekr.20060301080433:endEditLabel
+#@+node:ekr.20060301080026.2:createControl
+#@+node:ekr.20060301075130.187:createControl  (chapters)
+def createControl(self,body,frame,parentFrame):
+
+    c = self.c ; nb = self.nb
+    
+    if c not in self.pbodies:
+        parentFrame = self.createPanedWidget(parentFrame)
+
+    pbody = self.pbodies [c]
+    l, r = self.addHeading(parentFrame)
+
+    ctrl = old_createControl(body,frame,parentFrame)
+    
+    def focusInCallback(event,self=self,frame=frame):
+        return self.getGoodPage(event,frame.body)
+    ctrl.bind("<FocusIn>",focusInCallback,'+')
+    
+    i = 1.0 / len(pbody.panes())
+    for z in pbody.panes():
+        pbody.configurepane(z,size=i)
+    pbody.updatelayout()
+    frame.body.l = l
+    frame.body.r = r
+    frame.body.editorName = self.editorNames [parentFrame]
+    if frame not in self.twidgets:
+        self.twidgets [frame] = []
+    self.twidgets [frame].append(frame.body)
+    l.configure(textvariable=self.getStringVar(nb.getcurselection()))
+    return ctrl
+#@-node:ekr.20060301075130.187:createControl  (chapters)
+#@+node:ekr.20031218072017.3998:tkBody.createControl
+def createControl (self,frame,parentFrame):
+    
+    c = self.c
+
+    wrap = c.config.getBool('body_pane_wraps')
+    wrap = g.choose(wrap,"word","none")
+    
+    # Setgrid=1 cause severe problems with the font panel.
+    body = Tk.Text(parentFrame,name='body-pane',
+        bd=2,bg="white",relief="flat",setgrid=0,wrap=wrap)
+        
+    trace = c.config.getBool('trace_chapters') and not g.app.unitTesting
+    if trace: g.trace('tkBody',body)
+    
+    bodyBar = Tk.Scrollbar(parentFrame,name='bodyBar')
+    frame.bodyBar = self.bodyBar = bodyBar
+    body['yscrollcommand'] = bodyBar.set
+    bodyBar['command'] = body.yview
+    bodyBar.pack(side="right", fill="y")
+    
+    # Always create the horizontal bar.
+    frame.bodyXBar = self.bodyXBar = bodyXBar = Tk.Scrollbar(
+        parentFrame,name='bodyXBar',orient="horizontal")
+    body['xscrollcommand'] = bodyXBar.set
+    bodyXBar['command'] = body.xview
+    self.bodyXbar = frame.bodyXBar = bodyXBar
+    
+    if wrap == "none":
+        # g.trace(parentFrame)
+        bodyXBar.pack(side="bottom", fill="x")
+        
+    body.pack(expand=1,fill="both")
+
+    self.wrapState = wrap
+
+    if 0: # Causes the cursor not to blink.
+        body.configure(insertofftime=0)
+        
+    return body
+#@nonl
+#@-node:ekr.20031218072017.3998:tkBody.createControl
+#@-node:ekr.20060301080026.2:createControl
+#@+node:ekr.20060301080026.1:createCanvas
+#@+node:ekr.20060301075130.186:createCanvas (chapters)
+def createCanvas (self,frame,parentFrame,tabName='1'):
+    
+    nb = self.nb
+    ### pname = self.nameMaker.next()
+    ## pname = self.nextPageName()
+    g.trace(tabName)
+    pname = tabName
+    page = nb.add(pname)
+    indx = nb.index(pname)
+    tab = nb.tab(indx)
+    if indx == 0:
+        tab.configure(background='grey',foreground='white')
+        
+    canvas = old_createCanvas(frame,page) # Substitute page for parentFrame.
+    
+    hull = nb.component('hull')
+    tab.bind('<Button-3>',lambda event: hull.tmenu.post(event.x_root,event.y_root))
+    if 1:
+        self.stringVars[pname] = sv = Tk.StringVar()
+    else:
+        page.sv = sv = Tk.StringVar()
+    self.createBalloon(tab,sv)
+    canvas.name = pname
+    return canvas
+#@-node:ekr.20060301075130.186:createCanvas (chapters)
+#@+node:ekr.20031218072017.3944:f.createCanvas & helpers
+def createCanvas (self,parentFrame,pack=True):
+
+    # pageName is not used here: it is used for compatibility with the Chapters plugin.
+
+    c = self.c
+
+    scrolls = c.config.getBool('outline_pane_scrolls_horizontally')
+    scrolls = g.choose(scrolls,1,0)
+
+    if use_Pmw and Pmw:
+        canvas = self.createPmwTreeCanvas(parentFrame,scrolls,pack)
+    else:
+        canvas = self.createTkTreeCanvas(parentFrame,scrolls,pack)
+
+    return canvas
+#@nonl
+#@+node:ekr.20041221071131.1:createTkTreeCanvas
+def createTkTreeCanvas (self,parentFrame,scrolls,pack):
+    
+    frame = self
+    
+    canvas = Tk.Canvas(parentFrame,name="canvas",
+        bd=0,bg="white",relief="flat")
+        
+    trace = self.c.config.getBool('trace_chapters') and not g.app.unitTesting
+    if trace: g.trace(canvas)
+        
+    # g.trace('canvas',repr(canvas),'name',frame.c.widget_name(canvas))
+
+    frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
+    
+    # Bind mouse wheel event to canvas
+    if sys.platform != "win32": # Works on 98, crashes on XP.
+        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+        if 1: # New in 4.3.
+            << workaround for mouse-wheel problems >>
+        
+    canvas['yscrollcommand'] = self.setCallback
+    treeBar['command']     = self.yviewCallback
+    treeBar.pack(side="right", fill="y")
+    if scrolls: 
+        treeXBar = Tk.Scrollbar( 
+            parentFrame,name='treeXBar',orient="horizontal") 
+        canvas['xscrollcommand'] = treeXBar.set 
+        treeXBar['command'] = canvas.xview 
+        treeXBar.pack(side="bottom", fill="x")
+    
+    if pack:
+        canvas.pack(expand=1,fill="both")
+
+    canvas.bind("<Button-1>", frame.OnActivateTree)
+
+    # Handle mouse wheel in the outline pane.
+    if sys.platform == "linux2": # This crashes tcl83.dll
+        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+    if 0:
+        << do scrolling by hand in a separate thread >>
+    
+    # g.print_bindings("canvas",canvas)
+    return canvas
+#@nonl
+#@+node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
+# Handle mapping of mouse-wheel to buttons 4 and 5.
+
+def mapWheel(e):
+    if e.num == 4: # Button 4
+        e.delta = 120
+        return frame.OnMouseWheel(e)
+    elif e.num == 5: # Button 5
+        e.delta = -120
+        return frame.OnMouseWheel(e)
+
+canvas.bind("<ButtonPress>",mapWheel,add=1)
+#@nonl
+#@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
+#@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
+# New in 4.3: replaced global way with scrollWay ivar.
+ev = threading.Event()
+
+def run(self=self,canvas=canvas,ev=ev):
+
+    while 1:
+        ev.wait()
+        if self.scrollWay =='Down': canvas.yview("scroll", 1,"units")
+        else:                       canvas.yview("scroll",-1,"units")
+        time.sleep(.1)
+
+t = threading.Thread(target = run)
+t.setDaemon(True)
+t.start()
+
+def scrollUp(event): scrollUpOrDown(event,'Down')
+def scrollDn(event): scrollUpOrDown(event,'Up')
+    
+def scrollUpOrDown(event,theWay):
+    if event.widget!=canvas: return
+    if 0: # This seems to interfere with scrolling.
+        if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
+    ev.set()
+    self.scrollWay = theWay
+        
+def off(event,ev=ev,canvas=canvas):
+    if event.widget!=canvas: return
+    ev.clear()
+
+if 1: # Use shift-click
+    # Shift-button-1 scrolls up, Shift-button-2 scrolls down
+    canvas.bind_all('<Shift Button-3>',scrollDn)
+    canvas.bind_all('<Shift Button-1>',scrollUp)
+    canvas.bind_all('<Shift ButtonRelease-1>',off)
+    canvas.bind_all('<Shift ButtonRelease-3>',off)
+else: # Use plain click.
+    canvas.bind_all( '<Button-3>',scrollDn)
+    canvas.bind_all( '<Button-1>',scrollUp)
+    canvas.bind_all( '<ButtonRelease-1>',off)
+    canvas.bind_all( '<ButtonRelease-3>',off)
+#@nonl
+#@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
+#@-node:ekr.20041221071131.1:createTkTreeCanvas
+#@+node:ekr.20041221071131:createPmwTreeCanvas (not used)
+def createPmwTreeCanvas (self,parentFrame,hScrollMode,pack):
+ 
+    hscrollmode = g.choose(hScrollMode,'dynamic','none')
+    
+    self.scrolledCanvas = scrolledCanvas = Pmw.ScrolledCanvas(
+        parentFrame,
+        hscrollmode=hscrollmode,
+        vscrollmode='dynamic')
+
+    if pack:
+        scrolledCanvas.pack(side='top',expand=1,fill="both")
+
+    self.treeBar = scrolledCanvas.component('vertscrollbar')
+    
+    canvas = scrolledCanvas.component('canvas')
+    canvas.configure(background='white')
+    
+    return canvas
+#@nonl
+#@-node:ekr.20041221071131:createPmwTreeCanvas (not used)
+#@-node:ekr.20031218072017.3944:f.createCanvas & helpers
+#@-node:ekr.20060301080026.1:createCanvas
+#@+node:ekr.20060301080738.3:tree ctor
+#@+node:ekr.20060301075130.193:treeInit (chapters)
+def treeInit (self,tree,c,frame,canvas,tabName=''):
+    
+    ### sv = self.getStringVar(canvas.name)
+    
+    old_tree_init(tree,c,frame,canvas)
+    
+    g.trace(tabName)
+    
+    if tabName == '1':
+        # We are being called during the initial startup.
+
+        ### self.chapters [sv] = Chapter(c,tree,frame,canvas)
+        self.chapters ['1'] = Chapter(c,tree,frame,canvas)
+#@nonl
+#@-node:ekr.20060301075130.193:treeInit (chapters)
+#@+node:ekr.20040803072955.16:__init__ (tkTree)
+def __init__(self,c,frame,canvas):
+    
+    # Init the base class.
+    leoFrame.leoTree.__init__(self,frame)
+    
+    trace = c.config.getBool('trace_chapters') and not g.app.unitTesting
+    if trace: g.trace('tkTree')
+    
+    # Configuration and debugging settings.
+    self.expanded_click_area    = c.config.getBool('expanded_click_area')
+    self.gc_before_redraw       = c.config.getBool('gc_before_redraw')
+    self.stayInTree             = c.config.getBool('stayInTreeAfterSelect')
+
+    self.trace                  = c.config.getBool('trace_tree')
+    self.trace_alloc            = c.config.getBool('trace_tree_alloc')
+    self.trace_edit             = c.config.getBool('trace_tree_edit')
+    self.trace_redraw_now       = c.config.getBool('trace_redraw_now')
+    self.trace_select           = c.config.getBool('trace_select')
+    self.trace_stats            = c.config.getBool('show_tree_stats')
+ 
+    # Objects associated with this tree.
+    self.canvas = canvas
+    
+    << define drawing constants >>
+    << old ivars >>
+    << inject callbacks into the position class >>
+    
+    self.dragging = False
+    self.generation = 0
+    self.prevPositions = 0
+    self.redrawing = False # Used only to disable traces.
+    self.redrawCount = 0 # Count for debugging.
+    self.revertHeadline = None # Previous headline text for abortEditLabel.
+    
+    # New in 4.4: We should stay in the tree to use per-pane bindings.
+    self.textBindings = [] # Set in setBindings.
+    self.textNumber = 0 # To make names unique.
+    self.updateCount = 0 # Drawing is enabled only if self.updateCount <= 0
+    self.verbose = True
+    
+    self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
+    
+    # Keys are id's, values are positions...
+    self.ids = {}
+    self.iconIds = {}
+
+    # Lists of visible (in-use) widgets...
+    self.visibleBoxes = []
+    self.visibleClickBoxes = []
+    self.visibleIcons = []
+    self.visibleLines = []
+    self.visibleText  = {}
+        # Pre 4.4b2: Keys are vnodes, values are Tk.Text widgets.
+        #     4.4b2: Keys are p.key(), values are Tk.Text widgets.
+    self.visibleUserIcons = []
+
+    # Lists of free, hidden widgets...
+    self.freeBoxes = []
+    self.freeClickBoxes = []
+    self.freeIcons = []
+    self.freeLines = []
+    self.freeText = [] # New in 4.4b2: a list of free Tk.Text widgets
+   
+    self.freeUserIcons = []
+#@nonl
+#@+node:ekr.20040803072955.17:<< define drawing constants >>
+self.box_padding = 5 # extra padding between box and icon
+self.box_width = 9 + self.box_padding
+self.icon_width = 20
+self.text_indent = 4 # extra padding between icon and tex
+
+self.hline_y = 7 # Vertical offset of horizontal line
+self.root_left = 7 + self.box_width
+self.root_top = 2
+
+self.default_line_height = 17 + 2 # default if can't set line_height from font.
+self.line_height = self.default_line_height
+#@nonl
+#@-node:ekr.20040803072955.17:<< define drawing constants >>
+#@+node:ekr.20040803072955.18:<< old ivars >>
+# Miscellaneous info.
+self.iconimages = {} # Image cache set by getIconImage().
+self.active = False # True if tree is active
+self._editPosition = None # Returned by leoTree.editPosition()
+self.lineyoffset = 0 # y offset for this headline.
+self.lastClickFrameId = None # id of last entered clickBox.
+self.lastColoredText = None # last colored text widget.
+
+# Set self.font and self.fontName.
+self.setFontFromConfig()
+self.setColorFromConfig()
+
+# Drag and drop
+self.drag_p = None
+self.controlDrag = False # True: control was down when drag started.
+
+# Keep track of popup menu so we can handle behavior better on Linux Context menu
+self.popupMenu = None
+
+# Incremental redraws:
+self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
+self.prevMoveToFrac = None
+self.visibleArea = None
+self.expandedVisibleArea = None
+
+if self.allocateOnlyVisibleNodes:
+    self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw_now)
+#@nonl
+#@-node:ekr.20040803072955.18:<< old ivars >>
+#@+node:ekr.20040803072955.19:<< inject callbacks into the position class >>
+# The new code injects 3 callbacks for the colorizer.
+
+if not leoTkinterTree.callbacksInjected: # Class var.
+    leoTkinterTree.callbacksInjected = True
+    self.injectCallbacks()
+#@nonl
+#@-node:ekr.20040803072955.19:<< inject callbacks into the position class >>
+#@-node:ekr.20040803072955.16:__init__ (tkTree)
+#@-node:ekr.20060301080738.3:tree ctor
+#@-node:ekr.20060301080738.2:Gui
+#@-node:ekr.20060301080026:Add support for chapters to Leo's core
+#@+node:ekr.20060227163504:First
 #@+node:ekr.20060227124057:Lua
 #@+node:ekr.20060227120635:Lua patch
 @nocolor
@@ -459,1917 +1460,87 @@ Any command that alters text should call begin/endCommand.
 #@-node:ekr.20060227163504.1:Bugs
 #@+node:ekr.20060227163504.3:Important
 #@+node:ekr.20060211100150:Fix chapters plugin
-#@+node:ekr.20051217175058:Add commands
+@nocolor
+
+Add these commands:
+
 show-chapters
 hide-chapters
 add-chapter
 delete-this-chapter
 #@nonl
-#@-node:ekr.20051217175058:Add commands
-#@+node:ekr.20060201150547:Chapters
-@ignore
+#@-node:ekr.20060211100150:Fix chapters plugin
+#@+node:ekr.20060220155313:Script: update-leo-settings-file
+#@-node:ekr.20060220155313:Script: update-leo-settings-file
+#@+node:ekr.20060122183544:Improve isearch
+@nocolor
 
-from __future__ import generators
-import java
-import java.awt as awt
-import java.awt.event as aevent
-import javax.swing as swing
-import javax.swing.event as sevent
-import javax.swing.tree as stree
-import java.util.concurrent.locks as locks
-import leoNodes
-import leoGlobals as g
-import leoSwingUndo
-import javax.swing.undo as undo
-from utilities.DefCallable import DefCallable
-from utilities.Phaser import Phaser
-from utilities.Slider import Slider
-from leoSwingFrame import leoSwingTree
+- Handle backspace for isearch: keep a stack of previous matches.
+- Allow cross-node isearches.
+#@-node:ekr.20060122183544:Improve isearch
+#@+node:ekr.20060210140415:Most important new commands
+#@+node:ekr.20060211093935:Support for @list and on-enter-mode
+#@-node:ekr.20060211093935:Support for @list and on-enter-mode
+#@+node:ekr.20060113090042:open-outline-by-name & filename completion
+#@-node:ekr.20060113090042:open-outline-by-name & filename completion
+#@+node:ekr.20060122194643:isearch-headline (forward & backward)
+#@-node:ekr.20060122194643:isearch-headline (forward & backward)
+#@+node:ekr.20060116085649:find-word-on-line, find-character-on-line (forward & backward)
+#@-node:ekr.20060116085649:find-word-on-line, find-character-on-line (forward & backward)
+#@+node:ekr.20060206103922:Minibuffer interface for GoToLine number
+#@-node:ekr.20060206103922:Minibuffer interface for GoToLine number
+#@+node:ekr.20060116074839.2:extend-to-word
+#@-node:ekr.20060116074839.2:extend-to-word
+#@+node:ekr.20060117115212:Rename buffer doesn't seem to work
+#@-node:ekr.20060117115212:Rename buffer doesn't seem to work
+#@+node:ekr.20060123091352:Incremental search in switch-to-buffer
+#@-node:ekr.20060123091352:Incremental search in switch-to-buffer
+#@+node:ekr.20060104083551:move-line-up/down (LeoUser)
+http://sourceforge.net/forum/message.php?msg_id=3488030
 
+move-region-up
 
-class Chapters( sevent.ChangeListener ):
-    
-    def __init__( self, c ):
-        
-        self.c = c
-        self.book = None
-        path = g.os_path_join( g.app.loadDir,"..","Icons", "x.png" )
-        self.icon = swing.ImageIcon( path )
-        self.popup = self.ChaptersPopup( self )
-        self.chapters = {}
-        self.trees_chapters = {}
-        self.current_chapter = self.Chapter()
-        self.chapterlist = []
-        #let's skip adding the first chapter
-        #self.chapterlist.append( self.current_chapter )
-        self.current_chapter.setUndoer( leoSwingUndo.leoSwingUndo( c ) )
-        self.updateLock = locks.ReentrantLock() #this increase by 1 for each lock call. -1 for each unlock.  If it becomes 0, the lock is released
-        self.chaptersIterationBlocked = 0
-        self.chaptersundoer = undo.UndoManager()
-        self.chaptersPromptingForRemove = False
-        
-    
-    def getChapter( self ):
-        return self.current_chapter
-    
-    def startPromptingForRemove( self ):
-        self.chaptersPromptingForRemove = True
-        
-    def stopPromptingForRemove( self ):
-        self.chaptersPromptingForRemove = False
-    
-    def isPromptingForRemove( self ):
-        return self.chaptersPromptingForRemove
-    
-    
-    
-    def disablePopup( self ):
-        self.popup.disable()
-        
-    def enablePopup( self ):
-        self.popup.enable()
-    
-    def beginUpdate( self ):
-        self.updateLock.lock()
-        
-    def endUpdate( self ):
-        self.updateLock.unlock()
-    
-    def getWidget( self ):
-        if self.book is None:
-            # We defer creating until here because otherwise the book variable might miss a L&amp;F change
-            self.book = swing.JTabbedPane()
-            self.book.addMouseListener( self.popup )
-            ssm = self.book.getModel()
-            ssm.addChangeListener( self )
-        return self.book
-        
-    def getSelectedChapter( self ):
-        return self.current_chapter
-    
-    def getSelectedChapterWidget( self ):
-        
-        return self.book.getSelectedComponent()
-    
-    @others
-    
+Swap the selection with the line above it. If we are at the top of a node, the
+node identified by threadBack() is selected and the text is moved to the bottom
+of the node.
 
-#@+node:ekr.20060201150547.1:What are Chapters?
-@
-Chapters simply put are multiple Outlines within the Leo instance.  The definition doesn't stop there though since having more than one Outline defines an interaction model between these Outlines.  It is better to think of it like so:
-    An Outline is composed of at least 1 Chapter.
-    A writen Outline with multiple Chapters should be indistinguishable from an Outline with one Chapter.  The only mark is that the roots will have a uA marking them as belonging to a specific Chapter.
-    So at read time, the Outline is read in then broken into its separate Chapters.
-    At write time, the Outline is reconstituted as one Outline during output.  The reunification is only realised on disk.  Internally we use magic unfication iterators that give the write process a sense that it is writing one outline.  These special iterators mean that there is a low impact upon the write code.  Much of it has stayed the same except that it now uses a different iterator.
-#@-node:ekr.20060201150547.1:What are Chapters?
-#@+node:ekr.20060201150547.2:Things A Developer should know about Chapters
-@
-Observation 1: Do not start a beginUpdate in one chapter and finish it with a endUpdate in another chapter.  You will lose your ability to work with the outline/chapter where the beginUpdate started.  I have seen this happen, so let this be a warning to you.  I guess a protective fix against this would be to keep track of which chapter an endUpdate belongs to.  Hence doing a beginUpdate in one chapter followed by and endUpdate in another chapter would target the first chapter.  Im unsure if this would work, but it is a thought that may make the implementation more robust.
+move-region-down
 
-Observation 2: root positions should not become stale.  Since we aggresively copy everytime the root or current position is asked for from the chapter, the main copy should never change unless it is explicitly set.
+Swap the selection with the line below it. If we are at the bottom of the node,
+the node identified by threadNext() is selected and the text is moved to the top
+of the node.
 
-Observation 3: Sliders and Phasers work better than dialogs with Chapters.  Ive found it disruptive when working with Chapters to suddenly have a dialog pop up grabbing my attention away from the Chapter Im working on.  Hence Ive moved informational and querying of the user primarily to Sliders.  Not only does it attach a question or notification to a Chapter better it also is very nice animation to observe.  Keeping our focus on the Chapter in question is essential!
-
-Observation 4: We use the doHook mechanism to notify listeners that the current chapter has changed.  This makes it easy to monitor the changing of chapters, but the devloper must ensure that the chapter belongs to the chapters instance he is interested in.  Hence the commander is passed in as well.  If you are interested in the a specific Chapters instance the Commander should be enough to discern which chapters the chapter belongs to.  See the Node "A Note about Chapters and Commanders".
-
-#@-node:ekr.20060201150547.2:Things A Developer should know about Chapters
-#@+node:ekr.20060201150547.3:A Note about Chapters and Commanders
-@
-
-Chapters Swing takes the lessons learned from past Chapters plugins and simplifies the implementation by making the Chapters instance the provider of the root, current and top positions.  The Command is no longer in charge of this and will delegate the:
-    getCurrentPosition() # or is it c.currentPosition()? :D
-    getTopPosition()
-    getRootPosition()
-
-to the Chapters instance.  Each Commander now has a Chapters instance upon instantiation.
-
-Also setting the variables will be delegated to the Chapters instance, which in turn delegates to a Chapter instance.
-
-Hence we can keep the Commander interface and just restructure the internals and Chapters are now available.
+In all cases the moved text remains selected, even when the text moves to another node.
 #@nonl
-#@-node:ekr.20060201150547.3:A Note about Chapters and Commanders
-#@+node:ekr.20060201150547.4:commander delegates
-def setRootPosition( self, p ):
-    
-    #if self.loading: return
-    if p:
-        p = p.copy()
-    if self.current_chapter:
-        self.current_chapter.setRootPosition( p )
-    #self.roots[ self.current_chapter ] = p
+#@-node:ekr.20060104083551:move-line-up/down (LeoUser)
+#@+node:ekr.20060116084526.1:insert/remove spaces/tabs from lines (LeoUser)
+http://sourceforge.net/forum/message.php?msg_id=3488030
 
+add-space-to-lines      Adds a space is added to start of all selected lines.
 
-def getRootPosition( self ):
-    
-    #if self.loading: return
-    if self.current_chapter:
-        return self.current_chapter.getRootPosition()
-    return None   
-    #return self.roots[ self.current_chapter ].copy()
-    #rv = self.roots.get( self.current_chapter, None )
-    #if rv: rv = rv.copy()
-    #return rv
-    
-    
-def setCurrentPosition( self, p ):
-    
-    #if self.loading: return    
-    if p:
-        p = p.copy()
-    if self.current_chapter:
-        self.current_chapter.setCurrentPosition( p )   
-    #self.currentPositions[ self.current_chapter ] = p
-        
-    
-def getCurrentPosition( self ):
-    
-    #if self.loading: return
-    if self.current_chapter:
-        return self.current_chapter.getCurrentPosition()
-    return None
-        
-    #return self.currentPositions[ self.current_chapter ].copy()
-    #rv = self.currentPositions.get( self.current_chapter, None )
-    #if rv: rv = rv.copy()
-    #return rv
+add-tab-to-line         Adds 4 spaces to start of all selected lines.
+
+remove-space-from lines Removes a space from start of all selected lines.
+
+remove-tab-from lines   Removes a space from start of all selected lines.
 #@nonl
-#@-node:ekr.20060201150547.4:commander delegates
-#@+node:ekr.20060201150547.5:stateChanged
-def stateChanged( self, event ):
-    
-    c = self.c
-    try:
-        self.beginUpdate()
-        index = self.book.getSelectedIndex()
-        component = self.book.getComponentAt( index )
-        chapter = self.chapters[ component ]
-        c.frame.tree = chapter.tree
-        self.current_chapter = chapter
-        #chapter.tree.jtree.treeDidChange()
-        c.beginUpdate()
-        c.endUpdate()
-        #c.selectPosition( chapter.getCurrentPosition() )
-        self.current_chapter.undoer.setMenu( forceupdate = 1 )
-        g.doHook( "chapter-changed", c = self.c, chapter = chapter )
-    finally:
-        self.endUpdate()
-        
-    #if chapter.root:
-    #    chapter.root.linkAsRoot( None )
-
-@   
-    oldchapter = self.current_chapter
-    index = self.book.getSelectedIndex()
-    title = self.book.getTitleAt( index )
-    self.current_chapter = title
-    nwroot = self.chapters[ title ]
-    oldroot = self.c.rootPosition().copy()
-    self.chapters[ oldchapter ] = oldroot
-    c.beginUpdate()
-    c.setRootPosition( nwroot.copy() )
-    c.endUpdate()
-
-
-#@-node:ekr.20060201150547.5:stateChanged
-#@+node:ekr.20060201150547.6:getChaptersIterator
-def iterateOverChapters( self ):
-    
-    for x in self.chaptersIterator():
-        print x
-        
-    
-
-#@-node:ekr.20060201150547.6:getChaptersIterator
-#@+node:ekr.20060201150547.7:markNodesForChapterization
-def markNodesForChapterization( self ):
-
-    if not self.chaptersIterationBlocked:    
-        #for n in xrange( self.book.getTabCount() ):
-        #    widget = self.book.getComponentAt( n )
-        #    chapter = self.chapters[ widget ]
-        for n in xrange( len(self.chapterlist)):
-            chapter = self.chapterlist[ n ]
-            rp = chapter.getRootPosition()
-            rp_base = rp.copy()
-            for z in rp.self_and_siblings_iter( copy = True ):
-                v = z.v
-                if not hasattr( v, "unknownAttributes" ):
-                    v.unknownAttributes = {}
-                v.unknownAttributes[ 'chapter' ] = n
-                if z == rp_base:
-                    v.unknownAttributes[ 'chapter_name' ] = chapter.name
-    else:
-        rp = self.getRootPosition()
-        rp_base = rp.copy()
-        for z in rp.self_and_siblings_iter( copy = True ):
-            v = z.v
-            if not hasattr( v, "unknownAttributs" ):
-                v.unknownAttributes = {}
-            v.unknownAttributes[ 'chapter' ] = 0
-            if z == rp_base:
-                v.unknownAttributes[ 'chapter_name' ] = self.current_chapter.name
+#@-node:ekr.20060116084526.1:insert/remove spaces/tabs from lines (LeoUser)
+#@+node:ekr.20060123095316:clear-selection
+Useful, e.g., after a find.
 #@nonl
-#@-node:ekr.20060201150547.7:markNodesForChapterization
-#@+node:ekr.20060201150547.8:utility
-def changeChaptersName( self ):
-       
-    chapter = self.current_chapter
-    if chapter.isMessaging(): return
-    chapter.startMessaging()
-    jp = swing.JPanel( java.awt.BorderLayout() )
-    slider = Slider( jp, direction = Slider.down )
-    #phaser = Phaser( jp )
-    nlabel = swing.JLabel( "Chapter Name:" )
-    jp.add( nlabel, java.awt.BorderLayout.NORTH )
-    jtf = swing.JTextField()
-    slider.setComponentToFocus( jtf )
-    #phaser.setComponentToFocus( jtf )
-    jtf.setText( str( chapter.name ) )
-    jp.add( jtf )
-    top = self.c.frame.top
-    def closeAndChange():
-        chapter.doneMessaging()
-        nw_name = jtf.getText()
-        book = self.book
-        index = book.getSelectedIndex()
-        old_name= book.getTitleAt( index ) 
-        book.setTitleAt( index, nw_name )
-        self.chaptersundoer.addEdit( self.UndoChangeChapterName( self, chapter, old_name, nw_name ) )
-        chapter.name = nw_name
-        slider.startRemoving()
-        #phaser.phaseRemove()
-    
-    class aa( swing.AbstractAction ):
-        def __init__( self, *args ):
-            swing.AbstractAction.__init__( self, *args )
-        
-        def actionPerformed( self, ae ):
-            closeAndChange()
-    ks = swing.KeyStroke.getKeyStroke( "ENTER" )
-    if ks:
-        am = jtf.getActionMap()
-        im = jtf.getInputMap()
-        im.put( ks, "enter" )
-        am.put( "enter", aa() )
-    jp2 = swing.JPanel() 
-    jb = swing.JButton( "Ok" )
-    jb.actionPerformed = lambda event : closeAndChange()
-    jp2.add( jb )
-    jp.add( jp2, java.awt.BorderLayout.SOUTH )
-    tree = self.c.frame.tree
-    jtree = tree.jtree
-    bg = jtree.getBackground()
-    fg = jtree.getForeground()
-    jp.setBackground( bg )
-    jp.setForeground( fg )
-    nlabel.setForeground( fg )
-    jp2.setBackground( bg )
-    jp2.setForeground( fg )
-    lb = swing.border.LineBorder( fg )
-    jp.setBorder( lb )
-    main_widget = tree.getWidget()
-    vrect = tree.jspane.getViewportBorderBounds()
-    height = slider.getPreferredSize().height
-    #height = phaser.getPreferredSize().height
-    vrect.height = height
-    slider.setBounds( vrect )
-    #phaser.setBounds( vrect )
-    gp = main_widget.getGlassPane()
-    gp.setVisible( True )
-    gp.add( slider )
-    #gp.add( phaser )
-
-
-
-#@+node:ekr.20060201150547.9:changeChaptersName
-#@-node:ekr.20060201150547.9:changeChaptersName
-#@+node:ekr.20060201150547.10:moveNodeToChapter
-def moveNodeToChapter( self, pos, chapter ):
-    
-    c = self.c
-    cpos = chapter.getCurrentPosition()
-    if not cpos:
-        cpos = chapter.getRootPosition()
-        
-    if cpos.isRoot():
-        testroot = cpos.copy()
-        testroot.moveToNext()
-        if not testroot:
-            return
-    
-    parent = cpos.getParent()    
-    if parent:
-        ok =  c.checkMoveWithParentWithWarning( pos.copy(), parent, True )
-    else:
-        ok = 1
-        
-    if not ok:
-        return
-    
-    try:    
-        self.beginUpdate()
-        current = self.current_chapter
-        c.beginUpdate()
-        pos.unlink()
-        c.endUpdate()
-    
-        self.current_chapter = chapter
-        c.frame.tree = chapter.tree
-        c.beginUpdate()
-        pos.linkAfter( cpos )
-        c.endUpdate()
-    
-
-        self.current_chapter = current
-        c.frame.tree = current.tree
-    finally:
-        self.endUpdate()
-
-#@-node:ekr.20060201150547.10:moveNodeToChapter
-#@+node:ekr.20060201150547.11:copyNodeToChapter
-def copyNodeToChapter( self, pos, chapter ):
-    
-    c = self.c
-    cpos = chapter.getCurrentPosition()
-    if not cpos:
-        cpos = chapter.getRootPosition()
-    
-    nwpos = pos.copyTreeAfter()    
-    #if cpos.isRoot():
-    #    testroot = cpos.copy()
-    #    testroot.moveToNext()
-    #    if not testroot:
-    #        return
-    
-    #parent = cpos.getParent()    
-    #if parent:
-    #    ok =  c.checkMoveWithParentWithWarning( pos.copy(), parent, True )
-    #else:
-    #    ok = 1
-        
-    #if not ok:
-    #    return
-    try:
-        self.beginUpdate()
-        current = self.current_chapter
-        c.beginUpdate()
-        nwpos.unlink()
-        c.endUpdate()
-    
-        self.current_chapter = chapter
-        c.frame.tree = chapter.tree
-        c.beginUpdate()
-        nwpos.linkAfter( cpos )
-        undo = leoSwingUndo.UndoableInsertNode( self.c, [ "Insert Node", nwpos.copy(), ], {} )
-        chapter.undoer.addUndo( undo )
-        c.endUpdate()
-        self.current_chapter = current
-        c.frame.tree = current.tree
-        current.undoer.setMenu( forceupdate = 1 )
-    finally:
-        self.endUpdate()
-#@-node:ekr.20060201150547.11:copyNodeToChapter
-#@+node:ekr.20060201150547.12:cloneNodeToChapter
-def cloneNodeToChapter( self, pos, chapter ):
-    
-    c = self.c
-    cpos = chapter.getCurrentPosition()
-    if not cpos:
-        cpos = chapter.getRootPosition()
-    
-    nwpos = pos.clone( pos.copy() )
-        
-    #if cpos.isRoot():
-    #    testroot = cpos.copy()
-    #    testroot.moveToNext()
-    #    if not testroot:
-    #        return
-    
-    parent = cpos.getParent()    
-    if parent:
-        ok =  c.checkMoveWithParentWithWarning( nwpos.copy(), parent, True )
-    else:
-        ok = 1
-        
-    if not ok:
-        nwpos.unlink()
-        c.beginUpdate()
-        c.endUpdate()
-        return
-    
-    try:
-        self.beginUpdate()
-        current = self.current_chapter
-        c.beginUpdate()
-        nwpos.unlink()
-        c.endUpdate()
-    
-        self.current_chapter = chapter
-        c.frame.tree = chapter.tree
-        c.beginUpdate()
-        nwpos.linkAfter( cpos )
-        undo = leoSwingUndo.UndoableInsertNode( self.c, [ "Insert Node", nwpos.copy(), ], {} )
-        chapter.undoer.addUndo( undo )
-    finally:
-        c.endUpdate()
-    
-
-    self.current_chapter = current
-    c.frame.tree = current.tree
-    self.endUpdate()
-    current.undoer.setMenu( forceupdate = 1 )
+#@-node:ekr.20060123095316:clear-selection
+#@+node:ekr.20051202095626:help-for-command
+Use docstrings as the help message.
 #@nonl
-#@-node:ekr.20060201150547.12:cloneNodeToChapter
-#@+node:ekr.20060201150547.13:testNode
-def testNode( self ):
-    
-    chapter = self.current_chapter
-    pos = chapter.getCurrentPosition()
-    
-    print pos
-    for ancestor in pos.self_and_parents_iter(): #copy = 1):
-        print ancestor, ancestor.isCloned()
-#@nonl
-#@-node:ekr.20060201150547.13:testNode
-#@+node:ekr.20060201150547.14:swapChapters
-def swapChapters( self, chapter1, chapter2, undo = True ):
-
-    try:    
-        self.beginUpdate()
-        widget1 = chapter1.tree.getWidget()
-        widget2 = chapter2.tree.getWidget()
-        index1 = self.book.indexOfComponent( widget1 )
-        index2 = self.book.indexOfComponent( widget2 )
-        jp = swing.JPanel() #place holder, keeps order
-        self.book.setComponentAt( index1, jp )
-        self.book.setComponentAt( index2, widget1 )
-        self.book.setComponentAt( index1, widget2 )
-        self.book.setTitleAt( index1, chapter2.name )
-        self.book.setTitleAt( index2, chapter1.name )
-        i1 = self.chapterlist.index( chapter1 )
-        i2 = self.chapterlist.index( chapter2 )
-        self.chapterlist[ i1 ] = chapter2
-        self.chapterlist[ i2 ] = chapter1
-        self.current_chapter = chapter2
-        self.c.frame.tree = chapter2.tree
-        self.c.beginUpdate()
-        self.c.endUpdate()
-        if undo:
-            self.chaptersundoer.addEdit( self.UndoSwapChapters( self, chapter1, chapter2 )) 
-    finally:
-        self.endUpdate()
-    
-    
-#@nonl
-#@-node:ekr.20060201150547.14:swapChapters
-#@+node:ekr.20060201150547.15:mergeChapters
-def mergeChapters( self, chapter1, chapter2 ):
-
-	try:    
-        self.beginUpdate()
-    
-        rp = chapter2.getRootPosition()
-        nodes = []
-        for z in rp.self_and_siblings_iter( copy = True ):
-            nodes.append( z )
-    
-        for z in nodes:
-            z.unlink()
-        
-        rp2 = chapter1.getRootPosition()
-        for z in rp2.self_and_siblings_iter( copy = True ):
-            pass   
-        base = z.copy()
-
-    
-        self.c.beginUpdate()
-    
-        for z in nodes:
-            z.linkAfter( base )
-            base = z.copy()
-        
-        self.quietRemoveChapter( chapter2 )
-        self.c.endUpdate()    
-    finally:
-        self.endUpdate()
-#@nonl
-#@-node:ekr.20060201150547.15:mergeChapters
-#@+node:ekr.20060201150547.16:selectChapter
-def selectChapter( self, chapter ):
-    
-    widget = chapter.tree.getWidget()
-    index = self.book.indexOfComponent( widget )
-    if index != -1:
-        self.book.setSelectedComponent( widget )
-    
-#@nonl
-#@-node:ekr.20060201150547.16:selectChapter
-#@+node:ekr.20060201150547.17:insertChapter
-def insertChapter( self, chapter ):
-    
-    self.chapterlist.append( chapter )
-    tree = chapter.tree 
-    self.trees_chapters[ tree ] = chapter
-    widget = tree.getWidget()   
-    self.chapters[ widget ] = chapter
-    ic = self.IconCloser( self.icon, self.removeChapter )
-    self.book.addTab( chapter.name, ic, widget )
-
-#@-node:ekr.20060201150547.17:insertChapter
-#@+node:ekr.20060201150547.18:findChapterForNode
-def findChapterForNode( self, p ):
-    
-    for n in xrange( self.book.getTabCount() ):
-        widget = self.book.getComponentAt( n )
-        chapter = self.chapters[ widget ]
-        rp = chapter.getRootPosition()
-        for z in rp.fromSelfAllNodes_iter( copy = True ):
-            if z == p: return chapter
-        
-    return None
-#@nonl
-#@-node:ekr.20060201150547.18:findChapterForNode
-#@+node:ekr.20060201150547.19:turnNodeIntoChapter
-def turnNodeIntoChapter( self ):
-    
-    cp = self.current_chapter.getCurrentPosition()
-    if cp.isRoot():
-        testroot = cp.copy()
-        testroot.moveToNext()
-        if not testroot:
-            return
-    self.c.beginUpdate()
-    cp.unlink()
-    rp = self.current_chapter.getRootPosition()
-    self.current_chapter.setCurrentPosition( rp )
-    self.c.endUpdate()
-    self.freshChapter( p = cp )
-#@nonl
-#@-node:ekr.20060201150547.19:turnNodeIntoChapter
-#@-node:ekr.20060201150547.8:utility
-#@+node:ekr.20060201150547.20:import and export
-@others
-#@+node:ekr.20060201150547.21:import outline
-def importOutline( self ):
-    
-    fc = swing.JFileChooser()
-    fc.showOpenDialog( None )
-    sfile = fc.getSelectedFile()
-    if sfile:
-        self.loadFileAsChapter( sfile.getAbsolutePath() )
-    
-def loadFileAsChapter( self, fname ):
-    
-    c = self.c
-    targetfile = java.io.File( fname )
-    if not targetfile.exists() or targetfile.isDirectory():
-        return
-    
-    mungedname = targetfile.getName()
-    if mungedname.endswith( ".leo") : mungedname = mungedname[ : -4 ]
-    def run():
-        self.freshChapter( name = mungedname, edit = False, undo = False )
-        
-    dc = DefCallable( run )
-    ft = dc.wrappedAsFutureTask()
-    if java.awt.EventQueue.isDispatchThread():
-        ft.run()
-    else:
-        swing.SwingUtilities.invokeAndWait( ft )
-    
-    edit = sel.UndoImport( self, self.current_chapter )
-    self.chaptersundoer.addEdit( edit )
-    c.frame.disableResizing()
-    p = c.fileCommands.getLeoFileAsOutline( fname )
-    c.frame.enableResizing()
-    oldir = c.frame.openDirectory
-    parent = targetfile.getParentFile()
-    c.frame.openDirectory = parent.getAbsolutePath()
-    c.atFileCommands.readAll( c.rootPosition().copy() ,partialFlag=False)
-    c.frame.openDirectory= oldir
-    self.deferedChapterization( c.rootPosition(), selectchapter = self.getSelectedChapterWidget(), edit = edit )
-
-#@-node:ekr.20060201150547.21:import outline
-#@+node:ekr.20060201150547.22:export outline
-def exportOutline( self ):
-    
-    self.chaptersIterationBlocked = 1
-    self.beginUpdate()
-    fc = swing.JFileChooser()
-    fc.showSaveDialog( None )
-    sfile = fc.getSelectedFile()
-    if not sfile:
-        g.es( "No file name entered." )
-        return
-    fileName = fc.getName( sfile )
-    if not fileName.endswith( ".leo" ):
-        fileName = "%s.leo" % fileName
-    self.c.fileCommands.write_Leo_file( fileName, True )
-    self.chaptersIterationBlocked = 0
-    self.endUpdate()
-    g.es( "Done Exporting %s as %s" % ( self.current_chapter.name, fileName ) )
-#@nonl
-#@-node:ekr.20060201150547.22:export outline
-#@-node:ekr.20060201150547.20:import and export
-#@+node:ekr.20060201150547.23:adding and removing chapters
-@others
-#@+node:ekr.20060201150547.24:addChapter
-def addChapter( self, name, p = None ):
-    
-
-    c = self.c
-    chapter = self.Chapter()
-    self.chapterlist.append( chapter )
-    chapter.setUndoer( leoSwingUndo.leoSwingUndo( c ) )
-    chapter.setRootPosition( p )
-    chapter.setCurrentPosition( p )
-    #self.current_chapter = current
-    cm = self.ChapterModel( c , chapter) #, p )
-    tree = leoSwingTree( frame = c.frame, model = cm, chapter= chapter )
-    tree.createAuxilaryWidgets()
-    #self.c.frame.tree = tree
-    chapter.setTree( tree )
-    chapter.name = name
-    self.trees_chapters[ tree ] = chapter
-    widget = tree.getWidget()
-    
-    self.chapters[ widget ] = chapter
-    ic = self.IconCloser( self.icon, self.removeChapter )
-    self.book.addTab( name, ic, widget )
-
-    if not self.current_chapter:
-        self.beginUpdate()
-        self.current_chapter = chapter
-        c.frame.tree = tree
-        self.endUpdate()
-
-    return tree
-
-
-
-#@-node:ekr.20060201150547.24:addChapter
-#@+node:ekr.20060201150547.25:addChapterForSettingsTree
-def addChapterForSettingsTree( self, name, p = None , controller = None):
-    
-    c = self.c
-    chapter = self.current_chapter
-    #chapter = self.Chapter()
-    #chapter.setUndoer( leoSwingUndo.leoSwingUndo( c ) )
-    chapter.setRootPosition( p )
-    chapter.setCurrentPosition( p )
-    #c.chapters.current_chapter = chapter
-    #chapter = self.current_chapter
-    cm = self.ChapterModel( c , chapter)
-    import leoConfig
-    tree = leoConfig.settingsTree( frame = c.frame, model = cm, chapter = chapter, controller = controller )
-    chapter.setTree( tree )
-    chapter.name = name
-    self.trees_chapters[ tree ] = chapter
-    widget = tree.getWidget()
-    
-    self.chapters[ widget ] = chapter
-    self.book = self.getWidget()
-    self.book.addTab( name, widget )
-    if not self.current_chapter:
-        self.beginUpdate()
-        self.current_chapter = chapter
-        c.frame.tree = tree
-        self.endUpdate()
-
-    return tree
-
-
-
-
-#@-node:ekr.20060201150547.25:addChapterForSettingsTree
-#@+node:ekr.20060201150547.26:freshChapter
-def freshChapter( self, p = None, name = None, edit = True, undo = True ):
-    
-    c = self.c
-    if not p:
-        t = leoNodes.tnode( headString = "NewHeadline" )
-        v = leoNodes.vnode( c, t )
-        p = leoNodes.position( v, [] )
-    if not name:
-        name = "New Chapter"
-    tree = self.addChapter( name, p = p )                    
-    chapter = self.trees_chapters[ tree ]
-    if undo:
-        self.chaptersundoer.addEdit( self.UndoAddChapter( self, chapter ) ) 
-    try:
-        self.beginUpdate()
-        self.current_chapter = chapter
-        c.frame.tree = tree
-        p.linkAsRoot( None )
-        #self.current_chapter = current 
-        widget = tree.getWidget()
-        self.book.setSelectedComponent( widget )   
-    finally:
-        self.endUpdate()
-    tree.loaded = 1
-    if edit:
-        self.c.editPosition( p.copy() )
-#@nonl
-#@-node:ekr.20060201150547.26:freshChapter
-#@+node:ekr.20060201150547.27:removeChapter
-def removeChapter( self, chapter = None, undo = True ):
-
-    tree = self.c.frame.tree
-    vrect = tree.jspane.getViewportBorderBounds()
-    main_widget = tree.getWidget()
-    gp = main_widget.getGlassPane()
-    bgc = tree.jtree.getBackground()
-    fgc = tree.jtree.getForeground() 
-    index = self.book.getSelectedIndex()
-    component = self.book.getComponentAt( index )
-    chapter = self.chapters[ component ]
-    fg = self.book.getForegroundAt( index )
-    bg = self.book.getBackgroundAt( index )
-    if chapter.isMessaging() or self.isPromptingForRemove(): return
-    chapter.startMessaging()
-    self.startPromptingForRemove()
-    self.book.setForegroundAt( index, bg )
-    self.book.setBackgroundAt( index, fg )
-    if self.book.getTabCount() == 1:
-        def ok( chapter = chapter ):
-            self.stopPromptingForRemove()
-            chapter.doneMessaging()
-            self.book.setForegroundAt( index, fg )
-            self.book.setBackgroundAt( index, bg )
-        buttons = ( ( "Ok", ok ), )
-        sa = self.SliderMessageButtons( "Can't remove the only Chapter", buttons = buttons, bgc = bgc, fgc = fgc )
-        gp.setVisible( True )
-        swidget = sa.getSlider()
-        height = swidget.getPreferredSize().height
-        vrect.height = height
-        swidget.setBounds( vrect )
-        gp.add( swidget )
-        return
-    else:
-        message = "Do you want to remove Chapter: %s ?" % chapter.name
-        def yes( component = component, chapter = chapter ):
-            self.book.remove( component )
-            chapter.doneMessaging()
-            self.chapterlist.remove( chapter )
-            tree = chapter.tree 
-            del self.trees_chapters[ tree ]
-            del self.chapters[ component ]
-            self.chaptersundoer.addEdit( self.UndoRemoveChapter( self, chapter ) )
-            try:
-                index = self.book.getSelectedIndex()
-                component = self.book.getComponentAt( index )
-                #self.chapters[ widget ] = chapter
-                chapter = self.chapters[ component ]
-                self.beginUpdate()
-                self.current_chapter = chapter
-                self.c.frame.tree = chapter.tree
-            finally:
-                self.endUpdate()
-            self.stopPromptingForRemove()            
-            g.doHook( "chapter-removed", c = self.c, chapter = chapter )
-            
-        def no( chapter = chapter ):
-            self.stopPromptingForRemove()
-            chapter.doneMessaging()
-            self.book.setForegroundAt( index, fg )
-            self.book.setBackgroundAt( index, bg )
-            
-        buttons = ( ( "Yes", yes ), ( "No", no ) )
-        sa = self.SliderMessageButtons( message, buttons = buttons, bgc = bgc, fgc = fgc )
-        gp.setVisible( True )
-        swidget = sa.getSlider()
-        height = swidget.getPreferredSize().height
-        vrect.height = height
-        swidget.setBounds( vrect )
-        gp.add( swidget )            
-           
-@    
-    index = self.book.getSelectedIndex()
-    component = self.book.getComponentAt( index )
-    chapter = self.chapters[ component ]
-    rv = swing.JOptionPane.showConfirmDialog( None,
-                                             "Do you want to remove Chapter: %s" % chapter.name,
-                                             "Remove a Chapter?",
-swing.JOptionPane.YES_NO_OPTION )
-    if rv == swing.JOptionPane.NO_OPTION: return
-
-
-    self.book.removeTabAt( index ) #removing does not fire a change event
-    index = self.book.getSelectedIndex()
-    component = self.book.getComponentAt( index )
-    chapter = self.chapters[ component ]
-    self.chapterlist.remove( chapter )
-    try:
-        self.beginUpdate()
-        self.current_chapter = chapter
-        self.c.frame.tree = chapter.tree
-    finally:
-        self.endUpdate()
-    g.doHook( "chapter-removed", c = self.c, chapter = chapter )
-#@-node:ekr.20060201150547.27:removeChapter
-#@+node:ekr.20060201150547.28:quietRemoveChapter
-def quietRemoveChapter( self, chapter ):
-    
-    tree = chapter.tree
-    component = tree.getWidget()
-    self.book.remove( component )
-    self.chapterlist.remove( chapter )
-    del self.trees_chapters[ tree ]
-    del self.chapters[ component ]    
-#@-node:ekr.20060201150547.28:quietRemoveChapter
-#@-node:ekr.20060201150547.23:adding and removing chapters
-#@+node:ekr.20060201150547.29:transforming an Outline into Chapers components
-@others
-#@+node:ekr.20060201150547.30:deferedChaperization
-def deferedChapterization (self,pos,selectchapter=None,edit=None):
-
-    x = lambda: self.breakOutlineIntoChapters(pos,selectchapter,edit)
-    dc = DefCallable(x)
-    ft = dc.wrappedAsFutureTask()
-    swing.SwingUtilities.invokeLater(ft)
-#@nonl
-#@-node:ekr.20060201150547.30:deferedChaperization
-#@+node:ekr.20060201150547.31:breakOutlineIntoChapters
-def breakOutlineIntoChapters( self, p, selectchapter = None, edit = None ):
-    
-    #self.loading = 1
-    self.beginUpdate()
-    #self.updateLock.unlock()
-    n = 0 
-    last_z = None
-    p2 = p.copy()
-    level_0 = []
-    for z in p.self_and_siblings_iter( copy = True ):
-        level_0.append( z )
-
-    if level_0:
-        p1 = level_0[ 0 ]
-        v1 = p1.v
-        if hasattr( v1, "unknownAttributes" ):
-            uA = v1.unknownAttributes
-            if uA.has_key( "chapter_name" ):
-                name = uA[ 'chapter_name' ]
-                i = self.book.getSelectedIndex()
-                self.book.setTitleAt( i, name )
-                if self.current_chapter: #This needs to be set here or its lost in the next save
-                    self.current_chapter.name = name
-
-    for z in level_0:
-        v = z.v
-        name = "New Chapter"
-        if hasattr( v, "unknownAttributes" ):
-            if v.unknownAttributes.has_key( "chapter" ):
-                a_n = v.unknownAttributes[ "chapter" ]
-            else:
-                a_n = n
-            if v.unknownAttributes.has_key( "chapter_name" ):
-                name = v.unknownAttributes[ "chapter_name" ]
-        else:
-            a_n = n
-   
-        if a_n != n:
-            #self.c.endUpdate()
-            n = a_n
-            #z.doDelete( p2 )
-            z.unlink()
-            tree = self.c.chapters.addChapter( name, z.copy() )
-            widget = tree.getWidget()
-            chapter = self.chapters[ widget ]
-            self.c.frame.tree = chapter.tree
-            self.current_chapter = chapter
-            if edit and hasattr( edit, "addChapter" ):
-                edit.addChapter( chapter )
-            ic = self.IconCloser( self.icon, self.removeChapter )
-            self.book.addTab( name, ic, widget )
-            #self.book.addTab( name, widget )
-            self.book.setSelectedComponent( widget )
-            #self.c.beginUpdate()
-            last_z = z
-            z.linkAsRoot( None )
-            tree.loaded = 1
-            continue
-        
-        if last_z:
-            #z.moveAfter( last_z )
-            z.unlink() 
-            z.linkAfter( last_z )
-        last_z = z           
-    
-    if not selectchapter:
-        selectchapter = self.book.getComponentAt( 0 )       
-    self.book.setSelectedComponent( selectchapter )
-    self.c.beginUpdate()
-    self.c.endUpdate()       
-    self.endUpdate()
-#@nonl
-#@-node:ekr.20060201150547.31:breakOutlineIntoChapters
-#@-node:ekr.20060201150547.29:transforming an Outline into Chapers components
-#@+node:ekr.20060201150547.32:class ChaptersPopup
-class ChaptersPopup( aevent.MouseAdapter ):
-    
-    def __init__( self, chapters ):
-        aevent.MouseAdapter.__init__( self )
-        self.chapters = chapters
-        self.copyNodeToChapter = self.CopyNodeToChapter( chapters )
-        self.cloneNodeToChapter = self.CloneNodeToChapter( chapters )
-        self.swapChapters = self.SwapChapters( chapters )
-        self.mergeChapters = self.MergeChapters( chapters )
-        self.enabled = True
-        
-    def disable( self ):
-        self.enabled = False
-        
-    def enable( self ):
-        self.enabled = True
-        
-    @others
-#@nonl
-#@+node:ekr.20060201150547.33:mousePressed
-def mousePressed( self, mE ):
-                
-    if mE.getClickCount() == 1 and self.enabled:
-        if mE.getButton() == mE.BUTTON3:
-            x = mE.getX()
-            y = mE.getY()
-            DefAction = self.chapters.DefAction        
-            popup = swing.JPopupMenu()            
-            popup.add( DefAction( "Add Chapter", self.chapters.freshChapter ) ) 
-            #popup.add( DefAction( "Remove Chapter", self.chapters.removeChapter ) )
-            #popup.add( DefAction( "ITERATE!", self.chapters.iterateOverChapters ) ) 
-            popup.add( DefAction( "Edit Chapters Name", self.chapters.changeChaptersName ) )
-            popup.addSeparator()
-            popup.add( self.copyNodeToChapter.getWidget() )
-            popup.add( self.cloneNodeToChapter.getWidget() )
-            popup.add( self.swapChapters.getWidget() )
-            popup.add( self.mergeChapters.getWidget() )
-            popup.add( DefAction( "Copy Node Into Chapter", self.chapters.turnNodeIntoChapter ) )
-            #popup.add( DefAction( "Test NODE", self.chapters.testNode ) )
-            popup.addSeparator()
-            menu = swing.JMenu( "Import/Export" )
-            popup.add( menu )
-            menu.add( DefAction( "Import Outline", self.chapters.importOutline ) )
-            menu.add( DefAction( "Export Chapter as Outline", self.chapters.exportOutline ) )
-            popup.addSeparator()
-            undoer = self.chapters.chaptersundoer
-            utext = undoer.getUndoPresentationName()
-            item = popup.add( DefAction( utext, undoer.undo ) )
-            if not undoer.canUndo():
-                item.setEnabled( False )
-                
-            rtext = undoer.getRedoPresentationName()
-            item = popup.add( DefAction( rtext, undoer.redo ) )
-            if not undoer.canRedo():
-                item.setEnabled( False )    
-                              
-            source = mE.getSource()                
-            popup.show( source, x, y )
-#@-node:ekr.20060201150547.33:mousePressed
-#@+node:ekr.20060201150547.34:class CopyNodeToChapter
-class CopyNodeToChapter( sevent.MenuListener ):
-    
-    def __init__( self, chapters ):
-        self.chapters = chapters
-        self.menu = swing.JMenu( "Copy Node To Chapter" )
-        self.menu.addMenuListener( self )
-        
-    def getWidget( self ):
-        return self.menu
-        
-    def menuSelected( self, me ):
-        
-        self.menu.removeAll()
-        current = self.chapters.current_chapter
-        cpos = current.getCurrentPosition()
-        root = current.getRootPosition()
-        #if cpos == root:
-        #    roottest = cpos.copy()
-        #    roottest.moveToNext()
-        #    if not roottest:
-        #        return
-        
-        for z in self.chapters.cycleThroughChapters( swap = 0 ):
-            if z == current: continue
-            jmi = swing.JMenuItem( z.name )
-            mvnd = lambda event, cpos = cpos.copy(), chapter = z: self.chapters.copyNodeToChapter( cpos, chapter )
-            jmi.actionPerformed = mvnd
-            self.menu.add( jmi )
-    
-    def menuDeselected( self, me ):
-        pass
-        
-    def menuCanceled( self, me ):
-        pass
-#@-node:ekr.20060201150547.34:class CopyNodeToChapter
-#@+node:ekr.20060201150547.35:class CloneNodeToChapter
-class CloneNodeToChapter( sevent.MenuListener ):
-    
-    def __init__( self, chapters ):
-        self.chapters = chapters
-        self.menu = swing.JMenu( "Clone Node To Chapter" )
-        self.menu.addMenuListener( self )
-        
-    def getWidget( self ):
-        return self.menu
-        
-    def menuSelected( self, me ):
-        
-        self.menu.removeAll()
-        current = self.chapters.current_chapter
-        cpos = current.getCurrentPosition()
-        root = current.getRootPosition()
-        #if cpos == root:
-        #    roottest = cpos.copy()
-        #    roottest.moveToNext()
-        #    if not roottest:
-        #        return
-        
-        for z in self.chapters.cycleThroughChapters( swap = 0 ):
-            if z == current: continue
-            jmi = swing.JMenuItem( z.name )
-            mvnd = lambda event, cpos = cpos.copy(), chapter = z: self.chapters.cloneNodeToChapter( cpos, chapter )
-            jmi.actionPerformed = mvnd
-            self.menu.add( jmi )
-    
-    def menuDeselected( self, me ):
-        pass
-        
-    def menuCanceled( self, me ):
-        pass
-#@-node:ekr.20060201150547.35:class CloneNodeToChapter
-#@+node:ekr.20060201150547.36:class SwapChapters
-class SwapChapters( sevent.MenuListener ):
-    
-    def __init__( self, chapters ):
-        self.chapters = chapters
-        self.menu = swing.JMenu( "Swap Chapters" )
-        self.menu.addMenuListener( self )
-        
-    def getWidget( self ):
-        return self.menu
-        
-    def menuSelected( self, me ):
-        
-        self.menu.removeAll()
-        current = self.chapters.current_chapter
-        
-        for z in self.chapters.cycleThroughChapters( swap = 0 ):
-            if z == current: continue
-            jmi = swing.JMenuItem( z.name )
-            swapchap = lambda event,  chapter = z: self.chapters.swapChapters( current, chapter )
-            jmi.actionPerformed = swapchap
-            self.menu.add( jmi )
-    
-    def menuDeselected( self, me ):
-        pass
-        
-    def menuCanceled( self, me ):
-        pass
-#@-node:ekr.20060201150547.36:class SwapChapters
-#@+node:ekr.20060201150547.37:class MergeChapters
-class MergeChapters( sevent.MenuListener ):
-    
-    def __init__( self, chapters ):
-        self.chapters = chapters
-        self.menu = swing.JMenu( "Merge Chapters" )
-        self.menu.addMenuListener( self )
-        
-    def getWidget( self ):
-        return self.menu
-        
-    def menuSelected( self, me ):
-        
-        self.menu.removeAll()
-        current = self.chapters.current_chapter
-        
-        for z in self.chapters.cycleThroughChapters( swap = 0 ):
-            if z == current: continue
-            jmi = swing.JMenuItem( z.name )
-            mergechapters = lambda event,  chapter = z: self.chapters.mergeChapters( current, chapter )
-            jmi.actionPerformed = mergechapters
-            self.menu.add( jmi )
-    
-    def menuDeselected( self, me ):
-        pass
-        
-    def menuCanceled( self, me ):
-        pass
-#@-node:ekr.20060201150547.37:class MergeChapters
-#@-node:ekr.20060201150547.32:class ChaptersPopup
-#@+node:ekr.20060201150547.38:Action Classes
-@others
-#@+node:ekr.20060201150547.39:DefAction
-class DefAction( swing.AbstractAction ):
-    
-    def __init__( self, name, function ):
-        swing.AbstractAction.__init__( self, name )
-        self.function = function
-    
-    def actionPerformed( self, event ):
-        self.function()
-#@nonl
-#@-node:ekr.20060201150547.39:DefAction
-#@-node:ekr.20060201150547.38:Action Classes
-#@+node:ekr.20060201150547.40:class ChapterModel
-class ChapterModel( stree.TreeModel, java.lang.Runnable ):
-    
-    
-    
-    def __init__( self, c , chapter ):#, proot ):
-
-        self.c = c
-        self.tmlisteners = java.util.ArrayList();
-        self._root = self._rootN( c, chapter ) # , proot )
-        self._rTreePath = stree.TreePath( self._root ) 
-        self.chapter = chapter
-        self.drunning = 0
-
-        
-    def getChapter( self ):
-        return self.chapter
-
-    def getRoot( self ):
-        return self._root
-
-    def reload( self, full_reload = False ):
-        
-        
-        if full_reload:
-            t_r = self.c.frame.tree.tree_reloader
-            #for z in self.c.rootPosition().allNodes_iter( copy = True ):
-            for z in self._root.getRootPosition().allNodes_iter( copy = True ):
-                if z.isExpanded():
-                    t_r.expand( z )
-        
-        import jarray
-        a = jarray.zeros( 1, stree.TreeNode )
-        a[ 0 ] = self._root
-        e = sevent.TreeModelEvent( self._root, a )
-        for z in list( self.tmlisteners ):
-            z.treeStructureChanged( e )
-
-            
-    def dRun( self ):
-        self.drunning = 1
-        swing.SwingUtilities.invokeLater( self )
-            
-    def run( self ):
-        
-        try:
-            import jarray
-            a = jarray.zeros( 1, stree.TreeNode )
-            a[ 0 ] = self._root
-            e = sevent.TreeModelEvent( self._root, a )
-            for z in list( self.tmlisteners ):
-                z.treeStructureChanged( e )
-            if self.chapter.tree.jtree:
-                self.chapter.tree.jtree.fireTreeExpanded( self._rTreePath )
-                cp = self.chapter.getCurrentPosition()
-                cpp = self.getPathToRoot( cp )
-                self.chapter.tree.jtree.setSelectionPath( cpp )
-        finally:
-            self.drunning = 0
-    
-    def addTreeModelListener( self, listener ):
-        self.tmlisteners.add( listener )
-        
-    def removeTreeModelListener( self, listener ):
-        self.tmlisteners.remove( listener )
-    
-    def getChild( self, parent, ind ):
-        if parent is self._root:
-            return parent.getChildAt( ind ).copy()
-        return parent.getNthChild( ind ).copy()
-        
-    def getChildCount( self, parent ):
-        
-        if parent is self._root:
-            return parent.getChildCount()
-        if parent:
-            return parent.numberOfChildren()
-        else:
-            return 0
-        
-    def getIndexOfChild( self, parent, child ):
-        if parent is self._root:
-            return self._root.getIndex( child )
-        else:
-            return child.childIndex()
-
-
-    
-    def valueForPathChanged( self, path, value ):
-
-        pos = path.getLastPathComponent()
-        pos.setHeadString( value )
-        
-    def isLeaf( self, node ):
-        if node is self._root: return False
-        if node:
-            if node.numberOfChildren(): return False
-            else: return True
-        else:
-            return True
-            
-            
-    def getPathToRoot( self, node, masterlist = None ):
-        
-        path = []
-        #if not node:
-        #    node = self.c.rootPosition()
-        stopat = None
-        if self.chapter.hoistStack:
-            bunch = self.chapter.hoistStack[ -1 ]
-            stopat = bunch.p.copy()
-            
-        while node and node.level() != 0:
-            path.append( node.copy() )
-            if node == stopat: break
-            node = node.getParent()
-            if masterlist:
-                if node in masterlist:
-                    masterlist.remove( node )
-        else:
-            path.append( node.copy() )
-        
-        path.append( self._root )  
-        path.reverse()
-        tp = stree.TreePath( path )
-        return tp
-            
-    class _rootN( stree.TreeNode ):
-        
-        def __init__( self, c, chapter ):#, proot ):
-            self.c = c
-            self.chapter = chapter
-            self.v = None # These are for comparisons with positions, we must pretend to be a position
-            self.stack = None
-            
-            #self.chapters = c.chapters
-            #self.proot = proot
-        def expand( self ): pass
-        def contract( self ): pass
-        
-        def getChildIndex( self ):
-            return -1
-        
-        def getRootPosition( self ):
-            rp = self.chapter.getRootPosition()
-            return rp
-
-        
-        def getChildAt(self, childIndex):
-            rp = self.getRootPosition() #self.c.rootPosition()                
-            #if len( self.c.hoistStack ) != 0: #Hoist Code
-            if len( self.chapter.hoistStack ) != 0:
-                #rp = self.c.hoistStack[ -1 ].p.copy()
-                rp = self.chapter.hoistStack[ -1 ].p.copy()
-                def getParent( root = self ): #This slight modification to a copy allows the Tree to keep its expanded state
-                    return root
-                rp.getParent = getParent
-                return rp #End of Hoist Code
-            if not rp: return None
-            i = 0
-            for z in rp.siblings_iter():
-                if i == childIndex:
-                    return z
-                i = i + 1
-            return None       
-        
-        def getChildCount( self ):
-            #rp = self.c.rootPosition()
-            rp = self.getRootPosition()
-            if len( self.chapter.hoistStack ) != 0:
-                return 1
-            #if len( self.c.hoistStack ) != 0:
-            #    return 1
-            i = 0
-            for z in rp.siblings_iter():
-                i = i + 1
-            return i
-        
-        def getParent( self ):
-            return None
-            
-        def getIndex( self, node):
-            #rp = self.c.rootPosition()
-            rp = self.getRootPosition()
-            if len( self.chapter.hoistStack ) != 0:
-                return 0
-            i = 0
-            for z in rp.siblings_iter():
-                if z == node: return i
-                i = i + 1
-            return -1
-            
-        def getAllowsChildren( self ):
-            return True
-            
-        def isLeaf( self ):
-            return False
-            
-        def equal( self, x ):
-            if self is x: return True
-            else: return False
-            
-        def equals( self, x ):
-            if self is x: return True
-            else:
-                return False
-            
-        def copy( self ):
-            return self
-            
-        def bodyString( self ):
-            return ""
-            
-        def headString( self ):
-            return ""
-            
-        def children( self ):
-            
-            class _enum( util.Enumeration ):
-                
-                def __init__( self, iter ):
-                    self.iter = iter
-                    try:
-                        self.next = iter.next()
-                    except:
-                        self.next = None
-                
-                def hasMoreElements( self ):
-                    if self.next: return True
-                    else: return False
-                    
-                def nextElement( self ):
-                    
-                    try:
-                        rt = self.next
-                        self.next = iter.next()
-                    finally:
-                        return rt
-            #rp = self.c.rootPosition()
-            rp = self.getRootPosition()
-            return _enum( rp.siblings_iter( copy = True ) )
-            #return _enum( self.c.rootPosition.siblings_iter( copy = True ) )
-
-
-#@-node:ekr.20060201150547.40:class ChapterModel
-#@+node:ekr.20060201150547.41:class Chapter
-class Chapter:
-    
-    def __init__( self ):
-        
-        self.root = None
-        self.currentPosition = None
-        self.tree = None
-        self.name = None
-        self.hoistStack = []
-        self.undoer = None
-        self.messaging = False
-        
-    def startMessaging( self ):
-        self.messaging = True
-    
-    def isMessaging( self ):
-        return self.messaging
-        
-    def doneMessaging( self ):
-        self.messaging = False
-        
-    def isValid( self ):
-        widget = self.tree.getWidget()
-        if widget.getParent(): return True
-        else:
-            return False    
-        
-    def setUndoer( self, undoer ):
-        self.undoer = undoer
-        
-    def getUndoer( self ):
-        return self.undoer
-        
-    def getName( self ):
-        return self.name
-        
-    def setName( self, name ):
-        self.name = name
-        
-    
-    def getTree( self ):
-        return self.tree
-        
-    def setTree( self, tree ):
-        self.tree = tree
-    
-    def setRootPosition( self, p ):
-        if p:
-            p = p.copy()
-        self.root = p
-
-    def getRootPosition( self ):
-        p = self.root
-        if p:
-            p = p.copy()
-        return p
-    
-    def setCurrentPosition( self, p ):
-        if p:
-            p = p.copy()        
-        self.currentPosition = p
-        
-    
-    def getCurrentPosition( self ):
-        p = self.currentPosition
-        if p:
-            p = p.copy()
-        return p
-#@nonl
-#@-node:ekr.20060201150547.41:class Chapter
-#@+node:ekr.20060201150547.42:class SliderMessageButtons
-class SliderMessageButtons( sevent.AncestorListener ):
-    '''A class that manages creates a message with 0 to N buttons for
-       the user to select.  After selecting the button, the slider is removed.
-       After removal the function corresponding to the button is fired'''
-       
-    def __init__( self, message, buttons = (), direction = Slider.down, bgc = None, fgc = None ):
-        
-        self.backingpanel = swing.JPanel( awt.BorderLayout() )
-        self.slider = Slider( self.backingpanel, direction )
-        if fgc:
-            lb = swing.border.LineBorder( fgc )
-            self.backingpanel.setBorder( lb )
-        else:
-            lb = swing.border.LineBorder( self.backingpanel.getForeground() )
-            self.backingpanel.setBorder( lb )
-        jl = swing.JLabel( message )
-        jl.setHorizontalAlignment( swing.SwingConstants.CENTER )
-        self.backingpanel.add( jl )
-        jp2 = swing.JPanel()
-        self.func = None
-        for z in buttons:
-            label = z[ 0 ]
-            func = z[ 1 ]
-            b = swing.JButton( label )
-            b.actionPerformed = lambda event, func = func: self.__removeCall( func )
-            jp2.add( b )
-
-        self.backingpanel.add( jp2, awt.BorderLayout.SOUTH )
-        self.slider.setSize( self.slider.getPreferredSize() )
-        if not fgc is None:
-            self.backingpanel.setForeground( fgc )
-            jp2.setForeground( fgc )
-            jl.setForeground( fgc )
-        if not bgc is None:
-            self.backingpanel.setBackground( bgc )
-            jp2.setBackground( bgc )
-            jl.setBackground( bgc )
-        
-    def __removeCall( self, func ):
-        self.slider.addAncestorListener( self )
-        self.slider.startRemoving()
-        self.func = func
-        
-    def ancestorAdded( self, event):
-        pass
-        
-    def ancestorMoved( self, event ):
-        pass
-        
-    def ancestorRemoved( self, event ):
-        if not self.func is None:
-            self.func()
-        
-    def getSlider( self ):
-        return self.slider
-
-#@-node:ekr.20060201150547.42:class SliderMessageButtons
-#@+node:ekr.20060201150547.43:IconCloser
-class IconCloser( swing.Icon, aevent.MouseAdapter ):
-    
-    def __init__( self, iicon, callback ):
-        
-        aevent.MouseAdapter.__init__( self )
-        self.iicon = iicon
-        self.component = None
-        self.x = None
-        self.y = None
-        self.callback = callback
-        
-    def mousePressed( self, event ):
-        
-        if event.getButton() == event.BUTTON1:
-            x = event.getX(); y = event.getY()
-            rec = awt.Rectangle( self.x, self.y, self.iicon.getIconWidth(), self.iicon.getIconHeight() )
-            if rec.contains( x,y ):
-                self.component.removeMouseListener( self )
-                self.component = None
-                dc = DefCallable(self.callback)
-                swing.SwingUtilities.invokeLater(dc.wrappedAsFutureTask())
-        
-    def getIconHeight( self ):
-        
-        return self.iicon.getIconHeight()
-        
-    def getIconWidth( self ):
-        
-        return self.iicon.getIconWidth()
-        
-    def paintIcon( self, jc, g, x, y ):
-        
-        if self.component == None:
-            self.component = jc
-            jc.addMouseListener( self )
-        self.x = x
-        self.y = y
-        self.iicon.paintIcon( jc, g, x ,y )
-        
-#@nonl
-#@-node:ekr.20060201150547.43:IconCloser
-#@+node:ekr.20060201150547.44:iterators
-@others
-#@+node:ekr.20060201150547.45:chaptersIterator
-def chaptersIterator( self ):
-
-    if not self.chaptersIterationBlocked:
-        #for n in xrange( self.book.getTabCount() ):
-        #    widget = self.book.getComponentAt( n )
-        #    chapter = self.chapters[ widget ]
-        for chapter in self.chapterlist:
-            rp = chapter.getRootPosition()
-            for z in rp.fromSelfAllNodes_iter( copy = True ):
-                yield z
-    else:
-        
-        for z in self.c.allNodes_iter( copy = 1 ):
-            yield z            
-
-                
-#@-node:ekr.20060201150547.45:chaptersIterator
-#@+node:ekr.20060201150547.46:topLevelSiblingsIterator
-def topLevelSiblingsIterator( self, ):
-
-    if not self.chaptersIterationBlocked:
-        #for n in xrange( self.book.getTabCount() ):
-        #    widget = self.book.getComponentAt( n )
-        #    chapter = self.chapters[ widget ]
-        for chapter in self.chapterlist:
-            rp = chapter.getRootPosition()
-            for z in rp.self_and_siblings_iter( copy = True ):
-                yield z
-    else:
-        rp = self.c.rootPosition()
-        for z in rp.self_and_siblings_iter( copy = True ):
-            yield z
-            
-#@-node:ekr.20060201150547.46:topLevelSiblingsIterator
-#@+node:ekr.20060201150547.47:cycleThroughChapters
-def cycleThroughChapters( self, swap = 1 ):
-
-    if not self.chaptersIterationBlocked:
-        current = self.current_chapter
-        if swap: self.beginUpdate()
-        #for n in xrange( self.book.getTabCount() ):
-        #    widget = self.book.getComponentAt( n )
-        #    chapter = self.chapters[ widget ]
-        for chapter in self.chapterlist:
-            if swap:    
-                self.current_chapter = chapter
-            yield chapter
-    
-        self.current_chapter = current
-        if swap: self.endUpdate()
-    else:
-        yield self.current_chapter
-    
-#@-node:ekr.20060201150547.47:cycleThroughChapters
-#@-node:ekr.20060201150547.44:iterators
-#@+node:ekr.20060201150547.48:Undo
-@others
-#@nonl
-#@+node:ekr.20060201150547.49:UndoRemoveChapter
-class UndoRemoveChapter( undo.UndoableEdit ):
-    
-    def __init__( self, chapters, chapter ):
-        self.chapters = chapters
-        self.chapter = chapter
-        self.undone = False
-        
-    def addEdit( self, edit ): return False
-    def canRedo( self ): return self.undone
-    def canUndo( self ): return not self.undone
-    def die( self ):
-        self.chapters = None
-        self.chapter = None
-    def getPresentationName( self ): return "Undo Remove Chapter %s" % self.chapter.name
-    def getRedoPresentationName( self ): return "Redo Removing %s" % self.chapter.name
-    def getUndoPresentationName( self ): return "Undo Removing %s" % self.chapter.name
-    def isSignificant( self ): return True
-    def redo( self ):
-        
-        self.chapters.quietRemoveChapter( self.chapter )
-        self.undone = False
-        
-    def replaceEdit( self, edit ): return False
-    def undo( self ):
-        
-        self.chapters.insertChapter( self.chapter )
-        self.undone = True
-    
-#@-node:ekr.20060201150547.49:UndoRemoveChapter
-#@+node:ekr.20060201150547.50:UndoChangeChapterName
-class UndoChangeChapterName( undo.UndoableEdit ):
-    
-    def __init__( self, chapters, chapter, name1, name2 ):
-        self.chapters = chapters
-        self.chapter = chapter
-        self.name1 = name1
-        self.name2 = name2
-        self.undone = False
-        
-    def addEdit( self, edit ): return False
-    def canRedo( self ): return self.undone
-    def canUndo( self ): return not self.undone
-    def die( self ):
-        self.chapters = None
-        self.chapter = None
-    def getPresentationName( self ): return "Undo Changing Chapter Name From %s to %s" % ( self.name1, self.name2 )
-    def getRedoPresentationName( self ): return "Redo Changing Name From %s to %s" %  ( self.name1, self.name2 )
-    def getUndoPresentationName( self ): return "Undo Changing Name From %s to %s" % ( self.name1, self.name2 )
-    def isSignificant( self ): return True
-    def redo( self ):
-        
-        book = self.chapters.book
-        index = book.indexOfComponent( self.chapter.tree.getWidget() )
-        book.setTitleAt( index, self.name2 )
-        self.chapter.name = self.name2
-        self.undone = False
-        
-    def replaceEdit( self, edit ): return False
-    def undo( self ):
-        
-        book = self.chapters.book
-        index = book.indexOfComponent( self.chapter.tree.getWidget() )
-        book.setTitleAt( index, self.name1 )
-        self.chapter.name = self.name1
-        self.undone = True
-#@-node:ekr.20060201150547.50:UndoChangeChapterName
-#@+node:ekr.20060201150547.51:UndoAddChapter
-class UndoAddChapter( undo.UndoableEdit ):
-    
-    def __init__( self, chapters, chapter ):
-        self.chapters = chapters
-        self.chapter = chapter
-        self.undone = False
-        
-    def addEdit( self, edit ): return False
-    def canRedo( self ): return self.undone
-    def canUndo( self ): return not self.undone
-    def die( self ):
-        self.chapters = None
-        self.chapter = None
-    def getPresentationName( self ): return "Undo Add Chapter"
-    def getRedoPresentationName( self ): return "Redo Add Chapter"
-    def getUndoPresentationName( self ): return "Undo Add Chapter"
-    def isSignificant( self ): return True
-    def redo( self ):
-        
-        self.chapters.insertChapter( self.chapter )
-        self.undone = False
-        
-    def replaceEdit( self, edit ): return False
-    def undo( self ):
-        
-        self.chapters.quietRemoveChapter( self.chapter )
-        self.undone = True
-    
-#@-node:ekr.20060201150547.51:UndoAddChapter
-#@+node:ekr.20060201150547.52:UndoImport
-class UndoImport( undo.UndoableEdit ):
-    
-    def __init__( self, chapters, chapter ):
-        self.chapters = chapters
-        self.chapter_list = []
-        self.chapter_list.append( chapter )
-        self.undone = False
-    
-    def addChapter( self, chapter ):
-        self.chapter_list.append( chapter )
-           
-    def addEdit( self, edit ): return False
-    def canRedo( self ): return self.undone
-    def canUndo( self ): return not self.undone
-    def die( self ):
-        self.chapters = None
-        self.chapter = None
-    def getPresentationName( self ): return "Undo Import Outline"
-    def getRedoPresentationName( self ): return "Redo Import Outline"
-    def getUndoPresentationName( self ): return "Undo Import Outline"
-    def isSignificant( self ): return True
-    def redo( self ):
-        
-        for z in self.chapter_list:
-            self.chapters.insertChapter( z )
-        self.undone = False
-        
-    def replaceEdit( self, edit ): return False
-    def undo( self ):
-        
-        for z in self.chapter_list:
-            self.chapters.quietRemoveChapter( z )
-        self.undone = True
-    
-#@-node:ekr.20060201150547.52:UndoImport
-#@+node:ekr.20060201150547.53:UndoSwapChapters
-class UndoSwapChapters( undo.UndoableEdit ):
-    
-    def __init__( self, chapters, chapter1, chapter2 ):
-        self.chapters = chapters
-        self.chapter1 = chapter1
-        self.chapter2 = chapter2
-        self.undone = False
-        
-    def addEdit( self, edit ): return False
-    def canRedo( self ): return self.undone
-    def canUndo( self ): return not self.undone
-    def die( self ):
-        self.chapters = None
-        self.chapter = None
-    def getPresentationName( self ): return "Undo Swap Chapters %s , %s" % ( self.chapter1.name, self.chapter2.name )
-    def getRedoPresentationName( self ): return "Redo Swap Chapters %s, %s" % ( self.chapter1.name , self.chapter2.name )
-    def getUndoPresentationName( self ): return "Undo Swap Chapters %s, %s" % ( self.chapter1.name , self.chapter2.name )
-    def isSignificant( self ): return True
-    def redo( self ):
-        
-        self.chapters.swapChapters( self.chapter1, self.chapter2, undo = False )
-        self.undone = False
-        
-    def replaceEdit( self, edit ): return False
-    def undo( self ):
-        
-        self.chapters.swapChapters( self.chapter1, self.chapter2, undo = False )
-        self.undone = True
-    
-#@-node:ekr.20060201150547.53:UndoSwapChapters
-#@-node:ekr.20060201150547.48:Undo
-#@+node:ekr.20060201161901:(Important)
-#@+node:ekr.20060201150547.7:markNodesForChapterization
-def markNodesForChapterization( self ):
-
-    if not self.chaptersIterationBlocked:    
-        #for n in xrange( self.book.getTabCount() ):
-        #    widget = self.book.getComponentAt( n )
-        #    chapter = self.chapters[ widget ]
-        for n in xrange( len(self.chapterlist)):
-            chapter = self.chapterlist[ n ]
-            rp = chapter.getRootPosition()
-            rp_base = rp.copy()
-            for z in rp.self_and_siblings_iter( copy = True ):
-                v = z.v
-                if not hasattr( v, "unknownAttributes" ):
-                    v.unknownAttributes = {}
-                v.unknownAttributes[ 'chapter' ] = n
-                if z == rp_base:
-                    v.unknownAttributes[ 'chapter_name' ] = chapter.name
-    else:
-        rp = self.getRootPosition()
-        rp_base = rp.copy()
-        for z in rp.self_and_siblings_iter( copy = True ):
-            v = z.v
-            if not hasattr( v, "unknownAttributs" ):
-                v.unknownAttributes = {}
-            v.unknownAttributes[ 'chapter' ] = 0
-            if z == rp_base:
-                v.unknownAttributes[ 'chapter_name' ] = self.current_chapter.name
-#@nonl
-#@-node:ekr.20060201150547.7:markNodesForChapterization
-#@+node:ekr.20060201150547.29:transforming an Outline into Chapers components
-@others
-#@+node:ekr.20060201150547.30:deferedChaperization
-def deferedChapterization (self,pos,selectchapter=None,edit=None):
-
-    x = lambda: self.breakOutlineIntoChapters(pos,selectchapter,edit)
-    dc = DefCallable(x)
-    ft = dc.wrappedAsFutureTask()
-    swing.SwingUtilities.invokeLater(ft)
-#@nonl
-#@-node:ekr.20060201150547.30:deferedChaperization
-#@+node:ekr.20060201150547.31:breakOutlineIntoChapters
-def breakOutlineIntoChapters( self, p, selectchapter = None, edit = None ):
-    
-    #self.loading = 1
-    self.beginUpdate()
-    #self.updateLock.unlock()
-    n = 0 
-    last_z = None
-    p2 = p.copy()
-    level_0 = []
-    for z in p.self_and_siblings_iter( copy = True ):
-        level_0.append( z )
-
-    if level_0:
-        p1 = level_0[ 0 ]
-        v1 = p1.v
-        if hasattr( v1, "unknownAttributes" ):
-            uA = v1.unknownAttributes
-            if uA.has_key( "chapter_name" ):
-                name = uA[ 'chapter_name' ]
-                i = self.book.getSelectedIndex()
-                self.book.setTitleAt( i, name )
-                if self.current_chapter: #This needs to be set here or its lost in the next save
-                    self.current_chapter.name = name
-
-    for z in level_0:
-        v = z.v
-        name = "New Chapter"
-        if hasattr( v, "unknownAttributes" ):
-            if v.unknownAttributes.has_key( "chapter" ):
-                a_n = v.unknownAttributes[ "chapter" ]
-            else:
-                a_n = n
-            if v.unknownAttributes.has_key( "chapter_name" ):
-                name = v.unknownAttributes[ "chapter_name" ]
-        else:
-            a_n = n
-   
-        if a_n != n:
-            #self.c.endUpdate()
-            n = a_n
-            #z.doDelete( p2 )
-            z.unlink()
-            tree = self.c.chapters.addChapter( name, z.copy() )
-            widget = tree.getWidget()
-            chapter = self.chapters[ widget ]
-            self.c.frame.tree = chapter.tree
-            self.current_chapter = chapter
-            if edit and hasattr( edit, "addChapter" ):
-                edit.addChapter( chapter )
-            ic = self.IconCloser( self.icon, self.removeChapter )
-            self.book.addTab( name, ic, widget )
-            #self.book.addTab( name, widget )
-            self.book.setSelectedComponent( widget )
-            #self.c.beginUpdate()
-            last_z = z
-            z.linkAsRoot( None )
-            tree.loaded = 1
-            continue
-        
-        if last_z:
-            #z.moveAfter( last_z )
-            z.unlink() 
-            z.linkAfter( last_z )
-        last_z = z           
-    
-    if not selectchapter:
-        selectchapter = self.book.getComponentAt( 0 )       
-    self.book.setSelectedComponent( selectchapter )
-    self.c.beginUpdate()
-    self.c.endUpdate()       
-    self.endUpdate()
-#@nonl
-#@-node:ekr.20060201150547.31:breakOutlineIntoChapters
-#@-node:ekr.20060201150547.29:transforming an Outline into Chapers components
-#@-node:ekr.20060201161901:(Important)
-#@-node:ekr.20060201150547:Chapters
+#@-node:ekr.20051202095626:help-for-command
+#@+node:ekr.20060116090428:Expand 'point' so it indicates node as well as text location
+#@-node:ekr.20060116090428:Expand 'point' so it indicates node as well as text location
+#@+node:ekr.20060214140221:update-settings-file command
+#@-node:ekr.20060214140221:update-settings-file command
+#@-node:ekr.20060210140415:Most important new commands
+#@+node:ekr.20060116173818:*** Fix vampire nodes
+#@-node:ekr.20060116173818:*** Fix vampire nodes
+#@+node:ekr.20060228072202:New undoer
 #@+node:ekr.20060201161901.1:Postings re undo
 #@+node:ekr.20060201161901.2:@url http://sourceforge.net/forum/message.php?msg_id=3332355
 @nocolor
@@ -3179,77 +2350,7 @@ class UndoableCompoundEvent3:
 
 #@-node:ekr.20060201152349.15:<<UndoableCompoundEvent>>
 #@-node:ekr.20060201152349:NodeUndoer.py
-#@-node:ekr.20060211100150:Fix chapters plugin
-#@+node:ekr.20060220155313:Script: update-leo-settings-file
-#@-node:ekr.20060220155313:Script: update-leo-settings-file
-#@+node:ekr.20060122183544:Improve isearch
-@nocolor
-
-- Handle backspace for isearch: keep a stack of previous matches.
-- Allow cross-node isearches.
-#@-node:ekr.20060122183544:Improve isearch
-#@+node:ekr.20060210140415:Most important new commands
-#@+node:ekr.20060211093935:Support for @list and on-enter-mode
-#@-node:ekr.20060211093935:Support for @list and on-enter-mode
-#@+node:ekr.20060113090042:open-outline-by-name & filename completion
-#@-node:ekr.20060113090042:open-outline-by-name & filename completion
-#@+node:ekr.20060122194643:isearch-headline (forward & backward)
-#@-node:ekr.20060122194643:isearch-headline (forward & backward)
-#@+node:ekr.20060116085649:find-word-on-line, find-character-on-line (forward & backward)
-#@-node:ekr.20060116085649:find-word-on-line, find-character-on-line (forward & backward)
-#@+node:ekr.20060206103922:Minibuffer interface for GoToLine number
-#@-node:ekr.20060206103922:Minibuffer interface for GoToLine number
-#@+node:ekr.20060116074839.2:extend-to-word
-#@-node:ekr.20060116074839.2:extend-to-word
-#@+node:ekr.20060117115212:Rename buffer doesn't seem to work
-#@-node:ekr.20060117115212:Rename buffer doesn't seem to work
-#@+node:ekr.20060123091352:Incremental search in switch-to-buffer
-#@-node:ekr.20060123091352:Incremental search in switch-to-buffer
-#@+node:ekr.20060104083551:move-line-up/down (LeoUser)
-http://sourceforge.net/forum/message.php?msg_id=3488030
-
-move-region-up
-
-Swap the selection with the line above it. If we are at the top of a node, the
-node identified by threadBack() is selected and the text is moved to the bottom
-of the node.
-
-move-region-down
-
-Swap the selection with the line below it. If we are at the bottom of the node,
-the node identified by threadNext() is selected and the text is moved to the top
-of the node.
-
-In all cases the moved text remains selected, even when the text moves to another node.
-#@nonl
-#@-node:ekr.20060104083551:move-line-up/down (LeoUser)
-#@+node:ekr.20060116084526.1:insert/remove spaces/tabs from lines (LeoUser)
-http://sourceforge.net/forum/message.php?msg_id=3488030
-
-add-space-to-lines      Adds a space is added to start of all selected lines.
-
-add-tab-to-line         Adds 4 spaces to start of all selected lines.
-
-remove-space-from lines Removes a space from start of all selected lines.
-
-remove-tab-from lines   Removes a space from start of all selected lines.
-#@nonl
-#@-node:ekr.20060116084526.1:insert/remove spaces/tabs from lines (LeoUser)
-#@+node:ekr.20060123095316:clear-selection
-Useful, e.g., after a find.
-#@nonl
-#@-node:ekr.20060123095316:clear-selection
-#@+node:ekr.20051202095626:help-for-command
-Use docstrings as the help message.
-#@nonl
-#@-node:ekr.20051202095626:help-for-command
-#@+node:ekr.20060116090428:Expand 'point' so it indicates node as well as text location
-#@-node:ekr.20060116090428:Expand 'point' so it indicates node as well as text location
-#@+node:ekr.20060214140221:update-settings-file command
-#@-node:ekr.20060214140221:update-settings-file command
-#@-node:ekr.20060210140415:Most important new commands
-#@+node:ekr.20060116173818:*** Fix vampire nodes
-#@-node:ekr.20060116173818:*** Fix vampire nodes
+#@-node:ekr.20060228072202:New undoer
 #@-node:ekr.20060227163504.3:Important
 #@+node:ekr.20060227163911.1:Leo's web site
 @nocolor
@@ -3258,7 +2359,7 @@ Use docstrings as the help message.
 - Put complete slide show on Leo's web site.
 #@nonl
 #@-node:ekr.20060227163911.1:Leo's web site
-#@-node:ekr.20060226131603:To do 4.4b3
+#@-node:ekr.20060226131603:To do 4.4 b4
 #@-all
 #@nonl
 #@-node:ekr.20040117181936:@thin ../doc/leoToDo.txt

@@ -1157,7 +1157,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060203181203.1" a="E"><vh>Key handling tests...</vh>
+<v t="ekr.20060203181203.1"><vh>Key handling tests...</vh>
 <v t="ekr.20060208195054"><vh>@test k.inverseCommandsDict is inverse of c.commandsDict</vh></v>
 <v t="ekr.20060203181203.2"><vh>@test strokeFromSetting</vh></v>
 <v t="ekr.20060203181203.3"><vh>@test strokeFromEvent</vh></v>

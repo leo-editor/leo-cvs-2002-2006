@@ -810,7 +810,7 @@ def openWithFileName(fileName,old_c,
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
-        if not g.app.unitTesting:
+        if 1: ### not g.app.unitTesting:
             g.es("can not open: %s" % (fileName), color="blue")
         return False, None
     except Exception:
@@ -918,7 +918,7 @@ def callers (n=8,excludeCaller=True):
     
     result = []
     while n > 0:
-        s = g.callerName(n)
+        s = g._callerName(n)
         if s == 'callers':
             if excludeCaller and result:
                 del result [-1]
@@ -930,7 +930,7 @@ def callers (n=8,excludeCaller=True):
     return ','.join(result)
 #@-node:ekr.20051023083258:callers
 #@+node:ekr.20031218072017.3107:callerName
-def callerName (n=1):
+def _callerName (n=1):
 
     try: # get the function name from the call stack.
         f1 = sys._getframe(n) # The stack frame, n levels up.
@@ -1674,7 +1674,7 @@ def print_stats (name=None):
         if type(name) != type(""):
             name = repr(name)
     else:
-        name = g.callerName(n=2) # Get caller name 2 levels back.
+        name = g._callerName(n=2) # Get caller name 2 levels back.
 
     g.printDict(g.app.statsDict,tag='statistics at %s' % name)
 
@@ -1694,7 +1694,7 @@ def stat (name=None):
         if type(name) != type(""):
             name = repr(name)
     else:
-        name = g.callerName(n=2) # Get caller name 2 levels back.
+        name = g._callerName(n=2) # Get caller name 2 levels back.
         
     # g.trace(name)
 
@@ -2176,7 +2176,7 @@ def collectGarbage():
 def printGcSummary (message='',trace=False):
     
     if not message:
-        message = g.callerName(n=2)
+        message = g._callerName(n=2)
 
     g.enable_gc_debug()
 
@@ -2196,7 +2196,7 @@ def printGcSummary (message='',trace=False):
 def printGcAll (message=''):
     
     if not message:
-        message = g.callerName(n=2)
+        message = g._callerName(n=2)
     
     d = {} ; objects = gc.get_objects()
     g.es_print('-' * 30)
@@ -2228,7 +2228,7 @@ def printGcAll (message=''):
 def printGcObjects(message=''):
     
     if not message:
-        message = g.callerName(n=2)
+        message = g._callerName(n=2)
 
     global lastObjectCount
 
@@ -2314,7 +2314,7 @@ def printGcObjects(message=''):
 def printGcVerbose(message=''):
     
     if not message:
-        message = g.callerName(n=2)
+        message = g._callerName(n=2)
 
     global lastObjectsDict
     objects = gc.get_objects()
@@ -2349,7 +2349,7 @@ def printGc(message=None):
     if not g.app.trace_gc: return None
     
     if not message:
-        message = g.callerName(n=2)
+        message = g._callerName(n=2)
         
     printGcObjects(message)
     printGcRefs(message)

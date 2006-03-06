@@ -318,7 +318,7 @@ def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
             # The file has not been opened completely.
             # This may be the settings file.
             # The controller will be created later in new_createCanvas.
-            g.trace('controller not created',g.callers())
+            # g.trace('controller not created',g.callers())
             return
 #@nonl
 #@-node:ekr.20060213023839.18:new_open (fileCommands)

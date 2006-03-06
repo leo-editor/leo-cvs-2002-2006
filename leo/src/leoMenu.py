@@ -43,7 +43,7 @@ class leoMenu:
     #@+node:ekr.20031218072017.3775:oops
     def oops (self):
     
-        print "leoMenu oops:", g.callerName(2), "should be overridden in subclass"
+        print "leoMenu oops:", g.callers(), "should be overridden in subclass"
     #@nonl
     #@-node:ekr.20031218072017.3775:oops
     #@+node:ekr.20031218072017.3776:Gui-independent menu enablers
@@ -1618,7 +1618,7 @@ class nullMenu(leoMenu):
     #@+node:ekr.20050104094029:oops
     def oops (self):
     
-        # g.trace("leoMenu", g.callerName(2))
+        # g.trace("leoMenu", g.callers())
         pass
     #@nonl
     #@-node:ekr.20050104094029:oops

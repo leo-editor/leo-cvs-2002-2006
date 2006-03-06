@@ -644,7 +644,7 @@ class leoFind:
         if self.clone_find_all and clones:
             c.setChanged(True)
             u.afterChangeGroup(c.currentPosition(),undoType,reportFlag=True)   
-        c.redraw()
+        c.redraw_now()
         g.es("found: %d matches" % (count))
         self.restore(data)
     #@nonl
@@ -1049,8 +1049,10 @@ class leoFind:
         t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
         insert = g.choose(self.reverse,pos,newpos)
         # New in 4.4a3: a much better way to ensure progress in backward searches.
-        gui.setSelectionRange(t,pos,newpos,insert=insert)
+        # g.trace(id(t),pos,newpos)
         c.widgetWantsFocusNow(t)
+        gui.setSelectionRange(t,pos,newpos,insert=insert)
+        # c.widgetWantsFocusNow(t)
         gui.makeIndexVisible(t,insert)
         if self.wrap and not self.wrapPosition:
             self.wrapPosition = self.p
@@ -1076,8 +1078,7 @@ class leoFind:
     
     def oops(self):
         print ("leoFind oops:",
-            g.callerName(2),
-            "should be overridden in subclass")
+            g.callers(),"should be overridden in subclass")
             
     def update_ivars(self):
         self.oops()

@@ -247,9 +247,9 @@ class leoTkinterMenu (leoMenu.leoMenu):
                 label = label.replace("&","")
                 menu.entryconfig(realName,label=label,underline=underline)
         except:
-            print "setMenuLabel menu,name,label:",menu,name,label
-            g.es_exception()
-            pass
+            if not g.app.unitTesting:
+                print "setMenuLabel menu,name,label:",menu,name,label
+                g.es_exception()
     #@nonl
     #@-node:ekr.20031218072017.4121:setMenuLabel
     #@-node:ekr.20031218072017.4114:Methods with other spellings (Tkmenu)

@@ -342,7 +342,7 @@ class leoGui:
         # It is not usually an error to call methods of this class.
         # However, this message is useful when writing gui plugins.
         if 0:
-            print "leoGui oops", g.callerName(2), "should be overridden in subclass"
+            print "leoGui oops", g.callers(), "should be overridden in subclass"
     #@nonl
     #@-node:ekr.20031218072017.3741:oops
     #@-others
@@ -430,7 +430,7 @@ class nullGui(leoGui):
         # It is not usually an error to call methods of this class.
         # However, this message is useful when writing gui plugins.
         if 0:
-            g.trace("nullGui",g.callerName(2))
+            g.trace("nullGui",g.callers())
     #@nonl
     #@-node:ekr.20031218072017.2230:oops
     #@-others
@@ -505,7 +505,7 @@ class unitTestGui(leoGui):
     #@+node:ekr.20031218072017.3746:oops
     def oops(self):
         
-        g.trace("unitTestGui",g.callerName(2))
+        g.trace("unitTestGui",g.callers())
         
         if 0: # Fail the unit test.
             assert 0,"call to undefined method in unitTestMethod class"

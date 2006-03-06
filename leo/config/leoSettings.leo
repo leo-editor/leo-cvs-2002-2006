@@ -67,6 +67,7 @@
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060216091239"><vh>@bool trace_minibuffer = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
+<v t="ekr.20060306031258"><vh>@bool trace_onBodyChanged = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
 <v t="ekr.20060216130607"><vh>@bool trace_status_line = False</vh></v>
@@ -146,10 +147,12 @@
 </v>
 <v t="ekr.20051123100536" a="E" annotate="7d71002e"><vh>Plugins settings</vh>
 <v t="ekr.20060305100614" a="E"><vh>chapter plugin</vh>
-<v t="ekr.20060305100614.1" a="V"><vh>@color selected_chapter_tab_background_color = LightSteelBlue2</vh></v>
+<v t="ekr.20060305100614.1"><vh>@color selected_chapter_tab_background_color = LightSteelBlue2</vh></v>
 <v t="ekr.20060306001441"><vh>@color selected_chapter_tab_foreground_color = black</vh></v>
 <v t="ekr.20060306001504"><vh>@color unselected_chapter_tab_background_color = lightgrey</vh></v>
-<v t="ekr.20060306001630" a="E"><vh>@color unselected_chapter_tab_foreground_color = black</vh></v>
+<v t="ekr.20060306001630"><vh>@color unselected_chapter_tab_foreground_color = black</vh></v>
+<v t="ekr.20060306124427" a="EV"><vh>@color editor_label_background_color = lightgrey</vh></v>
+<v t="ekr.20060306124427.1"><vh>@color editor_label_foreground_color = black</vh></v>
 </v>
 <v t="ekr.20060111091324"><vh>fastgotonode plugin</vh>
 <v t="ekr.20060111091324.1"><vh>@bool fastgotonode_useKeyBinding = True</vh></v>
@@ -183,7 +186,7 @@
 <v t="ekr.20051025085144"><vh>@string aspell_dir = c:\aspell</vh></v>
 <v t="ekr.20051025085144.1"><vh>@string aspell_bin_dir = c:\aspell\bin</vh></v>
 </v>
-<v t="ekr.20041213105007.1" annotate="7d71002e"><vh>Colors</vh>
+<v t="ekr.20041213105007.1" a="E" annotate="7d71002e"><vh>Colors</vh>
 <v t="ekr.20041213105007.3"><vh>Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
@@ -350,7 +353,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20060110141538.1" a="E" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
@@ -393,6 +396,7 @@
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20060306031258"><vh>@bool trace_onBodyChanged = False</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4603,5 +4607,12 @@ SteelBlue2</t>
 <t tx="ekr.20060306001441">black</t>
 <t tx="ekr.20060306001504">lightgrey</t>
 <t tx="ekr.20060306001630">black</t>
+<t tx="ekr.20060306031258"></t>
+<t tx="ekr.20060306124427">MistyRose1
+LightSteelBlue2
+#ffffec
+lightgrey
+</t>
+<t tx="ekr.20060306124427.1"></t>
 </tnodes>
 </leo_file>

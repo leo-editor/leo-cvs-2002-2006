@@ -122,7 +122,7 @@ class generalTestCase(unittest.TestCase):
     
         import leoGlobals as g
     
-        g.app.unitTestDict["fail"] = g.callerName(2)
+        g.app.unitTestDict["fail"] = g.callers()
     #@nonl
     #@-node:ekr.20051104075904.7: fail
     #@+node:ekr.20051104075904.8:setUp
@@ -315,7 +315,7 @@ def printGc(message=None):
     '''Called from unit tests.'''
 
     if not message:
-        message = g.callerName(n=2)
+        message = g.callers(2)
 
     global lastObjectCount
 
@@ -656,7 +656,7 @@ def fail ():
 
     import leoGlobals as g
 
-    g.app.unitTestDict["fail"] = g.callerName(2)
+    g.app.unitTestDict["fail"] = g.callers()
 #@nonl
 #@-node:ekr.20051104075904.41: fail
 #@+node:ekr.20051104075904.42:leoTest.runLeoTest
@@ -676,7 +676,7 @@ def runLeoTest(c,path,verbose=False,full=False):
         if frame and frame.c != c:
             g.app.closeLeoWindow(frame.c.frame)
         c.frame.top.update()
-        g.app.unitTesting = True
+        g.app.unitTesting = False
 
     if not ok: raise
 #@nonl
@@ -1093,7 +1093,7 @@ class editBodyTestCase(unittest.TestCase):
     
         import leoGlobals as g
     
-        g.app.unitTestDict["fail"] = g.callerName(2)
+        g.app.unitTestDict["fail"] = g.callers()
     #@-node:ekr.20051104075904.72: fail
     #@+node:ekr.20051104075904.73:editBody
     def editBody (self):
@@ -1250,7 +1250,7 @@ class importExportTestCase(unittest.TestCase):
     
         import leoGlobals as g
     
-        g.app.unitTestDict["fail"] = g.callerName(2)
+        g.app.unitTestDict["fail"] = g.callers()
     #@nonl
     #@-node:ekr.20051104075904.81: fail
     #@+node:ekr.20051104075904.82:importExport

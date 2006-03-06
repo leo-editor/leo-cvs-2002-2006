@@ -5488,7 +5488,12 @@ class baseCommands:
         c.frame.body.colorizer.colorize(p,incremental)
     #@nonl
     #@-node:ekr.20051216171520:c.recolor_now
-    #@+node:ekr.20031218072017.2954:c.redraw_now
+    #@+node:ekr.20031218072017.2954:c.redraw and c.redraw_now
+    def redraw (self):
+        c = self
+        c.beginUpdate()
+        c.endUpdate()
+    
     def redraw_now (self):
         
         c = self
@@ -5504,9 +5509,9 @@ class baseCommands:
             c.recolor()
     
     # Compatibility with old scripts
-    redraw = force_redraw = redraw_now
+    force_redraw = redraw_now
     #@nonl
-    #@-node:ekr.20031218072017.2954:c.redraw_now
+    #@-node:ekr.20031218072017.2954:c.redraw and c.redraw_now
     #@+node:ekr.20060208143543:c.restoreFocus
     def restoreFocus (self):
         
@@ -6031,9 +6036,6 @@ class baseCommands:
                 pass # We have already made a copy.
             else: # Must make a copy _now_
                 c._currentPosition = p.copy()
-            # g.trace('exists',p.exists(c),'returns',p)
-            # if not p.exists(c):
-                # g.printStack()
         else:
             c._currentPosition = None
         

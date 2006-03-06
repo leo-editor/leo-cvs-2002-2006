@@ -187,6 +187,9 @@ class leoTkinterTree (leoFrame.leoTree):
         # Init the base class.
         leoFrame.leoTree.__init__(self,frame)
         
+        trace = c.config.getBool('trace_chapters') and not g.app.unitTesting
+        if trace: g.trace('tkTree')
+        
         # Configuration and debugging settings.
         self.expanded_click_area    = c.config.getBool('expanded_click_area')
         self.gc_before_redraw       = c.config.getBool('gc_before_redraw')
@@ -801,15 +804,18 @@ class leoTkinterTree (leoFrame.leoTree):
     def beginUpdate (self):
         
         self.updateCount += 1
+        # g.trace('tree',id(self),self.updateCount,g.callers())
         
     def endUpdate (self,flag,scroll=False):
         
         self.updateCount -= 1
+        # g.trace('  tree',id(self),self.updateCount,g.callers())
+        
         if self.updateCount <= 0:
             if flag:
                 self.redraw_now(scroll=scroll)
             if self.updateCount < 0:
-                g.trace("Can't happen: negative updateCount")
+                g.trace("Can't happen: negative updateCount",g.callers())
     #@nonl
     #@-node:ekr.20051216155728:tree.begin/endUpdate
     #@+node:ekr.20040803072955.58:redraw_now & helper
@@ -831,7 +837,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 if (self.redrawCount % 5) == 0:
                     g.printGcSummary(trace=True)
             if self.trace_redraw_now or self.trace_alloc:
-                g.trace(self.redrawCount,g.callers())
+                # g.trace(self.redrawCount,g.callers())
+                g.trace(c.rootPosition().headString(),'canvas:',id(self.canvas),g.callers())
                 if self.trace_stats:
                     g.print_stats()
                     g.clear_stats()
@@ -975,6 +982,8 @@ class leoTkinterTree (leoFrame.leoTree):
     def drawNode(self,p,x,y):
         
         c = self.c
+        
+        # g.trace(x,y,p,id(self.canvas))
         
         data = g.doHook("draw-outline-node",tree=self,c=c,p=p,v=p,x=x,y=y)
         if data is not None: return data
@@ -1187,10 +1196,10 @@ class leoTkinterTree (leoFrame.leoTree):
         self.dragging = False
         if self.trace:
             self.redrawCount += 1
-            print ; print
+            # print ; print
             delta = g.app.positions - self.prevPositions
-            g.trace("**** gen: %-3d positions: %5d +%4d" % (
-                self.generation,g.app.positions,delta),g.callers())
+            # g.trace("**** gen: %-3d positions: %5d +%4d" % (
+                # self.generation,g.app.positions,delta),g.callers())
             
         self.prevPositions = g.app.positions
     
@@ -1995,6 +2004,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         if not p: return
         
+        # g.trace(p.headString(),self.c._currentPosition)
+        
         if p.isCurrentPosition():
             if p == self.editPosition():
                 self.setEditLabelState(p) # selected, editing.
@@ -2390,23 +2401,20 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.124:tree.updateTree
     #@-node:ekr.20040803072955.118:Incremental drawing...
     #@+node:ekr.20040803072955.125:Selecting & editing... (tkTree)
-    #@+node:ekr.20040803072955.126:tree.endEditLabel
-    def endEditLabel (self):
-        
-        '''End editing of a headline and update p.headString().'''
+    #@+node:ekr.20040803072955.142:dimEditLabel, undimEditLabel
+    # Convenience methods so the caller doesn't have to know the present edit node.
     
-        c = self.c ; k = c.k ; p = c.currentPosition()
+    def dimEditLabel (self):
+        
+        p = self.c.currentPosition()
+        self.setSelectedLabelState(p)
     
-        self.setEditPosition(None) # That is, self._editPosition = None
-        
-        if k:
-            k.setDefaultUnboundKeyAction()
-            # k.showStateAndMode() # Destroys UNL info.
-        
-        # Important: this will redraw if necessary.
-        self.onHeadChanged(p)
+    def undimEditLabel (self):
+    
+        p = self.c.currentPosition()
+        self.setSelectedLabelState(p)
     #@nonl
-    #@-node:ekr.20040803072955.126:tree.endEditLabel
+    #@-node:ekr.20040803072955.142:dimEditLabel, undimEditLabel
     #@+node:ekr.20040803072955.127:editLabel
     def editLabel (self,p):
         
@@ -2432,6 +2440,44 @@ class leoTkinterTree (leoFrame.leoTree):
             c.headlineWantsFocus(p) # Make sure the focus sticks.
     #@nonl
     #@-node:ekr.20040803072955.127:editLabel
+    #@+node:ekr.20040803072955.126:tree.endEditLabel
+    def endEditLabel (self):
+        
+        '''End editing of a headline and update p.headString().'''
+    
+        c = self.c ; k = c.k ; p = c.currentPosition()
+    
+        self.setEditPosition(None) # That is, self._editPosition = None
+        
+        if k:
+            k.setDefaultUnboundKeyAction()
+            # k.showStateAndMode() # Destroys UNL info.
+        
+        # Important: this will redraw if necessary.
+        self.onHeadChanged(p)
+    #@nonl
+    #@-node:ekr.20040803072955.126:tree.endEditLabel
+    #@+node:ekr.20040803072955.143:tree.expandAllAncestors
+    def expandAllAncestors (self,p):
+        
+        '''Expand all ancestors without redrawing.
+        
+        Return a flag telling whether a redraw is needed.'''
+        
+        c = self.c ; redraw_flag = False
+    
+        c.beginUpdate()
+        try:
+            for p in p.parents_iter():
+                if not p.isExpanded():
+                    p.expand()
+                    redraw_flag = True
+        finally:
+            c.endUpdate(False)
+    
+        return redraw_flag
+    #@nonl
+    #@-node:ekr.20040803072955.143:tree.expandAllAncestors
     #@+node:ekr.20040803072955.128:tree.select
     #  Do **not** try to "optimize" this by returning if p==tree.currentPosition.
     
@@ -2564,26 +2610,6 @@ class leoTkinterTree (leoFrame.leoTree):
         return 'break' # Supresses unwanted selection.
     #@nonl
     #@-node:ekr.20040803072955.128:tree.select
-    #@+node:ekr.20060207101443:tree.setHeadline (new in 4.4b2)
-    def setHeadline (self,p,s):
-        
-        '''Set the actual text of the headline widget.
-        
-        This is called from the undo/redo logic to change the text before redrawing.'''
-        
-        w = self.edit_widget(p)
-        if w:
-            w.configure(state='normal')
-            w.delete('1.0','end')
-            if s.endswith('\n') or s.endswith('\r'):
-                s = s[:-1]
-            w.insert('1.0',s)
-            self.revertHeadline = s
-            # g.trace(repr(s),w.get('1.0','end'))
-        else:
-            g.trace('-'*20,'oops')
-    #@nonl
-    #@-node:ekr.20060207101443:tree.setHeadline (new in 4.4b2)
     #@+node:ekr.20040803072955.134:tree.set...LabelState
     #@+node:ekr.20040803072955.135:setEditLabelState
     def setEditLabelState (self,p): # selected, editing
@@ -2603,6 +2629,8 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.135:setEditLabelState
     #@+node:ekr.20040803072955.136:setSelectedLabelState
     def setSelectedLabelState (self,p): # selected, disabled
+    
+        # g.trace(p.headString(),g.callers())
     
         if p and p.edit_widget():
             self.setDisabledHeadlineColors(p)
@@ -2680,41 +2708,26 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.141:setUnselectedHeadlineColors
     #@-node:ekr.20040803072955.134:tree.set...LabelState
-    #@+node:ekr.20040803072955.142:dimEditLabel, undimEditLabel
-    # Convenience methods so the caller doesn't have to know the present edit node.
-    
-    def dimEditLabel (self):
+    #@+node:ekr.20060207101443:tree.setHeadline (new in 4.4b2)
+    def setHeadline (self,p,s):
         
-        p = self.c.currentPosition()
-        self.setSelectedLabelState(p)
-    
-    def undimEditLabel (self):
-    
-        p = self.c.currentPosition()
-        self.setSelectedLabelState(p)
+        '''Set the actual text of the headline widget.
+        
+        This is called from the undo/redo logic to change the text before redrawing.'''
+        
+        w = self.edit_widget(p)
+        if w:
+            w.configure(state='normal')
+            w.delete('1.0','end')
+            if s.endswith('\n') or s.endswith('\r'):
+                s = s[:-1]
+            w.insert('1.0',s)
+            self.revertHeadline = s
+            # g.trace(repr(s),w.get('1.0','end'))
+        else:
+            g.trace('-'*20,'oops')
     #@nonl
-    #@-node:ekr.20040803072955.142:dimEditLabel, undimEditLabel
-    #@+node:ekr.20040803072955.143:tree.expandAllAncestors
-    def expandAllAncestors (self,p):
-        
-        '''Expand all ancestors without redrawing.
-        
-        Return a flag telling whether a redraw is needed.'''
-        
-        c = self.c ; redraw_flag = False
-    
-        c.beginUpdate()
-        try:
-            for p in p.parents_iter():
-                if not p.isExpanded():
-                    p.expand()
-                    redraw_flag = True
-        finally:
-            c.endUpdate(False)
-    
-        return redraw_flag
-    #@nonl
-    #@-node:ekr.20040803072955.143:tree.expandAllAncestors
+    #@-node:ekr.20060207101443:tree.setHeadline (new in 4.4b2)
     #@-node:ekr.20040803072955.125:Selecting & editing... (tkTree)
     #@-others
 #@nonl

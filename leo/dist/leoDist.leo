@@ -111,7 +111,7 @@
 <v t="ekr.20050118125236"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
-<v t="EKR.20040519080201.1"><vh>Distribution checklist</vh></v>
+<v t="EKR.20040519080201.1" a="V"><vh>Distribution checklist</vh></v>
 <v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
 <v t="ekr.20050910192724"><vh>Pychecker warnings</vh></v>
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
@@ -136,7 +136,7 @@
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
 <v t="ekr.20051205102401"><vh>Note: do search replace to update version numbers</vh></v>
-<v t="ekr.20050118095021" a="V"><vh>Leo 4.x installer  (update for each release)</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.x installer  (update for each release)</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
@@ -269,7 +269,6 @@ Announcements
 	- Announce to Leo's Open Forum.
     - Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
 	- Announce to comp.lang.python
-	- Announce to comp.programming.literate
 	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
 <t tx="EKR.20040519080201.2"># Sample defaults file for PyChecker 0.8.13
 # This file should be called:  .pycheckrc
@@ -4895,7 +4894,7 @@ Quotes:   http://webpages.charter.net/edreamleo/testimonials.html</t>
 Leo 4.4 alpha 7 is now available at:
 http://sourceforge.net/project/showfiles.php?group_id=3458&amp;package_id=29106
 
-This version fixes some minor problems with Leo 4.4a6 and adds autocompletion and calltips.
+This version fixes some minor problems with Leo 4.4a6 and adds autocompletion and calltips. There are no known problems with this release.  It may be better than beta quality.  Or not.
 
 Leo is a text editor, data organizer, project manager and much more. See:
 http://webpages.charter.net/edreamleo/intro.html

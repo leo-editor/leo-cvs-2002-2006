@@ -232,7 +232,7 @@
 </v>
 </v>
 <v t="ekr.20060213023839.3" a="E"
-expanded="ekr.20060213023839.28,ekr.20060302173735,"><vh>@thin chapters2.py</vh></v>
+expanded="ekr.20060213023839.8,ekr.20060213023839.11,ekr.20060213023839.28,"><vh>@thin chapters2.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20060213023732.1">&lt;&lt;docstring&gt;&gt;

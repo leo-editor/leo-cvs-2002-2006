@@ -2093,7 +2093,7 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.3045:setDefaultDirectoryForNewFiles
     #@+node:ekr.20031218072017.3046:write_Leo_file
-    def write_Leo_file(self,fileName,outlineOnlyFlag):
+    def write_Leo_file(self,fileName,outlineOnlyFlag,toString=False):
     
         c = self.c
         self.assignFileIndices()
@@ -2128,27 +2128,29 @@ class baseFileCommands:
         #@nl
         try:
             theActualFile = None
-            #@        << create backup file >>
-            #@+node:ekr.20031218072017.3047:<< create backup file >>
-            # rename fileName to fileName.bak if fileName exists.
-            if g.os_path_exists(fileName):
-                backupName = g.os_path_join(g.app.loadDir,fileName)
-                backupName = fileName + ".bak"
-                if g.os_path_exists(backupName):
-                    g.utils_remove(backupName)
-                ok = g.utils_rename(fileName,backupName)
-                if not ok:
-                    if self.read_only:
-                        g.es("read only",color="red")
-                    return False
-            else:
-                backupName = None
-            #@nonl
-            #@-node:ekr.20031218072017.3047:<< create backup file >>
-            #@nl
+            if not toString:
+                #@            << create backup file >>
+                #@+node:ekr.20031218072017.3047:<< create backup file >>
+                # rename fileName to fileName.bak if fileName exists.
+                if g.os_path_exists(fileName):
+                    backupName = g.os_path_join(g.app.loadDir,fileName)
+                    backupName = fileName + ".bak"
+                    if g.os_path_exists(backupName):
+                        g.utils_remove(backupName)
+                    ok = g.utils_rename(fileName,backupName)
+                    if not ok:
+                        if self.read_only:
+                            g.es("read only",color="red")
+                        return False
+                else:
+                    backupName = None
+                #@nonl
+                #@-node:ekr.20031218072017.3047:<< create backup file >>
+                #@nl
             self.mFileName = fileName
             self.outputFile = cStringIO.StringIO() # or g.fileLikeObject()
-            theActualFile = open(fileName, 'wb')
+            if not toString:
+                theActualFile = open(fileName, 'wb')
             #@        << put the .leo file >>
             #@+node:ekr.20040324080819.1:<< put the .leo file >>
             self.putProlog()
@@ -2165,17 +2167,22 @@ class baseFileCommands:
             #@nonl
             #@-node:ekr.20040324080819.1:<< put the .leo file >>
             #@nl
-            theActualFile.write(self.outputFile.getvalue())
-            theActualFile.close()
+            s = self.outputFile.getvalue()
+            if toString:
+                # For support of chapters plugin.
+                g.app.write_Leo_file_string = s
+            else:
+                theActualFile.write(s)
+                theActualFile.close()
+                #@            << delete backup file >>
+                #@+node:ekr.20031218072017.3048:<< delete backup file >>
+                if backupName and g.os_path_exists(backupName):
+                
+                    self.deleteFileWithMessage(backupName,'backup')
+                #@nonl
+                #@-node:ekr.20031218072017.3048:<< delete backup file >>
+                #@nl
             self.outputFile = None
-            #@        << delete backup file >>
-            #@+node:ekr.20031218072017.3048:<< delete backup file >>
-            if backupName and g.os_path_exists(backupName):
-            
-                self.deleteFileWithMessage(backupName,'backup')
-            #@nonl
-            #@-node:ekr.20031218072017.3048:<< delete backup file >>
-            #@nl
             return True
         except Exception:
             g.es("exception writing: " + fileName)

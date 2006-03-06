@@ -270,12 +270,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.2176:f.finishCreate & helpers
     #@+node:ekr.20031218072017.3944:f.createCanvas & helpers
     def createCanvas (self,parentFrame,pack=True):
-        
+    
+        # pageName is not used here: it is used for compatibility with the Chapters plugin.
+    
         c = self.c
-        
+    
         scrolls = c.config.getBool('outline_pane_scrolls_horizontally')
         scrolls = g.choose(scrolls,1,0)
-        
+    
         if use_Pmw and Pmw:
             canvas = self.createPmwTreeCanvas(parentFrame,scrolls,pack)
         else:
@@ -283,27 +285,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         return canvas
     #@nonl
-    #@+node:ekr.20041221071131:createPmwTreeCanvas
-    def createPmwTreeCanvas (self,parentFrame,hScrollMode,pack):
-        
-        hscrollmode = g.choose(hScrollMode,'dynamic','none')
-        
-        self.scrolledCanvas = scrolledCanvas = Pmw.ScrolledCanvas(
-            parentFrame,
-            hscrollmode=hscrollmode,
-            vscrollmode='dynamic')
-    
-        if pack:
-            scrolledCanvas.pack(side='top',expand=1,fill="both")
-    
-        self.treeBar = scrolledCanvas.component('vertscrollbar')
-        
-        canvas = scrolledCanvas.component('canvas')
-        canvas.configure(background='white')
-        
-        return canvas
-    #@nonl
-    #@-node:ekr.20041221071131:createPmwTreeCanvas
     #@+node:ekr.20041221071131.1:createTkTreeCanvas
     def createTkTreeCanvas (self,parentFrame,scrolls,pack):
         
@@ -311,6 +292,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         canvas = Tk.Canvas(parentFrame,name="canvas",
             bd=0,bg="white",relief="flat")
+            
+        trace = self.c.config.getBool('trace_chapters') and not g.app.unitTesting
+        if trace: g.trace(canvas)
             
         # g.trace('canvas',repr(canvas),'name',frame.c.widget_name(canvas))
     
@@ -406,6 +390,27 @@ class leoTkinterFrame (leoFrame.leoFrame):
         return canvas
     #@nonl
     #@-node:ekr.20041221071131.1:createTkTreeCanvas
+    #@+node:ekr.20041221071131:createPmwTreeCanvas (not used)
+    def createPmwTreeCanvas (self,parentFrame,hScrollMode,pack):
+     
+        hscrollmode = g.choose(hScrollMode,'dynamic','none')
+        
+        self.scrolledCanvas = scrolledCanvas = Pmw.ScrolledCanvas(
+            parentFrame,
+            hscrollmode=hscrollmode,
+            vscrollmode='dynamic')
+    
+        if pack:
+            scrolledCanvas.pack(side='top',expand=1,fill="both")
+    
+        self.treeBar = scrolledCanvas.component('vertscrollbar')
+        
+        canvas = scrolledCanvas.component('canvas')
+        canvas.configure(background='white')
+        
+        return canvas
+    #@nonl
+    #@-node:ekr.20041221071131:createPmwTreeCanvas (not used)
     #@-node:ekr.20031218072017.3944:f.createCanvas & helpers
     #@+node:ekr.20041221123325:createLeoSplitters & helpers
     def createLeoSplitters (self,parentFrame):
@@ -1417,6 +1422,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         except AttributeError:
             return g.trace("%s component has no '%s' method" % (
                 self.statusLineComponentName,name))
+        except Exception:
+            # g.es_exception()
+            pass # Support for chapters plugin.
     
     def createStatusLine (self):
         self.callStatus('show')
@@ -2362,11 +2370,12 @@ class leoTkinterBody (leoFrame.leoBody):
         leoFrame.leoBody.__init__(self,frame,parentFrame)
         
         c = self.c
+        
+        self.trace_onBodyChanged = c.config.getBool('trace_onBodyChanged')
     
         self.bodyCtrl = self.createControl(frame,parentFrame)
     
         self.colorizer = leoColor.colorizer(c)
-    #@nonl
     #@-node:ekr.20031218072017.2182:tkBody. __init__
     #@+node:ekr.20031218072017.838:tkBody.createBindings
     def createBindings (self):
@@ -2405,6 +2414,9 @@ class leoTkinterBody (leoFrame.leoBody):
         # Setgrid=1 cause severe problems with the font panel.
         body = Tk.Text(parentFrame,name='body-pane',
             bd=2,bg="white",relief="flat",setgrid=0,wrap=wrap)
+            
+        trace = c.config.getBool('trace_chapters') and not g.app.unitTesting
+        if trace: g.trace('tkBody',body)
         
         bodyBar = Tk.Scrollbar(parentFrame,name='bodyBar')
         frame.bodyBar = self.bodyBar = bodyBar
@@ -2504,10 +2516,10 @@ class leoTkinterBody (leoFrame.leoBody):
         '''Update Leo after the body has been changed.'''
         
         body = self ; c = self.c ; bodyCtrl = body.bodyCtrl
+        trace = self.trace_onBodyChanged
         p = c.currentPosition()
         insert = bodyCtrl.index('insert')
         ch = g.choose(insert=='1.0','',bodyCtrl.get('insert-1c'))
-        # ch = bodyCtrl.get('insert-1c')
         newText = bodyCtrl.get('1.0','end')
         newSel = g.app.gui.getTextSelection(bodyCtrl)
         if oldText is None: oldText = p.bodyString()
@@ -2516,10 +2528,11 @@ class leoTkinterBody (leoFrame.leoBody):
         if removeTrailing and newText:
             newText = newText[:-1]
         changed = oldText != newText
-        if 0:
-            g.trace('removeTrailing',removeTrailing,'changed',changed,
-                'ch',repr(ch),'newText',repr(newText),'oldText',repr(oldText),
-                g.callers())
+        if trace:
+            g.trace(repr(ch),'changed:',changed)
+            # g.trace('removeTrailing:',removeTrailing)
+            g.trace('newText:',repr(newText))
+            #g.trace('oldText:',repr(oldText))
         if changed:
             c.undoer.setUndoTypingParams(p,undoType,
                 oldText=oldText,newText=newText,oldSel=oldSel,newSel=newSel,oldYview=oldYview)

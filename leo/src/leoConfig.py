@@ -384,7 +384,7 @@ class parserBaseClass:
     #@+node:ekr.20041119204700.2:oops
     def oops (self):
         print ("parserBaseClass oops:",
-            g.callerName(2),
+            g.callers(),
             "must be overridden in subclass")
     #@-node:ekr.20041119204700.2:oops
     #@+node:ekr.20041213082558:parsers

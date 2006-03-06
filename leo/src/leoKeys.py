@@ -1973,20 +1973,6 @@ class keyHandlerClass:
         
         for w in (c.miniBufferWidget,bodyCtrl,canvas,bindingWidget):
             self.completeAllBindingsForWidget(w)
-            
-            
-            # for stroke in  k.bindingsDict.keys():
-            # 
-                # def bindKeyCallback (event,k=k,stroke=stroke):
-                    # return k.masterKeyHandler(event,stroke=stroke)
-                # bindStroke = k.tkbindingFromStroke(stroke)
-                # try:
-                    # # g.trace(bindStroke,c.widget_name(w))
-                    # w.bind(bindStroke,bindKeyCallback)
-                # except Exception:
-                    # g.es_print('exception binding %s to %s' % (
-                        # bindStroke,c.widget_name(w)),color='blue')
-    #@nonl
     #@+node:ekr.20060221141535:completeAllBindingsForWidget
     def completeAllBindingsForWidget (self,w):
         

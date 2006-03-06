@@ -83,7 +83,7 @@ class componentBaseClass:
     def oops (self):
         
         print ("componentBaseClass oops:",
-            g.callerName(2),
+            g.callers(),
             "must be overridden in subclass")
     #@-node:ekr.20041223154028.1:oops
     #@+node:ekr.20041223154028.2:getters
@@ -148,7 +148,7 @@ class leoBody:
     #@+node:ekr.20031218072017.3658:oops
     def oops (self):
         
-        g.trace("leoBody oops:", g.callerName(2), "should be overridden in subclass")
+        g.trace("leoBody oops:", g.callers(), "should be overridden in subclass")
     #@nonl
     #@-node:ekr.20031218072017.3658:oops
     #@+node:ekr.20031218072017.3659:leoBody.setFontFromConfig
@@ -626,7 +626,7 @@ class leoFrame:
     #@+node:ekr.20031218072017.3691:oops
     def oops(self):
         
-        print "leoFrame oops:", g.callerName(2), "should be overridden in subclass"
+        print "leoFrame oops:", g.callers(), "should be overridden in subclass"
     #@-node:ekr.20031218072017.3691:oops
     #@+node:ekr.20031218072017.3692:promptForSave
     def promptForSave (self):
@@ -773,7 +773,7 @@ class leoLog:
     #@+node:ekr.20031218072017.3700:leoLog.oops
     def oops (self):
         
-        print "leoLog oops:", g.callerName(2), "should be overridden in subclass"
+        print "leoLog oops:", g.callers(), "should be overridden in subclass"
     #@nonl
     #@-node:ekr.20031218072017.3700:leoLog.oops
     #@+node:ekr.20031218072017.3701:leoLog.setFontFromConfig & setColorFromConfig
@@ -900,7 +900,7 @@ class leoTree:
     #@+node:ekr.20031218072017.3718:oops
     def oops(self):
         
-        print "leoTree oops:", g.callerName(2), "should be overridden in subclass"
+        print "leoTree oops:", g.callers(), "should be overridden in subclass"
     #@nonl
     #@-node:ekr.20031218072017.3718:oops
     #@+node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
@@ -1422,7 +1422,7 @@ class nullBody (leoBody):
     #@+node:ekr.20031218072017.2217:oops
     def oops(self):
     
-        g.trace("nullBody:", g.callerName(2))
+        g.trace("nullBody:", g.callers())
         pass
     #@nonl
     #@-node:ekr.20031218072017.2217:oops
@@ -1547,7 +1547,7 @@ class nullLog (leoLog):
     #@+node:ekr.20041012083237.2:oops
     def oops(self):
     
-        g.trace("nullLog:", g.callerName(2))
+        g.trace("nullLog:", g.callers())
         
     #@-node:ekr.20041012083237.2:oops
     #@+node:ekr.20041012083237.3:put and putnl (nullLog)
@@ -1605,7 +1605,7 @@ class nullTree (leoTree):
     def oops(self):
             
         # It is not an error to call this routine...
-        g.trace("nullTree:", g.callerName(2))
+        g.trace("nullTree:", g.callers())
         pass
     #@nonl
     #@-node:ekr.20031218072017.2235:oops

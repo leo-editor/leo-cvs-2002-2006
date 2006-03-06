@@ -24,6 +24,26 @@ s = ''.join(result)
 p.setBodyString(s)
 #@nonl
 #@-node:delete from ':' to end (script)
+#@+node:delete from first blank
+@color
+
+s = p.bodyString()
+
+result = []
+lines = g.splitLines(s)
+for line in lines:
+    i = line.find(' ')
+    if i > -1:
+        result.append(line[:i])
+        if line and line[-1] == '\n':
+            result.append('\n')
+    else:
+        result.append(line)
+
+s = ''.join(result)
+p.setBodyString(s)
+#@nonl
+#@-node:delete from first blank
 #@+node:replace =.* with = None
 @color
 
