@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="258" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="261" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
 	<global_window_position top="77" left="323" height="789" width="908"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -77,7 +77,7 @@
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 </v>
 <v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
-<v t="ekr.20060113182439"><vh>Other options</vh>
+<v t="ekr.20060113182439" a="E"><vh>Other options</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -144,7 +144,13 @@
 </v>
 <v t="ekr.20060127050605"><vh>@int max_undo_stack_size = 50</vh></v>
 </v>
-<v t="ekr.20051123100536" annotate="7d71002e"><vh>Plugins settings</vh>
+<v t="ekr.20051123100536" a="E" annotate="7d71002e"><vh>Plugins settings</vh>
+<v t="ekr.20060305100614" a="E"><vh>chapter plugin</vh>
+<v t="ekr.20060305100614.1" a="V"><vh>@color selected_chapter_tab_background_color = LightSteelBlue2</vh></v>
+<v t="ekr.20060306001441"><vh>@color selected_chapter_tab_foreground_color = black</vh></v>
+<v t="ekr.20060306001504"><vh>@color unselected_chapter_tab_background_color = lightgrey</vh></v>
+<v t="ekr.20060306001630" a="E"><vh>@color unselected_chapter_tab_foreground_color = black</vh></v>
+</v>
 <v t="ekr.20060111091324"><vh>fastgotonode plugin</vh>
 <v t="ekr.20060111091324.1"><vh>@bool fastgotonode_useKeyBinding = True</vh></v>
 <v t="ekr.20060111091324.2"><vh>@string fastgotonode_binding =  Shift-space</vh></v>
@@ -299,7 +305,7 @@
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 <v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 </v>
-<v t="ekr.20051007200824" a="V" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
@@ -344,12 +350,12 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" a="E" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -367,7 +373,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
@@ -380,12 +386,13 @@
 </v>
 <v t="ekr.20060219103020"><vh>Recent settings</vh>
 <v t="ekr.20060216145416"><vh>@bool trace_autocompleter = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20060301085047"><vh>@bool trace_chapters = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4590,5 +4597,11 @@ toggle-find-word-option
 toggle-find-wrap-around-option
 word-search-backward
 word-search-forward</t>
+<t tx="ekr.20060305100614"></t>
+<t tx="ekr.20060305100614.1">LightSteelBlue2
+SteelBlue2</t>
+<t tx="ekr.20060306001441">black</t>
+<t tx="ekr.20060306001504">lightgrey</t>
+<t tx="ekr.20060306001630">black</t>
 </tnodes>
 </leo_file>
