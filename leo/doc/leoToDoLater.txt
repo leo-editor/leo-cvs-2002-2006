@@ -8649,6 +8649,15 @@ diff -r1.76 leoCommands.py
 #@+node:ekr.20041228090855.2:Plugins
 #@+node:ekr.20041022083005.3:@path and other directives accept python expressions
 #@-node:ekr.20041022083005.3:@path and other directives accept python expressions
+#@+node:ekr.20060306151318:chapters2 plugin
+@nocolor
+
+- Separate editors from chapters plugin.
+    - This really should be part of Leo's core.  It's so useful.
+
+- Build in support for Tabbed outline into Leo's core.
+#@nonl
+#@-node:ekr.20060306151318:chapters2 plugin
 #@+node:ekr.20031218072017.797:Allow @file http & @file ftp
 I'd like to see leo's @file can be extended to cover more protocols, like REBOL's "read" does. 
 
