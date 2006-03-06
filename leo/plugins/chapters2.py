@@ -97,6 +97,11 @@ __version__ = "0.110"
 # - All ops that change the outline call c.setChanged(True)
 # - Support foreground/background/selected/unselected tab colors.
 # - Pychecker reports no problems.
+# 
+# v .111 EKR:
+# - Made all editors functional by connecting FocusIn callback in 
+# tkBody.createControl.
+#   Editors now act as in original plugin, and in an intuitive manner.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -854,15 +859,11 @@ class chapterController:
     def setTree (self,name):
     
         cc = self ; c = cc.c
-    
         chapter = self.getChapter(name)
         sv = chapter and chapter.sv
         
-        # g.trace(name,sv)
         if not sv:
-            # The page hasn't been fully created yet.
-            # This is *not* an error.
-            # g.trace('******* no sv attr for page',name,color='red')
+            # The page hasn't been fully created yet.  This is *not* an error.
             return None
     
         chapter.makeCurrent()
@@ -1550,7 +1551,7 @@ class chapterController:
         body.insertAtEnd(p.bodyString())
         if ip: body.setInsertionPoint(ip)
         body.colorizer.colorize(p)
-        body.bodyCtrl.update_idletasks()
+        # g.trace(id(body.bodyCtrl),p.headString())
     #@nonl
     #@-node:ekr.20060213023839.66:activateEditor
     #@+node:ekr.20060213023839.37:newEditor
@@ -1593,9 +1594,6 @@ class chapterController:
             frame = panedBody.pane(panes[0])
             body = cc.editorBodies.get(frame)
             cc.hideHeading(body)
-        
-        # g.trace(pane,frame)
-        # g.trace(cc.editorBodies.keys())
     #@nonl
     #@-node:ekr.20060213023839.67:removeEditor
     #@-node:ekr.20060213023839.64:Editor
@@ -1698,7 +1696,7 @@ class chapterController:
     #@-node:ekr.20060213023839.86:Writing
     #@-node:ekr.20060213023839.82:Files
     #@+node:ekr.20060302173735:Overrides
-    #@+node:ekr.20060213023839.40:createCanvas
+    #@+node:ekr.20060213023839.40:createCanvas (injects ivars for treeInit)
     def createCanvas (self,frame,parentFrame,pageName):
         
         cc = self
@@ -1715,7 +1713,7 @@ class chapterController:
     
         return canvas
     #@nonl
-    #@-node:ekr.20060213023839.40:createCanvas
+    #@-node:ekr.20060213023839.40:createCanvas (injects ivars for treeInit)
     #@+node:ekr.20060213023839.41:createControl (tkBody)
     def createControl(self,body,frame,parentFrame):
         
@@ -1743,10 +1741,10 @@ class chapterController:
     
         ctrl = old_createControl(body,frame,pane)
         
-        if 0: # Create a focus-in event to keep the generic label widget in synch.
-            def focusInCallback(event,self=self,frame=frame):
-                return self.getGoodPage(event,frame.body)
-            ctrl.bind("<FocusIn>",focusInCallback,'+')
+        # Create a focus-in event to keep the generic label widget in synch.
+        def focusInCallback(event,self=self,frame=frame):
+            return self.onFocusIn(event,body,ctrl)
+        ctrl.bind("<FocusIn>",focusInCallback,'+')
         
         i = 1.0 / len(panedBody.panes())
         for z in panedBody.panes():
@@ -1818,7 +1816,7 @@ class chapterController:
     
         c.frame.body.lastPosition = p
         return_val = old_select(tree,p,updateBeadList)
-        c.frame.body.lastChapter = n = nb.getcurselection()
+        c.frame.body.lastChapter = nb.getcurselection()
     
         if hasattr(p.c.frame.body,'editorRightLabel'):
             h = p.headString() or ''
@@ -1913,61 +1911,71 @@ class chapterController:
         return self.chapters.get(pageName)
     #@nonl
     #@-node:ekr.20060228123056.1:getChapter
-    #@+node:ekr.20060213023839.77:getGoodPage & helpers
-    def getGoodPage (self,event,body):
+    #@+node:ekr.20060213023839.77:onFocusIn & helpers
+    def onFocusIn (self,event,body,bodyCtrl):
         
-        self = cc ; nb = self.nb
+        '''Set the focus to the proper body and bodyCtrl.'''
         
-        g.trace(body)
-    
+        cc = self ; c = cc.c ; nb = cc.nb
+        
+        # g.trace(event,id(body),id(bodyCtrl))
+        
+        # Original code
         body.frame.body = body
         body.frame.bodyCtrl = body.bodyCtrl
     
         if not hasattr(body,'lastChapter'):
             body.lastChapter = nb.getcurselection()
             
-        page = self.checkChapterValidity(body.lastChapter)
+        # Select body.lastChapter if it exists, or the present chapter otherwise.
+        pageName = cc.getValidChapterName(body.lastChapter)
+        if pageName != nb.getcurselection():
+            body.lastChapter = pageName
+            nb.selectpage(pageName)
         
-        if page != nb.getcurselection():
-            body.lastChapter = page
-            nb.selectpage(page)
+        cc.selectNodeForEditor(body)
+        cc.activateEditor(body)
+    #@nonl
+    #@+node:ekr.20060213023839.78:getValidChapterName
+    def getValidChapterName (self,name):
         
-        self.selectNodeForEditor(body)
-        self.activateEditor(body)
-    #@+node:ekr.20060213023839.78:checkChapterValidity
-    def checkChapterValidity (self,name):
+        '''Return name if its chapter still exists.
+        Otherwise return the name of the presently selected tab.'''
         
-        nb = self.nb
+        cc = self ; nb = cc.nb
     
         try:
             nb.index(name)
-            return name
         except:
-            return nb.getcurselection()
+            name = nb.getcurselection()
+            
+        # g.trace(name)
+        return name
     #@nonl
-    #@-node:ekr.20060213023839.78:checkChapterValidity
+    #@-node:ekr.20060213023839.78:getValidChapterName
     #@+node:ekr.20060213023839.65:selectNodeForEditor
     def selectNodeForEditor (self,body):
     
         '''Select the next node for the editor.'''
         
-        c = self.c
+        cc = self ; c = cc.c
     
         if not hasattr(body,'lastPosition'):
             body.lastPosition = c.currentPosition()
     
         if body.lastPosition == c.currentPosition():
-            return
+            pass
         elif body.lastPosition.exists(c):
-            g.trace('last position does not exist',color='red')
             c.selectPosition(body.lastPosition)
         else:
+            g.trace('last position does not exist',color='red')
             c.selectPosition(c.rootPosition())
     
         body.lastPosition = c.currentPosition()
+        # g.trace(body.lastPosition.headString())
     #@nonl
     #@-node:ekr.20060213023839.65:selectNodeForEditor
-    #@-node:ekr.20060213023839.77:getGoodPage & helpers
+    #@-node:ekr.20060213023839.77:onFocusIn & helpers
     #@+node:ekr.20060213023839.76:renumber
     def renumber (self):
         

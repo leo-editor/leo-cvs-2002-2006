@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="255" clone_windows="0"/>
 <globals body_outline_ratio="0.492424242424">
-	<global_window_position top="68" left="372" height="781" width="891"/>
+	<global_window_position top="63" left="482" height="781" width="767"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -193,42 +193,42 @@
 <v t="ekr.20060213023839.36"><vh>makeNameMaker</vh></v>
 <v t="ekr.20060213023839.87"><vh>getMakeStringIO</vh></v>
 <v t="ekr.20060213023839.16"><vh>new_endEditLabel (leoTkinterTree)</vh></v>
+<v t="ekr.20060213023839.43"><vh>endEditLabel</vh></v>
 <v t="ekr.20060213023839.79"><vh>getStringVar</vh></v>
 <v t="ekr.20060228123056.3"><vh>nextPageName</vh></v>
 <v t="ekr.20060303143328.1"><vh>computeNodeLabel</vh></v>
 <v t="ekr.20060213023839.54"><vh>createRemoveChapterMenu (no longer used)</vh></v>
-<v t="ekr.20060213023839.43"><vh>endEditLabel</vh></v>
 </v>
-<v t="ekr.20060228081628"><vh>To do</vh>
+<v t="ekr.20060228081628" a="V"><vh>To do</vh>
 <v t="ekr.20060303104124"><vh>Later</vh></v>
-<v t="ekr.20060303083246"><vh>Recent: editors &amp; rename</vh>
-<v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
-<v t="ekr.20060213023839.40"><vh>createCanvas</vh></v>
-<v t="ekr.20060213023839.68"><vh>...Heading</vh>
-<v t="ekr.20060304122235"><vh>addHeading</vh></v>
-<v t="ekr.20060304122235.1"><vh>hide/showHeading</vh></v>
-</v>
-<v t="ekr.20060213023839.41"><vh>createControl (tkBody)</vh></v>
-<v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
-<v t="ekr.20060213023839.67"><vh>removeEditor</vh></v>
-<v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
-<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
-<v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
-<v t="ekr.20060213023839.85"><vh>insertChapters</vh></v>
-<v t="ekr.20060213023839.46"><vh>open</vh></v>
-<v t="ekr.20060213023839.77"><vh>getGoodPage &amp; helpers</vh>
-<v t="ekr.20060213023839.78"><vh>checkChapterValidity</vh></v>
-<v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20060213023839.3" a="ETV"><vh>@thin chapters2.py</vh></v>
 <v t="ekr.20060305100737"><vh>Recent: tab colors</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
 <v t="ekr.20060302083318.2"><vh>createTab</vh></v>
 <v t="ekr.20060213023839.80"><vh>lowerPage</vh></v>
 <v t="ekr.20060303105217"><vh>raisePage</vh></v>
 </v>
+<v t="ekr.20060303083246"><vh>Recent: editors &amp; getGoodPage</vh>
+<v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
+<v t="ekr.20060213023839.40"><vh>createCanvas (injects ivars for treeInit)</vh></v>
+<v t="ekr.20060213023839.68"><vh>...Heading</vh>
+<v t="ekr.20060304122235"><vh>addHeading</vh></v>
+<v t="ekr.20060304122235.1"><vh>hide/showHeading</vh></v>
+</v>
+<v t="ekr.20060213023839.41"><vh>createControl (tkBody)</vh></v>
+<v t="ekr.20060213023839.38"><vh>createEditorPane</vh></v>
+<v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
+<v t="ekr.20060213023839.67"><vh>removeEditor</vh></v>
+<v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
+<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
+<v t="ekr.20060213023839.45"><vh>select</vh></v>
+<v t="ekr.20060213023839.77"><vh>onFocusIn &amp; helpers</vh>
+<v t="ekr.20060213023839.78"><vh>getValidChapterName</vh></v>
+<v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
+</v>
+<v t="ekr.20060213023839.66"><vh>activateEditor</vh></v>
+</v>
+</v>
+<v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20060213023732.1">&lt;&lt;docstring&gt;&gt;
@@ -1559,15 +1559,11 @@ couldn't think of any parent node to group these under.
 <t tx="ekr.20060213023839.2">def setTree (self,name):
 
     cc = self ; c = cc.c
-
     chapter = self.getChapter(name)
     sv = chapter and chapter.sv
     
-    # g.trace(name,sv)
     if not sv:
-        # The page hasn't been fully created yet.
-        # This is *not* an error.
-        # g.trace('******* no sv attr for page',name,color='red')
+        # The page hasn't been fully created yet.  This is *not* an error.
         return None
 
     chapter.makeCurrent()
@@ -1596,18 +1592,6 @@ iscStringIO = False
 notebooks = {}
 pbodies = {}
 twidgets = {}</t>
-<t tx="ekr.20060213023839.27">def makeCurrent (self):
-
-    c = self.c ; cc = self.cc
-    
-    # g.trace(self.pageName)
-    cc.nb.selectpage(self.pageName)
-    cc.currentChapter._saveInfo()
-    cc.currentChapter = self
-    self.setVariables()
-    self.updateHeadingSV(self.sv)
-    c.redraw()
-    c.bodyWantsFocusNow()</t>
 <t tx="ekr.20060213023839.30">def __init__ (self,c,frame,parentFrame):
     
     self.c = c
@@ -1666,6 +1650,17 @@ twidgets = {}</t>
     chapter = cc.getChapter()
     body.editorLeftLabel.configure(textvariable=chapter.sv)
     body.editorRightLabel.configure(text=c.currentPosition().headString())</t>
+<t tx="ekr.20060213023839.38">def createEditorPane (self):
+    
+    '''Create a new pane with a unique name.'''
+
+    cc = self
+    cc.numberOfEditors += 1
+    name = str(cc.numberOfEditors)
+    pane = self.panedBody.add(name)
+    
+    # g.trace(pane)
+    return pane</t>
 <t tx="ekr.20060213023839.40">def createCanvas (self,frame,parentFrame,pageName):
     
     cc = self
@@ -1707,10 +1702,10 @@ twidgets = {}</t>
 
     ctrl = old_createControl(body,frame,pane)
     
-    if 0: # Create a focus-in event to keep the generic label widget in synch.
-        def focusInCallback(event,self=self,frame=frame):
-            return self.getGoodPage(event,frame.body)
-        ctrl.bind("&lt;FocusIn&gt;",focusInCallback,'+')
+    # Create a focus-in event to keep the generic label widget in synch.
+    def focusInCallback(event,self=self,frame=frame):
+        return self.onFocusIn(event,body,ctrl)
+    ctrl.bind("&lt;FocusIn&gt;",focusInCallback,'+')
     
     i = 1.0 / len(panedBody.panes())
     for z in panedBody.panes():
@@ -1736,26 +1731,21 @@ twidgets = {}</t>
             c.frame.body.editorLabel.configure(text=h)
 
     return old_editLabel(tree)</t>
-<t tx="ekr.20060213023839.46">def open (self,fc,file,fileName,readAtFileNodesFlag=True,silent=False):
+<t tx="ekr.20060213023839.45">def select (self,tree,p,updateBeadList=True):
 
-    cc = self ; c = cc.c
+    cc = self ; c = p.v.c ; h = p.headString() ; nb = cc.nb
+    
+    # g.trace(p.headString(),tree)
 
-    if zipfile.is_zipfile(fileName):
-        c.beginUpdate()
-        try:
-            # Set globals for g.os_path_dirname
-            global iscStringIO, stringIOCommander
-            iscStringIO = True ; stringIOCommander = c
-            chapters = cc.openChaptersFile(fileName)
-            g.es(str(len(chapters))+" Chapters To Read",color='blue')
-            cc.insertChapters(chapters)
-            g.es("Finished Reading Chapters",color='blue')
-            iscStringIO = False
-        finally:
-            c.endUpdate()
-        return True
-    else:
-        return old_open(fc,file,fileName,readAtFileNodesFlag,silent)</t>
+    c.frame.body.lastPosition = p
+    return_val = old_select(tree,p,updateBeadList)
+    c.frame.body.lastChapter = nb.getcurselection()
+
+    if hasattr(p.c.frame.body,'editorRightLabel'):
+        h = p.headString() or ''
+        c.frame.body.editorRightLabel.configure(text=h)
+
+    return return_val</t>
 <t tx="ekr.20060213023839.54">def createRemoveChapterMenu (self,event=None):
 
     c = self.c ; nb = self.nb ; rmenu = self.rmenu
@@ -1797,20 +1787,34 @@ twidgets = {}</t>
 
     '''Select the next node for the editor.'''
     
-    c = self.c
+    cc = self ; c = cc.c
 
     if not hasattr(body,'lastPosition'):
         body.lastPosition = c.currentPosition()
 
     if body.lastPosition == c.currentPosition():
-        return
+        pass
     elif body.lastPosition.exists(c):
-        g.trace('last position does not exist',color='red')
         c.selectPosition(body.lastPosition)
     else:
+        g.trace('last position does not exist',color='red')
         c.selectPosition(c.rootPosition())
 
-    body.lastPosition = c.currentPosition()</t>
+    body.lastPosition = c.currentPosition()
+    # g.trace(body.lastPosition.headString())</t>
+<t tx="ekr.20060213023839.66">def activateEditor (self,body):
+
+    '''Activate an editor.'''
+
+    p = body.lastPosition
+    h = p and p.headString() or ''
+    body.editorRightLabel.configure(text=h)
+    ip = body.lastPosition.t.insertSpot
+    body.deleteAllText()
+    body.insertAtEnd(p.bodyString())
+    if ip: body.setInsertionPoint(ip)
+    body.colorizer.colorize(p)
+    # g.trace(id(body.bodyCtrl),p.headString())</t>
 <t tx="ekr.20060213023839.67">def removeEditor (self):
     
     cc = self ; c = cc.c
@@ -1829,41 +1833,45 @@ twidgets = {}</t>
         panes = panedBody.panes()
         frame = panedBody.pane(panes[0])
         body = cc.editorBodies.get(frame)
-        cc.hideHeading(body)
-    
-    # g.trace(pane,frame)
-    # g.trace(cc.editorBodies.keys())</t>
+        cc.hideHeading(body)</t>
 <t tx="ekr.20060213023839.68"></t>
-<t tx="ekr.20060213023839.77">def getGoodPage (self,event,body):
+<t tx="ekr.20060213023839.77">def onFocusIn (self,event,body,bodyCtrl):
     
-    self = cc ; nb = self.nb
+    '''Set the focus to the proper body and bodyCtrl.'''
     
-    g.trace(body)
-
+    cc = self ; c = cc.c ; nb = cc.nb
+    
+    # g.trace(event,id(body),id(bodyCtrl))
+    
+    # Original code
     body.frame.body = body
     body.frame.bodyCtrl = body.bodyCtrl
 
     if not hasattr(body,'lastChapter'):
         body.lastChapter = nb.getcurselection()
         
-    page = self.checkChapterValidity(body.lastChapter)
+    # Select body.lastChapter if it exists, or the present chapter otherwise.
+    pageName = cc.getValidChapterName(body.lastChapter)
+    if pageName != nb.getcurselection():
+        body.lastChapter = pageName
+        nb.selectpage(pageName)
     
-    if page != nb.getcurselection():
-        body.lastChapter = page
-        nb.selectpage(page)
+    cc.selectNodeForEditor(body)
+    cc.activateEditor(body)</t>
+<t tx="ekr.20060213023839.78">def getValidChapterName (self,name):
     
-    self.selectNodeForEditor(body)
-    self.activateEditor(body)
-</t>
-<t tx="ekr.20060213023839.78">def checkChapterValidity (self,name):
+    '''Return name if its chapter still exists.
+    Otherwise return the name of the presently selected tab.'''
     
-    nb = self.nb
+    cc = self ; nb = cc.nb
 
     try:
         nb.index(name)
-        return name
     except:
-        return nb.getcurselection()</t>
+        name = nb.getcurselection()
+        
+    # g.trace(name)
+    return name</t>
 <t tx="ekr.20060213023839.79">def getStringVar (self,pageName):
 
     '''return a Tk StrinVar that is a primary identifier.'''
@@ -1884,30 +1892,6 @@ twidgets = {}</t>
     tab.configure(
         background=cc.unselectedTabBackgroundColor,
         foreground=cc.unselectedTabForegroundColor)</t>
-<t tx="ekr.20060213023839.85">def insertChapters (self,chapters):
-
-    cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
-    flipto = None
-    c.beginUpdate()
-    try:
-        for num, tup in enumerate(chapters):
-            x, y = tup
-            if num &gt; 0:
-                page,pageName = self.addPage(x)
-                sv = cc.getChapter(pageName).sv
-                nb.nextpage()
-                cselection = nb.getcurselection()
-            else:
-                cselection = nb.getcurselection()
-                sv = cc.getChapter(cselection).sv
-            sv.set(x)
-            next = cselection
-            self.setTree(next)
-            c.fileCommands.open(y,sv.get())
-            if num == 0: flipto = cselection
-        self.setTree(flipto)
-    finally:
-        c.endUpdate()</t>
 <t tx="ekr.20060213023839.87">def getMakeStringIO (self,chapList):
 
     '''Insures that data is put in a StringIO instance.'''
@@ -3625,13 +3609,9 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228081537"></t>
 <t tx="ekr.20060228081628">@nocolor
 
-- Make all editors functional: connect enter callback.
-
-Cleanup
-
+- (done?) Replace all v refs by p refs.
+- Remove all enumerates or use from future import.
 - Create unit tests.
-- Remove all enumerates.
-- Replace all v refs by p refs.  vnd
 
 @color</t>
 <t tx="ekr.20060228082602"></t>
