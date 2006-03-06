@@ -119,7 +119,7 @@ __version__ = "0.200"
 #@+at
 # v .200 EKR:
 # - Removed all enumerates for compatibility with Python 2.2.
-# - Make balloons work.
+# - Made balloons work.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -221,20 +221,13 @@ def init ():
 #@nonl
 #@-node:ekr.20060213023839.9:init
 #@+node:ekr.20060213023839.11:decorated Leo functions
-#@+at
-# I prefer decorating Leo functions as opposed to patching them.  Patching 
-# them leads to long term incompatibilites with Leo and the plugin.  Though 
-# this happens anyway with code evolution/changes, this makes it worse.  Thats 
-# my experience with it. :)
-#@-at
-#@@c
-#@+others
 #@+node:ekr.20060213023839.12:new_createCanvas (tkFrame)  (chapterControllers & tabs)
 def new_createCanvas (self,parentFrame,pageName='1'):
     
     # self is c.frame
     c = self.c
-    if g.app.unitTesting:
+
+    if 0: # g.app.unitTesting:
         global old_createCanvas
         return old_createCanvas(self,parentFrame)
     else:
@@ -264,7 +257,8 @@ def new_os_path_dirname (path,encoding=None):
 def new_createControl (self,frame,parentFrame):
 
     # self is c.frame.body
-    if g.app.unitTesting:
+
+    if 0: # g.app.unitTesting:
         global old_createControl
         return old_createControl(self,frame,parentFrame)
     else:
@@ -277,7 +271,8 @@ def new_createControl (self,frame,parentFrame):
 def new_doDelete (self):
     
     # self is position.
-    if g.app.unitTesting:
+
+    if 0: # g.app.unitTesting:
         global old_doDelete
         return old_doDelete(self)
     else:
@@ -290,7 +285,8 @@ def new_doDelete (self):
 def new_getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     
     # self is c.fileCommands
-    if g.app.unitTesting:
+
+    if 0: # g.app.unitTesting:
         global old_getLeoFile
         return old_getLeoFile(self,fileName,readAtFileNodesFlag,silent)
     else:
@@ -303,8 +299,9 @@ def new_getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
 def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
     
     # self = fileCommands
-    c = self.c
-    if g.app.unitTesting:
+    fc = self ; c = fc.c
+
+    if 0: # g.app.unitTesting:
         global old_open
         return old_open(fc,file,fileName,readAtFileNodesFlag,silent)
     else:
@@ -317,6 +314,7 @@ def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
             # The file has not been opened completely.
             # This may be the settings file.
             # The controller will be created later in new_createCanvas.
+            g.trace('controller not created',g.callers())
             return
 #@nonl
 #@-node:ekr.20060213023839.18:new_open (fileCommands)
@@ -324,7 +322,8 @@ def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
 def new_select (self,p,updateBeadList=True):
     
     # self is c.frame.tree
-    if g.app.unitTesting:
+
+    if 0: # g.app.unitTesting:
         global old_select
         return old_select(self,p,updateBeadList)
     else:
@@ -337,7 +336,8 @@ def new_select (self,p,updateBeadList=True):
 def new_tree_init (self,c,frame,canvas):
     
     # self is c.frame.tree
-    if g.app.unitTesting:
+
+    if 0: # g.app.unitTesting:
         global old_tree_init
         return old_tree_init(self,c,frame,canvas)
     else:
@@ -350,7 +350,8 @@ def new_tree_init (self,c,frame,canvas):
 def new_write_Leo_file (self,fileName,outlineOnlyFlag,singleChapter=False):
     
     # self is c.frame.tree
-    if g.app.unitTesting:
+
+    if 0: # g.app.unitTesting:
         global old_write_Leo_file
         return old_write_Leo_file(self,fileName,outlineOnlyFlag)
     else:
@@ -358,8 +359,6 @@ def new_write_Leo_file (self,fileName,outlineOnlyFlag,singleChapter=False):
         return cc.write_Leo_file(self,fileName,outlineOnlyFlag,singleChapter=singleChapter)
 #@nonl
 #@-node:ekr.20060213023839.21:new_write_Leo_file
-#@-others
-#@nonl
 #@-node:ekr.20060213023839.11:decorated Leo functions
 #@-node:ekr.20060213023839.8:Module level
 #@+node:ekr.20060213023839.23:class Chapter
