@@ -3,14 +3,14 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7977" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
-	<global_window_position top="98" left="450" height="857" width="781"/>
+	<global_window_position top="39" left="326" height="857" width="781"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
-<v t="ekr.20051020124457" a="E"><vh>Disabled buttons</vh>
+<v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
 <v t="ekr.20050704170739"><vh>@@button Ipython</vh></v>
@@ -53,7 +53,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051120173230" a="E" annotate="7d71002e"><vh>Prototypes</vh>
+<v t="ekr.20051120173230" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20051111114555"><vh>Subprocess tests</vh>
 <v t="ekr.20051112134206.1"><vh>subprocess.py (For study, but not very helpful)</vh>
 <v t="ekr.20051112134206.2"><vh>&lt;&lt; about this module &gt;&gt;</vh></v>
@@ -255,15 +255,26 @@
 <v t="ekr.20060223131415"><vh>Test of meaningless self</vh></v>
 <v t="ekr.20060228081859"><vh>Mini-tests for chapters</vh>
 <v t="ekr.20060228083913"><vh>print chapters</vh></v>
-<v t="ekr.20060228082132"><vh>@button addChapter</vh></v>
+<v t="ekr.20060228082132"><vh>@@button addChapter</vh></v>
 <v t="ekr.20060301121002"><vh>@@button rmChapter</vh></v>
-<v t="ekr.20060301132108"><vh>@button addEditor</vh></v>
-<v t="ekr.20060301132108.1" a="E"><vh>@button rmEditor</vh></v>
-<v t="ekr.20060301151555" a="E"><vh>@button index</vh></v>
+<v t="ekr.20060301132108"><vh>@@button addEditor</vh></v>
+<v t="ekr.20060301132108.1" a="E"><vh>@@button rmEditor</vh></v>
+<v t="ekr.20060301151555" a="E"><vh>@@button index</vh></v>
 </v>
 </v>
 <v t="ekr.20060306120904"><vh>import reportlab</vh></v>
-<v t="ekr.20060307115056" a="V"><vh>Test of leoDebugger</vh></v>
+<v t="ekr.20060307115056"><vh>Test of leoDebugger</vh></v>
+<v t="ekr.20060308001046" a="EV"><vh>Test of importing idle stuff</vh>
+<v t="ekr.20060308004027"><vh>myMain</vh></v>
+<v t="ekr.20060308014050" a="E"><vh>leoPyShell</vh>
+<v t="ekr.20060308015826"><vh>ctor: leoPyShell</vh></v>
+<v t="ekr.20060308015826.1"><vh>begin</vh></v>
+</v>
+<v t="ekr.20060308005321" a="E"><vh>leoPyShellFileList</vh>
+<v t="ekr.20060308014551"><vh>ctor: leoPyShellFileList</vh></v>
+<v t="ekr.20060308014050.1"><vh>open_shell</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4518,5 +4529,148 @@ else:
 
 print 'done'
 c.bodyWantsFocusNow()</t>
+<t tx="ekr.20060308001046">import idlelib.PyShell
+import os
+import sys
+import Tkinter
+
+@others
+
+args = [r'c:\Python24\Lib\idlelib\Pyshell.py'] # Edit file on startup.
+args = ['-d'] # Show debugger window on startup.
+args = []
+
+if 1:
+    myMain(args)
+else: # Works.
+    sys.argv = args
+    if 0:
+        # Sharing Leo's root is dangerous: killing idle kills Leo.
+        # Important: I added the previousRoot arg to Idle's source code.
+        idlelib.PyShell.main(previousRoot=g.app.gui.root)
+    else: # Safe, and easy.
+        idlelib.PyShell.main()</t>
+<t tx="ekr.20060308004027"># Adapted from idlelib.PyShel.main.
+
+def myMain(args):
+    # global flist, root, use_subprocess
+    if 1: # Leo continues when the Idle process dies.
+        root = Tkinter.Tk(className="Idle")
+        idlelib.PyShell.fixwordbreaks(root)
+        root.withdraw()
+    else: # Leo dies when Idle dies.
+        root = g.app.gui.root
+
+    # idlelib.PyShel.main sets these from sys.argv.
+    cmd = False
+    debug = False
+    edit_start = True
+    enable_edit = True 
+    enable_shell = True
+    script = False
+    startup = False
+    
+    #flist = idlelib.PyShell.PyShellFileList(root) # works.
+
+    flist = leoPyShellFileList(root)
+    
+    # Set the globals.
+    idlelib.PyShell.use_subprocess = True 
+    idlelib.PyShell.root = root
+    idlelib.PyShell.flist = flist
+    
+    if enable_edit:
+        if not (cmd or script):
+            for filename in args:
+                if filename:
+                    flist.open(filename)
+            # if not args:
+                # flist.new()
+    if enable_shell:
+        if not flist.open_shell():
+            return # couldn't open shell
+    shell = flist.pyshell
+    # handle remaining options:
+    if debug:
+        shell.open_debugger()
+
+    if startup:
+        filename = os.environ.get("IDLESTARTUP") or \
+                   os.environ.get("PYTHONSTARTUP")
+        if filename and os.path.isfile(filename):
+            shell.interp.execfile(filename)
+
+    if shell and cmd or script:
+        shell.interp.runcommand("""if 1:
+            import sys as _sys
+            _sys.argv = %r
+            del _sys
+            \n""" % (sys.argv,))
+        if cmd:
+            shell.interp.execsource(cmd)
+        elif script:
+            shell.interp.prepend_syspath(script)
+            shell.interp.execfile(script)
+            
+    root.mainloop()
+    # root.destroy() # This causes problems.</t>
+<t tx="ekr.20060308005321">class leoPyShellFileList (idlelib.PyShell.PyShellFileList):
+    
+    @others</t>
+<t tx="ekr.20060308014050">class leoPyShell (idlelib.PyShell.PyShell):
+    
+    # firewallmessage = ''
+    # COPYRIGHT = ''
+    
+    @others
+        
+    </t>
+<t tx="ekr.20060308014050.1"># Same as base open_shell except that it creates a leoPyShell.
+
+def open_shell(self, event=None):
+    
+    g.trace('leoPyShellFileList.pyshell:',self.pyshell)
+
+    if self.pyshell:
+        self.pyshell.top.wakeup()
+    else:
+        self.pyshell = leoPyShell(self)
+        if self.pyshell:
+            if not self.pyshell.begin():
+                return None
+    return self.pyshell</t>
+<t tx="ekr.20060308014551">def __init__ (self,root,*args,**keys):
+        
+    print 'leoPyShellFileList',args,keys
+        
+    idlelib.PyShell.PyShellFileList.__init__(self,root,*args,**keys)</t>
+<t tx="ekr.20060308015826">def __init__ (self,*args,**keys):
+        
+    print 'leoPythonShell',args,keys
+    
+    # Init the base class.
+    idlelib.PyShell.PyShell.__init__(self,*args,**keys)</t>
+<t tx="ekr.20060308015826.1">def begin(self):
+    self.resetoutput()
+    if idlelib.PyShell.use_subprocess:
+        nosub = ''
+        client = self.interp.start_subprocess()
+        if not client:
+            self.close()
+            return False
+    else:
+        nosub = "==== No Subprocess ===="
+    
+    if 1:
+        self.write("Python %s on %s\nIDLE for Leo %s      %s\n" % (
+            sys.version, sys.platform,idlelib.PyShell.idlever.IDLE_VERSION, nosub))
+    else:
+        self.write("Python %s on %s\n%s\n%s\nIDLE %s      %s\n" %
+                   (sys.version, sys.platform, self.COPYRIGHT,
+                    self.firewallmessage, idlever.IDLE_VERSION, nosub))
+    self.showprompt()
+    import Tkinter
+    Tkinter._default_root = None # 03Jan04 KBK What's this?
+    return True</t>
 </tnodes>
 </leo_file>
