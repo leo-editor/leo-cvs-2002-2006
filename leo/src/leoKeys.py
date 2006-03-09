@@ -2902,20 +2902,16 @@ class keyHandlerClass:
         state = k.state.kind
         if trace: g.trace(repr(stroke),'state',state)
         if k.inState():
-            # First: honor the 'mini' bindings, but *not* in auto-complete state.
-            if not state.startswith('auto-'):
-                d = k.masterBindingsDict.get('mini')
-                b = d.get(stroke)
-                if b:
-                    if trace: g.trace(repr(stroke),'mini binding',b.commandName)
-                    # Pass this on for macro recording.
-                    k.masterCommand(event,b.func,stroke,b.commandName)
-                    c.minibufferWantsFocus()
+            if 0: # Interferes with similar keys bound in a state.
+                if k.handleMiniBindings(event,state,stroke):
                     return 'break'
-            # Second, pass keys to getArg or full-command modes if they are active.
+            # Pass keys to getArg or full-command modes if they are active.
             if state == 'getArg':
                 return k.getArg(event)
             elif state in ('full-command','auto-complete'):
+                # Experimental: honor
+                if k.handleMiniBindings(event,state,stroke):
+                    return 'break'
                 # Do the default state action.
                 if trace: g.trace('calling state function')
                 val = k.callStateFunction(event) # Calls end-command.
@@ -2926,14 +2922,14 @@ class keyHandlerClass:
             else:
                 d =  k.masterBindingsDict.get(state)
                 if d:
-                    # A typical state
                     b = d.get(stroke)
-                    # g.trace(d.keys())
                     if b:
                         if trace: g.trace('calling generalModeHandler')
                         k.generalModeHandler (event,
                             commandName=b.commandName,func=b.func,
                             modeName=state,nextMode=b.nextMode)
+                        return 'break'
+                    elif k.handleMiniBindings(event,state,stroke):
                         return 'break'
                     else:
                         if trace: g.trace('calling modeHelp')
@@ -2975,6 +2971,25 @@ class keyHandlerClass:
             return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
     #@nonl
     #@-node:ekr.20060205221734:masterKeyHandlerHelper
+    #@+node:ekr.20060309065445:handleMiniBindings
+    def handleMiniBindings (self,event,state,stroke):
+        
+        k = self ; c = k.c
+        trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
+        
+        if not state.startswith('auto-'):
+            d = k.masterBindingsDict.get('mini')
+            b = d.get(stroke)
+            if b:
+                if trace: g.trace(repr(stroke),'mini binding',b.commandName)
+                # Pass this on for macro recording.
+                k.masterCommand(event,b.func,stroke,b.commandName)
+                c.minibufferWantsFocus()
+                return True
+            
+        return False
+    #@nonl
+    #@-node:ekr.20060309065445:handleMiniBindings
     #@-node:ekr.20060127183752:masterKeyHandler & helper
     #@+node:ekr.20060129052538.2:masterClickHandler
     def masterClickHandler (self,event,func=None):

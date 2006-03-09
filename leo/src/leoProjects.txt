@@ -4902,20 +4902,16 @@ def masterKeyHandlerHelper (self,event,stroke):
     state = k.state.kind
     if trace: g.trace(repr(stroke),'state',state)
     if k.inState():
-        # First: honor the 'mini' bindings, but *not* in auto-complete state.
-        if not state.startswith('auto-'):
-            d = k.masterBindingsDict.get('mini')
-            b = d.get(stroke)
-            if b:
-                if trace: g.trace(repr(stroke),'mini binding',b.commandName)
-                # Pass this on for macro recording.
-                k.masterCommand(event,b.func,stroke,b.commandName)
-                c.minibufferWantsFocus()
+        if 0: # Interferes with similar keys bound in a state.
+            if k.handleMiniBindings(event,state,stroke):
                 return 'break'
-        # Second, pass keys to getArg or full-command modes if they are active.
+        # Pass keys to getArg or full-command modes if they are active.
         if state == 'getArg':
             return k.getArg(event)
         elif state in ('full-command','auto-complete'):
+            # Experimental: honor
+            if k.handleMiniBindings(event,state,stroke):
+                return 'break'
             # Do the default state action.
             if trace: g.trace('calling state function')
             val = k.callStateFunction(event) # Calls end-command.
@@ -4926,14 +4922,14 @@ def masterKeyHandlerHelper (self,event,stroke):
         else:
             d =  k.masterBindingsDict.get(state)
             if d:
-                # A typical state
                 b = d.get(stroke)
-                # g.trace(d.keys())
                 if b:
                     if trace: g.trace('calling generalModeHandler')
                     k.generalModeHandler (event,
                         commandName=b.commandName,func=b.func,
                         modeName=state,nextMode=b.nextMode)
+                    return 'break'
+                elif k.handleMiniBindings(event,state,stroke):
                     return 'break'
                 else:
                     if trace: g.trace('calling modeHelp')
@@ -4975,6 +4971,25 @@ def masterKeyHandlerHelper (self,event,stroke):
         return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
 #@nonl
 #@-node:ekr.20060205221734:masterKeyHandlerHelper
+#@+node:ekr.20060309065445:handleMiniBindings
+def handleMiniBindings (self,event,state,stroke):
+    
+    k = self ; c = k.c
+    trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
+    
+    if not state.startswith('auto-'):
+        d = k.masterBindingsDict.get('mini')
+        b = d.get(stroke)
+        if b:
+            if trace: g.trace(repr(stroke),'mini binding',b.commandName)
+            # Pass this on for macro recording.
+            k.masterCommand(event,b.func,stroke,b.commandName)
+            c.minibufferWantsFocus()
+            return True
+        
+    return False
+#@nonl
+#@-node:ekr.20060309065445:handleMiniBindings
 #@-node:ekr.20060127183752:masterKeyHandler & helper
 #@+node:ekr.20060129052538.2:masterClickHandler
 def masterClickHandler (self,event,func=None):
@@ -6149,6 +6164,153 @@ def removeTrailingNewlines (self,old,new,ch):
 #@nonl
 #@-node:ekr.20051026143009:removeTrailingNewlines
 #@-node:ekr.20060309063048:Fixed another unicode crasher
+#@+node:ekr.20060309022225:Fixed problem with left & right arrows in outline mode
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3619340
+By: nobody
+
+Just tried out CVS today, and on Linux left/right and L/R in outline mode
+(Ctrl-Shift-O) seem to do nothing, whereas they should expand/contract parent
+nodes. Do I need to do something special to enable these keys, or is this a bug?
+
+@color
+#@nonl
+#@+node:ekr.20060127183752:masterKeyHandler & helper
+master_key_count = 0
+
+def masterKeyHandler (self,event,stroke=None):
+    
+    '''In the new binding scheme, there is only one key binding.
+    
+    This is the handler for that binding.'''
+    
+    k = self ; c = k.c
+    val = self.masterKeyHandlerHelper(event,stroke)
+    if val and c and c.exists: # Ignore special keys.
+        c.frame.updateStatusLine()
+        c.masterFocusHandler()
+    return val
+#@nonl
+#@+node:ekr.20060205221734:masterKeyHandlerHelper
+def masterKeyHandlerHelper (self,event,stroke):
+
+    k = self ; c = k.c
+    w = event and event.widget
+    w_name = c.widget_name(w)
+    trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
+    keysym = event.keysym or ''
+    if keysym in (
+        'Caps_Lock', 'Num_Lock', 'Control_L', 'Alt_L',
+        'Shift_L', 'Control_R', 'Alt_R','Shift_R','Win_L','Win_R'):
+        return None
+        
+    self.master_key_count += 1
+    if trace and (self.master_key_count % 100) == 0:
+        g.printGcSummary(trace=True)
+
+    if 0:
+        if stroke is None:
+            if trace: g.trace('no stroke: using strokeFromEvent')
+            stroke = k.strokeFromEvent(event)
+
+    # Pass keyboard-quit to k.masterCommand for macro recording.
+    if k.abortAllModesKey and stroke == k.abortAllModesKey:
+        return k.masterCommand(event,k.keyboardQuit,stroke,'keyboard-quit')
+        
+    state = k.state.kind
+    if trace: g.trace(repr(stroke),'state',state)
+    if k.inState():
+        if 0: # Interferes with similar keys bound in a state.
+            if k.handleMiniBindings(event,state,stroke):
+                return 'break'
+        # Pass keys to getArg or full-command modes if they are active.
+        if state == 'getArg':
+            return k.getArg(event)
+        elif state in ('full-command','auto-complete'):
+            # Experimental: honor
+            if k.handleMiniBindings(event,state,stroke):
+                return 'break'
+            # Do the default state action.
+            if trace: g.trace('calling state function')
+            val = k.callStateFunction(event) # Calls end-command.
+            if val != 'do-standard-keys':
+                return 'break'
+            g.trace('do-standard-keys',w_name,stroke)
+        # Third, pass keys to the general mode handler.
+        else:
+            d =  k.masterBindingsDict.get(state)
+            if d:
+                b = d.get(stroke)
+                if b:
+                    if trace: g.trace('calling generalModeHandler')
+                    k.generalModeHandler (event,
+                        commandName=b.commandName,func=b.func,
+                        modeName=state,nextMode=b.nextMode)
+                    return 'break'
+                elif k.handleMiniBindings(event,state,stroke):
+                    return 'break'
+                else:
+                    if trace: g.trace('calling modeHelp')
+                    k.modeHelp(event)
+                    return 'break'
+            else:
+                g.trace('No state dictionary for %s' % state)
+                return 'break'
+    
+    for key,name in (
+        # Order here is similar to bindtags order.
+        ('body','body'),
+        ('text','head'), # Important: text bindings in head before tree bindings.
+        ('tree','head'),
+        ('tree','canvas'),
+        ('log', 'log'),
+        ('text','log'),
+        ('text',None), ('all',None),
+    ):
+        if (
+            name and w_name.startswith(name) or
+            key == 'text' and g.app.gui.isTextWidget(w) or
+            key == 'all'
+        ):
+            d = k.masterBindingsDict.get(key)
+            # g.trace(key,name,d and len(d.keys()))
+            if d:
+                b = d.get(stroke)
+                if b:
+                    if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                    return k.masterCommand(event,b.func,b.stroke,b.commandName)
+
+    if k.ignore_unbound_non_ascii_keys and len(event.char) > 1:
+        # (stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1)):
+        if trace: g.trace('ignoring unbound non-ascii key')
+        return 'break'
+    else:
+        if trace: g.trace(repr(stroke),'no func')
+        return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+#@nonl
+#@-node:ekr.20060205221734:masterKeyHandlerHelper
+#@+node:ekr.20060309065445:handleMiniBindings
+def handleMiniBindings (self,event,state,stroke):
+    
+    k = self ; c = k.c
+    trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
+    
+    if not state.startswith('auto-'):
+        d = k.masterBindingsDict.get('mini')
+        b = d.get(stroke)
+        if b:
+            if trace: g.trace(repr(stroke),'mini binding',b.commandName)
+            # Pass this on for macro recording.
+            k.masterCommand(event,b.func,stroke,b.commandName)
+            c.minibufferWantsFocus()
+            return True
+        
+    return False
+#@nonl
+#@-node:ekr.20060309065445:handleMiniBindings
+#@-node:ekr.20060127183752:masterKeyHandler & helper
+#@-node:ekr.20060309022225:Fixed problem with left & right arrows in outline mode
 #@-node:ekr.20060306070425:4.4 b3 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
