@@ -42,6 +42,8 @@ if g.app and g.app.use_psyco:
     # print "enabled psyco classes",__file__
     try: from psyco.classes import *
     except ImportError: pass
+    
+Pmw = g.importExtension("Pmw",pluginName='LeoTkinterTree',verbose=True,required=True)
 
 import leoFrame
 import leoNodes
@@ -351,8 +353,23 @@ class leoTkinterTree (leoFrame.leoTree):
         )
         for tag,event,callback in table:
             self.canvas.tag_bind(tag,event,callback)
-        #@nonl
         #@-node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
+        #@nl
+        #@    << create baloon bindings for tagged items on the canvas >>
+        #@+node:ekr.20060307080642:<< create baloon bindings for tagged items on the canvas >>
+        if 0: # I find these very irritating.
+            for tag,text in (
+                # ('plusBox','plusBox'),
+                ('iconBox','Icon Box'),
+                ('selectBox','Click to select'),
+                ('clickBox','Click to expand or contract'),
+                # ('textBox','Headline'),
+            ):
+                # A fairly long wait is best.
+                balloon = Pmw.Balloon(self.canvas,initwait=700)
+                balloon.tagbind(self.canvas,tag,balloonHelp=text)
+        #@nonl
+        #@-node:ekr.20060307080642:<< create baloon bindings for tagged items on the canvas >>
         #@nl
     #@nonl
     #@-node:ekr.20051024102724:tkTtree.setBindings
@@ -453,11 +470,13 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.8:newClickBox
     def newClickBox (self,p,x1,y1,x2,y2):
         
-        canvas = self.canvas ; defaultColor = "" ; tag="clickBox" 
+        canvas = self.canvas ; defaultColor = ""
+        tag = g.choose(p.hasChildren(),'clickBox','selectBox')
     
         if self.freeClickBoxes:
             theId = self.freeClickBoxes.pop(0)
             canvas.coords(theId,x1,y1,x2,y2)
+            canvas.itemconfig(theId,tag=tag)
         else:
             theId = self.canvas.create_rectangle(x1,y1,x2,y2,tag=tag)
             canvas.itemconfig(theId,fill=defaultColor,outline=defaultColor)
@@ -526,7 +545,6 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas = self.canvas ; tag = "textBox"
         c = self.c ;  k = c.k
     
-        
         found = len(self.freeText) > 0
         if found:
             t,theId = self.freeText.pop()
@@ -571,6 +589,10 @@ class leoTkinterTree (leoFrame.leoTree):
                 g.trace('%4d' % (theId),self.textAddr(t),'** new')
                 
         # Common configuration.
+        if 0: # Doesn't seem to work.
+            balloon = Pmw.Balloon(canvas,initwait=700)
+            balloon.tagbind(canvas,theId,balloonHelp='Headline')
+                
         self.ids[theId] = p # Add the id of the *window*
         self.setText(theId,t,p.headString())
         t.configure(width=self.headWidth(p=p))
@@ -1208,7 +1230,7 @@ class leoTkinterTree (leoFrame.leoTree):
             self.drawTree(bunch.p,self.root_left,self.root_top,0,0,hoistFlag=True)
         else:
             self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
-            
+    
         if self.trace_stats: self.showStats()
         
         canvas.lower("lines")  # Lowest.
@@ -1216,6 +1238,7 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas.lift("userIcon")
         canvas.lift("plusBox")
         canvas.lift("clickBox")
+        canvas.lift("clickExpandBox")
         canvas.lift("iconBox") # Higest.
     
         self.redrawing = False
