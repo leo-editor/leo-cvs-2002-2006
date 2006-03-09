@@ -172,6 +172,26 @@ slow - I find myself holding Alt-Up and hoping I don't overshoot the keyboard
 autorepeat. Even then, it can take 20 seconds to get to the node I want.
 #@nonl
 #@-node:ekr.20060306200304.1:Scroll outline pane commands
+#@+node:ekr.20060309021641:Document autocompleter better
+@nocolor
+
+> is it correct that only ctrl, and a mouse click, should trigger insertion,
+
+No.  The main way to start autocompletion is to type a period.  For example, the last period in:
+
+x.y.z.
+
+Leo will scan to the start (x) to see if x is something it knows about.  In particular, if x is 'self' Leo will see if the current node is in the range of an class definition.  Also, Leo 'knows about' c, g and p, and a few others.  I need to find some way of generalizing what Leo knows about.  Leo also knows about all the modules in sys.modules so typing 'sys.' will bring up the autocompleter.
+
+>Does the autocompleter sometimes insert a word into text with some special markup?
+
+The presently suggested text is highlighted.  You can see the status of the autocompletion by looking at the name of the tab.  For example, after typing 'sys.' the tab will show 'Autocomplete sys.'
+
+Forget the other ways of invoking the autocompleter.
+
+Edward
+#@nonl
+#@-node:ekr.20060309021641:Document autocompleter better
 #@-node:ekr.20060301102950:To do 4.4 b3
 #@+node:ekr.20060226131603:To do 4.4 b4
 #@+node:ekr.20060301080026:Add support for chapters to Leo's core

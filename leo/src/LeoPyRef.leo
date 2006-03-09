@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9363" clone_windows="0"/>
 <globals body_outline_ratio="0.535469107551">
-	<global_window_position top="31" left="431" height="873" width="752"/>
+	<global_window_position top="31" left="431" height="873" width="663"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -13,11 +13,14 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"
+marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
-<v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
+<v t="ekr.20040117181936"
+marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20060207133601"
+expanded="ekr.20041228084143,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -330,7 +333,7 @@
 <v t="ekr.20060225125519"><vh>Applied rst3 patch from Kent Tenney</vh></v>
 </v>
 <v t="ekr.20060306070425"><vh>4.4 b3 projects</vh>
-<v t="ekr.20060301182319"><vh>(Support for chapters plugin)</vh>
+<v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
 <v t="ekr.20060306030946.1"><vh>Event handling for multiple editors</vh>
 <v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
 <v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
@@ -354,7 +357,7 @@
 <v t="ekr.20041221071131"><vh>createPmwTreeCanvas (not used)</vh></v>
 </v>
 <v t="ekr.20051104075904.42"><vh>leoTest.runLeoTest</vh></v>
-<v t="ekr.20031218072017.2052"><vh>g.openWithFileName</vh></v>
+<v t="ekr.20031218072017.2052" a="M"><vh>g.openWithFileName</vh></v>
 <v t="ekr.20031218072017.4121"><vh>setMenuLabel</vh></v>
 </v>
 <v t="ekr.20060306030946"><vh>Drawing</vh>
@@ -393,20 +396,46 @@
 <v t="ekr.20040803112450"><vh>c.isCurrentPosition</vh></v>
 </v>
 </v>
+<v t="ekr.20060306200304"><vh>Fixed unicode crasher??</vh></v>
+<v t="ekr.20060307080642.1"><vh>Added some balloons to the tree pane</vh>
+<v t="ekr.20060307080642"><vh>&lt;&lt; create baloon bindings for tagged items on the canvas &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.11"><vh>newText (leoTkinterTree)</vh>
+<v t="ekr.20050618045715"><vh>&lt;&lt; patch by Maciej Kalisiak  to handle scroll-wheel events &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.8" a="M"><vh>newClickBox</vh></v>
+<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
+</v>
+<v t="ekr.20060307234849"><vh>Addded outline-scroll commands</vh>
+<v t="ekr.20060309060654.1"><vh>scrollOutlineUp/Down/Line/Page</vh></v>
+</v>
+<v t="ekr.20060309063048"><vh>Fixed another unicode crasher</vh>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20060301102950"><vh>To do 4.4 b3</vh>
-<v t="ekr.20060305110016"><vh>**** autocompleter text not always sticking</vh></v>
+<v t="ekr.20060306193836" a="M"><vh>*** Mac problems with newline</vh></v>
+<v t="ekr.20060305110016"><vh>*** autocompleter text not always sticking</vh></v>
+<v t="ekr.20060306193910"><vh>***Open with shortcuts</vh></v>
+<v t="ekr.20060307074302.1"><vh>*set-change-text command should work when entering find text.</vh></v>
+<v t="ekr.20060308103043"><vh>* Fix crasher in Word plugin</vh></v>
+<v t="ekr.20060307142612"><vh>Fix problem with labels plugin</vh></v>
+<v t="ekr.20060307074624"><vh>Improve autocompleter</vh>
+<v t="ekr.20060306194204"><vh>Fix problems with autocompleter</vh></v>
 <v t="ekr.20060305073002"><vh>Separate config setting for self completion</vh></v>
-<v t="ekr.20060301102950.1"><vh>Get chapters plugin working</vh></v>
-<v t="ekr.20060227123644"><vh>There are still problems with focus: remove the optimizations</vh></v>
+<v t="ekr.20060307074302"><vh>*Control-g doesn't work in find completion</vh></v>
 <v t="ekr.20060228071700"><vh>Ignore autocompletion for number.</vh></v>
+</v>
+<v t="ekr.20060306195137"><vh>Document and test @ifgui and @ifplatform nodes</vh></v>
+<v t="ekr.20060227123644"><vh>There are still problems with focus: remove the optimizations?</vh></v>
 <v t="ekr.20060227133940"><vh>Post re breaking @ref links</vh></v>
 <v t="ekr.20060306082003"><vh>Create balloons for widgets</vh>
 <v t="ekr.20060306082003.1"><vh>createBalloon</vh></v>
 </v>
+<v t="ekr.20060306200304.1"><vh>Scroll outline pane commands</vh></v>
+<v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -430,8 +459,6 @@
 <v t="ekr.20031218072017.2810"
 marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
-<v t="ekr.20050710142719"
-marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3093"
 marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
@@ -459,9 +486,13 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 </v>
-<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20040803072955"
+marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
+<v t="ekr.20050710142719"
+marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
+<v t="ekr.20060309022225" a="V"><vh>Fix problem with left &amp; right arrows in outline mode</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040430162943"></t>
@@ -1167,7 +1198,7 @@ self.putPostlog()</t>
     return "Leo 4.4 a7, build %s, February 28, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.417 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.418 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -1236,6 +1267,73 @@ else: # Use plain click.
     &lt;&lt; initialize ivars &gt;&gt;
     self.config = configSettings(c)
     g.app.config.setIvarsFromSettings(c)</t>
+<t tx="ekr.20040803072955.8">def newClickBox (self,p,x1,y1,x2,y2):
+    
+    canvas = self.canvas ; defaultColor = ""
+    tag = g.choose(p.hasChildren(),'clickBox','selectBox')
+
+    if self.freeClickBoxes:
+        theId = self.freeClickBoxes.pop(0)
+        canvas.coords(theId,x1,y1,x2,y2)
+        canvas.itemconfig(theId,tag=tag)
+    else:
+        theId = self.canvas.create_rectangle(x1,y1,x2,y2,tag=tag)
+        canvas.itemconfig(theId,fill=defaultColor,outline=defaultColor)
+        
+    if self.trace_alloc:
+        g.trace("%3d %3d %3d %3d %3d" % (theId,x1,y1,x2,y2),p.headString(),align=-20)
+
+    assert(theId not in self.visibleClickBoxes)
+    self.visibleClickBoxes.append(theId)
+    
+    # assert(p)
+    # assert(not self.ids.get(theId))
+    self.ids[theId] = p
+    
+    return theId</t>
+<t tx="ekr.20040803072955.11">def newText (self,p,x,y):
+    
+    canvas = self.canvas ; tag = "textBox"
+    c = self.c ;  k = c.k
+
+    found = len(self.freeText) &gt; 0
+    if found:
+        t,theId = self.freeText.pop()
+        if self.trace_alloc: g.trace('%4d' % (theId),self.textAddr(t),'recycled')
+        canvas.coords(theId,x,y) # Make the window visible again.
+            # theId is the id of the *window* not the text.
+
+    else:
+        # Tags are not valid in Tk.Text widgets.
+        self.textNumber += 1
+        t = Tk.Text(canvas,name='head-%d' % self.textNumber,
+            state="normal",font=self.font,bd=0,relief="flat",height=1)
+        t.bindtags(self.textBindings) # Set the bindings for this widget.
+
+        if 0: # Crashes on XP.
+            &lt;&lt; patch by Maciej Kalisiak to handle scroll-wheel events &gt;&gt;
+    
+        theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
+        t.leo_window_id = theId # Never changes.
+        
+        if self.trace_alloc:
+            g.trace('%4d' % (theId),self.textAddr(t),'** new')
+            
+    # Common configuration.
+    if 0: # Doesn't seem to work.
+        balloon = Pmw.Balloon(canvas,initwait=700)
+        balloon.tagbind(canvas,theId,balloonHelp='Headline')
+            
+    self.ids[theId] = p # Add the id of the *window*
+    self.setText(theId,t,p.headString())
+    t.configure(width=self.headWidth(p=p))
+    t.leo_position = p # This p never changes.
+        # *Required*: onHeadlineClick uses w.leo_position to get p.
+
+    # Keys are p.key().  Entries are (t,theId)
+    self.visibleText [p.key()] = t,theId
+    
+    return t</t>
 <t tx="ekr.20040803072955.42">def drawNode(self,p,x,y):
     
     c = self.c
@@ -1326,7 +1424,7 @@ else: # Use plain click.
         self.drawTree(bunch.p,self.root_left,self.root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
-        
+
     if self.trace_stats: self.showStats()
     
     canvas.lower("lines")  # Lowest.
@@ -1334,6 +1432,7 @@ else: # Use plain click.
     canvas.lift("userIcon")
     canvas.lift("plusBox")
     canvas.lift("clickBox")
+    canvas.lift("clickExpandBox")
     canvas.lift("iconBox") # Higest.
 
     self.redrawing = False</t>
@@ -1815,6 +1914,22 @@ canvas.bind("&lt;ButtonPress&gt;",mapWheel,add=1)</t>
 LeoPy.leo
 C:\Documents and Settings\Ed\My Documents\ekr.leo
 c:\prog\leoCVS\leo\config\leoSettings.leo</t>
+<t tx="ekr.20050618045715">def PropagateButton4(e):
+    canvas.event_generate("&lt;Button-4&gt;")
+    return "break"
+
+def PropagateButton5(e):
+    canvas.event_generate("&lt;Button-5&gt;")
+    return "break"
+
+def PropagateMouseWheel(e):
+    canvas.event_generate("&lt;MouseWheel&gt;")
+    return "break"
+
+instance_tag = t.bindtags()[0]
+t.bind_class(instance_tag, "&lt;Button-4&gt;", PropagateButton4)
+t.bind_class(instance_tag, "&lt;Button-5&gt;", PropagateButton5)
+t.bind_class(instance_tag, "&lt;MouseWheel&gt;",PropagateMouseWheel)</t>
 <t tx="ekr.20050721093241">@nocolor
 
 The following are notes for anyone who is interested in writing alternate gui's for Leo.
@@ -3183,7 +3298,7 @@ def removeTrailingNewlines (self,old,new,ch):
             return True # Handle a very strange special case.
         else:
             return ch not in ('\r','\n')
-    elif old == new[:-1]:
+    elif g.safeStringCompare(old,new[-1]): ## old == new[:-1]:
         # A single trailing character has been added.
         return ch not in ('\r','\n') # Was False.
     else:
@@ -5378,7 +5493,6 @@ AttributeError: LeoApp instance has no attribute 'dialogs'</t>
 <t tx="ekr.20060227133940"></t>
 <t tx="ekr.20060228071700"></t>
 <t tx="ekr.20060301102950"></t>
-<t tx="ekr.20060301102950.1"></t>
 <t tx="ekr.20060301182319"></t>
 <t tx="ekr.20060305073002"></t>
 <t tx="ekr.20060305110016"></t>
@@ -5387,21 +5501,245 @@ AttributeError: LeoApp instance has no attribute 'dialogs'</t>
 <t tx="ekr.20060306070425"></t>
 <t tx="ekr.20060306070502"></t>
 <t tx="ekr.20060306082003"></t>
-<t tx="ekr.20060306082003.1">def createBalloon (self,tab,sv):
+<t tx="ekr.20060306082003.1">def createBalloon (self,w,s):
 
-    '''Create a balloon showing the present chapter name for a tab.'''
+    '''Create a balloon on a widget w with the text s.'''
     
-    # g.trace(tab,sv.get())
+    if not s: return
+    
+    balloon = Pmw.Balloon(w,initwait=100)
+    balloon.bind(w,s) # or tagbind
+   
 
-    balloon = Pmw.Balloon(tab,initwait=100)
-    balloon.bind(tab,'')
-    hull = balloon.component('hull')
-    def blockExpose (event):
-        if sv.get() == '':
-             hull.withdraw()
-    hull.bind('&lt;Expose&gt;',blockExpose,'+')
-    balloon._label.configure(textvariable=sv)</t>
+    if 0: # Not needed for plain text.
+        def exposeCallback (event):
+            if sv.get() == '':
+                 hull.withdraw()
+        hull = balloon.component('hull')
+        hull.bind('&lt;Expose&gt;',exposeCallback,'+')
+        balloon._label.configure(text=s)</t>
 <t tx="ekr.20060306103239"></t>
 <t tx="ekr.20060306130654"></t>
+<t tx="ekr.20060306193836">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3606515
+By: spboulet
+
+When pressing the return key, I see:
+
+masterKeyHandlerHelper: 'Return' state None
+masterKeyHandlerHelper: 'Return' no func
+
+This is the case regardless of whether @bool swap_mac_keys is True or False,
+although with 'True' the command key works as expected on the mac.
+
+Same result using CVS re the return key.
+
+Another thing I noticed (cvs version) is that the recent files is updated during
+a session but is not saved from session to session.
+
+Stephen
+</t>
+<t tx="ekr.20060306193910">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3607355
+By: vpe
+
+Alt-Ctrl-T shortcut for Open With external editor does not work in a7. Is it
+possible to assign shortcuts to Open With items? I see that there is open-with
+minibuffer command, but do not understand how to use it.
+</t>
+<t tx="ekr.20060306194204">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3607477
+By: ktenney
+
+Howdy,
+
+With autocomplete active, try typing;
+.. url: http://leo.zwiki.org/LeoZWiki
+
+what I find is: (W2K, current CVS)
+
+I have to type 4 "."
+
+after typing "leo." 
+I can't type "zwiki", I need to accept a
+completion, backspace over it, _then_ type "zwiki".</t>
+<t tx="ekr.20060306195137">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3607510
+By: spboulet
+
+One suggestion is to have more of the platform detection work be done by leo
+('if sys.platform ==' is not all that hard) instead of making it windows default
+(e.g. external editors program locations, command vs. control keys). Having
+to edit leoConfig.leo should be optional but not necessary in cases like these.
+
+Stephen (my 2 cents)
+</t>
+<t tx="ekr.20060306200304">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3609953
+By: ramondiaz
+
+With Leo 4.4 a7, build  1.417 , February 28, 2006
+Python 2.3.5, Tk 8.4.11, Pmw 1.2, linux2, if I press Ctrl-space bar I get the
+following trace:
+
+Error: 5
+UnicodeDecodeError Exception in Tk callback
+  Function: &lt;bound method keyHandlerClass.masterKeyHandler of
+&lt;leoKeys.keyHandlerClass instance at 0xb68a1c6c&gt;&gt; (type: &lt;type
+'instancemethod'&gt;)
+  Args: (&lt;Tkinter.Event instance at 0xb660ea6c&gt;,)
+  Event type: KeyPress (type num: 2)
+Traceback (innermost last):
+  File "/usr/lib/python2.3/site-packages/Pmw/Pmw_1_2/lib/PmwBase.py", line 1747,
+in __call__
+    return apply(self.func, args)
+  File "/usr/local/lib/leo/src/leoKeys.py", line 2884, in masterKeyHandler
+    val = self.masterKeyHandlerHelper(event,stroke)
+  File "/usr/local/lib/leo/src/leoKeys.py", line 2989, in
+masterKeyHandlerHelper
+    return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+  File "/usr/local/lib/leo/src/leoKeys.py", line 2192, in masterCommand
+    val = k.handleDefaultChar(event)
+  File "/usr/local/lib/leo/src/leoKeys.py", line 2240, in handleDefaultChar
+    c.editCommands.selfInsertCommand(event,action=action)
+  File "/usr/local/lib/leo/src/leoEditCommands.py", line 2383, in
+selfInsertCommand
+    if newText != oldText:
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xc0 in position 138: ordinal
+not in range(128)
+
+Try this: if g.safeStringCompare (newText,oldText):
+</t>
+<t tx="ekr.20060306200304.1">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3608246
+By: David
+
+It would be great if there was a way to scroll the tree pane with keyboard shortcuts
+and quickly choose nodes.
+
+Example:
+..press Ctrl-Up and Ctrl-down - which moves a cursor up and down the tree pane
+without actually selecting a node (which totally slows things down)
+..press Ctrl-Enter to select the node where the cursor is, and display it in
+the body pane
+
+This is just one possibility. What I'm really hoping for is any way of very
+rapidly scrolling through the tree pane, and selecting a node from that, and
+getting back to the body pane, with zero mouse usage.
+
+At present, the Alt-Up and Alt-Down work fine, except they're so excruciatingly
+slow - I find myself holding Alt-Up and hoping I don't overshoot the keyboard
+autorepeat. Even then, it can take 20 seconds to get to the node I want.</t>
+<t tx="ekr.20060307074302"></t>
+<t tx="ekr.20060307074302.1"></t>
+<t tx="ekr.20060307074624"></t>
+<t tx="ekr.20060307080642">if 0: # I find these very irritating.
+    for tag,text in (
+        # ('plusBox','plusBox'),
+        ('iconBox','Icon Box'),
+        ('selectBox','Click to select'),
+        ('clickBox','Click to expand or contract'),
+        # ('textBox','Headline'),
+    ):
+        # A fairly long wait is best.
+        balloon = Pmw.Balloon(self.canvas,initwait=700)
+        balloon.tagbind(self.canvas,tag,balloonHelp=text)</t>
+<t tx="ekr.20060307080642.1"></t>
+<t tx="ekr.20060307142612">@nocolor
+
+I tried the Labels plugin, and got:
+
+exception executing command
+Traceback (most recent call last):
+  File "C:\Software Engineering\Leo\src\leoCommands.py", line 265, in doCommand
+    val = command(event)
+TypeError: menu_add_label() takes exactly 1 argument (2 given)
+
+exception executing command
+Traceback (most recent call last):
+  File "C:\Software Engineering\Leo\src\leoCommands.py", line 265, in doCommand
+    val = command(event)
+TypeError: marks_to_label() takes exactly 1 argument (2 given)
+
+--Rich
+
+</t>
+<t tx="ekr.20060307234849"></t>
+<t tx="ekr.20060308103043">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3617936
+By: nobody
+
+I did a clean install of A7. I have the export to word plugin enabled. When
+I try to export my outline to word I get the following:
+
+Leo Log Window...
+Leo 4.4 a7, build  1.417 , February 28, 2006
+Python 2.3.5, Tk 8.4.3, Pmw 1.2
+Windows 5, 1, 2600, 2, Service Pack 2
+
+reading: C:\Development\VL4\VL4 outline.leo
+Trying to connect to Word
+Writing tree to Word
+Exception writing Word
+Traceback (most recent call last):
+  File "C:\Program Files\Leo\plugins\word_export.py", line 163, in cmd_Export
+    "")
+  File "C:\Program Files\Leo\plugins\word_export.py", line 122, in
+writeNodeAndTree
+    vnode = c.currentVnode()
+AttributeError: 'Bunch' object has no attribute 'currentVnode'
+</t>
+<t tx="ekr.20060309021641">@nocolor
+
+&gt; is it correct that only ctrl, and a mouse click, should trigger insertion,
+
+No.  The main way to start autocompletion is to type a period.  For example, the last period in:
+
+x.y.z.
+
+Leo will scan to the start (x) to see if x is something it knows about.  In particular, if x is 'self' Leo will see if the current node is in the range of an class definition.  Also, Leo 'knows about' c, g and p, and a few others.  I need to find some way of generalizing what Leo knows about.  Leo also knows about all the modules in sys.modules so typing 'sys.' will bring up the autocompleter.
+
+&gt;Does the autocompleter sometimes insert a word into text with some special markup?
+
+The presently suggested text is highlighted.  You can see the status of the autocompletion by looking at the name of the tab.  For example, after typing 'sys.' the tab will show 'Autocomplete sys.'
+
+Forget the other ways of invoking the autocompleter.
+
+Edward</t>
+<t tx="ekr.20060309022225">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3619340
+By: nobody
+
+Just tried out CVS today, and on Linux left/right and L/R in outline mode
+(Ctrl-Shift-O) seem to do nothing, whereas they should expand/contract parent
+nodes. Do I need to do something special to enable these keys, or is this a bug?
+</t>
+<t tx="ekr.20060309060654.1">def scrollOutlineDownLine (self,event=None):
+    self.c.frame.tree.canvas.yview_scroll(1,"unit")
+    
+def scrollOutlineDownPage (self,event=None):
+    self.c.frame.tree.canvas.yview_scroll(1,"page")
+
+def scrollOutlineUpLine (self,event=None):
+    self.c.frame.tree.canvas.yview_scroll(-1,"unit")
+
+def scrollOutlineUpPage (self,event=None):
+    self.c.frame.tree.canvas.yview_scroll(-1,"page")
+
+
+</t>
+<t tx="ekr.20060309063048">
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3619486
+By: ramondiaz
+
+File "/usr/local/lib/leo/src/leoTkinterFrame.py", line 2590, in
+removeTrailingNewlines
+
+elif old == new[:-1]:
+UnicodeDecodeError: 
+
+elif g.safeStringCompare(old,new[-1]):</t>
 </tnodes>
 </leo_file>
