@@ -1102,6 +1102,8 @@ class baseColorizer:
         self.c = c
         self.frame = c.frame
         self.body = c.frame.body
+        
+        self.trace = c.config.getBool('trace_colorizer')
     
         self.count = 0 # how many times this has been called.
         self.use_hyperlinks = False # True: use hyperlinks and underline "live" links.
@@ -1261,6 +1263,7 @@ class baseColorizer:
         #@nonl
         #@-node:ekr.20041107094252:<< extend forth words from files >>
         #@nl
+      
     #@nonl
     #@-node:ekr.20031218072017.1605:color.__init__
     #@+node:ekr.20050420083821:disable & enable
@@ -1313,7 +1316,7 @@ class baseColorizer:
     def colorize(self,p,incremental=False):
     
         if self.enabled:
-            # g.trace("incremental",incremental)
+            # if self.trace: g.trace("incremental",incremental)
             self.incremental=incremental
             self.updateSyntaxColorer(p)
             return self.colorizeAnyLanguage(p)
@@ -1326,7 +1329,7 @@ class baseColorizer:
     def recolor_range(self,p,leading,trailing):
         
         if self.enabled:
-            # g.trace("leading,trailing",leading,trailing)
+            # if self.trace: g.trace("leading,trailing",leading,trailing)
             self.incremental=True
             self.updateSyntaxColorer(p)
             return self.colorizeAnyLanguage(p,leading=leading,trailing=trailing)
@@ -1345,8 +1348,7 @@ class baseColorizer:
         
         if not c.config.getBool('use_syntax_coloring'):
             return
-        
-        # g.trace("incremental",self.incremental,p)
+    
         if self.killFlag:
             self.removeAllTags()
             return
@@ -1547,7 +1549,7 @@ class baseColorizer:
                 #@-at
                 #@@c
                 
-                # g.trace("incremental")
+                if self.trace: g.trace("incremental",self.language)
                 
                 # 6/30/03: make a copies of everything
                 old_lines = self.lines[:]
@@ -1709,7 +1711,7 @@ class baseColorizer:
             else:
                 #@            << non-incrementally color the text >>
                 #@+node:ekr.20031218072017.1887:<< non-incrementally color the text >>
-                # g.trace("non-incremental",self.language)
+                if self.trace: g.trace("non-incremental",self.language)
                 
                 self.line_index = 1 # The Tk line number for indices, as in n.i
                 for s in lines:
