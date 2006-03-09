@@ -14,15 +14,15 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20031218072017.2052,ekr.20040803072955.8,"
+expanded="ekr.20060127183752,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"
 marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
-<v t="ekr.20060207133601"
-expanded="ekr.20041228084143,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
+<v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -342,6 +342,7 @@ expanded="ekr.20041228084143,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
 <v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
+<v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
 </v>
 <v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
 </v>
@@ -410,6 +411,12 @@ expanded="ekr.20041228084143,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20060309063048"><vh>Fixed another unicode crasher</vh>
 <v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+</v>
+<v t="ekr.20060309022225"><vh>Fixed problem with left &amp; right arrows in outline mode</vh>
+<v t="ekr.20060127183752" a="E"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
+<v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -492,7 +499,6 @@ marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
-<v t="ekr.20060309022225" a="V"><vh>Fix problem with left &amp; right arrows in outline mode</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040430162943"></t>
@@ -4193,20 +4199,16 @@ shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0</t>
     state = k.state.kind
     if trace: g.trace(repr(stroke),'state',state)
     if k.inState():
-        # First: honor the 'mini' bindings, but *not* in auto-complete state.
-        if not state.startswith('auto-'):
-            d = k.masterBindingsDict.get('mini')
-            b = d.get(stroke)
-            if b:
-                if trace: g.trace(repr(stroke),'mini binding',b.commandName)
-                # Pass this on for macro recording.
-                k.masterCommand(event,b.func,stroke,b.commandName)
-                c.minibufferWantsFocus()
+        if 0: # Interferes with similar keys bound in a state.
+            if k.handleMiniBindings(event,state,stroke):
                 return 'break'
-        # Second, pass keys to getArg or full-command modes if they are active.
+        # Pass keys to getArg or full-command modes if they are active.
         if state == 'getArg':
             return k.getArg(event)
         elif state in ('full-command','auto-complete'):
+            # Experimental: honor
+            if k.handleMiniBindings(event,state,stroke):
+                return 'break'
             # Do the default state action.
             if trace: g.trace('calling state function')
             val = k.callStateFunction(event) # Calls end-command.
@@ -4217,14 +4219,14 @@ shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0</t>
         else:
             d =  k.masterBindingsDict.get(state)
             if d:
-                # A typical state
                 b = d.get(stroke)
-                # g.trace(d.keys())
                 if b:
                     if trace: g.trace('calling generalModeHandler')
                     k.generalModeHandler (event,
                         commandName=b.commandName,func=b.func,
                         modeName=state,nextMode=b.nextMode)
+                    return 'break'
+                elif k.handleMiniBindings(event,state,stroke):
                     return 'break'
                 else:
                     if trace: g.trace('calling modeHelp')
@@ -5714,7 +5716,8 @@ By: nobody
 Just tried out CVS today, and on Linux left/right and L/R in outline mode
 (Ctrl-Shift-O) seem to do nothing, whereas they should expand/contract parent
 nodes. Do I need to do something special to enable these keys, or is this a bug?
-</t>
+
+@color</t>
 <t tx="ekr.20060309060654.1">def scrollOutlineDownLine (self,event=None):
     self.c.frame.tree.canvas.yview_scroll(1,"unit")
     
@@ -5741,5 +5744,21 @@ elif old == new[:-1]:
 UnicodeDecodeError: 
 
 elif g.safeStringCompare(old,new[-1]):</t>
+<t tx="ekr.20060309065445">def handleMiniBindings (self,event,state,stroke):
+    
+    k = self ; c = k.c
+    trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
+    
+    if not state.startswith('auto-'):
+        d = k.masterBindingsDict.get('mini')
+        b = d.get(stroke)
+        if b:
+            if trace: g.trace(repr(stroke),'mini binding',b.commandName)
+            # Pass this on for macro recording.
+            k.masterCommand(event,b.func,stroke,b.commandName)
+            c.minibufferWantsFocus()
+            return True
+        
+    return False</t>
 </tnodes>
 </leo_file>
