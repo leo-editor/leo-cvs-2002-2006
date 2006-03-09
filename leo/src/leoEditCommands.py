@@ -1254,6 +1254,10 @@ class editCommandsClass (baseEditCommandsClass):
             'reverse-region':                       self.reverseRegion,
             'scroll-down':                          self.scrollDown,
             'scroll-down-extend-selection':         self.scrollDownExtendSelection,
+            'scroll-outline-down-line':             self.scrollOutlineDownLine,
+            'scroll-outline-down-page':             self.scrollOutlineDownPage,
+            'scroll-outline-up-line':               self.scrollOutlineUpLine,
+            'scroll-outline-up-page':               self.scrollOutlineUpPage,
             'scroll-up':                            self.scrollUp,
             'scroll-up-extend-selection':           self.scrollUpExtendSelection,
             'select-paragraph':                     self.selectParagraph,
@@ -2380,7 +2384,7 @@ class editCommandsClass (baseEditCommandsClass):
         # Update the text and handle undo.
         newText = w.get('1.0','end')
         w.see(w.index('insert'))
-        if newText != oldText:
+        if not g.safeStringCompare(newText,oldText):
             c.frame.body.onBodyChanged(undoType=undoType,
                 oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
                 
@@ -3398,6 +3402,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@-others
     #@nonl
     #@-node:ekr.20050920084036.105:region...
+    #@+node:ekr.20060309060654:scrolling...
     #@+node:ekr.20050920084036.116:scrollUp/Down/extendSelection
     def scrollDown (self,event):
         self.scrollHelper(event,'down',extend=False)
@@ -3435,6 +3440,22 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20060113082917:scrollHelper
     #@-node:ekr.20050920084036.116:scrollUp/Down/extendSelection
+    #@+node:ekr.20060309060654.1:scrollOutlineUp/Down/Line/Page
+    def scrollOutlineDownLine (self,event=None):
+        self.c.frame.tree.canvas.yview_scroll(1,"unit")
+        
+    def scrollOutlineDownPage (self,event=None):
+        self.c.frame.tree.canvas.yview_scroll(1,"page")
+    
+    def scrollOutlineUpLine (self,event=None):
+        self.c.frame.tree.canvas.yview_scroll(-1,"unit")
+    
+    def scrollOutlineUpPage (self,event=None):
+        self.c.frame.tree.canvas.yview_scroll(-1,"page")
+    
+    
+    #@-node:ekr.20060309060654.1:scrollOutlineUp/Down/Line/Page
+    #@-node:ekr.20060309060654:scrolling...
     #@+node:ekr.20050920084036.117:sort...
     '''XEmacs provides several commands for sorting text in a buffer.  All
     operate on the contents of the region (the text between point and the
