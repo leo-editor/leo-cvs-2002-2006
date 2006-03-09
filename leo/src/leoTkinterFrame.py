@@ -2600,7 +2600,7 @@ class leoTkinterBody (leoFrame.leoBody):
                 return True # Handle a very strange special case.
             else:
                 return ch not in ('\r','\n')
-        elif old == new[:-1]:
+        elif g.safeStringCompare(old,new[-1]): ## old == new[:-1]:
             # A single trailing character has been added.
             return ch not in ('\r','\n') # Was False.
         else:
