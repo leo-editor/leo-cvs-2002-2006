@@ -30,7 +30,7 @@ plugins_menu.py
 #niceNosent.py
 #################
 #vim.py
-chapters2.py
+#chapters2.py
 #bibtex.py
 #autotrees.py
 #mod_autosave.py

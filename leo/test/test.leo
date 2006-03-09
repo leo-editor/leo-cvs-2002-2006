@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7977" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
-	<global_window_position top="39" left="326" height="857" width="781"/>
+	<global_window_position top="40" left="450" height="857" width="781"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -193,6 +193,12 @@
 <v t="ekr.20060103102234"><vh>notes</vh></v>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
+<v t="ekr.20060309024008"><vh>Tree scrolling</vh>
+<v t="ekr.20060309024008.1"><vh>@@command page-up</vh></v>
+<v t="ekr.20060309024008.2"><vh>@@command page-down</vh></v>
+<v t="ekr.20060309024008.3"><vh>@@command line-up</vh></v>
+<v t="ekr.20060309024008.4"><vh>@@command line-down</vh></v>
+</v>
 </v>
 <v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
@@ -264,8 +270,11 @@
 </v>
 <v t="ekr.20060306120904"><vh>import reportlab</vh></v>
 <v t="ekr.20060307115056"><vh>Test of leoDebugger</vh></v>
-<v t="ekr.20060308001046" a="EV"><vh>Test of importing idle stuff</vh>
+<v t="ekr.20060308001046" a="V"><vh>Test of using Idle's debugger in Leo</vh>
 <v t="ekr.20060308004027"><vh>myMain</vh></v>
+<v t="ekr.20060308062532" a="E"><vh>leoPyShellEditorWindow</vh>
+<v t="ekr.20060308062532.1"><vh>ctor: </vh></v>
+</v>
 <v t="ekr.20060308014050" a="E"><vh>leoPyShell</vh>
 <v t="ekr.20060308015826"><vh>ctor: leoPyShell</vh></v>
 <v t="ekr.20060308015826.1"><vh>begin</vh></v>
@@ -4536,9 +4545,10 @@ import Tkinter
 
 @others
 
-args = [r'c:\Python24\Lib\idlelib\Pyshell.py'] # Edit file on startup.
+
 args = ['-d'] # Show debugger window on startup.
 args = []
+args = [r'c:\Python24\Lib\idlelib\EditorWindow.py'] # Edit file on startup.
 
 if 1:
     myMain(args)
@@ -4563,7 +4573,7 @@ def myMain(args):
 
     # idlelib.PyShel.main sets these from sys.argv.
     cmd = False
-    debug = False
+    debug = True
     edit_start = True
     enable_edit = True 
     enable_shell = True
@@ -4614,13 +4624,15 @@ def myMain(args):
             
     root.mainloop()
     # root.destroy() # This causes problems.</t>
-<t tx="ekr.20060308005321">class leoPyShellFileList (idlelib.PyShell.PyShellFileList):
+<t tx="ekr.20060308005321">class leoPyShellFileList(idlelib.PyShell.PyShellFileList):
     
+    # override FileList's class variable, instances return PyShellEditorWindow
+    # instead of EditorWindow when new edit windows are created.
+
+    pyshell = None
+
     @others</t>
 <t tx="ekr.20060308014050">class leoPyShell (idlelib.PyShell.PyShell):
-    
-    # firewallmessage = ''
-    # COPYRIGHT = ''
     
     @others
         
@@ -4643,7 +4655,9 @@ def open_shell(self, event=None):
         
     print 'leoPyShellFileList',args,keys
         
-    idlelib.PyShell.PyShellFileList.__init__(self,root,*args,**keys)</t>
+    idlelib.PyShell.PyShellFileList.__init__(self,root,*args,**keys)
+    
+    # self.EditorWindow = leoPyShellEditorWindow</t>
 <t tx="ekr.20060308015826">def __init__ (self,*args,**keys):
         
     print 'leoPythonShell',args,keys
@@ -4672,5 +4686,20 @@ def open_shell(self, event=None):
     import Tkinter
     Tkinter._default_root = None # 03Jan04 KBK What's this?
     return True</t>
+<t tx="ekr.20060308062532">class leoPyShellEditorWindow (idlelib.PyShell.PyShellEditorWindow):
+    
+    @others</t>
+<t tx="ekr.20060308062532.1">def __init__ (self,*args,**keys):
+    
+    print 'leoPyShellEditorWindow',args,keys
+    
+    # Init the base class.
+    idlelib.PyShell.PyShellEditorWindow(self,*args,**keys)
+</t>
+<t tx="ekr.20060309024008"></t>
+<t tx="ekr.20060309024008.1">c.frame.tree.canvas.yview_scroll(-1, "page")</t>
+<t tx="ekr.20060309024008.2">c.frame.tree.canvas.yview_scroll(1,"page")</t>
+<t tx="ekr.20060309024008.3">c.frame.tree.canvas.yview_scroll(-1,"unit")</t>
+<t tx="ekr.20060309024008.4">c.frame.tree.canvas.yview_scroll(1, "unit")</t>
 </tnodes>
 </leo_file>
