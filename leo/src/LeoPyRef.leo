@@ -12,10 +12,9 @@
 <v t="EKR.20040430162943"><vh>Notes</vh>
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
-<v t="EKR.20040519090151.3" a="V"><vh>Projects</vh>
+<v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20031218072017.2052,ekr.20040803072955.8,"
-expanded="ekr.20060306070425,ekr.20060127183752,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"
@@ -332,7 +331,7 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20060225125519"><vh>Applied rst3 patch from Kent Tenney</vh></v>
 </v>
-<v t="ekr.20060306070425" a="E"><vh>4.4 b3 projects</vh>
+<v t="ekr.20060306070425"><vh>4.4 b3 projects</vh>
 <v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
 <v t="ekr.20060306030946.1"><vh>Event handling for multiple editors</vh>
 <v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
@@ -429,7 +428,7 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 </v>
 <v t="ekr.20060321094013"><vh>Made Control-v work again in find command!</vh>
-<v t="ekr.20060127183752" a="E"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
 <v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
 <v t="ekr.20060321105403"><vh>&lt;&lt; define vars &gt;&gt;</vh></v>
 <v t="ekr.20060321105403.1"><vh>&lt;&lt; do key traces &gt;&gt;</vh></v>
@@ -443,6 +442,15 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20060301102950"><vh>To do 4.4 b3</vh>
 <v t="ekr.20060321082832"><vh>To do first</vh>
+<v t="ekr.20060321111639"><vh>Get rid of settings messages</vh>
+<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
+<v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
+<v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
+</v>
+</v>
 <v t="ekr.20060319155125"><vh>Generalize path to stylesheet in the rst3 plugin</vh>
 <v t="ekr.20060320071608"><vh>proposed revision</vh></v>
 </v>
@@ -458,8 +466,8 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060320113137.2"><vh>Report 2</vh></v>
 </v>
 <v t="ekr.20060321080150"><vh>Hoist-shortcut functionality</vh>
-<v t="ekr.20060321080150.1"><vh>@button Save Hoist</vh></v>
-<v t="ekr.20060321080150.2"><vh>@button Dehoist</vh></v>
+<v t="ekr.20060321080150.1"><vh>@@button Save Hoist</vh></v>
+<v t="ekr.20060321080150.2"><vh>@@button Dehoist</vh></v>
 <v t="ekr.20060321080150.3"><vh>setup</vh>
 <v t="ekr.20060321080150.4"><vh>addHoistCommand</vh>
 <v t="ekr.20060321080150.5"><vh>&lt;&lt; define callbacks for addHoistButton &gt;&gt;</vh></v>
@@ -491,7 +499,7 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060306200304.1"><vh>Scroll outline pane commands</vh></v>
 <v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -546,9 +554,19 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20040803072955"
 marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
 <v t="ekr.20050710142719"
-marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
+marks="ekr.20051022142249,"
+expanded="ekr.20060127162818.1,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
 <v t="ekr.20060321082832"><vh>To do first</vh>
+<v t="ekr.20060321111639"><vh>Get rid of settings messages</vh>
+<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
+<v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
+<v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
+</v>
+</v>
 <v t="ekr.20060319155125"><vh>Generalize path to stylesheet in the rst3 plugin</vh>
 <v t="ekr.20060320071608"><vh>proposed revision</vh></v>
 </v>
@@ -564,8 +582,8 @@ marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20060320113137.2"><vh>Report 2</vh></v>
 </v>
 <v t="ekr.20060321080150"><vh>Hoist-shortcut functionality</vh>
-<v t="ekr.20060321080150.1"><vh>@button Save Hoist</vh></v>
-<v t="ekr.20060321080150.2"><vh>@button Dehoist</vh></v>
+<v t="ekr.20060321080150.1"><vh>@@button Save Hoist</vh></v>
+<v t="ekr.20060321080150.2"><vh>@@button Dehoist</vh></v>
 <v t="ekr.20060321080150.3"><vh>setup</vh>
 <v t="ekr.20060321080150.4"><vh>addHoistCommand</vh>
 <v t="ekr.20060321080150.5"><vh>&lt;&lt; define callbacks for addHoistButton &gt;&gt;</vh></v>
@@ -634,6 +652,71 @@ def onBodyChanged (self,undoType,
         &lt;&lt; recolor the body &gt;&gt;
         if not c.changed: c.setChanged(True)
         &lt;&lt; redraw the screen if necessary &gt;&gt;</t>
+<t tx="ekr.20031218072017.1723">def createMenuEntries (self,menu,table,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.k
+    if g.app.unitTesting: return
+    for data in table:
+        &lt;&lt; get label &amp; command or continue &gt;&gt;
+        &lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;
+        accelerator = stroke = k.shortcutFromSetting(accel) or ''
+        accelerator = accelerator and k.prettyPrintKey(accelerator).lstrip('&lt;').rstrip('&gt;')
+        def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
+            return k.masterMenuHandler(stroke,command,commandName)
+        realLabel = self.getRealMenuName(label)
+        amp_index = realLabel.find("&amp;")
+        realLabel = realLabel.replace("&amp;","")
+        if sys.platform == 'darwin':
+            &lt;&lt; clear accelerator if it is a plain key &gt;&gt;
+        self.add_command(menu,label=realLabel,
+            accelerator=accelerator,
+            command=masterMenuCallback,
+            underline=amp_index)</t>
+<t tx="ekr.20031218072017.1725"># New in 4.4b2: command can be a minibuffer-command name (a string)
+minibufferCommand = type(command) == type('')
+accel = None
+if minibufferCommand:
+    commandName = command 
+    command = c.commandsDict.get(commandName)
+    if command:
+        rawKey,bunchList = c.config.getShortcut(commandName)
+        # Pick the first entry that is not a mode.
+        for bunch in bunchList:
+            if not bunch.pane.endswith('-mode'):
+                # g.trace('1',bunch)
+                accel = bunch and bunch.val ; break
+    else:
+        if not g.app.unitTesting:
+            # Don't warn during unit testing.
+            # This may come from a plugin that normally isn't enabled.
+            g.trace('No inverse for %s' % commandName)
+        continue # There is no way to make this menu entry.
+else:
+    # First, get the old-style name.
+    commandName = self.computeOldStyleShortcutKey(label)
+    rawKey,bunchList = c.config.getShortcut(commandName)
+    for bunch in bunchList:
+        if not bunch.pane.endswith('-mode'):
+            # g.trace('2',bunch)
+            accel = bunch and bunch.val ; break
+    # Second, get new-style name.
+    if not accel:
+        &lt;&lt; compute emacs_name &gt;&gt;
+            # Contains the not-so-horrible kludge.
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunchList = c.config.getShortcut(emacs_name)
+            # Pick the first entry that is not a mode.
+            for bunch in bunchList:
+                if not bunch.pane.endswith('-mode'):
+                    accel = bunch.val ; break
+                    # g.trace('2',bunch)
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % commandName)</t>
 <t tx="ekr.20031218072017.1801">def __init__(self,title,gui):
 
     # Init the base class.
@@ -3138,6 +3221,40 @@ def init_s_ctrl (self,s):
     t.insert("end",s)
     t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
     return t</t>
+<t tx="ekr.20051021091958">ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        # New in 4.4b2: command can be a minibuffer-command name (a string)
+        label,command = data
+    else:
+        # New in 4.4: we ignore shortcuts bound in menu tables.
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and label in (None,'-'):
+    self.add_separator(menu)
+    continue # That's all.</t>
+<t tx="ekr.20051021100806.1">@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % commandName
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None</t>
 <t tx="ekr.20051022212004"># Just open the Find tab if it has never been opened.
 # For minibuffer commands, it would be good to force the Find tab to be visible.
 # However, this leads to unfortunate confusion when executed from a shortcut.
@@ -4378,6 +4495,11 @@ if alt and not ctrl:
     for w in (c.miniBufferWidget,bodyCtrl,canvas,bindingWidget):
         self.completeAllBindingsForWidget(w)
 </t>
+<t tx="ekr.20060216110502">for z in ('Alt','Ctrl','Command'):
+    if accelerator.find(z) != -1:
+        break # Found.
+else:
+    accelerator = ''</t>
 <t tx="ekr.20060216155558.1">def scan (self,event=None,verbose=True,thread=True):
     
     c = self.c
@@ -6134,5 +6256,16 @@ else:
     if trace: g.trace(repr(stroke),'no func')
     return k.masterCommand(event,func=None,stroke=stroke,commandName=None)</t>
 <t tx="ekr.20060321110256">Can this be done?  How to tests keys in various states?</t>
+<t tx="ekr.20060321111639">Apparently g.app.unitTesting isn't set properly for the new-window test.
+
+### It's a button in some .leo file.
+
+Warning: ignoring bool:tracegc not shortcut
+There may be conflicting settings!
+
+# This comes from a plugin loaded during unit testing.
+
+createMenuEntries: No inverse for parameterizesectionreference
+</t>
 </tnodes>
 </leo_file>

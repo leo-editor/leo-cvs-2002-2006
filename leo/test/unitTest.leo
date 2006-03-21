@@ -958,7 +958,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051108140810" a="EV" annotate="7d71002e"><vh>All unit tests</vh>
+<v t="ekr.20051108140810" a="E" annotate="7d71002e"><vh>All unit tests</vh>
 <v t="ekr.20060203200614"><vh>Basic Unit tests</vh>
 <v t="ekr.20060205165937"><vh>Doctests</vh>
 <v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
@@ -1624,7 +1624,7 @@
 <v t="ekr.20051109143831" annotate="7d71002e"><vh>@test restore the screen</vh></v>
 </v>
 </v>
-<v t="ekr.20060203200614.1"><vh>Lengthy unit tests</vh>
+<v t="ekr.20060203200614.1" a="E"><vh>Lengthy unit tests</vh>
 <v t="ekr.20040712101754.2" annotate="7d71002e"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
@@ -1636,11 +1636,11 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins</vh>
+<v t="ekr.20050120095423" a="E" annotate="7d71002e"><vh>Unit tests for plugins</vh>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
-<v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
-<v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
-<v t="ekr.20050218015346.12"><vh>__init__</vh></v>
+<v t="ekr.20050218015346" a="E"><vh>@suite run all plugin test routines</vh>
+<v t="ekr.20050218015346.11" a="E"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050218015346.12" a="V"><vh>__init__</vh></v>
 <v t="ekr.20050218015346.13"><vh> fail</vh></v>
 <v t="ekr.20050218015346.16"><vh>runTest</vh></v>
 <v t="ekr.20050218015346.17"><vh>shortDescription</vh></v>
@@ -5412,7 +5412,7 @@ if 1:
     self.g = g
     self.code = code
     self.p = c.currentPosition().copy()
-    self.verbose = verbose
+    self.verbose = True # verbose
 </t>
 <t tx="ekr.20050218015346.13">def fail (self,msg=None):
 
@@ -7761,7 +7761,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;

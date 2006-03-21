@@ -270,7 +270,7 @@
 </v>
 <v t="ekr.20060306120904"><vh>import reportlab</vh></v>
 <v t="ekr.20060307115056"><vh>Test of leoDebugger</vh></v>
-<v t="ekr.20060308001046" a="V"><vh>Test of using Idle's debugger in Leo</vh>
+<v t="ekr.20060308001046"><vh>Test of using Idle's debugger in Leo</vh>
 <v t="ekr.20060308004027"><vh>myMain</vh></v>
 <v t="ekr.20060308062532" a="E"><vh>leoPyShellEditorWindow</vh>
 <v t="ekr.20060308062532.1"><vh>ctor: </vh></v>
@@ -284,6 +284,7 @@
 <v t="ekr.20060308014050.1"><vh>open_shell</vh></v>
 </v>
 </v>
+<v t="ekr.20060310092758" a="V"><vh>test of getting shortcuts</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4701,5 +4702,6 @@ def open_shell(self, event=None):
 <t tx="ekr.20060309024008.2">c.frame.tree.canvas.yview_scroll(1,"page")</t>
 <t tx="ekr.20060309024008.3">c.frame.tree.canvas.yview_scroll(-1,"unit")</t>
 <t tx="ekr.20060309024008.4">c.frame.tree.canvas.yview_scroll(1, "unit")</t>
+<t tx="ekr.20060310092758">print c.config.getShortcut('abc')</t>
 </tnodes>
 </leo_file>

@@ -1306,7 +1306,10 @@ class leoMenu:
                             # g.trace('1',bunch)
                             accel = bunch and bunch.val ; break
                 else:
-                    g.trace('No inverse for %s' % commandName)
+                    if not g.app.unitTesting:
+                        # Don't warn during unit testing.
+                        # This may come from a plugin that normally isn't enabled.
+                        g.trace('No inverse for %s' % commandName)
                     continue # There is no way to make this menu entry.
             else:
                 # First, get the old-style name.

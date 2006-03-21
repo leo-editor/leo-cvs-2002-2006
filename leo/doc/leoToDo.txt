@@ -2,6 +2,440 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060301102950:To do 4.4 b3
+#@+node:ekr.20060321082832:To do first
+#@+node:ekr.20060321111639:Get rid of settings messages
+Apparently g.app.unitTesting isn't set properly for the new-window test.
+
+### It's a button in some .leo file.
+
+Warning: ignoring bool:tracegc not shortcut
+There may be conflicting settings!
+
+# This comes from a plugin loaded during unit testing.
+
+createMenuEntries: No inverse for parameterizesectionreference
+#@+node:ekr.20031218072017.1723:createMenuEntries
+def createMenuEntries (self,menu,table,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.k
+    if g.app.unitTesting: return
+    for data in table:
+        << get label & command or continue >>
+        << compute commandName & accel from label & command >>
+        accelerator = stroke = k.shortcutFromSetting(accel) or ''
+        accelerator = accelerator and k.prettyPrintKey(accelerator).lstrip('<').rstrip('>')
+        def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
+            return k.masterMenuHandler(stroke,command,commandName)
+        realLabel = self.getRealMenuName(label)
+        amp_index = realLabel.find("&")
+        realLabel = realLabel.replace("&","")
+        if sys.platform == 'darwin':
+            << clear accelerator if it is a plain key >>
+        self.add_command(menu,label=realLabel,
+            accelerator=accelerator,
+            command=masterMenuCallback,
+            underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        # New in 4.4b2: command can be a minibuffer-command name (a string)
+        label,command = data
+    else:
+        # New in 4.4: we ignore shortcuts bound in menu tables.
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and label in (None,'-'):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+# New in 4.4b2: command can be a minibuffer-command name (a string)
+minibufferCommand = type(command) == type('')
+accel = None
+if minibufferCommand:
+    commandName = command 
+    command = c.commandsDict.get(commandName)
+    if command:
+        rawKey,bunchList = c.config.getShortcut(commandName)
+        # Pick the first entry that is not a mode.
+        for bunch in bunchList:
+            if not bunch.pane.endswith('-mode'):
+                # g.trace('1',bunch)
+                accel = bunch and bunch.val ; break
+    else:
+        if not g.app.unitTesting:
+            # Don't warn during unit testing.
+            # This may come from a plugin that normally isn't enabled.
+            g.trace('No inverse for %s' % commandName)
+        continue # There is no way to make this menu entry.
+else:
+    # First, get the old-style name.
+    commandName = self.computeOldStyleShortcutKey(label)
+    rawKey,bunchList = c.config.getShortcut(commandName)
+    for bunch in bunchList:
+        if not bunch.pane.endswith('-mode'):
+            # g.trace('2',bunch)
+            accel = bunch and bunch.val ; break
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+            # Contains the not-so-horrible kludge.
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunchList = c.config.getShortcut(emacs_name)
+            # Pick the first entry that is not a mode.
+            for bunch in bunchList:
+                if not bunch.pane.endswith('-mode'):
+                    accel = bunch.val ; break
+                    # g.trace('2',bunch)
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % commandName)
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % commandName
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@+node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
+for z in ('Alt','Ctrl','Command'):
+    if accelerator.find(z) != -1:
+        break # Found.
+else:
+    accelerator = ''
+#@nonl
+#@-node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@-node:ekr.20060321111639:Get rid of settings messages
+#@+node:ekr.20060319155125:Generalize path to stylesheet in the rst3 plugin
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3637393
+By: nobody
+
+Leo 4.4 a7, build  1.417 (under Linux)
+
+Using rst3 to generate LaTex
+
+Hi,
+
+I'm trying to set up a default stylesheet for a project and want this to be
+held relative to the project directory (where the .leo file is). The default
+is to place it in the same directory as the output, which is a couple of levels
+down.
+
+setting stylesheet_path = . or empty does not work. I seem to have to specify
+an absolute path, which is not helpful when sharing developmnent through cvs.
+
+Am I missing something?
+
+Mike S.
+#@nonl
+#@+node:ekr.20060320071608:proposed revision
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3639216
+By: nobody
+
+I looked at the code myself. I have changed rst3.py line 1213 to replace
+g.os_path_dirname(self.outputFileName) with self.c.frame.openDirectory. This
+makes the path relative to the project. Not 100% as the stylesheet filename
+would need a path embedded in it to move the location down the tree. However,
+it is consistent with the way the output file is named.
+#@-node:ekr.20060320071608:proposed revision
+#@-node:ekr.20060319155125:Generalize path to stylesheet in the rst3 plugin
+#@+node:ekr.20060321080150.6:Handle missing leoSettings.leo files more gracefully
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3641107
+By: thyrsus
+
+Running the entitled version of Leo from CVS on Fedora Core 4, python 2.4.1
+
+Bug: attempting to save the outline:
+
++ top
+(contents)
+@delims dnl 
+...@file foo.mc
+(contents)
+@first divert(-1)dnl
+test
+dnl test
+more test
+
+With no @settings nodes anywhere (there is no leSettings.leo file, contrary
+to the generated message below), "python ~/leo/src/leo.py" makes a large number
+of comments about
+
+leoID = sps (in /home/sps)
+Plugins disabled: use_plugins is 0 in a leoSettings.leo file.
+initSpecialIvars: no setting for full-command
+initSpecialIvars: no setting for keyboard-quit
+initSpecialIvars: no setting for universal-argument
+checkBindings: No shortcut for abbrev-mode = abbrevmode
+checkBindings: No shortcut for abort-edit-headline = aborteditheadline
+checkBindings: No shortcut for about-leo = aboutleo
+
+(goes on for many lines)
+
+The menu save results in python exceptions:
+
+Leo Log Window...
+Leo 4.4 a7, build  1.418 , February 28, 2006
+Python 2.4.1, Tk 8.4.9, Pmw 1.2
+linux2
+
+leoID = sps (in /home/sps)
+global config dir: /home/sps/leo/config
+home dir: /home/sps
+Plugins disabled: use_plugins is 0 in a leoSettings.leo file.
+exception writing:divert(-1)dnl
+Traceback (most recent call last):
+  File "/home/sps/leo/src/leoAtFile.py", line 4138, in os
+    s = g.toEncodedString(s,at.encoding,reportErrors=True)
+  File "/home/sps/leo/src/leoGlobals.py", line 3842, in toEncodedString
+    s = s.encode(encoding,"strict")
+TypeError: encode() argument 1 must be string, not None
+exception writing:/home/sps/foo.mc
+Traceback (most recent call last):
+  File "/home/sps/leo/src/leoAtFile.py", line 2912, in write
+    at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+  File "/home/sps/leo/src/leoAtFile.py", line 3180, in writeOpenFile
+    at.putOpenLeoSentinel("@+leo-ver=4")
+  File "/home/sps/leo/src/leoAtFile.py", line 3894, in putOpenLeoSentinel
+    encoding = at.encoding.lower()
+AttributeError: 'NoneType' object has no attribute 'lower'
+exception writing: /home/sps/foo.leo
+TypeError: encode() argument 1 must be string, not None
+#@-node:ekr.20060321080150.6:Handle missing leoSettings.leo files more gracefully
+#@+node:ekr.20060309132452:Figure out what is really wrong with unicode in onBodyChanged
+#@-node:ekr.20060309132452:Figure out what is really wrong with unicode in onBodyChanged
+#@+node:ekr.20060319103111:Fix problems with chapters plugin
+#@+node:ekr.20060319103111.1:Report 1
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3626542
+By: tfer
+
+Just playing with the chapters plug-in under a CVS download and ran into odd
+behavior.  I was playing with putting Dive into Python" into chapters.  inserted
+a new chapter (2), named the node "Your first Python Program", cntrl-i for insert
+new node, cntrl-r  to move right, (1st odd thing:), node collapsed under chapter
+title.  (2nd odd thing:) I can't select the "NewHeading" via mouse (chapter
+name  node remains selected), trying same by keyboard (alt-dwnArrow, cntrl-h),
+changes the body pane "location line" to "NewHeading", but in outline pane chapter
+title node reamains selected,  and I can't edit the NewHeading node name.
+
+Only thing I'm leaving out is alt-tabbing to scintila to cut and paste teaxt
+to nodes/body.
+
+Tom
+#@-node:ekr.20060319103111.1:Report 1
+#@+node:ekr.20060319103111.2:Report 2
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3629055
+By: tfer
+
+Saved out the troubled outline, did a update via CVS, adn the outline seems
+to be behaving itself now.  Need to test more to be sure.  The problem seems
+to start when you move a node via cntrl-r.
+
+There seems to be a problem with @button w/chapters, opening a chpters doc with
+an one does not add a button to button bar.
+
+tom
+#@-node:ekr.20060319103111.2:Report 2
+#@+node:ekr.20060319103111.3:Report 3
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3632004
+By: tfer
+
+Darn, bug still seems to be present.
+
+1) Add & name new chapter
+2) Insert a node (cntrl-i)
+3) Move "NewNode" right (cntrl-r)
+
+"NewNode" collapses into chapter name and selection box will not leave it.
+
+Tom
+#@-node:ekr.20060319103111.3:Report 3
+#@-node:ekr.20060319103111:Fix problems with chapters plugin
+#@+node:ekr.20060320113137:Fix problems with clones
+@nocolor
+#@nonl
+#@+node:ekr.20060320113137.1:Report 1
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3638771
+By: nobody
+
+In fact I closed leo then I opened the text file (the @thin file in leo) with
+vim then modified a little part (which is a cloned node).
+
+Then when I launched leo again it crashed when trying to read the file.
+
+I suppose it may not be possible to edit clones nodes in an @thin file this
+way...?
+#@-node:ekr.20060320113137.1:Report 1
+#@+node:ekr.20060320113137.2:Report 2
+http://sourceforge.net/forum/message.php?msg_id=3639193
+By: nobody
+
+I'm using Leo 4.3.1, build 1.266 , June 20, 2005. 
+
+I have a document of a few @thin nodes that in some hundred subnodes contain
+many nodes so that the same node is cloned in more than one file. This works
+mgaically greatly in Leo. Whatever I change in one cloned node is neatly distributed
+to all the files.
+
+But I've found a situation, that can be a bit dangerous. I changed the body
+(actually I did Ctrl-x to cut a part of it) of one of these cloned nodes and
+saved the whole document with Ctrl-s. Then I undid from the Edit menu with the
+"Undo Cut" and saved whole document with Ctrl-s again.
+
+After undo and before second saving I already noticed that the icons before
+changed clones did not get different, more black, colour that signifies changed
+nodes.
+
+But, more seriously, I've noticed in the log, that only the top .leo file was
+saved. I looked into other files containing the cloned node and really, there
+was still the old contents.
+
+There is a simple workaround. I simply type and delete one space into the body
+of the changed node and then the colour of the icons is OK and Ctrl-s saves
+oall the clones.
+
+May be it's not important that I have @thin nodes. May be the same situation
+would show in one self contained .leo document with a few clones. I didn't try.
+
+I hope I explained well enough. If anybody is interested to anylse and cannot
+reproduce the situation, I would try to prepare a simplified document to show
+the problem.
+
+maksr@snt.si
+#@-node:ekr.20060320113137.2:Report 2
+#@-node:ekr.20060320113137:Fix problems with clones
+#@+node:ekr.20060321080150:Hoist-shortcut functionality
+@
+Instructions:
+    
+   Select the "setup" node and hit the "Run Script" button
+   Create script buttons out of the "Dehoist" and "Save Hoist" nodes
+   Navigate to node for which to create hoist buttons and hit the "Save Hoist" button
+       This will hoist that node and
+       Create a hoist button for that node
+   Click on the "dehoist" button to return to the full outline view
+   Click on the created hoist button to return to the hoisted view of the node
+#@nonl
+#@+node:ekr.20060321080150.1:@@button Save Hoist
+@others
+c.sc.addHoistCommand()
+c.hoist()
+#@nonl
+#@-node:ekr.20060321080150.1:@@button Save Hoist
+#@+node:ekr.20060321080150.2:@@button Dehoist
+c.dehoist()
+#@nonl
+#@-node:ekr.20060321080150.2:@@button Dehoist
+#@+node:ekr.20060321080150.3:setup
+import mod_scripting
+import sys
+@others
+g.funcToMethod(addHoistCommand, mod_scripting.scriptingController)
+
+# I couldn't find a way to access the default scripting controller object (looks to me like it is a
+# function local variable?), so just create a new instance and save it in the commander (ugly?!)
+c.sc = mod_scripting.scriptingController(c)
+#c.sc.createAllButtons()
+#@+node:ekr.20060321080150.4:addHoistCommand
+# Slight modification of  mod_scripting.scriptingController.addScriptButtonCommand
+# maxButtonSize --> mod_script.maxButtonSize and ScriptButton --> Hoist and
+# a different commandCallback function
+# TODO: it might make sense to add input arguments for "status message prefix" and
+# commandCallback.  Then the code could be re-used for both addScriptButtonCommand and
+# addHoistCommand
+def addHoistCommand (self):
+   # Create permanent bindings for callbacks.
+   c = self.c ; p = c.currentPosition()
+   self.buttons += 1
+   # New in 4.2.1: always use the entire body string.
+   script = g.getScript(c,p,useSelectedText=False)
+   h = p.headString().strip()
+   buttonName = key = "Script %d" % self.buttons
+   if not h: return
+   text = h
+   statusMessage = "Hoist: %s" % text
+   buttonText = text[:mod_scripting.maxButtonSize]
+   # Create the button.
+   b = c.frame.addIconButton(text=buttonText)
+   << define callbacks for addHoistButton >>
+   self.d [key] = b
+   if sys.platform == "win32":
+       width = int(len(buttonText) * 0.9)
+       b.configure(width=width,font=('verdana',7,'bold'))
+       b.configure(bg='MistyRose1')
+   b.configure(command=commandCallback)
+   b.bind('<3>',deleteButtonCallback)
+   b.bind('<Enter>', mouseEnterCallback)
+   b.bind('<Leave>', mouseLeaveCallback)
+   c.frame.bodyWantsFocus()
+#@nonl
+#@+node:ekr.20060321080150.5:<< define callbacks for addHoistButton >>
+def deleteButtonCallback (event=None,self=self,buttonName=buttonName):
+   self.deleteButton(buttonName)
+
+def commandCallback (event=None,self=self,b=b,p=p.copy(),buttonText=buttonText):
+   while (c.canDehoist()):
+       c.dehoist()
+   c.selectPosition(p)
+   c.hoist()
+
+def mouseEnterCallback (event=None,self=self,statusMessage=statusMessage):
+   self.mouseEnter(statusMessage)
+
+def mouseLeaveCallback (event=None,self=self):
+   self.mouseLeave()
+#@nonl
+#@-node:ekr.20060321080150.5:<< define callbacks for addHoistButton >>
+#@-node:ekr.20060321080150.4:addHoistCommand
+#@-node:ekr.20060321080150.3:setup
+#@-node:ekr.20060321080150:Hoist-shortcut functionality
+#@+node:ekr.20060321110256:Create better unit tests for master key handler
+Can this be done?  How to tests keys in various states?
+#@nonl
+#@-node:ekr.20060321110256:Create better unit tests for master key handler
+#@-node:ekr.20060321082832:To do first
 #@+node:ekr.20060306193836:*** Mac problems with newline
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3606515
@@ -80,6 +514,8 @@ TypeError: marks_to_label() takes exactly 1 argument (2 given)
 --Rich
 
 #@-node:ekr.20060307142612:Fix problem with labels plugin
+#@+node:ekr.20060309132427:Add option to disable self completion
+#@-node:ekr.20060309132427:Add option to disable self completion
 #@+node:ekr.20060307074624:Improve autocompleter
 #@+node:ekr.20060306194204:Fix problems with autocompleter
 @nocolor
@@ -106,6 +542,26 @@ completion, backspace over it, _then_ type "zwiki".
 #@-node:ekr.20060307074302:*Control-g doesn't work in find completion
 #@+node:ekr.20060228071700:Ignore autocompletion for number.
 #@-node:ekr.20060228071700:Ignore autocompletion for number.
+#@+node:ekr.20060309021641:Document autocompleter better
+@nocolor
+
+> is it correct that only ctrl, and a mouse click, should trigger insertion,
+
+No.  The main way to start autocompletion is to type a period.  For example, the last period in:
+
+x.y.z.
+
+Leo will scan to the start (x) to see if x is something it knows about.  In particular, if x is 'self' Leo will see if the current node is in the range of an class definition.  Also, Leo 'knows about' c, g and p, and a few others.  I need to find some way of generalizing what Leo knows about.  Leo also knows about all the modules in sys.modules so typing 'sys.' will bring up the autocompleter.
+
+>Does the autocompleter sometimes insert a word into text with some special markup?
+
+The presently suggested text is highlighted.  You can see the status of the autocompletion by looking at the name of the tab.  For example, after typing 'sys.' the tab will show 'Autocomplete sys.'
+
+Forget the other ways of invoking the autocompleter.
+
+Edward
+#@nonl
+#@-node:ekr.20060309021641:Document autocompleter better
 #@-node:ekr.20060307074624:Improve autocompleter
 #@+node:ekr.20060306195137:Document and test @ifgui and @ifplatform nodes
 @nocolor
@@ -172,26 +628,29 @@ slow - I find myself holding Alt-Up and hoping I don't overshoot the keyboard
 autorepeat. Even then, it can take 20 seconds to get to the node I want.
 #@nonl
 #@-node:ekr.20060306200304.1:Scroll outline pane commands
-#@+node:ekr.20060309021641:Document autocompleter better
+#@+node:ekr.20060310093345:Improve groupoperations plugin
 @nocolor
 
-> is it correct that only ctrl, and a mouse click, should trigger insertion,
+> G.Ops is another plugin that I found very handy
 
-No.  The main way to start autocompletion is to type a period.  For example, the last period in:
+OK, I found the groupOperations.py plugin.
 
-x.y.z.
+All that is really required is a call to
 
-Leo will scan to the start (x) to see if x is something it knows about.  In particular, if x is 'self' Leo will see if the current node is in the range of an class definition.  Also, Leo 'knows about' c, g and p, and a few others.  I need to find some way of generalizing what Leo knows about.  Leo also knows about all the modules in sys.modules so typing 'sys.' will bring up the autocompleter.
+k.registerCommand for each command.
 
->Does the autocompleter sometimes insert a word into text with some special markup?
+However, you need to specify a shortcut to k.registerCommand, so the plugin also needs to handle shortcuts, say by calling c.config.getShortcut('groupOperations_x_shortcut')
+for each command x that you want to register.
 
-The presently suggested text is highlighted.  You can see the status of the autocompletion by looking at the name of the tab.  For example, after typing 'sys.' the tab will show 'Autocomplete sys.'
+The value returned is ('setting_name',{list of settings])
 
-Forget the other ways of invoking the autocompleter.
+The user would define these shortcuts in individual @shortcut nodes.
+
+You could try to do this yourself with these hints.  Otherwise you may have to wait awhile for me to do it.
 
 Edward
-#@nonl
-#@-node:ekr.20060309021641:Document autocompleter better
+
+#@-node:ekr.20060310093345:Improve groupoperations plugin
 #@-node:ekr.20060301102950:To do 4.4 b3
 #@+node:ekr.20060226131603:To do 4.4 b4
 #@+node:ekr.20060301080026:Add support for chapters to Leo's core

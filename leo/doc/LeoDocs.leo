@@ -758,7 +758,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20060206111717"><vh>Ancient...</vh>
 <v t="edream.110203163054.118"><vh>3.x...</vh>
@@ -2485,8 +2485,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20060227102028" a="EV"><vh>4.4a7</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20060227102028"><vh>4.4a7</vh>
 <v t="ekr.20060227102028.2"><vh>Bugs Fixed</vh>
 <v t="ekr.20060227102028.3"><vh>Fixed binding bug</vh>
 <v t="ekr.20060227102028.4"><vh>R</vh></v>
@@ -2508,9 +2508,12 @@
 <v t="ekr.20060227102028.17"><vh>Removed horrible g.app.dialogs hack</vh></v>
 <v t="ekr.20060227102028.18"><vh>Fix crasher in plugin</vh></v>
 </v>
-<v t="ekr.20060227102028.111" a="E"><vh>Autocompletion and calltips</vh></v>
+<v t="ekr.20060227102028.111"><vh>Autocompletion and calltips</vh></v>
 </v>
 </v>
+</v>
+<v t="EKR.20040524104904.140" a="V"><vh>Specifying settings</vh>
+<v t="ekr.20060105214753"><vh>Input modes</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -3188,10 +3191,29 @@ example, any setting specified in an ``@settings`` tree in the file being loaded
 overrides any setting seen in any ``leoSettings.leo`` file.
 
 The format of nodes in ``@settings`` trees are as follows:
+    
+1. Organizer nodes have headlines that do no start with @.
+   Organizer nodes may be inserted freely without changing the meaning of an @setting tree.
 
-1. Leo ignores any subtree of an ``@settings`` tree whose headline starts with ``@ignore``.
+2. Leo ignores any subtree of an ``@settings`` tree whose headline starts with ``@ignore``.
 
-2. "Simple settings nodes" have headlines of the form::
+You can use several other kinds of nodes to cause Leo to ignore parts of  an ``@settings`` tree:
+    
+- ``@if`` *expression*
+
+  A node whose headline starts with ``@if`` *expression* acts like an organizer node if the expression evaluates to True,    
+  otherwise acts like an ``@ignore`` node.
+  If the expression is empty the body text should contain a script that will be evaluated (in an empty context).
+
+- ``@ifgui`` *gui-name*
+
+  Same as ``@if g.app.guiName == "gui-name":``
+  
+- ``@ifplatform`` *platform-name*
+
+   Same as ``@if sys.platform == "platform-name":`` except that it isn't necessary to import sys.
+
+3. "Simple settings nodes" have headlines of the form::
 
     @&lt;type&gt; name = val
 
@@ -3224,7 +3246,7 @@ set the value of ``name`` to ``val``, with the indicated type.
 
 **Important**: you can use the show-colors minibuffer command to guide you in making these settings.
 
-3. "Complex settings nodes" have headlines of the form::
+4. "Complex settings nodes" have headlines of the form::
 
     @&lt;type&gt; description
 
