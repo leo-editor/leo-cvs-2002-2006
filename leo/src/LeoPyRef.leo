@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="9363" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="9369" clone_windows="0"/>
 <globals body_outline_ratio="0.535469107551">
-	<global_window_position top="31" left="431" height="873" width="663"/>
+	<global_window_position top="10" left="338" height="878" width="883"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -12,17 +12,17 @@
 <v t="EKR.20040430162943"><vh>Notes</vh>
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
-<v t="EKR.20040519090151.3"><vh>Projects</vh>
+<v t="EKR.20040519090151.3" a="V"><vh>Projects</vh>
 <v t="EKR.20040429143933"
 marks="ekr.20031218072017.2052,ekr.20040803072955.8,"
-expanded="ekr.20060127183752,"><vh>@thin leoProjects.txt</vh></v>
+expanded="ekr.20060306070425,ekr.20060127183752,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"
 marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -332,7 +332,7 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20060225125519"><vh>Applied rst3 patch from Kent Tenney</vh></v>
 </v>
-<v t="ekr.20060306070425"><vh>4.4 b3 projects</vh>
+<v t="ekr.20060306070425" a="E"><vh>4.4 b3 projects</vh>
 <v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
 <v t="ekr.20060306030946.1"><vh>Event handling for multiple editors</vh>
 <v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
@@ -341,7 +341,12 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
 </v>
 <v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
-<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
+<v t="ekr.20060321105403"><vh>&lt;&lt; define vars &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.1"><vh>&lt;&lt; do key traces &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.2"><vh>&lt;&lt; handle mode bindings &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.3"><vh>&lt;&lt; handle per-pane bindings &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
 </v>
 <v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
@@ -413,25 +418,69 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
 </v>
 <v t="ekr.20060309022225"><vh>Fixed problem with left &amp; right arrows in outline mode</vh>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
+<v t="ekr.20060321105403"><vh>&lt;&lt; define vars &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.1"><vh>&lt;&lt; do key traces &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.2"><vh>&lt;&lt; handle mode bindings &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.3"><vh>&lt;&lt; handle per-pane bindings &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
+</v>
+</v>
+<v t="ekr.20060321094013"><vh>Made Control-v work again in find command!</vh>
 <v t="ekr.20060127183752" a="E"><vh>masterKeyHandler &amp; helper</vh>
-<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
+<v t="ekr.20060321105403"><vh>&lt;&lt; define vars &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.1"><vh>&lt;&lt; do key traces &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.2"><vh>&lt;&lt; handle mode bindings &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.3"><vh>&lt;&lt; handle per-pane bindings &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
 </v>
 </v>
 </v>
 </v>
 <v t="ekr.20060301102950"><vh>To do 4.4 b3</vh>
+<v t="ekr.20060321082832"><vh>To do first</vh>
+<v t="ekr.20060319155125"><vh>Generalize path to stylesheet in the rst3 plugin</vh>
+<v t="ekr.20060320071608"><vh>proposed revision</vh></v>
+</v>
+<v t="ekr.20060321080150.6"><vh>Handle missing leoSettings.leo files more gracefully</vh></v>
+<v t="ekr.20060309132452"><vh>Figure out what is really wrong with unicode in onBodyChanged</vh></v>
+<v t="ekr.20060319103111"><vh>Fix problems with chapters plugin</vh>
+<v t="ekr.20060319103111.1"><vh>Report 1</vh></v>
+<v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
+<v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
+</v>
+<v t="ekr.20060320113137"><vh>Fix problems with clones</vh>
+<v t="ekr.20060320113137.1"><vh>Report 1</vh></v>
+<v t="ekr.20060320113137.2"><vh>Report 2</vh></v>
+</v>
+<v t="ekr.20060321080150"><vh>Hoist-shortcut functionality</vh>
+<v t="ekr.20060321080150.1"><vh>@button Save Hoist</vh></v>
+<v t="ekr.20060321080150.2"><vh>@button Dehoist</vh></v>
+<v t="ekr.20060321080150.3"><vh>setup</vh>
+<v t="ekr.20060321080150.4"><vh>addHoistCommand</vh>
+<v t="ekr.20060321080150.5"><vh>&lt;&lt; define callbacks for addHoistButton &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
+</v>
 <v t="ekr.20060306193836" a="M"><vh>*** Mac problems with newline</vh></v>
 <v t="ekr.20060305110016"><vh>*** autocompleter text not always sticking</vh></v>
 <v t="ekr.20060306193910"><vh>***Open with shortcuts</vh></v>
 <v t="ekr.20060307074302.1"><vh>*set-change-text command should work when entering find text.</vh></v>
 <v t="ekr.20060308103043"><vh>* Fix crasher in Word plugin</vh></v>
 <v t="ekr.20060307142612"><vh>Fix problem with labels plugin</vh></v>
+<v t="ekr.20060309132427"><vh>Add option to disable self completion</vh></v>
 <v t="ekr.20060307074624"><vh>Improve autocompleter</vh>
 <v t="ekr.20060306194204"><vh>Fix problems with autocompleter</vh></v>
 <v t="ekr.20060305073002"><vh>Separate config setting for self completion</vh></v>
 <v t="ekr.20060307074302"><vh>*Control-g doesn't work in find completion</vh></v>
 <v t="ekr.20060228071700"><vh>Ignore autocompletion for number.</vh></v>
+<v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
 </v>
 <v t="ekr.20060306195137"><vh>Document and test @ifgui and @ifplatform nodes</vh></v>
 <v t="ekr.20060227123644"><vh>There are still problems with focus: remove the optimizations?</vh></v>
@@ -440,7 +489,7 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060306082003.1"><vh>createBalloon</vh></v>
 </v>
 <v t="ekr.20060306200304.1"><vh>Scroll outline pane commands</vh></v>
-<v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
+<v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -498,6 +547,32 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
+</v>
+<v t="ekr.20060321082832"><vh>To do first</vh>
+<v t="ekr.20060319155125"><vh>Generalize path to stylesheet in the rst3 plugin</vh>
+<v t="ekr.20060320071608"><vh>proposed revision</vh></v>
+</v>
+<v t="ekr.20060321080150.6"><vh>Handle missing leoSettings.leo files more gracefully</vh></v>
+<v t="ekr.20060309132452"><vh>Figure out what is really wrong with unicode in onBodyChanged</vh></v>
+<v t="ekr.20060319103111"><vh>Fix problems with chapters plugin</vh>
+<v t="ekr.20060319103111.1"><vh>Report 1</vh></v>
+<v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
+<v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
+</v>
+<v t="ekr.20060320113137"><vh>Fix problems with clones</vh>
+<v t="ekr.20060320113137.1"><vh>Report 1</vh></v>
+<v t="ekr.20060320113137.2"><vh>Report 2</vh></v>
+</v>
+<v t="ekr.20060321080150"><vh>Hoist-shortcut functionality</vh>
+<v t="ekr.20060321080150.1"><vh>@button Save Hoist</vh></v>
+<v t="ekr.20060321080150.2"><vh>@button Dehoist</vh></v>
+<v t="ekr.20060321080150.3"><vh>setup</vh>
+<v t="ekr.20060321080150.4"><vh>addHoistCommand</vh>
+<v t="ekr.20060321080150.5"><vh>&lt;&lt; define callbacks for addHoistButton &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4172,100 +4247,25 @@ shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0</t>
     # This handles the reverse option.
     self.finder.findNextCommand()</t>
 <t tx="ekr.20060205221734">def masterKeyHandlerHelper (self,event,stroke):
+    
+    &lt;&lt; define vars &gt;&gt;
 
-    k = self ; c = k.c
-    w = event and event.widget
-    w_name = c.widget_name(w)
-    trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
-    keysym = event.keysym or ''
-    if keysym in (
-        'Caps_Lock', 'Num_Lock', 'Control_L', 'Alt_L',
-        'Shift_L', 'Control_R', 'Alt_R','Shift_R','Win_L','Win_R'):
+    if keysym in special_keys:
         return None
-        
-    self.master_key_count += 1
-    if trace and (self.master_key_count % 100) == 0:
-        g.printGcSummary(trace=True)
 
-    if 0:
-        if stroke is None:
-            if trace: g.trace('no stroke: using strokeFromEvent')
-            stroke = k.strokeFromEvent(event)
+    &lt;&lt; do key traces &gt;&gt;
 
-    # Pass keyboard-quit to k.masterCommand for macro recording.
+    # Handle keyboard-quit first.
     if k.abortAllModesKey and stroke == k.abortAllModesKey:
         return k.masterCommand(event,k.keyboardQuit,stroke,'keyboard-quit')
-        
-    state = k.state.kind
-    if trace: g.trace(repr(stroke),'state',state)
-    if k.inState():
-        if 0: # Interferes with similar keys bound in a state.
-            if k.handleMiniBindings(event,state,stroke):
-                return 'break'
-        # Pass keys to getArg or full-command modes if they are active.
-        if state == 'getArg':
-            return k.getArg(event)
-        elif state in ('full-command','auto-complete'):
-            # Experimental: honor
-            if k.handleMiniBindings(event,state,stroke):
-                return 'break'
-            # Do the default state action.
-            if trace: g.trace('calling state function')
-            val = k.callStateFunction(event) # Calls end-command.
-            if val != 'do-standard-keys':
-                return 'break'
-            g.trace('do-standard-keys',w_name,stroke)
-        # Third, pass keys to the general mode handler.
-        else:
-            d =  k.masterBindingsDict.get(state)
-            if d:
-                b = d.get(stroke)
-                if b:
-                    if trace: g.trace('calling generalModeHandler')
-                    k.generalModeHandler (event,
-                        commandName=b.commandName,func=b.func,
-                        modeName=state,nextMode=b.nextMode)
-                    return 'break'
-                elif k.handleMiniBindings(event,state,stroke):
-                    return 'break'
-                else:
-                    if trace: g.trace('calling modeHelp')
-                    k.modeHelp(event)
-                    return 'break'
-            else:
-                g.trace('No state dictionary for %s' % state)
-                return 'break'
-    
-    for key,name in (
-        # Order here is similar to bindtags order.
-        ('body','body'),
-        ('text','head'), # Important: text bindings in head before tree bindings.
-        ('tree','head'),
-        ('tree','canvas'),
-        ('log', 'log'),
-        ('text','log'),
-        ('text',None), ('all',None),
-    ):
-        if (
-            name and w_name.startswith(name) or
-            key == 'text' and g.app.gui.isTextWidget(w) or
-            key == 'all'
-        ):
-            d = k.masterBindingsDict.get(key)
-            # g.trace(key,name,d and len(d.keys()))
-            if d:
-                b = d.get(stroke)
-                if b:
-                    if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
-                    return k.masterCommand(event,b.func,b.stroke,b.commandName)
 
-    if k.ignore_unbound_non_ascii_keys and len(event.char) &gt; 1:
-        # (stroke.find('Alt+') &gt; -1 or stroke.find('Ctrl+') &gt; -1)):
-        if trace: g.trace('ignoring unbound non-ascii key')
-        return 'break'
-    else:
-        if trace: g.trace(repr(stroke),'no func')
-        return k.masterCommand(event,func=None,stroke=stroke,commandName=None)</t>
+    if k.inState():
+        # This will return unless k.autoCompleterStateHandler
+        # (called from k.callStateFunction) returns 'do-standard-keys'
+        &lt;&lt; handle mode bindings &gt;&gt;
+
+    &lt;&lt; handle per-pane bindings &gt;&gt;
+</t>
 <t tx="ekr.20060206064635">def extendLabel(self,s,select=False,protect=False):
     
     k = self ; c = k.c ; w = self.widget
@@ -5760,5 +5760,379 @@ elif g.safeStringCompare(old,new[-1]):</t>
             return True
         
     return False</t>
+<t tx="ekr.20060309132427"></t>
+<t tx="ekr.20060309132452"></t>
+<t tx="ekr.20060310093345">@nocolor
+
+&gt; G.Ops is another plugin that I found very handy
+
+OK, I found the groupOperations.py plugin.
+
+All that is really required is a call to
+
+k.registerCommand for each command.
+
+However, you need to specify a shortcut to k.registerCommand, so the plugin also needs to handle shortcuts, say by calling c.config.getShortcut('groupOperations_x_shortcut')
+for each command x that you want to register.
+
+The value returned is ('setting_name',{list of settings])
+
+The user would define these shortcuts in individual @shortcut nodes.
+
+You could try to do this yourself with these hints.  Otherwise you may have to wait awhile for me to do it.
+
+Edward
+
+</t>
+<t tx="ekr.20060319103111"></t>
+<t tx="ekr.20060319103111.1">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3626542
+By: tfer
+
+Just playing with the chapters plug-in under a CVS download and ran into odd
+behavior.  I was playing with putting Dive into Python" into chapters.  inserted
+a new chapter (2), named the node "Your first Python Program", cntrl-i for insert
+new node, cntrl-r  to move right, (1st odd thing:), node collapsed under chapter
+title.  (2nd odd thing:) I can't select the "NewHeading" via mouse (chapter
+name  node remains selected), trying same by keyboard (alt-dwnArrow, cntrl-h),
+changes the body pane "location line" to "NewHeading", but in outline pane chapter
+title node reamains selected,  and I can't edit the NewHeading node name.
+
+Only thing I'm leaving out is alt-tabbing to scintila to cut and paste teaxt
+to nodes/body.
+
+Tom
+</t>
+<t tx="ekr.20060319103111.2">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3629055
+By: tfer
+
+Saved out the troubled outline, did a update via CVS, adn the outline seems
+to be behaving itself now.  Need to test more to be sure.  The problem seems
+to start when you move a node via cntrl-r.
+
+There seems to be a problem with @button w/chapters, opening a chpters doc with
+an one does not add a button to button bar.
+
+tom
+</t>
+<t tx="ekr.20060319103111.3">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3632004
+By: tfer
+
+Darn, bug still seems to be present.
+
+1) Add &amp; name new chapter
+2) Insert a node (cntrl-i)
+3) Move "NewNode" right (cntrl-r)
+
+"NewNode" collapses into chapter name and selection box will not leave it.
+
+Tom
+</t>
+<t tx="ekr.20060319155125">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3637393
+By: nobody
+
+Leo 4.4 a7, build  1.417 (under Linux)
+
+Using rst3 to generate LaTex
+
+Hi,
+
+I'm trying to set up a default stylesheet for a project and want this to be
+held relative to the project directory (where the .leo file is). The default
+is to place it in the same directory as the output, which is a couple of levels
+down.
+
+setting stylesheet_path = . or empty does not work. I seem to have to specify
+an absolute path, which is not helpful when sharing developmnent through cvs.
+
+Am I missing something?
+
+Mike S.</t>
+<t tx="ekr.20060320071608">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3639216
+By: nobody
+
+I looked at the code myself. I have changed rst3.py line 1213 to replace
+g.os_path_dirname(self.outputFileName) with self.c.frame.openDirectory. This
+makes the path relative to the project. Not 100% as the stylesheet filename
+would need a path embedded in it to move the location down the tree. However,
+it is consistent with the way the output file is named.
+</t>
+<t tx="ekr.20060320113137">@nocolor</t>
+<t tx="ekr.20060320113137.1">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3638771
+By: nobody
+
+In fact I closed leo then I opened the text file (the @thin file in leo) with
+vim then modified a little part (which is a cloned node).
+
+Then when I launched leo again it crashed when trying to read the file.
+
+I suppose it may not be possible to edit clones nodes in an @thin file this
+way...?
+</t>
+<t tx="ekr.20060320113137.2">http://sourceforge.net/forum/message.php?msg_id=3639193
+By: nobody
+
+I'm using Leo 4.3.1, build 1.266 , June 20, 2005. 
+
+I have a document of a few @thin nodes that in some hundred subnodes contain
+many nodes so that the same node is cloned in more than one file. This works
+mgaically greatly in Leo. Whatever I change in one cloned node is neatly distributed
+to all the files.
+
+But I've found a situation, that can be a bit dangerous. I changed the body
+(actually I did Ctrl-x to cut a part of it) of one of these cloned nodes and
+saved the whole document with Ctrl-s. Then I undid from the Edit menu with the
+"Undo Cut" and saved whole document with Ctrl-s again.
+
+After undo and before second saving I already noticed that the icons before
+changed clones did not get different, more black, colour that signifies changed
+nodes.
+
+But, more seriously, I've noticed in the log, that only the top .leo file was
+saved. I looked into other files containing the cloned node and really, there
+was still the old contents.
+
+There is a simple workaround. I simply type and delete one space into the body
+of the changed node and then the colour of the icons is OK and Ctrl-s saves
+oall the clones.
+
+May be it's not important that I have @thin nodes. May be the same situation
+would show in one self contained .leo document with a few clones. I didn't try.
+
+I hope I explained well enough. If anybody is interested to anylse and cannot
+reproduce the situation, I would try to prepare a simplified document to show
+the problem.
+
+maksr@snt.si
+</t>
+<t tx="ekr.20060321080150">@
+Instructions:
+    
+   Select the "setup" node and hit the "Run Script" button
+   Create script buttons out of the "Dehoist" and "Save Hoist" nodes
+   Navigate to node for which to create hoist buttons and hit the "Save Hoist" button
+       This will hoist that node and
+       Create a hoist button for that node
+   Click on the "dehoist" button to return to the full outline view
+   Click on the created hoist button to return to the hoisted view of the node</t>
+<t tx="ekr.20060321080150.1">@others
+c.sc.addHoistCommand()
+c.hoist()</t>
+<t tx="ekr.20060321080150.2">c.dehoist()</t>
+<t tx="ekr.20060321080150.3">import mod_scripting
+import sys
+@others
+g.funcToMethod(addHoistCommand, mod_scripting.scriptingController)
+
+# I couldn't find a way to access the default scripting controller object (looks to me like it is a
+# function local variable?), so just create a new instance and save it in the commander (ugly?!)
+c.sc = mod_scripting.scriptingController(c)
+#c.sc.createAllButtons()
+</t>
+<t tx="ekr.20060321080150.4"># Slight modification of  mod_scripting.scriptingController.addScriptButtonCommand
+# maxButtonSize --&gt; mod_script.maxButtonSize and ScriptButton --&gt; Hoist and
+# a different commandCallback function
+# TODO: it might make sense to add input arguments for "status message prefix" and
+# commandCallback.  Then the code could be re-used for both addScriptButtonCommand and
+# addHoistCommand
+def addHoistCommand (self):
+   # Create permanent bindings for callbacks.
+   c = self.c ; p = c.currentPosition()
+   self.buttons += 1
+   # New in 4.2.1: always use the entire body string.
+   script = g.getScript(c,p,useSelectedText=False)
+   h = p.headString().strip()
+   buttonName = key = "Script %d" % self.buttons
+   if not h: return
+   text = h
+   statusMessage = "Hoist: %s" % text
+   buttonText = text[:mod_scripting.maxButtonSize]
+   # Create the button.
+   b = c.frame.addIconButton(text=buttonText)
+   &lt;&lt; define callbacks for addHoistButton &gt;&gt;
+   self.d [key] = b
+   if sys.platform == "win32":
+       width = int(len(buttonText) * 0.9)
+       b.configure(width=width,font=('verdana',7,'bold'))
+       b.configure(bg='MistyRose1')
+   b.configure(command=commandCallback)
+   b.bind('&lt;3&gt;',deleteButtonCallback)
+   b.bind('&lt;Enter&gt;', mouseEnterCallback)
+   b.bind('&lt;Leave&gt;', mouseLeaveCallback)
+   c.frame.bodyWantsFocus()</t>
+<t tx="ekr.20060321080150.5">def deleteButtonCallback (event=None,self=self,buttonName=buttonName):
+   self.deleteButton(buttonName)
+
+def commandCallback (event=None,self=self,b=b,p=p.copy(),buttonText=buttonText):
+   while (c.canDehoist()):
+       c.dehoist()
+   c.selectPosition(p)
+   c.hoist()
+
+def mouseEnterCallback (event=None,self=self,statusMessage=statusMessage):
+   self.mouseEnter(statusMessage)
+
+def mouseLeaveCallback (event=None,self=self):
+   self.mouseLeave()</t>
+<t tx="ekr.20060321080150.6">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3641107
+By: thyrsus
+
+Running the entitled version of Leo from CVS on Fedora Core 4, python 2.4.1
+
+Bug: attempting to save the outline:
+
++ top
+(contents)
+@delims dnl 
+...@file foo.mc
+(contents)
+@first divert(-1)dnl
+test
+dnl test
+more test
+
+With no @settings nodes anywhere (there is no leSettings.leo file, contrary
+to the generated message below), "python ~/leo/src/leo.py" makes a large number
+of comments about
+
+leoID = sps (in /home/sps)
+Plugins disabled: use_plugins is 0 in a leoSettings.leo file.
+initSpecialIvars: no setting for full-command
+initSpecialIvars: no setting for keyboard-quit
+initSpecialIvars: no setting for universal-argument
+checkBindings: No shortcut for abbrev-mode = abbrevmode
+checkBindings: No shortcut for abort-edit-headline = aborteditheadline
+checkBindings: No shortcut for about-leo = aboutleo
+
+(goes on for many lines)
+
+The menu save results in python exceptions:
+
+Leo Log Window...
+Leo 4.4 a7, build  1.418 , February 28, 2006
+Python 2.4.1, Tk 8.4.9, Pmw 1.2
+linux2
+
+leoID = sps (in /home/sps)
+global config dir: /home/sps/leo/config
+home dir: /home/sps
+Plugins disabled: use_plugins is 0 in a leoSettings.leo file.
+exception writing:divert(-1)dnl
+Traceback (most recent call last):
+  File "/home/sps/leo/src/leoAtFile.py", line 4138, in os
+    s = g.toEncodedString(s,at.encoding,reportErrors=True)
+  File "/home/sps/leo/src/leoGlobals.py", line 3842, in toEncodedString
+    s = s.encode(encoding,"strict")
+TypeError: encode() argument 1 must be string, not None
+exception writing:/home/sps/foo.mc
+Traceback (most recent call last):
+  File "/home/sps/leo/src/leoAtFile.py", line 2912, in write
+    at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+  File "/home/sps/leo/src/leoAtFile.py", line 3180, in writeOpenFile
+    at.putOpenLeoSentinel("@+leo-ver=4")
+  File "/home/sps/leo/src/leoAtFile.py", line 3894, in putOpenLeoSentinel
+    encoding = at.encoding.lower()
+AttributeError: 'NoneType' object has no attribute 'lower'
+exception writing: /home/sps/foo.leo
+TypeError: encode() argument 1 must be string, not None
+</t>
+<t tx="ekr.20060321082832"></t>
+<t tx="ekr.20060321094013"></t>
+<t tx="ekr.20060321105403">k = self ; c = k.c
+w = event and event.widget
+w_name = c.widget_name(w)
+trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
+keysym = event.keysym or ''
+state = k.state.kind
+special_keys = (
+    'Caps_Lock', 'Num_Lock', 'Control_L', 'Alt_L',
+    'Shift_L', 'Control_R', 'Alt_R','Shift_R','Win_L','Win_R')</t>
+<t tx="ekr.20060321105403.1">self.master_key_count += 1
+
+if trace and (self.master_key_count % 100) == 0:
+    g.printGcSummary(trace=True)
+
+if 0:
+    if stroke is None:
+        if trace: g.trace('no stroke: using strokeFromEvent')
+        stroke = k.strokeFromEvent(event)
+        
+if trace:
+    g.trace(repr(stroke),'state',state)
+</t>
+<t tx="ekr.20060321105403.2"># First, honor minibuffer bindings for all except user modes.
+if state in ('getArg','full-command','auto-complete'):
+    if k.handleMiniBindings(event,state,stroke):
+        return 'break'
+
+# Second, honor general modes.
+if state == 'getArg':
+    return k.getArg(event)
+elif state in ('full-command','auto-complete'):
+    # Do the default state action.
+    if trace: g.trace('calling state function')
+    val = k.callStateFunction(event) # Calls end-command.
+    if val != 'do-standard-keys': return 'break'
+        
+# Third, pass keys to user modes.
+else:
+    d =  k.masterBindingsDict.get(state)
+    if d:
+        b = d.get(stroke)
+        if b:
+            if trace: g.trace('calling generalModeHandler')
+            k.generalModeHandler (event,
+                commandName=b.commandName,func=b.func,
+                modeName=state,nextMode=b.nextMode)
+        elif not k.handleMiniBindings(event,state,stroke):
+            if trace: g.trace('calling modeHelp')
+            k.modeHelp(event)
+    else:
+        g.trace('No state dictionary for %s' % state)
+    return 'break'</t>
+<t tx="ekr.20060321105403.3">for key,name in (
+    # Order here is similar to bindtags order.
+    ('body','body'),
+    ('text','head'), # Important: text bindings in head before tree bindings.
+    ('tree','head'),
+    ('tree','canvas'),
+    ('log', 'log'),
+    ('text','log'),
+    ('text',None), ('all',None),
+):
+    if (
+        name and w_name.startswith(name) or
+        key == 'text' and g.app.gui.isTextWidget(w) or
+        key == 'all'
+    ):
+        d = k.masterBindingsDict.get(key)
+        # g.trace(key,name,d and len(d.keys()))
+        if d:
+            b = d.get(stroke)
+            if b:
+                if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                return k.masterCommand(event,b.func,b.stroke,b.commandName)
+
+if k.ignore_unbound_non_ascii_keys and len(event.char) &gt; 1:
+    # (stroke.find('Alt+') &gt; -1 or stroke.find('Ctrl+') &gt; -1)):
+    if trace: g.trace('ignoring unbound non-ascii key')
+    return 'break'
+else:
+    if trace: g.trace(repr(stroke),'no func')
+    return k.masterCommand(event,func=None,stroke=stroke,commandName=None)</t>
+<t tx="ekr.20060321110256">Can this be done?  How to tests keys in various states?</t>
 </tnodes>
 </leo_file>

@@ -2875,50 +2875,66 @@ class keyHandlerClass:
     #@nonl
     #@+node:ekr.20060205221734:masterKeyHandlerHelper
     def masterKeyHandlerHelper (self,event,stroke):
-    
+        
+        #@    << define vars >>
+        #@+node:ekr.20060321105403:<< define vars >>
         k = self ; c = k.c
         w = event and event.widget
         w_name = c.widget_name(w)
         trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
         keysym = event.keysym or ''
-        if keysym in (
+        state = k.state.kind
+        special_keys = (
             'Caps_Lock', 'Num_Lock', 'Control_L', 'Alt_L',
-            'Shift_L', 'Control_R', 'Alt_R','Shift_R','Win_L','Win_R'):
+            'Shift_L', 'Control_R', 'Alt_R','Shift_R','Win_L','Win_R')
+        #@nonl
+        #@-node:ekr.20060321105403:<< define vars >>
+        #@nl
+    
+        if keysym in special_keys:
             return None
-            
+    
+        #@    << do key traces >>
+        #@+node:ekr.20060321105403.1:<< do key traces >>
         self.master_key_count += 1
+        
         if trace and (self.master_key_count % 100) == 0:
             g.printGcSummary(trace=True)
-    
+        
         if 0:
             if stroke is None:
                 if trace: g.trace('no stroke: using strokeFromEvent')
                 stroke = k.strokeFromEvent(event)
+                
+        if trace:
+            g.trace(repr(stroke),'state',state)
+        #@-node:ekr.20060321105403.1:<< do key traces >>
+        #@nl
     
-        # Pass keyboard-quit to k.masterCommand for macro recording.
+        # Handle keyboard-quit first.
         if k.abortAllModesKey and stroke == k.abortAllModesKey:
             return k.masterCommand(event,k.keyboardQuit,stroke,'keyboard-quit')
-            
-        state = k.state.kind
-        if trace: g.trace(repr(stroke),'state',state)
+    
         if k.inState():
-            if 0: # Interferes with similar keys bound in a state.
+            # This will return unless k.autoCompleterStateHandler
+            # (called from k.callStateFunction) returns 'do-standard-keys'
+            #@        << handle mode bindings >>
+            #@+node:ekr.20060321105403.2:<< handle mode bindings >>
+            # First, honor minibuffer bindings for all except user modes.
+            if state in ('getArg','full-command','auto-complete'):
                 if k.handleMiniBindings(event,state,stroke):
                     return 'break'
-            # Pass keys to getArg or full-command modes if they are active.
+            
+            # Second, honor general modes.
             if state == 'getArg':
                 return k.getArg(event)
             elif state in ('full-command','auto-complete'):
-                # Experimental: honor
-                if k.handleMiniBindings(event,state,stroke):
-                    return 'break'
                 # Do the default state action.
                 if trace: g.trace('calling state function')
                 val = k.callStateFunction(event) # Calls end-command.
-                if val != 'do-standard-keys':
-                    return 'break'
-                g.trace('do-standard-keys',w_name,stroke)
-            # Third, pass keys to the general mode handler.
+                if val != 'do-standard-keys': return 'break'
+                    
+            # Third, pass keys to user modes.
             else:
                 d =  k.masterBindingsDict.get(state)
                 if d:
@@ -2928,17 +2944,18 @@ class keyHandlerClass:
                         k.generalModeHandler (event,
                             commandName=b.commandName,func=b.func,
                             modeName=state,nextMode=b.nextMode)
-                        return 'break'
-                    elif k.handleMiniBindings(event,state,stroke):
-                        return 'break'
-                    else:
+                    elif not k.handleMiniBindings(event,state,stroke):
                         if trace: g.trace('calling modeHelp')
                         k.modeHelp(event)
-                        return 'break'
                 else:
                     g.trace('No state dictionary for %s' % state)
-                    return 'break'
-        
+                return 'break'
+            #@nonl
+            #@-node:ekr.20060321105403.2:<< handle mode bindings >>
+            #@nl
+    
+        #@    << handle per-pane bindings >>
+        #@+node:ekr.20060321105403.3:<< handle per-pane bindings >>
         for key,name in (
             # Order here is similar to bindtags order.
             ('body','body'),
@@ -2961,7 +2978,7 @@ class keyHandlerClass:
                     if b:
                         if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
                         return k.masterCommand(event,b.func,b.stroke,b.commandName)
-    
+        
         if k.ignore_unbound_non_ascii_keys and len(event.char) > 1:
             # (stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1)):
             if trace: g.trace('ignoring unbound non-ascii key')
@@ -2969,7 +2986,9 @@ class keyHandlerClass:
         else:
             if trace: g.trace(repr(stroke),'no func')
             return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
-    #@nonl
+        #@nonl
+        #@-node:ekr.20060321105403.3:<< handle per-pane bindings >>
+        #@nl
     #@-node:ekr.20060205221734:masterKeyHandlerHelper
     #@+node:ekr.20060309065445:handleMiniBindings
     def handleMiniBindings (self,event,state,stroke):
