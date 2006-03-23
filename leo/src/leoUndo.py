@@ -1297,6 +1297,9 @@ class baseUndoer:
         else:
             bunch = old_d
         
+        bunch.dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        if not p.isDirty():
+            bunch.dirtyVnodeList.append(p.copy())
         bunch.leading=u.leading
         bunch.trailing= u.trailing
         bunch.newNewlines=u.newNewlines
@@ -1304,7 +1307,7 @@ class baseUndoer:
         bunch.newSel=u.newSel
         bunch.newText=u.newText
         bunch.yview=u.yview
-        
+        #@nonl
         #@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
         #@nl
         return bunch
@@ -1373,6 +1376,9 @@ class baseUndoer:
             oldRoot = c.rootPosition()
             u.newP.linkAsRoot(oldRoot)
             
+        for v in u.dirtyVnodeList: # New in 4.4b3.
+            v.t.setDirty()
+    
         c.selectPosition(u.newP)
     #@nonl
     #@-node:ekr.20050412083057:redoCloneNode
@@ -1558,6 +1564,9 @@ class baseUndoer:
             u.newMiddleLines,u.oldMiddleLines,
             u.newNewlines,u.oldNewlines,
             tag="redo",undoType=u.undoType)
+            
+        for v in u.dirtyVnodeList: # New in 4.4b3.
+            v.t.setDirty()
         
         if u.newSel:
             c.bodyWantsFocus()
@@ -1627,6 +1636,10 @@ class baseUndoer:
     
         c.selectPosition(u.newP)
         c.deleteOutline()
+        
+        for v in u.dirtyVnodeList: # New in 4.4b3.
+            v.t.clearDirty()
+    
         c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050412083057.1:undoCloneNode
@@ -1645,7 +1658,7 @@ class baseUndoer:
             
         # Restore all vnodeLists (and thus all clone marks).
         u.p.restoreLinksInTree()
-        
+        u.p.setAllAncestorAtFileNodesDirty() # New in 4.4b3.
         c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050412084055:undoDeleteNode
@@ -1836,6 +1849,9 @@ class baseUndoer:
             u.oldMiddleLines,u.newMiddleLines,
             u.oldNewlines,u.newNewlines,
             tag="undo",undoType=u.undoType)
+    
+        for v in u.dirtyVnodeList: # New in 4.4b3.
+            v.t.clearDirty()
     
         if u.oldSel:
             c.bodyWantsFocus()
