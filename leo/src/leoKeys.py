@@ -1943,6 +1943,8 @@ class keyHandlerClass:
         
         k = self ; c = k.c
         
+        if not c.config.getBool('warn_about_missing_settings'): return
+        
         names = c.commandsDict.keys() ; names.sort()
         
         for name in names:
@@ -2035,7 +2037,9 @@ class keyHandlerClass:
         
         '''Set ivars for special keystrokes from previously-existing bindings.'''
     
-        k = self ; c = k.c ; trace = c.config.getBool('trace_bindings')
+        k = self ; c = k.c
+        trace = c.config.getBool('trace_bindings')
+        warn  = c.config.getBool('warn_about_missing_settings')
         
         for ivar,commandName in (
             ('fullCommandKey',  'full-command'),
@@ -2050,7 +2054,7 @@ class keyHandlerClass:
                         stroke = k.strokeFromSetting(bunch.val)
                         if trace: g.trace(commandName,stroke)
                         setattr(k,ivar,stroke) ; found = True ;break
-            if not found:
+            if not found and warn:
                 g.trace('no setting for %s' % commandName)
     #@nonl
     #@-node:ekr.20051008152134:initSpecialIvars
@@ -2610,7 +2614,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.62:getArg
     #@+node:ekr.20050920085536.63:keyboardQuit
-    def keyboardQuit (self,event):
+    def keyboardQuit (self,event,hideTabs=True):
     
         '''This method clears the state and the minibuffer label.
         
@@ -2620,10 +2624,11 @@ class keyHandlerClass:
     
         if g.app.quitting:
             return
-        
-        k.autoCompleter.exit()
-        c.frame.log.deleteTab('Mode')
-        c.frame.log.hideTab('Completion')
+    
+        if hideTabs:
+            k.autoCompleter.exit()
+            c.frame.log.deleteTab('Mode')
+            c.frame.log.hideTab('Completion')
         
         # Completely clear the mode.
         if k.inputModeName:
@@ -2632,7 +2637,7 @@ class keyHandlerClass:
         # Complete clear the state.
         k.state.kind = None
         k.state.n = None
-            
+    
         k.clearState()
         k.resetLabel()
         
@@ -3023,7 +3028,8 @@ class keyHandlerClass:
         # A click outside the minibuffer terminates any state.
         if k.inState() and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
             if not c.widget_name(w).startswith('log'):
-                k.keyboardQuit(event)
+                k.keyboardQuit(event,hideTabs=False)
+                # k.endMode(event) # Less drastic than keyboard-quit.
                 w and c.widgetWantsFocusNow(w)
                 return 'break'
     
