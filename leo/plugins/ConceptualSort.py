@@ -277,14 +277,14 @@ def csort( a, b, atdict ):
 
 #@-node:ekr.20040916074337.9:csort
 #@+node:ekr.20040916074337.10:addCommand
-def addCommand( tag, keywords ):
-    
+def addCommand (tag,keywords):
+
     c = keywords.get('c')
-    if not c or haveseen.has_key( c ): return
-    
-    table = ( ( "Conceptual Sort" , None, lambda c = c: getConcept( c )), )
+    if not c or haveseen.has_key(c): return
+
+    table = (("Conceptual Sort",None,lambda c=c: getConcept(c)),)
     men = c.frame.menu
-    men.createMenuItemsFromTable( "Outline" , table )
+    men.createMenuItemsFromTable("Outline",table,dynamicMenu=True)
 #@nonl
 #@-node:ekr.20040916074337.10:addCommand
 #@-others

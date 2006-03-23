@@ -107,7 +107,7 @@ class pluginController:
     
         c = self.c
         c.frame.menu.createNewMenu("E&xtensions","top")
-        c.frame.menu.createMenuItemsFromTable("Extensions",table)
+        c.frame.menu.createMenuItemsFromTable("Extensions",table,dynamicMenu=True)
     #@nonl
     #@-node:EKR.20040517080049.6:load_menu
     #@+node:EKR.20040517080049.7:_getpath

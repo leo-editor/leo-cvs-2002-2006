@@ -136,7 +136,7 @@ class paramClass:
         
         c = self.c
         table = ("Parameterize Section Reference",None,self.parameterize),
-        c.frame.menu.createMenuItemsFromTable("Outline",table)
+        c.frame.menu.createMenuItemsFromTable("Outline",table,dynamicMenu=True)
     #@nonl
     #@-node:ekr.20040916084945.3:addMenu
     #@-others

@@ -202,7 +202,7 @@ class labelsController(object):
             labelsMenu = menu.getMenu('Labels')
             if not labelsMenu:
                 menu.createNewMenu("Labels")
-                menu.createMenuItemsFromTable("Labels", table)
+                menu.createMenuItemsFromTable("Labels",table,dynamicMenu=True)
     #@nonl
     #@-node:ekr.20050301103957.3:onCreateOptionalMenus
     #@+node:ekr.20050301095332.19:subroutines
