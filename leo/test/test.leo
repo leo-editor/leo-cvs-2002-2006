@@ -53,7 +53,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051120173230" a="V" annotate="7d71002e"><vh>Prototypes</vh>
+<v t="ekr.20051120173230" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20051111114555"><vh>Subprocess tests</vh>
 <v t="ekr.20051112134206.1"><vh>subprocess.py (For study, but not very helpful)</vh>
 <v t="ekr.20051112134206.2"><vh>&lt;&lt; about this module &gt;&gt;</vh></v>
@@ -294,6 +294,7 @@
 </v>
 </v>
 <v t="ekr.20060310092758"><vh>test of getting shortcuts</vh></v>
+<v t="ekr.20060323080438" a="E"><vh>@thin cloneTest.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.

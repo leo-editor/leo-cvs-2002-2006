@@ -959,13 +959,13 @@
 </v>
 </v>
 <v t="ekr.20051108140810" a="E" annotate="7d71002e"><vh>All unit tests</vh>
-<v t="ekr.20060203200614"><vh>Basic Unit tests</vh>
+<v t="ekr.20060203200614" a="E"><vh>Basic Unit tests</vh>
 <v t="ekr.20060205165937"><vh>Doctests</vh>
 <v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20060131101825.1"><vh>@test print end of doctests</vh></v>
 </v>
-<v t="ekr.20060205165937.1"><vh>Test routines</vh>
-<v t="ekr.20050106080304" annotate="7d71002e"><vh>@suite run all test routines (runs some tests twice!)</vh>
+<v t="ekr.20060205165937.1" a="E"><vh>Test routines</vh>
+<v t="ekr.20050106080304" a="E" annotate="7d71002e"><vh>@suite run all test routines (runs some tests twice!)</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
 <v t="ekr.20050106094854.1"><vh>__init__</vh></v>
@@ -977,7 +977,7 @@
 <v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
 </v>
 </v>
-<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050106080318.1" a="E"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050106080318.2"><vh>__init__</vh></v>
 <v t="ekr.20050106080318.3"><vh> fail</vh></v>
 <v t="ekr.20050106080318.6"><vh>runTest</vh></v>
@@ -5412,7 +5412,7 @@ if 1:
     self.g = g
     self.code = code
     self.p = c.currentPosition().copy()
-    self.verbose = True # verbose
+    self.verbose = verbose
 </t>
 <t tx="ekr.20050218015346.13">def fail (self,msg=None):
 

@@ -7578,6 +7578,340 @@ else:
 #@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
 #@-node:ekr.20031218072017.1490:setUndoTypingParams
 #@-node:ekr.20060321140706:Investigated setting descendant @file nodes dirty when changing body text
+#@+node:ekr.20060306193836:Work around newline problems on the Mac
+#@+node:ekr.20060323095532:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3606515
+By: spboulet
+
+When pressing the return key, I see:
+
+masterKeyHandlerHelper: 'Return' state None
+masterKeyHandlerHelper: 'Return' no func
+
+This is the case regardless of whether @bool swap_mac_keys is True or False,
+although with 'True' the command key works as expected on the mac.
+
+Same result using CVS re the return key.
+
+Another thing I noticed (cvs version) is that the recent files is updated during
+a session but is not saved from session to session.
+
+Stephen
+#@nonl
+#@-node:ekr.20060323095532:Report
+#@+node:ekr.20050920084036.85:insert & delete...
+#@+node:ekr.20051026092433.1:backwardDeleteCharacter
+def backwardDeleteCharacter (self,event=None):
+    
+    c = self.c ; p = c.currentPosition()
+    w = event and event.widget
+    if not g.app.gui.isTextWidget(w):
+        g.trace('*'*40,'Not a text widget',c.widget_name(w))
+        return
+    
+    wname = c.widget_name(w)
+    i,j = g.app.gui.getTextSelection(w)
+    # g.trace(wname,i,j)
+
+    if wname.startswith('body'):
+        self.beginCommand()
+        d = g.scanDirectives(c,p)
+        tab_width = d.get("tabwidth",c.tab_width)
+        changed = True
+        if i != j:
+            w.delete(i,j)
+        elif i == '1.0':
+            changed = False # Bug fix: 1/6/06 (after a5 released).
+        elif tab_width > 0:
+            w.delete('insert-1c')
+        else:
+            << backspace with negative tab_width >>
+        self.endCommand(changed=True,setLabel=False) # Necessary to make text changes stick.
+    else:
+        # No undo in this widget.
+        if i != j:
+            w.delete(i,j)
+        elif i != '1.0':
+            # Bug fix: 1/6/06 (after a5 released).
+            # Do nothing at the start of the headline.
+            w.delete('insert-1c')
+#@nonl
+#@+node:ekr.20051026092746:<< backspace with negative tab_width >>
+s = prev = w.get("insert linestart","insert")
+n = len(prev)
+abs_width = abs(tab_width)
+
+# Delete up to this many spaces.
+n2 = (n % abs_width) or abs_width
+n2 = min(n,n2) ; count = 0
+
+while n2 > 0:
+    n2 -= 1
+    ch = prev[n-count-1]
+    if ch != ' ': break
+    else: count += 1
+
+# Make sure we actually delete something.
+w.delete("insert -%dc" % (max(1,count)),"insert")
+#@nonl
+#@-node:ekr.20051026092746:<< backspace with negative tab_width >>
+#@-node:ekr.20051026092433.1:backwardDeleteCharacter
+#@+node:ekr.20050920084036.87:deleteNextChar
+def deleteNextChar (self,event):
+
+    c = self.c ; w = event and event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    name = c.widget_name(w)
+    i,j = g.app.gui.getTextSelection(w)
+    end = w.index('end-1c')
+    # g.trace(i,j,'end',w.index('end-1c'))
+    
+    if name.startswith('body'):
+        self.beginCommand()
+
+    changed = True
+    if i != j:
+        w.delete(i,j)
+    elif j != end:
+        w.delete(i)
+    else:
+        changed = False
+        
+    if name.startswith('body'):
+        self.endCommand(changed=changed,setLabel=False)
+#@nonl
+#@-node:ekr.20050920084036.87:deleteNextChar
+#@+node:ekr.20050920084036.135:deleteSpaces
+def deleteSpaces (self,event,insertspace=False):
+
+    c = self.c ; w = event and event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    name = c.widget_name(w)
+    char = w.get('insert','insert + 1c ')
+    if not char.isspace(): return
+    
+    if name.startswith('body'):
+        oldText = w.get('1.0','end')
+        oldSel = g.app.gui.getTextSelection(w)
+        i = w.index('insert')
+        wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+        wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
+        if '' in (wf,wb): return
+        w.delete('%s +1c' % wb,wf)
+        if insertspace: w.insert('insert',' ')
+        
+        c.frame.body.onBodyChanged(undoType='delete-spaces',
+            oldSel=oldSel,oldText=oldText,oldYview=None)
+#@nonl
+#@-node:ekr.20050920084036.135:deleteSpaces
+#@+node:ekr.20050920084036.141:removeBlankLines
+def removeBlankLines (self,event):
+    
+    '''The remove-blank-lines command removes lines containing nothing but
+    whitespace. If there is a text selection, only lines within the selected
+    text are affected; otherwise all blank lines in the selected node are
+    affected.'''
+    
+    c = self.c ; undoType = 'Remove Blank Lines' ; p = c.currentPosition()
+    result = []
+    body = p.bodyString()
+    hasSelection = c.frame.body.hasTextSelection()
+    
+    if hasSelection:
+        head,lines,tail,oldSel,oldYview = c.getBodyLines()
+        joinChar = '\n'
+    else:
+        head = tail = oldYview = None
+        lines = g.splitLines(body)
+        oldSel = ('1.0','1.0')
+        joinChar = ''
+
+    for line in lines:
+        if line.strip():
+            result.append(line)
+
+    result = joinChar.join(result)
+    
+    if result != body:
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20050920084036.141:removeBlankLines
+#@+node:ekr.20050920084036.138:insertNewLine (not undoable)
+def insertNewLine (self,event):
+
+    w = event.widget
+    w.insert('insert','\n')
+
+insertNewline = insertNewLine
+#@-node:ekr.20050920084036.138:insertNewLine (not undoable)
+#@+node:ekr.20050920084036.86:insertNewLineAndTab
+def insertNewLineAndTab (self,event):
+
+    '''Insert a newline and tab'''
+
+    w = event.widget
+    w.insert('insert','\n\t')
+#@nonl
+#@-node:ekr.20050920084036.86:insertNewLineAndTab
+#@+node:ekr.20050920084036.139:insertParentheses
+def insertParentheses (self,event):
+
+    w = event.widget
+    w.insert('insert','()')
+    w.mark_set('insert','insert -1c')
+#@nonl
+#@-node:ekr.20050920084036.139:insertParentheses
+#@+node:ekr.20051125080855:selfInsertCommand
+def selfInsertCommand(self,event,action='insert'):
+    
+    '''Insert a character in the body pane.
+    
+    This is the default binding for all keys in the body pane.'''
+    
+    c = self.c ; p = c.currentPosition()
+    ch = event and event.char or ''
+    w = event and event.widget
+    name = c.widget_name(w)
+    oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
+    oldText = name.startswith('body') and p.bodyString()
+    removeTrailing = None # A signal to compute it later.
+    undoType = 'Typing'
+    trace = c.config.getBool('trace_masterCommand')
+    
+    if trace: g.trace(name)
+    
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+        
+    if ch == '\t':
+        removeTrailing = self.updateTab(p,w)
+    elif ch == '\b':
+        # This is correct: we only come here if there no bindngs for this key. 
+        self.backwardDeleteCharacter(event)
+    elif ch in ('\r','\n'):
+        ch = '\n'
+        << handle newline >>
+    elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
+        self.updateAutomatchBracket(p,w,ch,oldSel)
+    elif ch: # Null chars must not delete the selection.
+        i,j = oldSel
+        if i != j:                  w.delete(i,j)
+        elif action == 'overwrite': w.delete(i,'%s+1c' % i)
+        w.insert(i,ch)                     
+    else:
+        return 'break' # New in 4.4a5: this method *always* returns 'break'
+
+    # Update the text and handle undo.
+    newText = w.get('1.0','end')
+    w.see(w.index('insert'))
+    if not g.safeStringCompare(newText,oldText):
+        c.frame.body.onBodyChanged(undoType=undoType,
+            oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
+            
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return 'break'
+#@nonl
+#@+node:ekr.20051026171121:<< handle newline >>
+i,j = oldSel
+
+if i != j:
+    # No auto-indent if there is selected text.
+    w.delete(i,j)
+    w.insert(i,ch)
+else:
+    w.insert(i,ch)
+    if c.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+        # No auto-indent if in @nocolor mode or after a Change command.
+        removeTrailing = self.updateAutoIndent(p)
+#@nonl
+#@-node:ekr.20051026171121:<< handle newline >>
+#@+node:ekr.20051027172949:updateAutomatchBracket
+def updateAutomatchBracket (self,p,w,ch,oldSel):
+    
+    # assert ch in ('(',')','[',']','{','}')
+    
+    c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
+    language = d.get('language')
+    
+    if ch in ('(','[','{',):
+        automatch = language not in ('plain',)
+        if automatch:
+            ch = ch + {'(':')','[':']','{':'}'}.get(ch)
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,ch)
+        if automatch:
+            w.mark_set('insert','insert-1c')
+    else:
+        ch2 = w.get('insert')
+        if ch2 in (')',']','}'):
+            w.mark_set('insert','insert+1c')
+        else:
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,ch)
+#@nonl
+#@-node:ekr.20051027172949:updateAutomatchBracket
+#@+node:ekr.20051026171121.1:udpateAutoIndent
+# By David McNab:
+def updateAutoIndent (self,p):
+
+    c = self.c ; d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
+    s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s [ -1] == ':':
+        # For Python: increase auto-indent after colons.
+        if c.frame.body.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width] ; tabex = 0
+        for i in range(0,len(s)):
+            if s [i] == '\t':
+                tabex += tab_width-1
+            if s [i] in '([{':
+                brackets.append(i+tabex+1)
+            elif s [i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+    ws = g.computeLeadingWhitespace(width,tab_width)
+    if ws:
+        c.frame.bodyCtrl.insert("insert",ws)
+        removeTrailing = False
+    else:
+        removeTrailing = None
+    return removeTrailing
+#@nonl
+#@-node:ekr.20051026171121.1:udpateAutoIndent
+#@+node:ekr.20051026092433:updateTab
+def updateTab (self,p,w):
+
+    c = self.c ; d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width)
+    
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        w.delete(i,j)
+    if tab_width > 0:
+        w.insert("insert",'\t')
+    else:
+        # Get the preceeding characters.
+        s = w.get("insert linestart","insert")
+    
+        # Compute n, the number of spaces to insert.
+        width = g.computeWidth(s,tab_width)
+        n = abs(tab_width) - (width % abs(tab_width))
+        w.insert("insert",' ' * n)
+#@nonl
+#@-node:ekr.20051026092433:updateTab
+#@-node:ekr.20051125080855:selfInsertCommand
+#@-node:ekr.20050920084036.85:insert & delete...
+#@-node:ekr.20060306193836:Work around newline problems on the Mac
 #@-node:ekr.20060306070425:4.4 b3 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

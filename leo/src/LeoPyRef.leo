@@ -17,11 +17,10 @@
 marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"
-marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -491,9 +490,29 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 </v>
 </v>
+<v t="ekr.20060306193836"><vh>Work around newline problems on the Mac</vh>
+<v t="ekr.20060323095532"><vh>Report</vh></v>
+<v t="ekr.20050920084036.85"><vh>insert &amp; delete...</vh>
+<v t="ekr.20051026092433.1"><vh>backwardDeleteCharacter</vh>
+<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050920084036.87"><vh>deleteNextChar</vh></v>
+<v t="ekr.20050920084036.135"><vh>deleteSpaces</vh></v>
+<v t="ekr.20050920084036.141"><vh>removeBlankLines</vh></v>
+<v t="ekr.20050920084036.138"><vh>insertNewLine (not undoable)</vh></v>
+<v t="ekr.20050920084036.86"><vh>insertNewLineAndTab</vh></v>
+<v t="ekr.20050920084036.139"><vh>insertParentheses</vh></v>
+<v t="ekr.20051125080855"><vh>selfInsertCommand</vh>
+<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
+<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
+<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
+<v t="ekr.20051026092433"><vh>updateTab</vh></v>
 </v>
 </v>
-<v t="ekr.20060301102950" a="V"><vh>To do 4.4 b3</vh>
+</v>
+</v>
+</v>
+<v t="ekr.20060301102950"><vh>To do 4.4 b3</vh>
 <v t="ekr.20060321082832"><vh>To do first</vh>
 <v t="ekr.20060321111639"><vh>Get rid of settings messages</vh>
 <v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
@@ -537,26 +556,6 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20060306200304.1"><vh>Scroll outline pane commands</vh></v>
 <v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
-<v t="ekr.20060306193836" a="M"><vh>Work around newline problems on the Mac</vh>
-<v t="ekr.20060323095532"><vh>Report</vh></v>
-<v t="ekr.20050920084036.85"><vh>insert &amp; delete...</vh>
-<v t="ekr.20051026092433.1"><vh>backwardDeleteCharacter</vh>
-<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050920084036.87"><vh>deleteNextChar</vh></v>
-<v t="ekr.20050920084036.135"><vh>deleteSpaces</vh></v>
-<v t="ekr.20050920084036.141"><vh>removeBlankLines</vh></v>
-<v t="ekr.20050920084036.138"><vh>insertNewLine (not undoable)</vh></v>
-<v t="ekr.20050920084036.86"><vh>insertNewLineAndTab</vh></v>
-<v t="ekr.20050920084036.139"><vh>insertParentheses</vh></v>
-<v t="ekr.20051125080855"><vh>selfInsertCommand</vh>
-<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
-<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
-<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
-<v t="ekr.20051026092433"><vh>updateTab</vh></v>
-</v>
-</v>
-</v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -616,7 +615,7 @@ marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
 marks="ekr.20051022142249,"
 expanded="ekr.20050920084036.53,ekr.20050929155208,ekr.20050920084036.85,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
-<v t="ekr.20060321082832"><vh>To do first</vh>
+<v t="ekr.20060321082832" a="E"><vh>To do first</vh>
 <v t="ekr.20060321111639"><vh>Get rid of settings messages</vh>
 <v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
 <v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
