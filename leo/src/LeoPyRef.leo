@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9369" clone_windows="0"/>
 <globals body_outline_ratio="0.535469107551">
-	<global_window_position top="38" left="364" height="878" width="883"/>
+	<global_window_position top="38" left="365" height="878" width="882"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,8 +14,7 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040803072955.8,ekr.20031218072017.2052,"
-expanded="ekr.20041118104831.2,ekr.20060323140748,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
@@ -341,6 +340,7 @@ expanded="ekr.20041118104831.2,ekr.20060323140748,"><vh>@thin leoProjects.txt</v
 <v t="ekr.20040803072955.8" a="M"><vh>newClickBox</vh></v>
 <v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
 </v>
+<v t="ekr.20060306200304.1"><vh>Added scroll outline pane commands</vh></v>
 </v>
 <v t="ekr.20060323131536.1"><vh>Bugs</vh>
 <v t="ekr.20060306200304"><vh>Fixed unicode crasher??</vh></v>
@@ -464,13 +464,13 @@ expanded="ekr.20041118104831.2,ekr.20060323140748,"><vh>@thin leoProjects.txt</v
 <v t="ekr.20060323134459"><vh>What I did</vh></v>
 <v t="ekr.20051011103654"><vh>checkBindings</vh></v>
 <v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
-<v t="ekr.20041118104831.2" a="E"><vh>configSettings.__init__</vh>
+<v t="ekr.20041118104831.2"><vh>configSettings.__init__</vh>
 <v t="ekr.20041118104240"><vh>initIvar</vh></v>
 <v t="ekr.20041118104414"><vh>initEncoding</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20060323140748" a="E"><vh>Plugins</vh>
+<v t="ekr.20060323140748"><vh>Plugins</vh>
 <v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
 <v t="ekr.20060306030946.1"><vh>Event handling for multiple editors</vh>
 <v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
@@ -501,7 +501,7 @@ expanded="ekr.20041118104831.2,ekr.20060323140748,"><vh>@thin leoProjects.txt</v
 <v t="ekr.20041221071131"><vh>createPmwTreeCanvas (not used)</vh></v>
 </v>
 <v t="ekr.20051104075904.42"><vh>leoTest.runLeoTest</vh></v>
-<v t="ekr.20031218072017.2052" a="M"><vh>g.openWithFileName</vh></v>
+<v t="ekr.20031218072017.2052"><vh>g.openWithFileName</vh></v>
 <v t="ekr.20031218072017.4121"><vh>setMenuLabel</vh></v>
 </v>
 <v t="ekr.20060306030946"><vh>Drawing</vh>
@@ -539,9 +539,19 @@ expanded="ekr.20041118104831.2,ekr.20060323140748,"><vh>@thin leoProjects.txt</v
 <v t="ekr.20040803072955.85"><vh>configureTextState</vh></v>
 <v t="ekr.20040803112450"><vh>c.isCurrentPosition</vh></v>
 </v>
+<v t="ekr.20040307104131.3"><vh>p.exists</vh></v>
+<v t="ekr.20031218072017.1771"><vh>moveOutlineRight</vh></v>
+<v t="ekr.20040303175026.11"><vh>p.moveToNthChildOf</vh></v>
+<v t="ekr.20040803140033.3"><vh>setRootPosition</vh></v>
+<v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
 </v>
 <v t="ekr.20060319155125"><vh>Changed path to stylesheet in the rst3 plugin</vh>
 <v t="ekr.20060320071608"><vh>proposed revision</vh></v>
+</v>
+<v t="ekr.20060319103111"><vh>Fixed problems with chapters plugin</vh>
+<v t="ekr.20060319103111.1"><vh>Report 1</vh></v>
+<v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
+<v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
 </v>
 </v>
 </v>
@@ -549,33 +559,23 @@ expanded="ekr.20041118104831.2,ekr.20060323140748,"><vh>@thin leoProjects.txt</v
 <v t="ekr.20060301102950"><vh>To do 4.4 b3</vh>
 <v t="ekr.20060321082832"><vh>To do first</vh>
 <v t="ekr.20060309132452"><vh>Figure out what is really wrong with unicode in onBodyChanged</vh></v>
-<v t="ekr.20060319103111"><vh>Fix problems with chapters plugin</vh>
-<v t="ekr.20060319103111.1"><vh>Report 1</vh></v>
-<v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
-<v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
-</v>
-</v>
-<v t="ekr.20060305110016"><vh>*** autocompleter text not always sticking</vh></v>
-<v t="ekr.20060306193910"><vh>***Open with shortcuts</vh></v>
-<v t="ekr.20060307074302.1"><vh>*set-change-text command should work when entering find text.</vh></v>
-<v t="ekr.20060308103043"><vh>* Fix crasher in Word plugin</vh></v>
+<v t="ekr.20060306193910"><vh>Open with shortcuts</vh></v>
+<v t="ekr.20060308103043"><vh>Fix crasher in Word plugin</vh></v>
 <v t="ekr.20060307142612"><vh>Fix problem with labels plugin</vh></v>
-<v t="ekr.20060309132427"><vh>Add option to disable self completion</vh></v>
+<v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
 <v t="ekr.20060307074624"><vh>Improve autocompleter</vh>
+<v t="ekr.20060309132427"><vh>Add option to disable self completion</vh></v>
+<v t="ekr.20060305110016"><vh>*** autocompleter text not always sticking</vh></v>
 <v t="ekr.20060306194204"><vh>Fix problems with autocompleter</vh></v>
 <v t="ekr.20060305073002"><vh>Separate config setting for self completion</vh></v>
 <v t="ekr.20060307074302"><vh>*Control-g doesn't work in find completion</vh></v>
 <v t="ekr.20060228071700"><vh>Ignore autocompletion for number.</vh></v>
 <v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
 </v>
+</v>
+<v t="ekr.20060307074302.1"><vh>*set-change-text command should work when entering find text.</vh></v>
 <v t="ekr.20060306195137"><vh>Document and test @ifgui and @ifplatform nodes</vh></v>
 <v t="ekr.20060227123644"><vh>There are still problems with focus: remove the optimizations?</vh></v>
-<v t="ekr.20060227133940"><vh>Post re breaking @ref links</vh></v>
-<v t="ekr.20060306082003"><vh>Create balloons for widgets</vh>
-<v t="ekr.20060306082003.1"><vh>createBalloon</vh></v>
-</v>
-<v t="ekr.20060306200304.1"><vh>Scroll outline pane commands</vh></v>
-<v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
 <v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -637,10 +637,18 @@ marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
 <v t="ekr.20060321082832" a="V"><vh>To do first</vh>
 <v t="ekr.20060309132452"><vh>Figure out what is really wrong with unicode in onBodyChanged</vh></v>
-<v t="ekr.20060319103111"><vh>Fix problems with chapters plugin</vh>
-<v t="ekr.20060319103111.1"><vh>Report 1</vh></v>
-<v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
-<v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
+<v t="ekr.20060306193910"><vh>Open with shortcuts</vh></v>
+<v t="ekr.20060308103043"><vh>Fix crasher in Word plugin</vh></v>
+<v t="ekr.20060307142612"><vh>Fix problem with labels plugin</vh></v>
+<v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
+<v t="ekr.20060307074624"><vh>Improve autocompleter</vh>
+<v t="ekr.20060309132427"><vh>Add option to disable self completion</vh></v>
+<v t="ekr.20060305110016"><vh>*** autocompleter text not always sticking</vh></v>
+<v t="ekr.20060306194204"><vh>Fix problems with autocompleter</vh></v>
+<v t="ekr.20060305073002"><vh>Separate config setting for self completion</vh></v>
+<v t="ekr.20060307074302"><vh>*Control-g doesn't work in find completion</vh></v>
+<v t="ekr.20060228071700"><vh>Ignore autocompletion for number.</vh></v>
+<v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
 </v>
 </v>
 </vnodes>
@@ -944,6 +952,34 @@ else:
         c.endUpdate()
 
     return clone # For mod_labels and chapters plugins.</t>
+<t tx="ekr.20031218072017.1771">def moveOutlineRight (self,event=None):
+    
+    c = self ; u = c.undoer ; p = c.currentPosition()
+    if not p: return
+    if not c.canMoveOutlineRight(): # 11/4/03: Support for hoist.
+        if c.hoistStack: g.es("Can't move node out of hoisted outline",color="blue")
+        return
+    if not p.hasBack: return
+    back = p.back()
+    if not c.checkMoveWithParentWithWarning(p,back,True): return
+
+    c.beginUpdate()
+    try: # update...
+        c.endEditing()
+        undoData = u.beforeMoveNode(p)
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        n = back.numberOfChildren()
+        p.moveToNthChildOf(back,n)
+        # g.trace(p,p.parent())
+        # Moving an outline right can never bring it outside the range of @ignore.
+        dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
+        dirtyVnodeList.extend(dirtyVnodeList2)
+        c.setChanged(True)
+        u.afterMoveNode(p,'Move Right',undoData,dirtyVnodeList)
+        c.selectPosition(p)
+    finally:
+        c.endUpdate(scroll=True)
+    c.updateSyntaxColorer(p) # Moving can change syntax coloring.</t>
 <t tx="ekr.20031218072017.1801">def __init__(self,title,gui):
 
     # Init the base class.
@@ -1554,6 +1590,25 @@ def onDragSplitterBar (self, event, verticalFlag):
         if not g.app.unitTesting:
             print "setMenuLabel menu,name,label:",menu,name,label
             g.es_exception()</t>
+<t tx="ekr.20040303175026.11">def moveToNthChildOf (self,parent,n):
+
+    """Move a position to the nth child of parent."""
+
+    p = self ; c = p.c # Do NOT copy the position!
+    
+    # g.trace(p,parent,n)
+
+    p.unlink()
+    p.linkAsNthChild(parent,n)
+    
+    # Moving a node can create a new root node.
+    if not parent.hasParent() and not parent.hasBack():
+        if not parent.equal(c.rootPosition()):
+            # g.trace('old root',c.rootPosition(),'new root',parent())
+            c.setRootPosition(parent)
+
+    return p
+</t>
 <t tx="ekr.20040303214038">def setAllAncestorAtFileNodesDirty (self,setDescendentsDirty=False):
 
     p = self ; c = p.c
@@ -1582,6 +1637,65 @@ def onDragSplitterBar (self, event, verticalFlag):
         c.endUpdate(changed)
 
     return dirtyVnodeList</t>
+<t tx="ekr.20040307104131.3">def exists(self,c):
+    
+    """Return True if a position exists in c's tree"""
+    
+    p = self.copy()
+
+    # This code must be fast.
+    root = c.rootPosition()
+
+    while p:
+        # g.trace(p.headString(),'parent',p.parent(),'back',p.back())
+        if p.equal(root):
+            return True
+        if p.hasParent():
+            p.moveToParent()
+        else:
+            p.moveToBack()
+        
+    # g.trace('does not exist in root:',root.headString())
+    return False</t>
+<t tx="ekr.20040310062332.3">def linkAsNthChild (self,parent,n):
+
+    """Links self as the n'th child of vnode pv"""
+    
+    # g.trace(self,parent,n,parent.v)
+
+    p = self
+
+    # Recreate the stack using the parent.
+    p.stack = parent.stack[:] 
+    if parent.isCloned():
+        p.stack.append(parent.v)
+
+    p.v._parent = parent.v
+
+    # Add v to it's tnode's vnodeList.
+    if p.v not in p.v.t.vnodeList:
+        p.v.t.vnodeList.append(p.v)
+
+    if n == 0:
+        child1 = parent.v.t._firstChild
+        p.v._back = None
+        p.v._next = child1
+        if child1:
+            child1._back = p.v
+        parent.v.t._firstChild = p.v
+    else:
+        prev = parent.nthChild(n-1) # zero based
+        assert(prev)
+        p.v._back = prev.v
+        p.v._next = prev.v._next
+        prev.v._next = p.v
+        if p.v._next:
+            p.v._next._back = p.v
+            
+    if 0:
+        g.trace('-'*20)
+        p.dump(label="p")
+        parent.dump(label="parent")</t>
 <t tx="ekr.20040324061854">if u.redoing or u.undoing:
     return None
 
@@ -2037,7 +2151,9 @@ def select (self,p,updateBeadList=True):
     
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
-    if not p or not p.exists(c): return # Not an error.
+    if not p or not p.exists(c):
+        # g.trace('does not exist',p.headString())
+        return # Not an error.
     
     if self.trace_select and not g.app.unitTesting: g.trace(g.callers())
 
@@ -2168,6 +2284,23 @@ else:
     
 # For compatibiility with old scripts.
 setCurrentVnode = setCurrentPosition</t>
+<t tx="ekr.20040803140033.3">def setRootPosition(self,p):
+    
+    """Set the root positioin."""
+
+    c = self
+    
+    if p:
+        if p.equal(c._rootPosition):
+            pass # We have already made a copy.
+        else:
+            # We must make a copy _now_.
+            c._rootPosition = p.copy()
+    else:
+        c._rootPosition = None
+    
+# For compatibiility with old scripts.
+setRootVnode = setRootPosition</t>
 <t tx="ekr.20041118104240">def initIvar(self,key):
     
     c = self.c
@@ -6570,7 +6703,6 @@ AttributeError: LeoApp instance has no attribute 'dialogs'</t>
 <t tx="ekr.20060227123644">@ It's much better to call g.app.gui.set_focus a few extra times than to mess up the focus!
 
 - Make c.invalidateFocus a do-nothing method.</t>
-<t tx="ekr.20060227133940"></t>
 <t tx="ekr.20060228071700"></t>
 <t tx="ekr.20060301102950"></t>
 <t tx="ekr.20060301182319"></t>
@@ -6580,24 +6712,6 @@ AttributeError: LeoApp instance has no attribute 'dialogs'</t>
 <t tx="ekr.20060306030946.1"></t>
 <t tx="ekr.20060306070425"></t>
 <t tx="ekr.20060306070502"></t>
-<t tx="ekr.20060306082003"></t>
-<t tx="ekr.20060306082003.1">def createBalloon (self,w,s):
-
-    '''Create a balloon on a widget w with the text s.'''
-    
-    if not s: return
-    
-    balloon = Pmw.Balloon(w,initwait=100)
-    balloon.bind(w,s) # or tagbind
-   
-
-    if 0: # Not needed for plain text.
-        def exposeCallback (event):
-            if sv.get() == '':
-                 hull.withdraw()
-        hull = balloon.component('hull')
-        hull.bind('&lt;Expose&gt;',exposeCallback,'+')
-        balloon._label.configure(text=s)</t>
 <t tx="ekr.20060306103239"></t>
 <t tx="ekr.20060306130654"></t>
 <t tx="ekr.20060306193836"></t>
@@ -6673,25 +6787,15 @@ not in range(128)
 Try this: if g.safeStringCompare (newText,oldText):
 </t>
 <t tx="ekr.20060306200304.1">@nocolor
+
 http://sourceforge.net/forum/message.php?msg_id=3608246
-By: David
 
-It would be great if there was a way to scroll the tree pane with keyboard shortcuts
-and quickly choose nodes.
+Added the following commands:
 
-Example:
-..press Ctrl-Up and Ctrl-down - which moves a cursor up and down the tree pane
-without actually selecting a node (which totally slows things down)
-..press Ctrl-Enter to select the node where the cursor is, and display it in
-the body pane
-
-This is just one possibility. What I'm really hoping for is any way of very
-rapidly scrolling through the tree pane, and selecting a node from that, and
-getting back to the body pane, with zero mouse usage.
-
-At present, the Alt-Up and Alt-Down work fine, except they're so excruciatingly
-slow - I find myself holding Alt-Up and hoping I don't overshoot the keyboard
-autorepeat. Even then, it can take 20 seconds to get to the node I want.</t>
+scroll-outline-down-line       
+scroll-outline-down-page       
+scroll-outline-up-line       
+scroll-outline-up-page</t>
 <t tx="ekr.20060307074302"></t>
 <t tx="ekr.20060307074302.1"></t>
 <t tx="ekr.20060307074624"></t>
@@ -6848,19 +6952,23 @@ Edward
 <t tx="ekr.20060319103111.1">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3626542
+
+v .203 EKR:
+- Chapter.makeCurrent now calls self.rp.v.linkAsRoot to properly anchor the root node.
+  This was the cause of the move-outline-right problems.
 By: tfer
 
 Just playing with the chapters plug-in under a CVS download and ran into odd
 behavior.  I was playing with putting Dive into Python" into chapters.  inserted
 a new chapter (2), named the node "Your first Python Program", cntrl-i for insert
-new node, cntrl-r  to move right, (1st odd thing:), node collapsed under chapter
-title.  (2nd odd thing:) I can't select the "NewHeading" via mouse (chapter
-name  node remains selected), trying same by keyboard (alt-dwnArrow, cntrl-h),
+new node, cntrl-r  to move right.
+(1st odd thing:), node collapsed under chapter title.
+(2nd odd thing:) I can't select the "NewHeading" via mouse (chapter name  node remains selected)
+trying same by keyboard (alt-dwnArrow, cntrl-h),
 changes the body pane "location line" to "NewHeading", but in outline pane chapter
 title node reamains selected,  and I can't edit the NewHeading node name.
 
-Only thing I'm leaving out is alt-tabbing to scintila to cut and paste teaxt
-to nodes/body.
+Only thing I'm leaving out is alt-tabbing to scintila to cut and paste teaxt to nodes/body.
 
 Tom
 </t>

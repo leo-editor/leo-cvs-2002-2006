@@ -224,7 +224,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051104081824" a="E" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051104081824" a="V" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -262,7 +262,7 @@
 <v t="ekr.20060301132108.1" a="E"><vh>@@button rmEditor</vh></v>
 <v t="ekr.20060301151555" a="E"><vh>@@button index</vh></v>
 </v>
-<v t="ekr.20051214100048" a="V" annotate="7d71002e"><vh>Recent tests</vh>
+<v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
 <v t="ekr.20060107082808"><vh>Error test</vh>
