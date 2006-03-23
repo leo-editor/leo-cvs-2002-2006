@@ -29,7 +29,7 @@ can only be read when this plugin has been enabled.
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.2021"
+__version__ = "0.203"
 #@<< version history >>
 #@+node:ekr.20060306151759.3:<< version history >>
 #@@nocolor
@@ -119,13 +119,17 @@ __version__ = "0.2021"
 # v .200 EKR:
 # - Removed all enumerates for compatibility with Python 2.2.
 # - Made balloons work.
-# v .201
+# v .201 EKR:
 # - Supported @color editor_label_foreground/background_color
 # - Call chapter._saveInfo in select. This solves a problem with changed 
 # selections after a save.
-# v .202
+# v .202 EKR:
 # - Improved doc string.
 # - Moved the code back into leoPlugins.leo.
+# v .203 EKR:
+# - Chapter.makeCurrent now calls self.rp.v.linkAsRoot to properly anchor the 
+# root node.
+#   This was the cause of the move-outline-right problems.
 #@-at
 #@nonl
 #@-node:ekr.20060306151759.3:<< version history >>
@@ -437,9 +441,11 @@ class Chapter:
         cc = self.cc ; c = cc.c
         
         if cc.currentChapter:
+            g.trace()
             # We are creating a *second* or following chapter.
             t = leoNodes.tnode('','New Headline')
             v = leoNodes.vnode(c,t)
+            # v.linkAsRoot(oldRoot=None)
             p = leoNodes.position(c,v,[])
             self.cp = p.copy()
             self.rp = p.copy()
@@ -494,6 +500,7 @@ class Chapter:
         cc.currentChapter = self
         self.setVariables()
         self.updateHeadingSV(self.sv)
+        self.rp.v.linkAsRoot(oldRoot=self.rp.v._next)
         c.redraw()
         c.bodyWantsFocusNow()
     #@nonl
@@ -558,7 +565,7 @@ class chapterController:
     #@+node:ekr.20060306151759.33:constructTree
     def constructTree (self,frame,pageName):
         
-        # g.trace(pageName)
+        g.trace(pageName)
     
         cc = self ; c = self.c ; nb = self.nb
         canvas = treeBar = tree = None
@@ -1004,9 +1011,10 @@ class chapterController:
     #@+node:ekr.20060306151759.60:addChapter
     def addChapter (self,event=None):
         
-        cc = self
+        cc = self ; c = cc.c
         cc.addPage()
         cc.renumber()
+        c.bodyWantsFocusNow()
     #@nonl
     #@-node:ekr.20060306151759.60:addChapter
     #@+node:ekr.20060306151759.61:convertTopLevelToChapters
@@ -1984,7 +1992,7 @@ class chapterController:
         junk, page = cc.constructTree(self.frame,pageName)
             # Creates a canvas, new tab and a new tree.
     
-        # old_chapter.makeCurrent()
+        old_chapter.makeCurrent() # Essential to capture the present values.
         chapter = cc.getChapter(cc.newPageName)
         chapter.makeCurrent()
         return page,pageName
