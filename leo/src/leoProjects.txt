@@ -4915,6 +4915,19 @@ def drawTopTree (self):
 #@nonl
 #@-node:ekr.20040803072955.52:drawTopTree
 #@-node:ekr.20060307080642.1:Added some balloons to the tree pane
+#@+node:ekr.20060306200304.1:Added scroll outline pane commands
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3608246
+
+Added the following commands:
+
+scroll-outline-down-line       
+scroll-outline-down-page       
+scroll-outline-up-line       
+scroll-outline-up-page
+#@nonl
+#@-node:ekr.20060306200304.1:Added scroll outline pane commands
 #@-node:ekr.20060323131536:New features
 #@+node:ekr.20060323131536.1:Bugs
 #@+node:ekr.20060306200304:Fixed unicode crasher??
@@ -8176,7 +8189,9 @@ def select (self,p,updateBeadList=True):
     
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
-    if not p or not p.exists(c): return # Not an error.
+    if not p or not p.exists(c):
+        # g.trace('does not exist',p.headString())
+        return # Not an error.
     
     if self.trace_select and not g.app.unitTesting: g.trace(g.callers())
 
@@ -8350,6 +8365,142 @@ def isCurrentPosition (self,p):
 #@nonl
 #@-node:ekr.20040803112450:c.isCurrentPosition
 #@-node:ekr.20060306130654:Selecting
+#@+node:ekr.20040307104131.3:p.exists
+def exists(self,c):
+    
+    """Return True if a position exists in c's tree"""
+    
+    p = self.copy()
+
+    # This code must be fast.
+    root = c.rootPosition()
+
+    while p:
+        # g.trace(p.headString(),'parent',p.parent(),'back',p.back())
+        if p.equal(root):
+            return True
+        if p.hasParent():
+            p.moveToParent()
+        else:
+            p.moveToBack()
+        
+    # g.trace('does not exist in root:',root.headString())
+    return False
+#@nonl
+#@-node:ekr.20040307104131.3:p.exists
+#@+node:ekr.20031218072017.1771:moveOutlineRight
+def moveOutlineRight (self,event=None):
+    
+    c = self ; u = c.undoer ; p = c.currentPosition()
+    if not p: return
+    if not c.canMoveOutlineRight(): # 11/4/03: Support for hoist.
+        if c.hoistStack: g.es("Can't move node out of hoisted outline",color="blue")
+        return
+    if not p.hasBack: return
+    back = p.back()
+    if not c.checkMoveWithParentWithWarning(p,back,True): return
+
+    c.beginUpdate()
+    try: # update...
+        c.endEditing()
+        undoData = u.beforeMoveNode(p)
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        n = back.numberOfChildren()
+        p.moveToNthChildOf(back,n)
+        # g.trace(p,p.parent())
+        # Moving an outline right can never bring it outside the range of @ignore.
+        dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
+        dirtyVnodeList.extend(dirtyVnodeList2)
+        c.setChanged(True)
+        u.afterMoveNode(p,'Move Right',undoData,dirtyVnodeList)
+        c.selectPosition(p)
+    finally:
+        c.endUpdate(scroll=True)
+    c.updateSyntaxColorer(p) # Moving can change syntax coloring.
+#@nonl
+#@-node:ekr.20031218072017.1771:moveOutlineRight
+#@+node:ekr.20040303175026.11:p.moveToNthChildOf
+def moveToNthChildOf (self,parent,n):
+
+    """Move a position to the nth child of parent."""
+
+    p = self ; c = p.c # Do NOT copy the position!
+    
+    # g.trace(p,parent,n)
+
+    p.unlink()
+    p.linkAsNthChild(parent,n)
+    
+    # Moving a node can create a new root node.
+    if not parent.hasParent() and not parent.hasBack():
+        if not parent.equal(c.rootPosition()):
+            # g.trace('old root',c.rootPosition(),'new root',parent())
+            c.setRootPosition(parent)
+
+    return p
+#@-node:ekr.20040303175026.11:p.moveToNthChildOf
+#@+node:ekr.20040803140033.3:setRootPosition
+def setRootPosition(self,p):
+    
+    """Set the root positioin."""
+
+    c = self
+    
+    if p:
+        if p.equal(c._rootPosition):
+            pass # We have already made a copy.
+        else:
+            # We must make a copy _now_.
+            c._rootPosition = p.copy()
+    else:
+        c._rootPosition = None
+    
+# For compatibiility with old scripts.
+setRootVnode = setRootPosition
+#@nonl
+#@-node:ekr.20040803140033.3:setRootPosition
+#@+node:ekr.20040310062332.3:p.linkAsNthChild
+def linkAsNthChild (self,parent,n):
+
+    """Links self as the n'th child of vnode pv"""
+    
+    # g.trace(self,parent,n,parent.v)
+
+    p = self
+
+    # Recreate the stack using the parent.
+    p.stack = parent.stack[:] 
+    if parent.isCloned():
+        p.stack.append(parent.v)
+
+    p.v._parent = parent.v
+
+    # Add v to it's tnode's vnodeList.
+    if p.v not in p.v.t.vnodeList:
+        p.v.t.vnodeList.append(p.v)
+
+    if n == 0:
+        child1 = parent.v.t._firstChild
+        p.v._back = None
+        p.v._next = child1
+        if child1:
+            child1._back = p.v
+        parent.v.t._firstChild = p.v
+    else:
+        prev = parent.nthChild(n-1) # zero based
+        assert(prev)
+        p.v._back = prev.v
+        p.v._next = prev.v._next
+        prev.v._next = p.v
+        if p.v._next:
+            p.v._next._back = p.v
+            
+    if 0:
+        g.trace('-'*20)
+        p.dump(label="p")
+        parent.dump(label="parent")
+#@nonl
+#@-node:ekr.20040310062332.3:p.linkAsNthChild
 #@-node:ekr.20060301182319:Support for chapters plugin
 #@+node:ekr.20060319155125:Changed path to stylesheet in the rst3 plugin
 @nocolor
@@ -8388,6 +8539,63 @@ would need a path embedded in it to move the location down the tree. However,
 it is consistent with the way the output file is named.
 #@-node:ekr.20060320071608:proposed revision
 #@-node:ekr.20060319155125:Changed path to stylesheet in the rst3 plugin
+#@+node:ekr.20060319103111:Fixed problems with chapters plugin
+#@+node:ekr.20060319103111.1:Report 1
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3626542
+
+v .203 EKR:
+- Chapter.makeCurrent now calls self.rp.v.linkAsRoot to properly anchor the root node.
+  This was the cause of the move-outline-right problems.
+By: tfer
+
+Just playing with the chapters plug-in under a CVS download and ran into odd
+behavior.  I was playing with putting Dive into Python" into chapters.  inserted
+a new chapter (2), named the node "Your first Python Program", cntrl-i for insert
+new node, cntrl-r  to move right.
+(1st odd thing:), node collapsed under chapter title.
+(2nd odd thing:) I can't select the "NewHeading" via mouse (chapter name  node remains selected)
+trying same by keyboard (alt-dwnArrow, cntrl-h),
+changes the body pane "location line" to "NewHeading", but in outline pane chapter
+title node reamains selected,  and I can't edit the NewHeading node name.
+
+Only thing I'm leaving out is alt-tabbing to scintila to cut and paste teaxt to nodes/body.
+
+Tom
+#@-node:ekr.20060319103111.1:Report 1
+#@+node:ekr.20060319103111.2:Report 2
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3629055
+By: tfer
+
+Saved out the troubled outline, did a update via CVS, adn the outline seems
+to be behaving itself now.  Need to test more to be sure.  The problem seems
+to start when you move a node via cntrl-r.
+
+There seems to be a problem with @button w/chapters, opening a chpters doc with
+an one does not add a button to button bar.
+
+tom
+#@-node:ekr.20060319103111.2:Report 2
+#@+node:ekr.20060319103111.3:Report 3
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3632004
+By: tfer
+
+Darn, bug still seems to be present.
+
+1) Add & name new chapter
+2) Insert a node (cntrl-i)
+3) Move "NewNode" right (cntrl-r)
+
+"NewNode" collapses into chapter name and selection box will not leave it.
+
+Tom
+#@-node:ekr.20060319103111.3:Report 3
+#@-node:ekr.20060319103111:Fixed problems with chapters plugin
 #@-node:ekr.20060323140748:Plugins
 #@-node:ekr.20060306070425:4.4 b3 projects
 #@-node:ekr.20050924073836:4.4 projects

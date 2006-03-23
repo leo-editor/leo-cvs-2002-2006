@@ -4884,6 +4884,7 @@ class baseCommands:
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             n = back.numberOfChildren()
             p.moveToNthChildOf(back,n)
+            # g.trace(p,p.parent())
             # Moving an outline right can never bring it outside the range of @ignore.
             dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty()
             dirtyVnodeList.extend(dirtyVnodeList2)

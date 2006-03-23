@@ -922,7 +922,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.drawTopTree()
         
         if self.trace:
-            print "idle_second_redraw allocated:",self.redrawCount
+            g.trace(self.redrawCount)
     #@nonl
     #@-node:ekr.20040803072955.61:idle_second_redraw
     #@+node:ekr.20051105073850:drawX...
@@ -1415,7 +1415,9 @@ class leoTkinterTree (leoFrame.leoTree):
     
     def yoffsetTree(self,p,p1):
         h = 0
-        if not p.exists(self.c): return h,False # An extra precaution.
+        if not p.exists(self.c):
+            # g.trace('does not exist',p.headString())
+            return h,False # An extra precaution.
         p = p.copy()
         for p2 in p.siblings_iter():
             # print "yoffsetTree:", p2
@@ -2510,7 +2512,9 @@ class leoTkinterTree (leoFrame.leoTree):
         
         c = self.c ; frame = c.frame ; body = frame.bodyCtrl
         old_p = c.currentPosition()
-        if not p or not p.exists(c): return # Not an error.
+        if not p or not p.exists(c):
+            # g.trace('does not exist',p.headString())
+            return # Not an error.
         
         if self.trace_select and not g.app.unitTesting: g.trace(g.callers())
     
@@ -2673,7 +2677,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if self.trace and self.verbose:
             if not self.redrawing:
-                print "%10s %d %s" % ("disabled",id(w),p.headString())
+                g.trace("%10s %d %s" % ("disabled",id(w),p.headString()))
                 # import traceback ; traceback.print_stack(limit=6)
     
         fg = c.config.getColor("headline_text_selected_foreground_color") or 'black'
