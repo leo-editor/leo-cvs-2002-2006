@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9369" clone_windows="0"/>
 <globals body_outline_ratio="0.535469107551">
-	<global_window_position top="10" left="338" height="878" width="883"/>
+	<global_window_position top="38" left="364" height="878" width="883"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,7 +14,8 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040803072955.8,ekr.20031218072017.2052,"
+expanded="ekr.20041118104831.2,ekr.20060323140748,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
@@ -112,7 +113,7 @@ marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt<
 </v>
 </v>
 <v t="ekr.20060221073238"><vh>Fixed bug in open-find-dialog</vh></v>
-<v t="ekr.20060224143628.1"><vh>Ensure dialogs properly get focus</vh></v>
+<v t="ekr.20060224143628.1"><vh>Ensured dialogs properly get focus</vh></v>
 <v t="ekr.20060224143628.2"><vh>Disabled autocompleter in headlines</vh></v>
 <v t="ekr.20060224143628"><vh>Removed horrible g.app.dialogs hack</vh></v>
 <v t="ekr.20060227070350.1"><vh>Fix crasher in plugin</vh></v>
@@ -331,76 +332,7 @@ marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt<
 <v t="ekr.20060225125519"><vh>Applied rst3 patch from Kent Tenney</vh></v>
 </v>
 <v t="ekr.20060306070425"><vh>4.4 b3 projects</vh>
-<v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
-<v t="ekr.20060306030946.1"><vh>Event handling for multiple editors</vh>
-<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
-<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
-</v>
-<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
-<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
-<v t="ekr.20060321105403"><vh>&lt;&lt; define vars &gt;&gt;</vh></v>
-<v t="ekr.20060321105403.1"><vh>&lt;&lt; do key traces &gt;&gt;</vh></v>
-<v t="ekr.20060321105403.2"><vh>&lt;&lt; handle mode bindings &gt;&gt;</vh></v>
-<v t="ekr.20060321105403.3"><vh>&lt;&lt; handle per-pane bindings &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
-</v>
-<v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
-</v>
-<v t="ekr.20060306070502"><vh>Find</vh>
-<v t="ekr.20031218072017.3091"><vh>showSuccess</vh></v>
-</v>
-<v t="ekr.20060306103239"><vh>Problems with unit testing</vh>
-<v t="ekr.20031218072017.3944"><vh>f.createCanvas &amp; helpers</vh>
-<v t="ekr.20041221071131.1"><vh>createTkTreeCanvas</vh>
-<v t="ekr.20050119210541"><vh>&lt;&lt; workaround for mouse-wheel problems &gt;&gt;</vh></v>
-<v t="ekr.20040709081208"><vh>&lt;&lt; do scrolling by hand in a separate thread &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041221071131"><vh>createPmwTreeCanvas (not used)</vh></v>
-</v>
-<v t="ekr.20051104075904.42"><vh>leoTest.runLeoTest</vh></v>
-<v t="ekr.20031218072017.2052" a="M"><vh>g.openWithFileName</vh></v>
-<v t="ekr.20031218072017.4121"><vh>setMenuLabel</vh></v>
-</v>
-<v t="ekr.20060306030946"><vh>Drawing</vh>
-<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
-<v t="ekr.20040803072955.53"><vh>drawTree</vh></v>
-<v t="ekr.20040803072955.42"><vh>drawNode &amp; force_draw_node (good trace)</vh>
-<v t="ekr.20040803072955.43"><vh>force_draw_node</vh></v>
-</v>
-<v t="ekr.20031218072017.3046"><vh>write_Leo_file</vh>
-<v t="ekr.20040324080359"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
-<v t="ekr.20040324080359.1"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3047"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
-<v t="ekr.20040324080819.1"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3048"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
-<v t="ekr.20050405103712"><vh>&lt;&lt; delete fileName &gt;&gt;</vh></v>
-<v t="ekr.20050405103712.1"><vh>&lt;&lt; rename backupName to fileName &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
-<v t="ekr.20031218072017.2954"><vh>c.redraw and c.redraw_now</vh></v>
-<v t="ekr.20051216155728"><vh>tree.begin/endUpdate</vh></v>
-<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
-<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
-</v>
-</v>
-<v t="ekr.20060306130654"><vh>Selecting</vh>
-<v t="ekr.20040803072955.128"><vh>tree.select</vh>
-<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.131"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.132"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040803140033.1"><vh>setCurrentPosition</vh></v>
-<v t="ekr.20040803072955.136"><vh>setSelectedLabelState</vh></v>
-<v t="ekr.20040803072955.85"><vh>configureTextState</vh></v>
-<v t="ekr.20040803112450"><vh>c.isCurrentPosition</vh></v>
-</v>
-</v>
-<v t="ekr.20060306200304"><vh>Fixed unicode crasher??</vh></v>
+<v t="ekr.20060323131536"><vh>New features</vh>
 <v t="ekr.20060307080642.1"><vh>Added some balloons to the tree pane</vh>
 <v t="ekr.20060307080642"><vh>&lt;&lt; create baloon bindings for tagged items on the canvas &gt;&gt;</vh></v>
 <v t="ekr.20040803072955.11"><vh>newText (leoTkinterTree)</vh>
@@ -409,6 +341,9 @@ marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt<
 <v t="ekr.20040803072955.8" a="M"><vh>newClickBox</vh></v>
 <v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
 </v>
+</v>
+<v t="ekr.20060323131536.1"><vh>Bugs</vh>
+<v t="ekr.20060306200304"><vh>Fixed unicode crasher??</vh></v>
 <v t="ekr.20060307234849"><vh>Addded outline-scroll commands</vh>
 <v t="ekr.20060309060654.1"><vh>scrollOutlineUp/Down/Line/Page</vh></v>
 </v>
@@ -510,11 +445,7 @@ marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt<
 </v>
 </v>
 </v>
-</v>
-</v>
-<v t="ekr.20060301102950"><vh>To do 4.4 b3</vh>
-<v t="ekr.20060321082832"><vh>To do first</vh>
-<v t="ekr.20060321111639"><vh>Get rid of settings messages</vh>
+<v t="ekr.20060321111639"><vh>Got rid of settings messages</vh>
 <v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
 <v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
@@ -522,18 +453,107 @@ marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt<
 </v>
 <v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20041121143823"><vh>getValFromDict</vh></v>
 </v>
-<v t="ekr.20060321080150.6"><vh>Handle missing leoSettings.leo files more gracefully</vh></v>
+<v t="ekr.20060323110223"><vh>Clicks outside minibuffer no longer rip focus</vh>
+<v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
+<v t="ekr.20050920085536.63"><vh>keyboardQuit</vh></v>
+</v>
+<v t="ekr.20060321080150.6"><vh>Handled missing leoSettings.leo files more gracefully</vh>
+<v t="ekr.20060323132048"><vh>Report</vh></v>
+<v t="ekr.20060323134459"><vh>What I did</vh></v>
+<v t="ekr.20051011103654"><vh>checkBindings</vh></v>
+<v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
+<v t="ekr.20041118104831.2" a="E"><vh>configSettings.__init__</vh>
+<v t="ekr.20041118104240"><vh>initIvar</vh></v>
+<v t="ekr.20041118104414"><vh>initEncoding</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060323140748" a="E"><vh>Plugins</vh>
+<v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
+<v t="ekr.20060306030946.1"><vh>Event handling for multiple editors</vh>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+</v>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
+<v t="ekr.20060321105403"><vh>&lt;&lt; define vars &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.1"><vh>&lt;&lt; do key traces &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.2"><vh>&lt;&lt; handle mode bindings &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.3"><vh>&lt;&lt; handle per-pane bindings &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
+</v>
+<v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
+</v>
+<v t="ekr.20060306070502"><vh>Find</vh>
+<v t="ekr.20031218072017.3091"><vh>showSuccess</vh></v>
+</v>
+<v t="ekr.20060306103239"><vh>Problems with unit testing</vh>
+<v t="ekr.20031218072017.3944"><vh>f.createCanvas &amp; helpers</vh>
+<v t="ekr.20041221071131.1"><vh>createTkTreeCanvas</vh>
+<v t="ekr.20050119210541"><vh>&lt;&lt; workaround for mouse-wheel problems &gt;&gt;</vh></v>
+<v t="ekr.20040709081208"><vh>&lt;&lt; do scrolling by hand in a separate thread &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041221071131"><vh>createPmwTreeCanvas (not used)</vh></v>
+</v>
+<v t="ekr.20051104075904.42"><vh>leoTest.runLeoTest</vh></v>
+<v t="ekr.20031218072017.2052" a="M"><vh>g.openWithFileName</vh></v>
+<v t="ekr.20031218072017.4121"><vh>setMenuLabel</vh></v>
+</v>
+<v t="ekr.20060306030946"><vh>Drawing</vh>
+<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
+<v t="ekr.20040803072955.53"><vh>drawTree</vh></v>
+<v t="ekr.20040803072955.42"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040803072955.43"><vh>force_draw_node</vh></v>
+</v>
+<v t="ekr.20031218072017.3046"><vh>write_Leo_file</vh>
+<v t="ekr.20040324080359"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
+<v t="ekr.20040324080359.1"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3047"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
+<v t="ekr.20040324080819.1"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3048"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
+<v t="ekr.20050405103712"><vh>&lt;&lt; delete fileName &gt;&gt;</vh></v>
+<v t="ekr.20050405103712.1"><vh>&lt;&lt; rename backupName to fileName &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
+<v t="ekr.20031218072017.2954"><vh>c.redraw and c.redraw_now</vh></v>
+<v t="ekr.20051216155728"><vh>tree.begin/endUpdate</vh></v>
+<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
+<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
+</v>
+</v>
+<v t="ekr.20060306130654"><vh>Selecting</vh>
+<v t="ekr.20040803072955.128"><vh>tree.select</vh>
+<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.131"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.132"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803140033.1"><vh>setCurrentPosition</vh></v>
+<v t="ekr.20040803072955.136"><vh>setSelectedLabelState</vh></v>
+<v t="ekr.20040803072955.85"><vh>configureTextState</vh></v>
+<v t="ekr.20040803112450"><vh>c.isCurrentPosition</vh></v>
+</v>
+</v>
+<v t="ekr.20060319155125"><vh>Changed path to stylesheet in the rst3 plugin</vh>
+<v t="ekr.20060320071608"><vh>proposed revision</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20060301102950"><vh>To do 4.4 b3</vh>
+<v t="ekr.20060321082832"><vh>To do first</vh>
 <v t="ekr.20060309132452"><vh>Figure out what is really wrong with unicode in onBodyChanged</vh></v>
 <v t="ekr.20060319103111"><vh>Fix problems with chapters plugin</vh>
 <v t="ekr.20060319103111.1"><vh>Report 1</vh></v>
 <v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
 <v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
 </v>
-<v t="ekr.20060319155125"><vh>Generalize path to stylesheet in the rst3 plugin</vh>
-<v t="ekr.20060320071608"><vh>proposed revision</vh></v>
-</v>
-<v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
 </v>
 <v t="ekr.20060305110016"><vh>*** autocompleter text not always sticking</vh></v>
 <v t="ekr.20060306193910"><vh>***Open with shortcuts</vh></v>
@@ -556,6 +576,7 @@ marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt<
 </v>
 <v t="ekr.20060306200304.1"><vh>Scroll outline pane commands</vh></v>
 <v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
+<v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -588,7 +609,7 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
 <v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
-<v t="ekr.20051104075904" a="E" annotate="7d71002e"><vh>@thin leoTest.py</vh></v>
+<v t="ekr.20051104075904" annotate="7d71002e"><vh>@thin leoTest.py</vh></v>
 <v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
@@ -607,35 +628,20 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
-</v>
-<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20040803072955"
 marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
+</v>
+<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20050710142719"
-marks="ekr.20051022142249,"
-expanded="ekr.20050920084036.53,ekr.20050929155208,ekr.20050920084036.85,"><vh>@thin leoEditCommands.py</vh></v>
+marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
 <v t="ekr.20060321082832" a="V"><vh>To do first</vh>
-<v t="ekr.20060321111639"><vh>Get rid of settings messages</vh>
-<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
-<v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
-<v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20060321080150.6"><vh>Handle missing leoSettings.leo files more gracefully</vh></v>
 <v t="ekr.20060309132452"><vh>Figure out what is really wrong with unicode in onBodyChanged</vh></v>
 <v t="ekr.20060319103111"><vh>Fix problems with chapters plugin</vh>
 <v t="ekr.20060319103111.1"><vh>Report 1</vh></v>
 <v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
 <v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
 </v>
-<v t="ekr.20060319155125"><vh>Generalize path to stylesheet in the rst3 plugin</vh>
-<v t="ekr.20060320071608"><vh>proposed revision</vh></v>
-</v>
-<v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -893,7 +899,7 @@ if minibufferCommand:
                 # g.trace('1',bunch)
                 accel = bunch and bunch.val ; break
     else:
-        if not g.app.unitTesting:
+        if not g.app.unitTesting and not not dynamicMenu:
             # Don't warn during unit testing.
             # This may come from a plugin that normally isn't enabled.
             g.trace('No inverse for %s' % commandName)
@@ -2162,6 +2168,53 @@ else:
     
 # For compatibiility with old scripts.
 setCurrentVnode = setCurrentPosition</t>
+<t tx="ekr.20041118104240">def initIvar(self,key):
+    
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.ivarsDict.get(key)
+    ivarName = bunch.ivar
+    val = g.app.config.get(c,ivarName,kind=None) # kind is ignored anyway.
+
+    if val or not hasattr(self,ivarName):
+        # g.trace('c.configSettings',c.shortFileName(),ivarName,val)
+        setattr(self,ivarName,val)</t>
+<t tx="ekr.20041118104414">def initEncoding (self,key):
+    
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.encodingIvarsDict.get(key)
+    encodingName = bunch.ivar
+    encoding = g.app.config.get(c,encodingName,kind='string')
+    
+    # New in 4.4b3: use the global setting as a last resort.
+    if encoding:
+        # g.trace('c.configSettings',c.shortFileName(),encodingName,encoding)
+        setattr(self,encodingName,encoding)
+    else:
+        encoding = getattr(g.app.config,encodingName)
+        # g.trace('g.app.config',c.shortFileName(),encodingName,encoding)
+        setattr(self,encodingName,encoding)
+
+    if encoding and not g.isValidEncoding(encoding):
+        g.es("bad %s: %s" % (encodingName,encoding))</t>
+<t tx="ekr.20041118104831.2">def __init__ (self,c):
+    
+    self.c = c
+    
+    self.defaultBodyFontSize = g.app.config.defaultBodyFontSize
+    self.defaultLogFontSize  = g.app.config.defaultLogFontSize
+    self.defaultTreeFontSize = g.app.config.defaultTreeFontSize
+    
+    for key in g.app.config.encodingIvarsDict.keys():
+        if key != '_hash':
+            self.initEncoding(key)
+        
+    for key in g.app.config.ivarsDict.keys():
+        if key != '_hash':
+            self.initIvar(key)</t>
 <t tx="ekr.20041119040438">@nocolor
 
 This tree contains settings unique to this outline.</t>
@@ -2169,6 +2222,33 @@ This tree contains settings unique to this outline.</t>
 
 Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files. See further warnings in LeoDocs.leo.
 </t>
+<t tx="ekr.20041121143823">def getValFromDict (self,d,setting,requestedType,warn=True):
+    
+    '''Look up the setting in d. If warn is True, warn if the requested type
+    does not (loosely) match the actual type.
+    returns (val,exists)'''
+
+    bunch = d.get(self.munge(setting))
+    if not bunch: return None,False
+
+    # g.trace(setting,requestedType,bunch.toString())
+    val = bunch.val
+    if not self.typesMatch(bunch.kind,requestedType):
+        # New in 4.4: make sure the types match.
+        # A serious warning: one setting may have destroyed another!
+        # Important: this is not a complete test of conflicting settings:
+        # The warning is given only if the code tries to access the setting.
+        if warn:
+            s = (
+                'Warning: ignoring %s:%s not %s\n' +
+                'There may be conflicting settings!')
+            g.es_print(s % (bunch.kind,setting,requestedType),color='red')
+        return None, False
+    elif val in (u'None',u'none','None','none','',None):
+        return None, True # Exists, but is None
+    else:
+        # g.trace(setting,val)
+        return val, True</t>
 <t tx="ekr.20041130173135">def hash (self):
 
     c = self
@@ -3053,6 +3133,37 @@ def doBackSpace (self,defaultCompletionList,completion=True):
         k.updateLabel(event)
         k.mb_tabListPrefix = k.getLabel()
     return 'break'</t>
+<t tx="ekr.20050920085536.63">def keyboardQuit (self,event,hideTabs=True):
+
+    '''This method clears the state and the minibuffer label.
+    
+    k.endCommand handles all other end-of-command chores.'''
+    
+    k = self ; c = k.c
+
+    if g.app.quitting:
+        return
+
+    if hideTabs:
+        k.autoCompleter.exit()
+        c.frame.log.deleteTab('Mode')
+        c.frame.log.hideTab('Completion')
+    
+    # Completely clear the mode.
+    if k.inputModeName:
+        k.endMode(event)
+
+    # Complete clear the state.
+    k.state.kind = None
+    k.state.n = None
+
+    k.clearState()
+    k.resetLabel()
+    
+    k.setDefaultUnboundKeyAction()
+    k.showStateAndMode()
+    c.endEditing()
+    c.bodyWantsFocus()</t>
 <t tx="ekr.20050920093543">def finishCreate (self):  # New in 4.4.
     
     '''Finish creating the commander after frame.finishCreate.
@@ -3211,6 +3322,29 @@ self.setDefaultUnboundKeyAction()</t>
         except Exception:
             g.es_exception()
             g.trace(repr(name),repr(f),g.callers())</t>
+<t tx="ekr.20051008152134">def initSpecialIvars (self):
+    
+    '''Set ivars for special keystrokes from previously-existing bindings.'''
+
+    k = self ; c = k.c
+    trace = c.config.getBool('trace_bindings')
+    warn  = c.config.getBool('warn_about_missing_settings')
+    
+    for ivar,commandName in (
+        ('fullCommandKey',  'full-command'),
+        ('abortAllModesKey','keyboard-quit'),
+        ('universalArgKey', 'universal-argument'),
+    ):
+        junk, bunchList = c.config.getShortcut(commandName)
+        bunchList = bunchList or [] ; found = False
+        for pane in ('text','all'):
+            for bunch in bunchList:
+                if bunch.pane == pane:
+                    stroke = k.strokeFromSetting(bunch.val)
+                    if trace: g.trace(commandName,stroke)
+                    setattr(k,ivar,stroke) ; found = True ;break
+        if not found and warn:
+            g.trace('no setting for %s' % commandName)</t>
 <t tx="ekr.20051009044751">def createOuterFrames (self):
 
     f = self ; c = f.c
@@ -3385,6 +3519,27 @@ OnCopyFromMenu = copyText</t>
     return 'break' # Essential
 
 OnPasteFromMenu = pasteText</t>
+<t tx="ekr.20051011103654">def checkBindings (self):
+    
+    '''Print warnings if commands do not have any @shortcut entry.
+    The entry may be `None`, of course.'''
+    
+    k = self ; c = k.c
+    
+    if not c.config.getBool('warn_about_missing_settings'): return
+    
+    names = c.commandsDict.keys() ; names.sort()
+    
+    for name in names:
+        abbrev = k.abbreviationsDict.get(name)
+        key = c.frame.menu.canonicalizeMenuName(abbrev or name)
+        key = key.replace('&amp;','')
+        if not g.app.config.exists(c,key,'shortcut'):
+            if abbrev:
+                 g.trace('No shortcut for abbrev %s -&gt; %s = %s' % (
+                    name,abbrev,key))
+            else:
+                g.trace('No shortcut for %s = %s' % (name,key))</t>
 <t tx="ekr.20051017212452"># Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
 
 def computeCompletionList (self,defaultTabList,backspace):
@@ -5046,7 +5201,8 @@ shortcut = ''.join([val for flag,val in table if flag])</t>
     # A click outside the minibuffer terminates any state.
     if k.inState() and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
         if not c.widget_name(w).startswith('log'):
-            k.keyboardQuit(event)
+            k.keyboardQuit(event,hideTabs=False)
+            # k.endMode(event) # Less drastic than keyboard-quit.
             w and c.widgetWantsFocusNow(w)
             return 'break'
 
@@ -6808,70 +6964,7 @@ reproduce the situation, I would try to prepare a simplified document to show
 the problem.
 
 maksr@snt.si</t>
-<t tx="ekr.20060321080150.6">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3641107
-By: thyrsus
-
-Running the entitled version of Leo from CVS on Fedora Core 4, python 2.4.1
-
-Bug: attempting to save the outline:
-
-+ top
-(contents)
-@delims dnl 
-...@file foo.mc
-(contents)
-@first divert(-1)dnl
-test
-dnl test
-more test
-
-With no @settings nodes anywhere (there is no leSettings.leo file, contrary
-to the generated message below), "python ~/leo/src/leo.py" makes a large number
-of comments about
-
-leoID = sps (in /home/sps)
-Plugins disabled: use_plugins is 0 in a leoSettings.leo file.
-initSpecialIvars: no setting for full-command
-initSpecialIvars: no setting for keyboard-quit
-initSpecialIvars: no setting for universal-argument
-checkBindings: No shortcut for abbrev-mode = abbrevmode
-checkBindings: No shortcut for abort-edit-headline = aborteditheadline
-checkBindings: No shortcut for about-leo = aboutleo
-
-(goes on for many lines)
-
-The menu save results in python exceptions:
-
-Leo Log Window...
-Leo 4.4 a7, build  1.418 , February 28, 2006
-Python 2.4.1, Tk 8.4.9, Pmw 1.2
-linux2
-
-leoID = sps (in /home/sps)
-global config dir: /home/sps/leo/config
-home dir: /home/sps
-Plugins disabled: use_plugins is 0 in a leoSettings.leo file.
-exception writing:divert(-1)dnl
-Traceback (most recent call last):
-  File "/home/sps/leo/src/leoAtFile.py", line 4138, in os
-    s = g.toEncodedString(s,at.encoding,reportErrors=True)
-  File "/home/sps/leo/src/leoGlobals.py", line 3842, in toEncodedString
-    s = s.encode(encoding,"strict")
-TypeError: encode() argument 1 must be string, not None
-exception writing:/home/sps/foo.mc
-Traceback (most recent call last):
-  File "/home/sps/leo/src/leoAtFile.py", line 2912, in write
-    at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
-  File "/home/sps/leo/src/leoAtFile.py", line 3180, in writeOpenFile
-    at.putOpenLeoSentinel("@+leo-ver=4")
-  File "/home/sps/leo/src/leoAtFile.py", line 3894, in putOpenLeoSentinel
-    encoding = at.encoding.lower()
-AttributeError: 'NoneType' object has no attribute 'lower'
-exception writing: /home/sps/foo.leo
-TypeError: encode() argument 1 must be string, not None
-</t>
+<t tx="ekr.20060321080150.6"></t>
 <t tx="ekr.20060321082832"></t>
 <t tx="ekr.20060321094013"></t>
 <t tx="ekr.20060321105403">k = self ; c = k.c
@@ -6962,12 +7055,7 @@ else:
 ### It's a button in some .leo file.
 
 Warning: ignoring bool:tracegc not shortcut
-There may be conflicting settings!
-
-# This comes from a plugin loaded during unit testing.
-
-createMenuEntries: No inverse for parameterizesectionreference
-</t>
+There may be conflicting settings!</t>
 <t tx="ekr.20060321140706"></t>
 <t tx="ekr.20060323085310">@nocolor
 
@@ -6999,5 +7087,77 @@ Another thing I noticed (cvs version) is that the recent files is updated during
 a session but is not saved from session to session.
 
 Stephen</t>
+<t tx="ekr.20060323110223"># Hit control-f, then select the text that doesn't have focus.</t>
+<t tx="ekr.20060323131536"></t>
+<t tx="ekr.20060323131536.1"></t>
+<t tx="ekr.20060323132048">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3641107
+By: thyrsus
+
+Running the entitled version of Leo from CVS on Fedora Core 4, python 2.4.1
+
+Bug: attempting to save the outline:
+
++ top
+(contents)
+@delims dnl 
+...@file foo.mc
+(contents)
+@first divert(-1)dnl
+test
+dnl test
+more test
+
+With no @settings nodes anywhere (there is no leSettings.leo file, contrary
+to the generated message below), "python ~/leo/src/leo.py" makes a large number
+of comments about
+
+leoID = sps (in /home/sps)
+Plugins disabled: use_plugins is 0 in a leoSettings.leo file.
+initSpecialIvars: no setting for full-command
+initSpecialIvars: no setting for keyboard-quit
+initSpecialIvars: no setting for universal-argument
+checkBindings: No shortcut for abbrev-mode = abbrevmode
+checkBindings: No shortcut for abort-edit-headline = aborteditheadline
+checkBindings: No shortcut for about-leo = aboutleo
+
+(goes on for many lines)
+
+The menu save results in python exceptions:
+
+Leo Log Window...
+Leo 4.4 a7, build  1.418 , February 28, 2006
+Python 2.4.1, Tk 8.4.9, Pmw 1.2
+linux2
+
+leoID = sps (in /home/sps)
+global config dir: /home/sps/leo/config
+home dir: /home/sps
+Plugins disabled: use_plugins is 0 in a leoSettings.leo file.
+exception writing:divert(-1)dnl
+Traceback (most recent call last):
+  File "/home/sps/leo/src/leoAtFile.py", line 4138, in os
+    s = g.toEncodedString(s,at.encoding,reportErrors=True)
+  File "/home/sps/leo/src/leoGlobals.py", line 3842, in toEncodedString
+    s = s.encode(encoding,"strict")
+TypeError: encode() argument 1 must be string, not None
+exception writing:/home/sps/foo.mc
+Traceback (most recent call last):
+  File "/home/sps/leo/src/leoAtFile.py", line 2912, in write
+    at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+  File "/home/sps/leo/src/leoAtFile.py", line 3180, in writeOpenFile
+    at.putOpenLeoSentinel("@+leo-ver=4")
+  File "/home/sps/leo/src/leoAtFile.py", line 3894, in putOpenLeoSentinel
+    encoding = at.encoding.lower()
+AttributeError: 'NoneType' object has no attribute 'lower'
+exception writing: /home/sps/foo.leo
+TypeError: encode() argument 1 must be string, not None
+
+</t>
+<t tx="ekr.20060323134459">ConfigSettings.initEncoding now uses the g.app.config settings if no other settings are available.
+
+In particular, this causes at.encoding to be inited to a reasonable value.</t>
+<t tx="ekr.20060323140748"></t>
 </tnodes>
 </leo_file>

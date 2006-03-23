@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041119035137" a="E" annotate="7d71002e"><vh>About this file</vh>
+<v t="ekr.20041119035137" annotate="7d71002e"><vh>About this file</vh>
 <v t="ekr.20041122163623"><vh>Note about canonicalized names</vh></v>
 <v t="ekr.20041119035704"><vh> Basic setting nodes: @type-name setting-name = value</vh>
 <v t="ekr.20041119042929"><vh>@bool</vh></v>
@@ -25,7 +25,7 @@
 <v t="ekr.20041119042929.7"><vh>@string</vh></v>
 </v>
 <v t="ekr.20041119035704.1"><vh> Organizer nodes</vh></v>
-<v t="ekr.20041119035931" a="V"><vh>@if expression</vh></v>
+<v t="ekr.20041119035931"><vh>@if expression</vh></v>
 <v t="ekr.20041120175840"><vh>@ifgui gui-name</vh></v>
 <v t="ekr.20041119110141"><vh>@ifplatform platform-name</vh></v>
 <v t="ekr.20041119035704.2"><vh>@ignore comment</vh></v>
@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
@@ -77,6 +77,7 @@
 <v t="ekr.20060206161839"><vh>@bool trace_tree_edit = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
+<v t="ekr.20060323131801"><vh>@bool warn_about_missing_settings = False</vh></v>
 </v>
 <v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 <v t="ekr.20060113182439"><vh>Other options</vh>
@@ -388,17 +389,18 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060219103020"><vh>Recent settings</vh>
+<v t="ekr.20060219103020" a="E"><vh>Recent settings</vh>
 <v t="ekr.20060216145416"><vh>@bool trace_autocompleter = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060301085047"><vh>@bool trace_chapters = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20060131071947" a="V"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20060306031258"><vh>@bool trace_onBodyChanged = False</vh></v>
 <v t="ekr.20060309022759"><vh>@bool trace_colorizer = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
+<v t="ekr.20060323131801"><vh>@bool warn_about_missing_settings = False</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4431,7 +4433,7 @@ False (recommended):  No translation.</t>
 <t tx="ekr.20060216135834"></t>
 <t tx="ekr.20060216145416"></t>
 <t tx="ekr.20060216170801"></t>
-<t tx="ekr.20060219103020"></t>
+<t tx="ekr.20060219103020">@nocolor</t>
 <t tx="ekr.20060301085047"></t>
 <t tx="ekr.20060303075452">The following commands are will be useful for operating Leo without a mouse.
 
@@ -4632,5 +4634,6 @@ pink1
 thistle2</t>
 <t tx="ekr.20060306124427.1"></t>
 <t tx="ekr.20060309022759"></t>
+<t tx="ekr.20060323131801">True: warn if a command has no setting.</t>
 </tnodes>
 </leo_file>

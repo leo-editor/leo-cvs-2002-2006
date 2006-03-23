@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="V"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -121,6 +121,7 @@
 </v>
 <v t="ekr.20050830115714.76"><vh>Trouble shooting</vh>
 <v t="ekr.20060210070421"><vh>I can't run Leo from a cvs sandbox.  What's going on?</vh></v>
+<v t="ekr.20060323105214"><vh>Leo's Recent Files menu doesn't work from a cvs shandbox.  What's going on?</vh></v>
 <v t="ekr.20050830115714.77"><vh>How can I use Python's pdb debugger with Leo?</vh></v>
 <v t="ekr.20050906090012"><vh>How can I run Leo from a console window?</vh></v>
 <v t="ekr.20050830115714.9"><vh>Some characters in derived files look funny. What can I do?</vh></v>
@@ -2512,7 +2513,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.140" a="V"><vh>Specifying settings</vh>
+<v t="EKR.20040524104904.140"><vh>Specifying settings</vh>
 <v t="ekr.20060105214753"><vh>Input modes</vh></v>
 </v>
 </vnodes>
@@ -24631,5 +24632,8 @@ enable_autocompleter and enable_calltips settings in leoSettings.leo. You may
 enable or disable these features at any time with these commands:
 enable-auto-completer-command, enable-calltips-command,
 disable-auto-completer-command and disable-calltips-command.</t>
+<t tx="ekr.20060323105214">You must create .leoRecentFiles.txt in the config directory.
+.leoRecentFiles.txt is part of the standard releases but is not part of the cvs repository.
+</t>
 </tnodes>
 </leo_file>

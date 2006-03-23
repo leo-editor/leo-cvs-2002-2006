@@ -1211,8 +1211,9 @@ class rstClass:
     
         # Make the stylesheet path relative to the directory containing the output file.
         stylesheet_path = (
-            self.getOption('stylesheet_path') or g.os_path_dirname(self.outputFileName))
-        
+            # self.getOption('stylesheet_path') or g.os_path_dirname(self.outputFileName))
+            self.getOption('stylesheet_path') or g.os_path_dirname(self.c.frame.openDirectory))
+    
         if 1: # New in 4.4a4: allow relative paths.
             path = g.os_path_join(
                 stylesheet_path,self.getOption('stylesheet_name'))

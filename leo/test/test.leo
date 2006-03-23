@@ -208,8 +208,23 @@
 </v>
 </v>
 </v>
+<v t="ekr.20060307115056"><vh>Test of leoDebugger</vh></v>
+<v t="ekr.20060308001046"><vh>Prototype of using Idle's debugger in Leo</vh>
+<v t="ekr.20060308004027"><vh>myMain</vh></v>
+<v t="ekr.20060308062532"><vh>leoPyShellEditorWindow</vh>
+<v t="ekr.20060308062532.1"><vh>ctor: </vh></v>
 </v>
-<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20060308014050"><vh>leoPyShell</vh>
+<v t="ekr.20060308015826"><vh>ctor: leoPyShell</vh></v>
+<v t="ekr.20060308015826.1"><vh>begin</vh></v>
+</v>
+<v t="ekr.20060308005321" a="E"><vh>leoPyShellFileList</vh>
+<v t="ekr.20060308014551"><vh>ctor: leoPyShellFileList</vh></v>
+<v t="ekr.20060308014050.1"><vh>open_shell</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051104081824" a="E" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -225,7 +240,29 @@
 <v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
-<v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
+<v t="ekr.20060216144005"><vh>autocompleter test</vh>
+<v t="ekr.20060216163942"><vh>reverseFindWhitespace</vh></v>
+</v>
+<v t="ekr.20060222140651"><vh>testClass (for test of self completion)</vh>
+<v t="ekr.20060222140651.1" a="E"><vh>ctor</vh></v>
+<v t="ekr.20060222140651.2" a="E"><vh>spam</vh></v>
+<v t="ekr.20060223125426"><vh>eggs</vh></v>
+<v t="ekr.20060222140651.3"><vh>bad</vh></v>
+<v t="ekr.20060223120040"><vh>test of self</vh></v>
+</v>
+<v t="ekr.20060223181726"><vh>test of self in position class</vh>
+<v t="ekr.20060223181815"><vh>test of position.self</vh></v>
+</v>
+<v t="ekr.20060223131415"><vh>Test of meaningless self</vh></v>
+<v t="ekr.20060228081859"><vh>Mini-tests for chapters</vh>
+<v t="ekr.20060228083913"><vh>print chapters</vh></v>
+<v t="ekr.20060228082132"><vh>@@button addChapter</vh></v>
+<v t="ekr.20060301121002"><vh>@@button rmChapter</vh></v>
+<v t="ekr.20060301132108"><vh>@@button addEditor</vh></v>
+<v t="ekr.20060301132108.1" a="E"><vh>@@button rmEditor</vh></v>
+<v t="ekr.20060301151555" a="E"><vh>@@button index</vh></v>
+</v>
+<v t="ekr.20051214100048" a="V" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
 <v t="ekr.20060107082808"><vh>Error test</vh>
@@ -253,48 +290,9 @@
 <v t="ekr.20060114164015"><vh>test editing state</vh></v>
 <v t="ekr.20060119121607.5"><vh>tcl show bindings</vh></v>
 <v t="ekr.20060119170038"><vh>python show bindings</vh></v>
-</v>
-<v t="ekr.20060216144005"><vh>autocompleter test</vh>
-<v t="ekr.20060216163942"><vh>reverseFindWhitespace</vh></v>
-</v>
-<v t="ekr.20060222140651"><vh>testClass (for test of self completion)</vh>
-<v t="ekr.20060222140651.1" a="E"><vh>ctor</vh></v>
-<v t="ekr.20060222140651.2" a="E"><vh>spam</vh></v>
-<v t="ekr.20060223125426"><vh>eggs</vh></v>
-<v t="ekr.20060222140651.3"><vh>bad</vh></v>
-<v t="ekr.20060223120040"><vh>test of self</vh></v>
-</v>
-<v t="ekr.20060223181726"><vh>test of self in position class</vh>
-<v t="ekr.20060223181815"><vh>test of position.self</vh></v>
-</v>
-<v t="ekr.20060223131415"><vh>Test of meaningless self</vh></v>
-<v t="ekr.20060228081859"><vh>Mini-tests for chapters</vh>
-<v t="ekr.20060228083913"><vh>print chapters</vh></v>
-<v t="ekr.20060228082132"><vh>@@button addChapter</vh></v>
-<v t="ekr.20060301121002"><vh>@@button rmChapter</vh></v>
-<v t="ekr.20060301132108"><vh>@@button addEditor</vh></v>
-<v t="ekr.20060301132108.1" a="E"><vh>@@button rmEditor</vh></v>
-<v t="ekr.20060301151555" a="E"><vh>@@button index</vh></v>
-</v>
-</v>
 <v t="ekr.20060306120904"><vh>import reportlab</vh></v>
-<v t="ekr.20060307115056"><vh>Test of leoDebugger</vh></v>
-<v t="ekr.20060308001046"><vh>Test of using Idle's debugger in Leo</vh>
-<v t="ekr.20060308004027"><vh>myMain</vh></v>
-<v t="ekr.20060308062532" a="E"><vh>leoPyShellEditorWindow</vh>
-<v t="ekr.20060308062532.1"><vh>ctor: </vh></v>
-</v>
-<v t="ekr.20060308014050" a="E"><vh>leoPyShell</vh>
-<v t="ekr.20060308015826"><vh>ctor: leoPyShell</vh></v>
-<v t="ekr.20060308015826.1"><vh>begin</vh></v>
-</v>
-<v t="ekr.20060308005321" a="E"><vh>leoPyShellFileList</vh>
-<v t="ekr.20060308014551"><vh>ctor: leoPyShellFileList</vh></v>
-<v t="ekr.20060308014050.1"><vh>open_shell</vh></v>
 </v>
 </v>
-<v t="ekr.20060310092758"><vh>test of getting shortcuts</vh></v>
-<v t="ekr.20060323080438" a="E"><vh>@thin cloneTest.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4712,7 +4710,6 @@ def open_shell(self, event=None):
 <t tx="ekr.20060309024008.2">c.frame.tree.canvas.yview_scroll(1,"page")</t>
 <t tx="ekr.20060309024008.3">c.frame.tree.canvas.yview_scroll(-1,"unit")</t>
 <t tx="ekr.20060309024008.4">c.frame.tree.canvas.yview_scroll(1, "unit")</t>
-<t tx="ekr.20060310092758">print c.config.getShortcut('abc')</t>
 <t tx="ekr.20060323074338">@
 Instructions:
     
