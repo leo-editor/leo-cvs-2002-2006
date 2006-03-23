@@ -2299,10 +2299,8 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.138:insertNewLine (not undoable)
     def insertNewLine (self,event):
     
-        k = self.k ; w = event.widget
-        i = w.index('insert')
+        w = event.widget
         w.insert('insert','\n')
-        w.mark_set('insert',i)
     
     insertNewline = insertNewLine
     #@-node:ekr.20050920084036.138:insertNewLine (not undoable)
@@ -2311,17 +2309,14 @@ class editCommandsClass (baseEditCommandsClass):
     
         '''Insert a newline and tab'''
     
-        k = self.k ; w = event.widget
-        self.insertNewLine(event)
-        i = w.index('insert +1c')
-        w.insert(i,'\t')
-        w.mark_set('insert','%s lineend' % i)
+        w = event.widget
+        w.insert('insert','\n\t')
     #@nonl
     #@-node:ekr.20050920084036.86:insertNewLineAndTab
     #@+node:ekr.20050920084036.139:insertParentheses
     def insertParentheses (self,event):
     
-        k = self.k ; w = event.widget
+        w = event.widget
         w.insert('insert','()')
         w.mark_set('insert','insert -1c')
     #@nonl
