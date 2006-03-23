@@ -1306,7 +1306,7 @@ class leoMenu:
                             # g.trace('1',bunch)
                             accel = bunch and bunch.val ; break
                 else:
-                    if not g.app.unitTesting:
+                    if not g.app.unitTesting and not not dynamicMenu:
                         # Don't warn during unit testing.
                         # This may come from a plugin that normally isn't enabled.
                         g.trace('No inverse for %s' % commandName)
