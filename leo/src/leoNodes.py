@@ -1738,14 +1738,15 @@ class position (object):
         root = c.rootPosition()
     
         while p:
-            # g.trace(p,'parent',p.parent(),'back',p.back())
-            if p == root:
+            # g.trace(p.headString(),'parent',p.parent(),'back',p.back())
+            if p.equal(root):
                 return True
             if p.hasParent():
                 p.moveToParent()
             else:
                 p.moveToBack()
             
+        # g.trace('does not exist in root:',root.headString())
         return False
     #@nonl
     #@-node:ekr.20040307104131.3:p.exists
@@ -2771,7 +2772,9 @@ class position (object):
         
         # Moving a node can create a new root node.
         if not parent.hasParent() and not parent.hasBack():
-            c.setRootPosition(parent)
+            if not parent.equal(c.rootPosition()):
+                # g.trace('old root',c.rootPosition(),'new root',parent())
+                c.setRootPosition(parent)
     
         return p
     #@-node:ekr.20040303175026.11:p.moveToNthChildOf
@@ -3207,7 +3210,8 @@ class position (object):
     
         """Links self as the n'th child of vnode pv"""
         
-        # g.trace(self,parent,n)
+        # g.trace(self,parent,n,parent.v)
+    
         p = self
     
         # Recreate the stack using the parent.
