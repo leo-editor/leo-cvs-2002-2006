@@ -6347,9 +6347,14 @@ class configSettings:
         bunch = g.app.config.encodingIvarsDict.get(key)
         encodingName = bunch.ivar
         encoding = g.app.config.get(c,encodingName,kind='string')
-    
-        if encoding or not hasattr(self,encodingName):
+        
+        # New in 4.4b3: use the global setting as a last resort.
+        if encoding:
             # g.trace('c.configSettings',c.shortFileName(),encodingName,encoding)
+            setattr(self,encodingName,encoding)
+        else:
+            encoding = getattr(g.app.config,encodingName)
+            # g.trace('g.app.config',c.shortFileName(),encodingName,encoding)
             setattr(self,encodingName,encoding)
     
         if encoding and not g.isValidEncoding(encoding):
