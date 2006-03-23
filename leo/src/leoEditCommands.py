@@ -2300,9 +2300,13 @@ class editCommandsClass (baseEditCommandsClass):
     def insertNewLine (self,event):
     
         w = event.widget
-        w.insert('insert','\n')
+        wname = g.app.gui.widget_name(w)
+        
+        if not wname.startswith('head'):
+            w.insert('insert','\n')
     
     insertNewline = insertNewLine
+    #@nonl
     #@-node:ekr.20050920084036.138:insertNewLine (not undoable)
     #@+node:ekr.20050920084036.86:insertNewLineAndTab
     def insertNewLineAndTab (self,event):
@@ -2310,8 +2314,10 @@ class editCommandsClass (baseEditCommandsClass):
         '''Insert a newline and tab'''
     
         w = event.widget
-        w.insert('insert','\n\t')
-    #@nonl
+        wname = g.app.gui.widget_name(w)
+        
+        if not wname.startswith('head'):
+            w.insert('insert','\n\t')
     #@-node:ekr.20050920084036.86:insertNewLineAndTab
     #@+node:ekr.20050920084036.139:insertParentheses
     def insertParentheses (self,event):
