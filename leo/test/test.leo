@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7977" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7983" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
 	<global_window_position top="40" left="450" height="857" width="781"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -53,7 +53,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051120173230" annotate="7d71002e"><vh>Prototypes</vh>
+<v t="ekr.20051120173230" a="V" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20051111114555"><vh>Subprocess tests</vh>
 <v t="ekr.20051112134206.1"><vh>subprocess.py (For study, but not very helpful)</vh>
 <v t="ekr.20051112134206.2"><vh>&lt;&lt; about this module &gt;&gt;</vh></v>
@@ -199,6 +199,15 @@
 <v t="ekr.20060309024008.3"><vh>@@command line-up</vh></v>
 <v t="ekr.20060309024008.4"><vh>@@command line-down</vh></v>
 </v>
+<v t="ekr.20060323074338"><vh>Hoist-shortcut functionality (will likely be a plugin)</vh>
+<v t="ekr.20060323074338.1"><vh>@@button Save Hoist</vh></v>
+<v t="ekr.20060323074338.2"><vh>@@button Dehoist</vh></v>
+<v t="ekr.20060323074338.3"><vh>setup</vh>
+<v t="ekr.20060323074338.4"><vh>addHoistCommand</vh>
+<v t="ekr.20060323074338.5"><vh>&lt;&lt; define callbacks for addHoistButton &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
 </v>
 <v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
@@ -284,7 +293,7 @@
 <v t="ekr.20060308014050.1"><vh>open_shell</vh></v>
 </v>
 </v>
-<v t="ekr.20060310092758" a="V"><vh>test of getting shortcuts</vh></v>
+<v t="ekr.20060310092758"><vh>test of getting shortcuts</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4703,5 +4712,74 @@ def open_shell(self, event=None):
 <t tx="ekr.20060309024008.3">c.frame.tree.canvas.yview_scroll(-1,"unit")</t>
 <t tx="ekr.20060309024008.4">c.frame.tree.canvas.yview_scroll(1, "unit")</t>
 <t tx="ekr.20060310092758">print c.config.getShortcut('abc')</t>
+<t tx="ekr.20060323074338">@
+Instructions:
+    
+   Select the "setup" node and hit the "Run Script" button
+   Create script buttons out of the "Dehoist" and "Save Hoist" nodes
+   Navigate to node for which to create hoist buttons and hit the "Save Hoist" button
+       This will hoist that node and
+       Create a hoist button for that node
+   Click on the "dehoist" button to return to the full outline view
+   Click on the created hoist button to return to the hoisted view of the node</t>
+<t tx="ekr.20060323074338.1">@others
+c.sc.addHoistCommand()
+c.hoist()</t>
+<t tx="ekr.20060323074338.2">c.dehoist()</t>
+<t tx="ekr.20060323074338.3">import mod_scripting
+import sys
+@others
+g.funcToMethod(addHoistCommand, mod_scripting.scriptingController)
+
+# I couldn't find a way to access the default scripting controller object (looks to me like it is a
+# function local variable?), so just create a new instance and save it in the commander (ugly?!)
+c.sc = mod_scripting.scriptingController(c)
+#c.sc.createAllButtons()
+</t>
+<t tx="ekr.20060323074338.4"># Slight modification of  mod_scripting.scriptingController.addScriptButtonCommand
+# maxButtonSize --&gt; mod_script.maxButtonSize and ScriptButton --&gt; Hoist and
+# a different commandCallback function
+# TODO: it might make sense to add input arguments for "status message prefix" and
+# commandCallback.  Then the code could be re-used for both addScriptButtonCommand and
+# addHoistCommand
+def addHoistCommand (self):
+   # Create permanent bindings for callbacks.
+   c = self.c ; p = c.currentPosition()
+   self.buttons += 1
+   # New in 4.2.1: always use the entire body string.
+   script = g.getScript(c,p,useSelectedText=False)
+   h = p.headString().strip()
+   buttonName = key = "Script %d" % self.buttons
+   if not h: return
+   text = h
+   statusMessage = "Hoist: %s" % text
+   buttonText = text[:mod_scripting.maxButtonSize]
+   # Create the button.
+   b = c.frame.addIconButton(text=buttonText)
+   &lt;&lt; define callbacks for addHoistButton &gt;&gt;
+   self.d [key] = b
+   if sys.platform == "win32":
+       width = int(len(buttonText) * 0.9)
+       b.configure(width=width,font=('verdana',7,'bold'))
+       b.configure(bg='MistyRose1')
+   b.configure(command=commandCallback)
+   b.bind('&lt;3&gt;',deleteButtonCallback)
+   b.bind('&lt;Enter&gt;', mouseEnterCallback)
+   b.bind('&lt;Leave&gt;', mouseLeaveCallback)
+   c.frame.bodyWantsFocus()</t>
+<t tx="ekr.20060323074338.5">def deleteButtonCallback (event=None,self=self,buttonName=buttonName):
+   self.deleteButton(buttonName)
+
+def commandCallback (event=None,self=self,b=b,p=p.copy(),buttonText=buttonText):
+   while (c.canDehoist()):
+       c.dehoist()
+   c.selectPosition(p)
+   c.hoist()
+
+def mouseEnterCallback (event=None,self=self,statusMessage=statusMessage):
+   self.mouseEnter(statusMessage)
+
+def mouseLeaveCallback (event=None,self=self):
+   self.mouseLeave()</t>
 </tnodes>
 </leo_file>
