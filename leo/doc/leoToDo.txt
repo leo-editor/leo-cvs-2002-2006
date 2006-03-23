@@ -134,43 +134,6 @@ else:
 #@-node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
 #@-node:ekr.20031218072017.1723:createMenuEntries
 #@-node:ekr.20060321111639:Get rid of settings messages
-#@+node:ekr.20060319155125:Generalize path to stylesheet in the rst3 plugin
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3637393
-By: nobody
-
-Leo 4.4 a7, build  1.417 (under Linux)
-
-Using rst3 to generate LaTex
-
-Hi,
-
-I'm trying to set up a default stylesheet for a project and want this to be
-held relative to the project directory (where the .leo file is). The default
-is to place it in the same directory as the output, which is a couple of levels
-down.
-
-setting stylesheet_path = . or empty does not work. I seem to have to specify
-an absolute path, which is not helpful when sharing developmnent through cvs.
-
-Am I missing something?
-
-Mike S.
-#@nonl
-#@+node:ekr.20060320071608:proposed revision
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3639216
-By: nobody
-
-I looked at the code myself. I have changed rst3.py line 1213 to replace
-g.os_path_dirname(self.outputFileName) with self.c.frame.openDirectory. This
-makes the path relative to the project. Not 100% as the stylesheet filename
-would need a path embedded in it to move the location down the tree. However,
-it is consistent with the way the output file is named.
-#@-node:ekr.20060320071608:proposed revision
-#@-node:ekr.20060319155125:Generalize path to stylesheet in the rst3 plugin
 #@+node:ekr.20060321080150.6:Handle missing leoSettings.leo files more gracefully
 @nocolor
 
@@ -291,6 +254,43 @@ Darn, bug still seems to be present.
 Tom
 #@-node:ekr.20060319103111.3:Report 3
 #@-node:ekr.20060319103111:Fix problems with chapters plugin
+#@+node:ekr.20060319155125:Generalize path to stylesheet in the rst3 plugin
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3637393
+By: nobody
+
+Leo 4.4 a7, build  1.417 (under Linux)
+
+Using rst3 to generate LaTex
+
+Hi,
+
+I'm trying to set up a default stylesheet for a project and want this to be
+held relative to the project directory (where the .leo file is). The default
+is to place it in the same directory as the output, which is a couple of levels
+down.
+
+setting stylesheet_path = . or empty does not work. I seem to have to specify
+an absolute path, which is not helpful when sharing developmnent through cvs.
+
+Am I missing something?
+
+Mike S.
+#@nonl
+#@+node:ekr.20060320071608:proposed revision
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3639216
+By: nobody
+
+I looked at the code myself. I have changed rst3.py line 1213 to replace
+g.os_path_dirname(self.outputFileName) with self.c.frame.openDirectory. This
+makes the path relative to the project. Not 100% as the stylesheet filename
+would need a path embedded in it to move the location down the tree. However,
+it is consistent with the way the output file is named.
+#@-node:ekr.20060320071608:proposed revision
+#@-node:ekr.20060319155125:Generalize path to stylesheet in the rst3 plugin
 #@+node:ekr.20060321110256:Create better unit tests for master key handler
 Can this be done?  How to tests keys in various states?
 #@nonl

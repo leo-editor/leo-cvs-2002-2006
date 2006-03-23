@@ -20,7 +20,7 @@ marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt<
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -523,15 +523,15 @@ marks="ekr.20031218072017.2052,ekr.20040803072955.8,"><vh>@thin leoProjects.txt<
 <v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20060319155125"><vh>Generalize path to stylesheet in the rst3 plugin</vh>
-<v t="ekr.20060320071608"><vh>proposed revision</vh></v>
-</v>
 <v t="ekr.20060321080150.6"><vh>Handle missing leoSettings.leo files more gracefully</vh></v>
 <v t="ekr.20060309132452"><vh>Figure out what is really wrong with unicode in onBodyChanged</vh></v>
 <v t="ekr.20060319103111"><vh>Fix problems with chapters plugin</vh>
 <v t="ekr.20060319103111.1"><vh>Report 1</vh></v>
 <v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
 <v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
+</v>
+<v t="ekr.20060319155125"><vh>Generalize path to stylesheet in the rst3 plugin</vh>
+<v t="ekr.20060320071608"><vh>proposed revision</vh></v>
 </v>
 <v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
 </v>
@@ -615,7 +615,7 @@ marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
 marks="ekr.20051022142249,"
 expanded="ekr.20050920084036.53,ekr.20050929155208,ekr.20050920084036.85,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
-<v t="ekr.20060321082832" a="E"><vh>To do first</vh>
+<v t="ekr.20060321082832" a="V"><vh>To do first</vh>
 <v t="ekr.20060321111639"><vh>Get rid of settings messages</vh>
 <v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
 <v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
@@ -625,15 +625,15 @@ expanded="ekr.20050920084036.53,ekr.20050929155208,ekr.20050920084036.85,"><vh>@
 <v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20060319155125"><vh>Generalize path to stylesheet in the rst3 plugin</vh>
-<v t="ekr.20060320071608"><vh>proposed revision</vh></v>
-</v>
 <v t="ekr.20060321080150.6"><vh>Handle missing leoSettings.leo files more gracefully</vh></v>
 <v t="ekr.20060309132452"><vh>Figure out what is really wrong with unicode in onBodyChanged</vh></v>
 <v t="ekr.20060319103111"><vh>Fix problems with chapters plugin</vh>
 <v t="ekr.20060319103111.1"><vh>Report 1</vh></v>
 <v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
 <v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
+</v>
+<v t="ekr.20060319155125"><vh>Generalize path to stylesheet in the rst3 plugin</vh>
+<v t="ekr.20060320071608"><vh>proposed revision</vh></v>
 </v>
 <v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
 </v>
@@ -2576,7 +2576,11 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
     '''Insert a newline and tab'''
 
     w = event.widget
-    w.insert('insert','\n\t')</t>
+    wname = g.app.gui.widget_name(w)
+    
+    if not wname.startswith('head'):
+        w.insert('insert','\n\t')
+</t>
 <t tx="ekr.20050920084036.87">def deleteNextChar (self,event):
 
     c = self.c ; w = event and event.widget
@@ -2645,10 +2649,12 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
 <t tx="ekr.20050920084036.138">def insertNewLine (self,event):
 
     w = event.widget
-    w.insert('insert','\n')
+    wname = g.app.gui.widget_name(w)
+    
+    if not wname.startswith('head'):
+        w.insert('insert','\n')
 
-insertNewline = insertNewLine
-</t>
+insertNewline = insertNewLine</t>
 <t tx="ekr.20050920084036.139">def insertParentheses (self,event):
 
     w = event.widget
