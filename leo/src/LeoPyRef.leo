@@ -438,9 +438,62 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
 </v>
 </v>
+<v t="ekr.20060320113137"><vh>Fixed undo problem with clones</vh>
+<v t="ekr.20060320113137.2"><vh>Report</vh></v>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+</v>
+<v t="ekr.20031218072017.1762"><vh>c.clone</vh></v>
+<v t="ekr.20050412084055"><vh>undoDeleteNode</vh></v>
+<v t="EKR.20040526090701.4"><vh>undoTyping</vh></v>
+<v t="ekr.20050412083057"><vh>redoCloneNode</vh></v>
+<v t="ekr.20050412083057.1"><vh>undoCloneNode</vh></v>
+<v t="EKR.20040526075238.5"><vh>redoTyping</vh></v>
+<v t="ekr.20040303214038"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
+<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
+<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
+<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
+</v>
+<v t="ekr.20031218072017.1490"><vh>setUndoTypingParams</vh>
+<v t="ekr.20040324061854"><vh>&lt;&lt; return if there is nothing to do &gt;&gt;</vh></v>
+<v t="ekr.20040324061854.1"><vh>&lt;&lt; init the undo params &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1491"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1492"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
+<v t="ekr.20040324061854.2"><vh>&lt;&lt; save the selection and scrolling position &gt;&gt;</vh></v>
+<v t="ekr.20040324061854.3"><vh>&lt;&lt; adjust the undo stack, clearing all forward entries &gt;&gt;</vh>
+<v t="ekr.20050125220613"><vh>&lt;&lt; set newBead if we can't share the previous bead &gt;&gt;</vh>
+<v t="ekr.20050125203937"><vh>&lt;&lt; set newBead if the change does not continue a word &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20060301102950"><vh>To do 4.4 b3</vh>
+</v>
+</v>
+<v t="ekr.20060321140706"><vh>Investigated setting descendant @file nodes dirty when changing body text</vh>
+<v t="ekr.20060323085310"><vh>Report</vh></v>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+</v>
+<v t="ekr.20040303214038"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
+<v t="ekr.20031218072017.1490"><vh>setUndoTypingParams</vh>
+<v t="ekr.20040324061854"><vh>&lt;&lt; return if there is nothing to do &gt;&gt;</vh></v>
+<v t="ekr.20040324061854.1"><vh>&lt;&lt; init the undo params &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1491"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1492"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
+<v t="ekr.20040324061854.2"><vh>&lt;&lt; save the selection and scrolling position &gt;&gt;</vh></v>
+<v t="ekr.20040324061854.3"><vh>&lt;&lt; adjust the undo stack, clearing all forward entries &gt;&gt;</vh>
+<v t="ekr.20050125220613"><vh>&lt;&lt; set newBead if we can't share the previous bead &gt;&gt;</vh>
+<v t="ekr.20050125203937"><vh>&lt;&lt; set newBead if the change does not continue a word &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20060301102950" a="V"><vh>To do 4.4 b3</vh>
 <v t="ekr.20060321082832"><vh>To do first</vh>
 <v t="ekr.20060321111639"><vh>Get rid of settings messages</vh>
 <v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
@@ -461,22 +514,8 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
 <v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
 </v>
-<v t="ekr.20060320113137"><vh>Fix problems with clones</vh>
-<v t="ekr.20060320113137.1"><vh>Report 1</vh></v>
-<v t="ekr.20060320113137.2"><vh>Report 2</vh></v>
-</v>
-<v t="ekr.20060321080150"><vh>Hoist-shortcut functionality</vh>
-<v t="ekr.20060321080150.1"><vh>@@button Save Hoist</vh></v>
-<v t="ekr.20060321080150.2"><vh>@@button Dehoist</vh></v>
-<v t="ekr.20060321080150.3"><vh>setup</vh>
-<v t="ekr.20060321080150.4"><vh>addHoistCommand</vh>
-<v t="ekr.20060321080150.5"><vh>&lt;&lt; define callbacks for addHoistButton &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
 <v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
 </v>
-<v t="ekr.20060306193836" a="M"><vh>*** Mac problems with newline</vh></v>
 <v t="ekr.20060305110016"><vh>*** autocompleter text not always sticking</vh></v>
 <v t="ekr.20060306193910"><vh>***Open with shortcuts</vh></v>
 <v t="ekr.20060307074302.1"><vh>*set-change-text command should work when entering find text.</vh></v>
@@ -498,8 +537,28 @@ marks="ekr.20060306193836,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20060306200304.1"><vh>Scroll outline pane commands</vh></v>
 <v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
+<v t="ekr.20060306193836" a="M"><vh>Work around newline problems on the Mac</vh>
+<v t="ekr.20060323095532"><vh>Report</vh></v>
+<v t="ekr.20050920084036.85"><vh>insert &amp; delete...</vh>
+<v t="ekr.20051026092433.1"><vh>backwardDeleteCharacter</vh>
+<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
+<v t="ekr.20050920084036.87"><vh>deleteNextChar</vh></v>
+<v t="ekr.20050920084036.135"><vh>deleteSpaces</vh></v>
+<v t="ekr.20050920084036.141"><vh>removeBlankLines</vh></v>
+<v t="ekr.20050920084036.138"><vh>insertNewLine (not undoable)</vh></v>
+<v t="ekr.20050920084036.86"><vh>insertNewLineAndTab</vh></v>
+<v t="ekr.20050920084036.139"><vh>insertParentheses</vh></v>
+<v t="ekr.20051125080855"><vh>selfInsertCommand</vh>
+<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
+<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
+<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
+<v t="ekr.20051026092433"><vh>updateTab</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -530,7 +589,7 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
 <v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
-<v t="ekr.20051104075904" annotate="7d71002e"><vh>@thin leoTest.py</vh></v>
+<v t="ekr.20051104075904" a="E" annotate="7d71002e"><vh>@thin leoTest.py</vh></v>
 <v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
@@ -555,7 +614,7 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"
-expanded="ekr.20060127162818.1,"><vh>@thin leoEditCommands.py</vh></v>
+expanded="ekr.20050920084036.53,ekr.20050929155208,ekr.20050920084036.85,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
 <v t="ekr.20060321082832"><vh>To do first</vh>
 <v t="ekr.20060321111639"><vh>Get rid of settings messages</vh>
@@ -577,19 +636,6 @@ expanded="ekr.20060127162818.1,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
 <v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
 </v>
-<v t="ekr.20060320113137"><vh>Fix problems with clones</vh>
-<v t="ekr.20060320113137.1"><vh>Report 1</vh></v>
-<v t="ekr.20060320113137.2"><vh>Report 2</vh></v>
-</v>
-<v t="ekr.20060321080150"><vh>Hoist-shortcut functionality</vh>
-<v t="ekr.20060321080150.1"><vh>@@button Save Hoist</vh></v>
-<v t="ekr.20060321080150.2"><vh>@@button Dehoist</vh></v>
-<v t="ekr.20060321080150.3"><vh>setup</vh>
-<v t="ekr.20060321080150.4"><vh>addHoistCommand</vh>
-<v t="ekr.20060321080150.5"><vh>&lt;&lt; define callbacks for addHoistButton &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
 <v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
 </v>
 </vnodes>
@@ -597,6 +643,59 @@ expanded="ekr.20060127162818.1,"><vh>@thin leoEditCommands.py</vh></v>
 <t tx="EKR.20040430162943"></t>
 <t tx="EKR.20040519090151.2"></t>
 <t tx="EKR.20040519090151.3"></t>
+<t tx="EKR.20040526075238.5">def redoTyping (self):
+
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectPosition causes recoloring, so avoid if possible.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ('Cut','Paste','Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.newMiddleLines,u.oldMiddleLines,
+        u.newNewlines,u.oldNewlines,
+        tag="redo",undoType=u.undoType)
+        
+    for v in u.dirtyVnodeList: # New in 4.4b3.
+        v.t.setDirty()
+    
+    if u.newSel:
+        c.bodyWantsFocus()
+        c.frame.body.setTextSelection(u.newSel)
+    if u.yview:
+        c.bodyWantsFocus()
+        c.frame.body.setYScrollPosition(u.yview)</t>
+<t tx="EKR.20040526090701.4">def undoTyping (self):
+    
+    u = self ; c = u.c ; current = c.currentPosition()
+    
+    # g.trace('oldSel',u.oldSel)
+
+    # selectPosition causes recoloring, so don't do this unless needed.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ("Cut","Paste",'Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.oldMiddleLines,u.newMiddleLines,
+        u.oldNewlines,u.newNewlines,
+        tag="undo",undoType=u.undoType)
+
+    for v in u.dirtyVnodeList: # New in 4.4b3.
+        v.t.clearDirty()
+
+    if u.oldSel:
+        c.bodyWantsFocus()
+        c.frame.body.setTextSelection(u.oldSel)
+    if u.yview:
+        c.bodyWantsFocus()
+        c.frame.body.setYScrollPosition(u.yview)</t>
+<t tx="ekr.20031218072017.840"></t>
 <t tx="ekr.20031218072017.998">def setCallback (self,*args,**keys):
     
     """Callback to adjust the scrollbar.
@@ -652,6 +751,111 @@ def onBodyChanged (self,undoType,
         &lt;&lt; recolor the body &gt;&gt;
         if not c.changed: c.setChanged(True)
         &lt;&lt; redraw the screen if necessary &gt;&gt;</t>
+<t tx="ekr.20031218072017.1490">@ This routine saves enough information so a typing operation can be undone and redone.
+
+We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+@c
+
+def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+    
+    __pychecker__ = 'maxlines=2000' # Ignore the size of this method.
+    
+    u = self ; c = u.c
+    &lt;&lt; return if there is nothing to do &gt;&gt;
+    # g.trace(undo_type,g.callers(7))
+    &lt;&lt; init the undo params &gt;&gt;
+    &lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;
+    &lt;&lt; save undo text info &gt;&gt;
+    &lt;&lt; save the selection and scrolling position &gt;&gt;
+    &lt;&lt; adjust the undo stack, clearing all forward entries &gt;&gt;
+    return bunch</t>
+<t tx="ekr.20031218072017.1491">@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
+
+NB: the number of old and new middle lines may be different.
+@c
+
+old_lines = string.split(oldText,'\n')
+new_lines = string.split(newText,'\n')
+new_len = len(new_lines)
+old_len = len(old_lines)
+min_len = min(old_len,new_len)
+
+i = 0
+while i &lt; min_len:
+    if old_lines[i] != new_lines[i]:
+        break
+    i += 1
+leading = i
+
+if leading == new_len:
+    # This happens when we remove lines from the end.
+    # The new text is simply the leading lines from the old text.
+    trailing = 0
+else:
+    i = 0
+    while i &lt; min_len - leading:
+        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+            break
+        i += 1
+    trailing = i
+    
+# NB: the number of old and new middle lines may be different.
+if trailing == 0:
+    old_middle_lines = old_lines[leading:]
+    new_middle_lines = new_lines[leading:]
+else:
+    old_middle_lines = old_lines[leading:-trailing]
+    new_middle_lines = new_lines[leading:-trailing]
+
+# Remember how many trailing newlines in the old and new text.
+i = len(oldText) - 1 ; old_newlines = 0
+while i &gt;= 0 and oldText[i] == '\n':
+    old_newlines += 1
+    i -= 1
+
+i = len(newText) - 1 ; new_newlines = 0
+while i &gt;= 0 and newText[i] == '\n':
+    new_newlines += 1
+    i -= 1
+
+if u.debug_print:
+    print "lead,trail",leading,trailing
+    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
+    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
+    #print "lead,trail:",leading,trailing
+    #print "old mid:",old_middle_lines
+    #print "new mid:",new_middle_lines
+    print "---------------------"</t>
+<t tx="ekr.20031218072017.1492">@ This is the start of the incremental undo algorithm.
+
+We must save enough info to do _both_ of the following:
+
+Undo: Given newText, recreate oldText.
+Redo: Given oldText, recreate oldText.
+
+The "given" texts for the undo and redo routines are simply p.bodyString().
+@c
+
+if u.debug:
+    # Remember the complete text for comparisons...
+    u.oldText = oldText
+    u.newText = newText
+    # Compute statistics comparing old and new ways...
+    # The old doesn't often store the old text, so don't count it here.
+    u.old_mem += len(newText)
+    s1 = string.join(old_middle_lines,'\n')
+    s2 = string.join(new_middle_lines,'\n')
+    u.new_mem += len(s1) + len(s2)
+else:
+    u.oldText = None
+    u.newText = None
+
+u.leading = leading
+u.trailing = trailing
+u.oldMiddleLines = old_middle_lines
+u.newMiddleLines = new_middle_lines
+u.oldNewlines = old_newlines
+u.newNewlines = new_newlines</t>
 <t tx="ekr.20031218072017.1723">def createMenuEntries (self,menu,table,dynamicMenu=False):
         
     '''Create a menu entry from the table.
@@ -717,6 +921,24 @@ else:
                     # g.trace('2',bunch)
         elif not dynamicMenu:
             g.trace('No inverse for %s' % commandName)</t>
+<t tx="ekr.20031218072017.1762">def clone (self,event=None):
+
+    c = self ; u = c.undoer ; p = c.currentPosition()
+    if not p: return
+    
+    c.beginUpdate()
+    try: # In update...
+        undoData = c.undoer.beforeCloneNode(p)
+        clone = p.clone(p)
+        dirtyVnodeList = clone.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        if c.validateOutline():
+            u.afterCloneNode(clone,'Clone Node',undoData,dirtyVnodeList=dirtyVnodeList)
+            c.selectPosition(clone)
+    finally:
+        c.endUpdate()
+
+    return clone # For mod_labels and chapters plugins.</t>
 <t tx="ekr.20031218072017.1801">def __init__(self,title,gui):
 
     # Init the base class.
@@ -1327,6 +1549,107 @@ def onDragSplitterBar (self, event, verticalFlag):
         if not g.app.unitTesting:
             print "setMenuLabel menu,name,label:",menu,name,label
             g.es_exception()</t>
+<t tx="ekr.20040303214038">def setAllAncestorAtFileNodesDirty (self,setDescendentsDirty=False):
+
+    p = self ; c = p.c
+    dirtyVnodeList = []
+    
+    # Calculate all nodes that are joined to p or parents of such nodes.
+    nodes = p.findAllPotentiallyDirtyNodes()
+    
+    if setDescendentsDirty:
+        # N.B. Only mark _direct_ descendents of nodes.
+        # Using the findAllPotentiallyDirtyNodes algorithm would mark way too many nodes.
+        for p2 in p.subtree_iter():
+            # Only @thin nodes need to be marked.
+            if p2.v not in nodes and p2.isAtThinFileNode():
+                nodes.append(p2.v)
+                
+    dirtyVnodeList = [v for v in nodes
+        if not v.t.isDirty() and v.isAnyAtFileNode()]
+    changed = len(dirtyVnodeList) &gt; 0
+
+    c.beginUpdate()
+    try:
+        for v in dirtyVnodeList:
+            v.t.setDirty() # Do not call v.setDirty here!
+    finally:
+        c.endUpdate(changed)
+
+    return dirtyVnodeList</t>
+<t tx="ekr.20040324061854">if u.redoing or u.undoing:
+    return None
+
+if undo_type == None:
+    return None
+
+if undo_type == "Can't Undo":
+    u.clearUndoState()
+    u.setUndoTypes() # Must still recalculate the menu labels.
+    return None
+
+if oldText == newText:
+    # g.trace("no change")
+    u.setUndoTypes() # Must still recalculate the menu labels.
+    return None</t>
+<t tx="ekr.20040324061854.1"># Clear all optional params.
+for ivar in u.optionalIvars:
+    setattr(u,ivar,None)
+
+# Set the params.
+u.undoType = undo_type
+u.p = p.copy()</t>
+<t tx="ekr.20040324061854.2">#Remember the selection.
+u.oldSel = oldSel
+u.newSel = newSel
+
+# Remember the scrolling position.
+if oldYview:
+    u.yview = oldYview
+else:
+    u.yview = c.frame.body.getYScrollPosition()
+</t>
+<t tx="ekr.20040324061854.3">@ New in Leo 4.3. Instead of creating a new bead on every character, we may adjust the top bead:
+
+word granularity: adjust the top bead if the typing would continue the word.
+line granularity: adjust the top bead if the typing is on the same line.
+node granularity: adjust the top bead if the typing is anywhere on the same node.
+@c
+
+granularity = u.granularity
+
+old_d = u.peekBead(u.bead)
+old_p = old_d and old_d.get('p')
+
+&lt;&lt; set newBead if we can't share the previous bead &gt;&gt;
+
+if newBead:
+    # Push params on undo stack, clearing all forward entries.
+    bunch = g.Bunch(
+        p = p.copy(),
+        kind='typing',
+        undoType = undo_type,
+        undoHelper=u.undoTyping,
+        redoHelper=u.redoTyping,
+        oldText=u.oldText,
+        oldSel=u.oldSel,
+        oldNewlines=u.oldNewlines,
+        oldMiddleLines=u.oldMiddleLines,
+    )
+    u.pushBead(bunch)
+else:
+    bunch = old_d
+
+bunch.dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+if not p.isDirty():
+    bunch.dirtyVnodeList.append(p.copy())
+bunch.leading=u.leading
+bunch.trailing= u.trailing
+bunch.newNewlines=u.newNewlines
+bunch.newMiddleLines=u.newMiddleLines
+bunch.newSel=u.newSel
+bunch.newText=u.newText
+bunch.yview=u.yview</t>
 <t tx="ekr.20040324080359">try:
     # Write all @file nodes and set orphan bits.
     c.atFileCommands.writeAll()
@@ -2068,12 +2391,126 @@ def mapWheel(e):
         return frame.OnMouseWheel(e)
 
 canvas.bind("&lt;ButtonPress&gt;",mapWheel,add=1)</t>
+<t tx="ekr.20050125203937">old_start,old_end = oldSel
+new_start,new_end = newSel
+# g.trace('new_start',new_start,'old_start',old_start)
+if old_start != old_end or new_start != new_end:
+    # The new and old characters are not contiguous.
+    newBead = True
+else:
+    old_row,old_col = old_start.split('.')
+    new_row,new_col = new_start.split('.')
+    old_row,old_col = int(old_row),int(old_col)
+    new_row,new_col = int(new_row),int(new_col)
+    old_lines = g.splitLines(oldText)
+    new_lines = g.splitLines(newText)
+    # g.trace('old',old_row,old_col,len(old_lines))
+    # g.trace('new',new_row,new_col,len(new_lines))
+    # Recognize backspace, del, etc. as contiguous.
+    if old_row != new_row or abs(old_col- new_col) != 1:
+        # The new and old characters are not contiguous.
+        newBead = True
+    elif old_col == 0 or new_col == 0:
+        pass # We have just inserted a line.
+    else:
+        old_s = old_lines[old_row-1]
+        new_s = new_lines[new_row-1]
+        # New in 4.3b2:
+        # Guard against invalid oldSel or newSel params.
+        if old_col-1 &gt;= len(old_s) or new_col-1 &gt;= len(new_s):
+            newBead = True
+        else:
+            # g.trace(new_col,len(new_s),repr(new_s))
+            # g.trace(repr(old_ch),repr(new_ch))
+            old_ch = old_s[old_col-1]
+            new_ch = new_s[new_col-1]
+            newBead = self.recognizeStartOfTypingWord(
+                old_lines,old_row,old_col,old_ch,
+                new_lines,new_row,new_col,new_ch)</t>
+<t tx="ekr.20050125220613">@ We must set newBead to True if undo_type is not 'Typing' so that commands that
+get treated like typing (by updateBodyPane and onBodyChanged) don't get lumped
+with 'real' typing.
+@c
+# g.trace(granularity)
+if (
+    not old_d or not old_p or
+    old_p.v != p.v or
+    old_d.get('kind') != 'typing' or
+    old_d.get('undoType') != 'Typing' or
+    undo_type != 'Typing'
+):
+    newBead = True # We can't share the previous node.
+elif granularity == 'char':
+    newBead = True # This was the old way.
+elif granularity == 'node':
+    newBead = False # Always replace previous bead.
+else:
+    assert granularity in ('line','word')
+    # Replace the previous bead if only the middle lines have changed.
+    newBead = (
+        old_d.get('leading',0)  != u.leading or 
+        old_d.get('trailing',0) != u.trailing
+    )
+    if granularity == 'word' and not newBead:
+        # Protect the method that may be changed by the user
+        try:
+            &lt;&lt; set newBead if the change does not continue a word &gt;&gt;
+        except Exception:
+            if 0:
+                g.trace('old_lines',old_lines)
+                g.trace('new_lines',new_lines)
+            g.es('Exception in setUndoRedoTypingParams',color='blue')
+            g.es_exception()
+            newBead = True</t>
 <t tx="ekr.20050405103712">if fileName and g.os_path_exists(fileName):
     self.deleteFileWithMessage(fileName,'')
 </t>
 <t tx="ekr.20050405103712.1">if backupName:
     g.es("restoring " + fileName + " from " + backupName)
     g.utils_rename(backupName,fileName)</t>
+<t tx="ekr.20050412083057">def redoCloneNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.newBack:
+        u.newP.linkAfter(u.newBack)
+    elif u.newParent:
+        u.newP.linkAsNthChild(u.newParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.newP.linkAsRoot(oldRoot)
+        
+    for v in u.dirtyVnodeList: # New in 4.4b3.
+        v.t.setDirty()
+
+    c.selectPosition(u.newP)</t>
+<t tx="ekr.20050412083057.1">def undoCloneNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.newP)
+    c.deleteOutline()
+    
+    for v in u.dirtyVnodeList: # New in 4.4b3.
+        v.t.clearDirty()
+
+    c.selectPosition(u.p)</t>
+<t tx="ekr.20050412084055">def undoDeleteNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.oldBack:
+        u.p.linkAfter(u.oldBack)
+    elif u.oldParent:
+        u.p.linkAsNthChild(u.oldParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.p.restoreLinksInTree()
+    u.p.setAllAncestorAtFileNodesDirty() # New in 4.4b3.
+    c.selectPosition(u.p)</t>
 <t tx="ekr.20050420073615">c:\prog\leoCVS\leo\doc\LeoDocs.leo
 LeoPy.leo
 C:\Documents and Settings\Ed\My Documents\ekr.leo
@@ -2134,6 +2571,36 @@ Two (recently written) functions in leoGlobals.py support conversions from Pytho
 - g.convertRowColToPythonIndex does the reverse.
 
 Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by g.convertPythonIndexToRowCol is zero based, so the code that actually creates Tkinter indices from row/col must add 1 to the row.  Similar remarks apply when going in the reverse direction.</t>
+<t tx="ekr.20050920084036.85"></t>
+<t tx="ekr.20050920084036.86">def insertNewLineAndTab (self,event):
+
+    '''Insert a newline and tab'''
+
+    w = event.widget
+    w.insert('insert','\n\t')</t>
+<t tx="ekr.20050920084036.87">def deleteNextChar (self,event):
+
+    c = self.c ; w = event and event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    name = c.widget_name(w)
+    i,j = g.app.gui.getTextSelection(w)
+    end = w.index('end-1c')
+    # g.trace(i,j,'end',w.index('end-1c'))
+    
+    if name.startswith('body'):
+        self.beginCommand()
+
+    changed = True
+    if i != j:
+        w.delete(i,j)
+    elif j != end:
+        w.delete(i)
+    else:
+        changed = False
+        
+    if name.startswith('body'):
+        self.endCommand(changed=changed,setLabel=False)</t>
 <t tx="ekr.20050920084036.113">def replaceString (self,event):
 
     k = self.k ; tag = 'replace-string' ; state = k.getState(tag)
@@ -2155,6 +2622,68 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
         self.lastStateHelper()
         self.generalChangeHelper(self._sString,k.arg)
 </t>
+<t tx="ekr.20050920084036.135">def deleteSpaces (self,event,insertspace=False):
+
+    c = self.c ; w = event and event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    name = c.widget_name(w)
+    char = w.get('insert','insert + 1c ')
+    if not char.isspace(): return
+    
+    if name.startswith('body'):
+        oldText = w.get('1.0','end')
+        oldSel = g.app.gui.getTextSelection(w)
+        i = w.index('insert')
+        wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+        wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
+        if '' in (wf,wb): return
+        w.delete('%s +1c' % wb,wf)
+        if insertspace: w.insert('insert',' ')
+        
+        c.frame.body.onBodyChanged(undoType='delete-spaces',
+            oldSel=oldSel,oldText=oldText,oldYview=None)</t>
+<t tx="ekr.20050920084036.138">def insertNewLine (self,event):
+
+    w = event.widget
+    w.insert('insert','\n')
+
+insertNewline = insertNewLine
+</t>
+<t tx="ekr.20050920084036.139">def insertParentheses (self,event):
+
+    w = event.widget
+    w.insert('insert','()')
+    w.mark_set('insert','insert -1c')</t>
+<t tx="ekr.20050920084036.141">def removeBlankLines (self,event):
+    
+    '''The remove-blank-lines command removes lines containing nothing but
+    whitespace. If there is a text selection, only lines within the selected
+    text are affected; otherwise all blank lines in the selected node are
+    affected.'''
+    
+    c = self.c ; undoType = 'Remove Blank Lines' ; p = c.currentPosition()
+    result = []
+    body = p.bodyString()
+    hasSelection = c.frame.body.hasTextSelection()
+    
+    if hasSelection:
+        head,lines,tail,oldSel,oldYview = c.getBodyLines()
+        joinChar = '\n'
+    else:
+        head = tail = oldYview = None
+        lines = g.splitLines(body)
+        oldSel = ('1.0','1.0')
+        joinChar = ''
+
+    for line in lines:
+        if line.strip():
+            result.append(line)
+
+    result = joinChar.join(result)
+    
+    if result != body:
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)</t>
 <t tx="ekr.20050920084036.257">class searchCommandsClass (baseEditCommandsClass):
     
     '''Implements many kinds of searches.'''
@@ -2766,6 +3295,91 @@ def createStatusLineComponents (self):
     v.initHeadString("NewHeadline")
     p.moveToRoot()
     c.editPosition(p)</t>
+<t tx="ekr.20051011072049.2">def cutText (self,event=None):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c ; w = event and event.widget
+    if not w or not g.app.gui.isTextWidget(w): return
+
+    name = c.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # Update the widget and set the clipboard text.
+    s = w.get(i,j)
+    if i != j:
+        w.delete(i,j)
+        g.app.gui.replaceClipboardWith(s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        # The headline is not officially changed yet.
+        # p.initHeadString(s)
+        w.configure(width=f.tree.headWidth(s=s))
+    else: pass
+
+OnCutFromMenu = cutText</t>
+<t tx="ekr.20051011072903.2">def copyText (self,event=None):
+    
+    '''Copy the selected text from the widget to the clipboard.'''
+    
+    f = self ; c = f.c ; w = event and event.widget
+    if not w or not g.app.gui.isTextWidget(w): return
+
+    # Set the clipboard text.
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        s = w.get(i,j)
+        g.app.gui.replaceClipboardWith(s)
+        
+OnCopyFromMenu = copyText</t>
+<t tx="ekr.20051011072903.5">def pasteText (self,event=None):
+
+    '''Paste the clipboard into a widget.'''
+
+    f = self ; c = f.c ; w = event and event.widget
+    if not w or not g.app.gui.isTextWidget(w): return
+
+    wname = c.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    s = s1 = g.app.gui.getTextFromClipboard()
+    # g.trace(wname,s,i,j)
+    
+    singleLine = wname.startswith('head') or wname.startswith('minibuffer')
+    
+    if singleLine:
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+
+    try:
+        # Update the widget.
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,s)
+    
+        if wname.startswith('body'):
+            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+        elif singleLine:
+            s = w.get('1.0','end')
+            while s and s [ -1] in ('\n','\r'):
+                s = s [: -1]
+            if wname.startswith('head'):
+                # The headline is not officially changed yet.
+                # p.initHeadString(s)
+                w.configure(width=f.tree.headWidth(s=s))
+        else: pass
+    except Exception:
+        pass # Tk sometimes throws weird exceptions here.
+        
+    return 'break' # Essential
+
+OnPasteFromMenu = pasteText</t>
 <t tx="ekr.20051017212452"># Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
 
 def computeCompletionList (self,defaultTabList,backspace):
@@ -3473,6 +4087,74 @@ try:
         redraw_flag = True
 finally:
     c.endUpdate(redraw_flag)</t>
+<t tx="ekr.20051026092433">def updateTab (self,p,w):
+
+    c = self.c ; d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width)
+    
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        w.delete(i,j)
+    if tab_width &gt; 0:
+        w.insert("insert",'\t')
+    else:
+        # Get the preceeding characters.
+        s = w.get("insert linestart","insert")
+    
+        # Compute n, the number of spaces to insert.
+        width = g.computeWidth(s,tab_width)
+        n = abs(tab_width) - (width % abs(tab_width))
+        w.insert("insert",' ' * n)</t>
+<t tx="ekr.20051026092433.1">def backwardDeleteCharacter (self,event=None):
+    
+    c = self.c ; p = c.currentPosition()
+    w = event and event.widget
+    if not g.app.gui.isTextWidget(w):
+        g.trace('*'*40,'Not a text widget',c.widget_name(w))
+        return
+    
+    wname = c.widget_name(w)
+    i,j = g.app.gui.getTextSelection(w)
+    # g.trace(wname,i,j)
+
+    if wname.startswith('body'):
+        self.beginCommand()
+        d = g.scanDirectives(c,p)
+        tab_width = d.get("tabwidth",c.tab_width)
+        changed = True
+        if i != j:
+            w.delete(i,j)
+        elif i == '1.0':
+            changed = False # Bug fix: 1/6/06 (after a5 released).
+        elif tab_width &gt; 0:
+            w.delete('insert-1c')
+        else:
+            &lt;&lt; backspace with negative tab_width &gt;&gt;
+        self.endCommand(changed=True,setLabel=False) # Necessary to make text changes stick.
+    else:
+        # No undo in this widget.
+        if i != j:
+            w.delete(i,j)
+        elif i != '1.0':
+            # Bug fix: 1/6/06 (after a5 released).
+            # Do nothing at the start of the headline.
+            w.delete('insert-1c')</t>
+<t tx="ekr.20051026092746">s = prev = w.get("insert linestart","insert")
+n = len(prev)
+abs_width = abs(tab_width)
+
+# Delete up to this many spaces.
+n2 = (n % abs_width) or abs_width
+n2 = min(n,n2) ; count = 0
+
+while n2 &gt; 0:
+    n2 -= 1
+    ch = prev[n-count-1]
+    if ch != ' ': break
+    else: count += 1
+
+# Make sure we actually delete something.
+w.delete("insert -%dc" % (max(1,count)),"insert")</t>
 <t tx="ekr.20051026143009">@ Tk will add a newline only if:
 1. A real change has been made to the Tk.Text widget, and
 2. the change did _not_ result in the widget already containing a newline.
@@ -3504,6 +4186,71 @@ def removeTrailingNewlines (self,old,new,ch):
         # Moveover, some other change has been made to the text,
         # So at worst we have misrepresented the user's intentions slightly.
         return True</t>
+<t tx="ekr.20051026171121">i,j = oldSel
+
+if i != j:
+    # No auto-indent if there is selected text.
+    w.delete(i,j)
+    w.insert(i,ch)
+else:
+    w.insert(i,ch)
+    if c.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+        # No auto-indent if in @nocolor mode or after a Change command.
+        removeTrailing = self.updateAutoIndent(p)</t>
+<t tx="ekr.20051026171121.1"># By David McNab:
+def updateAutoIndent (self,p):
+
+    c = self.c ; d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
+    s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) &gt; 0 and s [ -1] == ':':
+        # For Python: increase auto-indent after colons.
+        if c.frame.body.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width] ; tabex = 0
+        for i in range(0,len(s)):
+            if s [i] == '\t':
+                tabex += tab_width-1
+            if s [i] in '([{':
+                brackets.append(i+tabex+1)
+            elif s [i] in '}])' and len(brackets) &gt; 1:
+                brackets.pop()
+        width = brackets.pop()
+    ws = g.computeLeadingWhitespace(width,tab_width)
+    if ws:
+        c.frame.bodyCtrl.insert("insert",ws)
+        removeTrailing = False
+    else:
+        removeTrailing = None
+    return removeTrailing</t>
+<t tx="ekr.20051027172949">def updateAutomatchBracket (self,p,w,ch,oldSel):
+    
+    # assert ch in ('(',')','[',']','{','}')
+    
+    c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
+    language = d.get('language')
+    
+    if ch in ('(','[','{',):
+        automatch = language not in ('plain',)
+        if automatch:
+            ch = ch + {'(':')','[':']','{':'}'}.get(ch)
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,ch)
+        if automatch:
+            w.mark_set('insert','insert-1c')
+    else:
+        ch2 = w.get('insert')
+        if ch2 in (')',']','}'):
+            w.mark_set('insert','insert+1c')
+        else:
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,ch)</t>
 <t tx="ekr.20051029070945"># None of the following are correct.
 
 leoGlobals.py:1417: Setting aList to itself has no effect
@@ -3565,6 +4312,54 @@ C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionL
     else:
         w.bind_all("&lt;Control-1&gt;", tracewidget)
         w.bind_all("&lt;Control-Shift-1&gt;", untracewidget)</t>
+<t tx="ekr.20051125080855">def selfInsertCommand(self,event,action='insert'):
+    
+    '''Insert a character in the body pane.
+    
+    This is the default binding for all keys in the body pane.'''
+    
+    c = self.c ; p = c.currentPosition()
+    ch = event and event.char or ''
+    w = event and event.widget
+    name = c.widget_name(w)
+    oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
+    oldText = name.startswith('body') and p.bodyString()
+    removeTrailing = None # A signal to compute it later.
+    undoType = 'Typing'
+    trace = c.config.getBool('trace_masterCommand')
+    
+    if trace: g.trace(name)
+    
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+        
+    if ch == '\t':
+        removeTrailing = self.updateTab(p,w)
+    elif ch == '\b':
+        # This is correct: we only come here if there no bindngs for this key. 
+        self.backwardDeleteCharacter(event)
+    elif ch in ('\r','\n'):
+        ch = '\n'
+        &lt;&lt; handle newline &gt;&gt;
+    elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
+        self.updateAutomatchBracket(p,w,ch,oldSel)
+    elif ch: # Null chars must not delete the selection.
+        i,j = oldSel
+        if i != j:                  w.delete(i,j)
+        elif action == 'overwrite': w.delete(i,'%s+1c' % i)
+        w.insert(i,ch)                     
+    else:
+        return 'break' # New in 4.4a5: this method *always* returns 'break'
+
+    # Update the text and handle undo.
+    newText = w.get('1.0','end')
+    w.see(w.index('insert'))
+    if not g.safeStringCompare(newText,oldText):
+        c.frame.body.onBodyChanged(undoType=undoType,
+            oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
+            
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return 'break'</t>
 <t tx="ekr.20051126122638">@ To do:
     
 - scan text for foreign languages.
@@ -5644,25 +6439,7 @@ AttributeError: LeoApp instance has no attribute 'dialogs'</t>
         balloon._label.configure(text=s)</t>
 <t tx="ekr.20060306103239"></t>
 <t tx="ekr.20060306130654"></t>
-<t tx="ekr.20060306193836">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3606515
-By: spboulet
-
-When pressing the return key, I see:
-
-masterKeyHandlerHelper: 'Return' state None
-masterKeyHandlerHelper: 'Return' no func
-
-This is the case regardless of whether @bool swap_mac_keys is True or False,
-although with 'True' the command key works as expected on the mac.
-
-Same result using CVS re the return key.
-
-Another thing I noticed (cvs version) is that the recent files is updated during
-a session but is not saved from session to session.
-
-Stephen
-</t>
+<t tx="ekr.20060306193836"></t>
 <t tx="ekr.20060306193910">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3607355
 By: vpe
@@ -5988,21 +6765,10 @@ makes the path relative to the project. Not 100% as the stylesheet filename
 would need a path embedded in it to move the location down the tree. However,
 it is consistent with the way the output file is named.
 </t>
-<t tx="ekr.20060320113137">@nocolor</t>
-<t tx="ekr.20060320113137.1">@nocolor
+<t tx="ekr.20060320113137"># The dirty bits were not updated properly in several undo/redo operations.</t>
+<t tx="ekr.20060320113137.2">@nocolor
 
-http://sourceforge.net/forum/message.php?msg_id=3638771
-By: nobody
-
-In fact I closed leo then I opened the text file (the @thin file in leo) with
-vim then modified a little part (which is a cloned node).
-
-Then when I launched leo again it crashed when trying to read the file.
-
-I suppose it may not be possible to edit clones nodes in an @thin file this
-way...?
-</t>
-<t tx="ekr.20060320113137.2">http://sourceforge.net/forum/message.php?msg_id=3639193
+http://sourceforge.net/forum/message.php?msg_id=3639193
 By: nobody
 
 I'm using Leo 4.3.1, build 1.266 , June 20, 2005. 
@@ -6036,77 +6802,7 @@ I hope I explained well enough. If anybody is interested to anylse and cannot
 reproduce the situation, I would try to prepare a simplified document to show
 the problem.
 
-maksr@snt.si
-</t>
-<t tx="ekr.20060321080150">@
-Instructions:
-    
-   Select the "setup" node and hit the "Run Script" button
-   Create script buttons out of the "Dehoist" and "Save Hoist" nodes
-   Navigate to node for which to create hoist buttons and hit the "Save Hoist" button
-       This will hoist that node and
-       Create a hoist button for that node
-   Click on the "dehoist" button to return to the full outline view
-   Click on the created hoist button to return to the hoisted view of the node</t>
-<t tx="ekr.20060321080150.1">@others
-c.sc.addHoistCommand()
-c.hoist()</t>
-<t tx="ekr.20060321080150.2">c.dehoist()</t>
-<t tx="ekr.20060321080150.3">import mod_scripting
-import sys
-@others
-g.funcToMethod(addHoistCommand, mod_scripting.scriptingController)
-
-# I couldn't find a way to access the default scripting controller object (looks to me like it is a
-# function local variable?), so just create a new instance and save it in the commander (ugly?!)
-c.sc = mod_scripting.scriptingController(c)
-#c.sc.createAllButtons()
-</t>
-<t tx="ekr.20060321080150.4"># Slight modification of  mod_scripting.scriptingController.addScriptButtonCommand
-# maxButtonSize --&gt; mod_script.maxButtonSize and ScriptButton --&gt; Hoist and
-# a different commandCallback function
-# TODO: it might make sense to add input arguments for "status message prefix" and
-# commandCallback.  Then the code could be re-used for both addScriptButtonCommand and
-# addHoistCommand
-def addHoistCommand (self):
-   # Create permanent bindings for callbacks.
-   c = self.c ; p = c.currentPosition()
-   self.buttons += 1
-   # New in 4.2.1: always use the entire body string.
-   script = g.getScript(c,p,useSelectedText=False)
-   h = p.headString().strip()
-   buttonName = key = "Script %d" % self.buttons
-   if not h: return
-   text = h
-   statusMessage = "Hoist: %s" % text
-   buttonText = text[:mod_scripting.maxButtonSize]
-   # Create the button.
-   b = c.frame.addIconButton(text=buttonText)
-   &lt;&lt; define callbacks for addHoistButton &gt;&gt;
-   self.d [key] = b
-   if sys.platform == "win32":
-       width = int(len(buttonText) * 0.9)
-       b.configure(width=width,font=('verdana',7,'bold'))
-       b.configure(bg='MistyRose1')
-   b.configure(command=commandCallback)
-   b.bind('&lt;3&gt;',deleteButtonCallback)
-   b.bind('&lt;Enter&gt;', mouseEnterCallback)
-   b.bind('&lt;Leave&gt;', mouseLeaveCallback)
-   c.frame.bodyWantsFocus()</t>
-<t tx="ekr.20060321080150.5">def deleteButtonCallback (event=None,self=self,buttonName=buttonName):
-   self.deleteButton(buttonName)
-
-def commandCallback (event=None,self=self,b=b,p=p.copy(),buttonText=buttonText):
-   while (c.canDehoist()):
-       c.dehoist()
-   c.selectPosition(p)
-   c.hoist()
-
-def mouseEnterCallback (event=None,self=self,statusMessage=statusMessage):
-   self.mouseEnter(statusMessage)
-
-def mouseLeaveCallback (event=None,self=self):
-   self.mouseLeave()</t>
+maksr@snt.si</t>
 <t tx="ekr.20060321080150.6">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3641107
@@ -6267,5 +6963,36 @@ There may be conflicting settings!
 
 createMenuEntries: No inverse for parameterizesectionreference
 </t>
+<t tx="ekr.20060321140706"></t>
+<t tx="ekr.20060323085310">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3642892
+By: thyrsus
+
+An unimportant bug presented when I tried this: the logic to interpret
+the @file didn't notice the change to the parent node, and I had to taint the
+@file node itself (I'm sure a child node would also have worked) to get Leo
+to notice that the @file needed to be rewritten.
+
+
+EKR: The present code is probably the best compromise between strict accuracy and marking too many nodes dirty.</t>
+<t tx="ekr.20060323095532">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3606515
+By: spboulet
+
+When pressing the return key, I see:
+
+masterKeyHandlerHelper: 'Return' state None
+masterKeyHandlerHelper: 'Return' no func
+
+This is the case regardless of whether @bool swap_mac_keys is True or False,
+although with 'True' the command key works as expected on the mac.
+
+Same result using CVS re the return key.
+
+Another thing I noticed (cvs version) is that the recent files is updated during
+a session but is not saved from session to session.
+
+Stephen</t>
 </tnodes>
 </leo_file>

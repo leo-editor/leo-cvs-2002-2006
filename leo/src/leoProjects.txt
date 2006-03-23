@@ -6492,6 +6492,1092 @@ def handleMiniBindings (self,event,state,stroke):
 #@-node:ekr.20060309065445:handleMiniBindings
 #@-node:ekr.20060127183752:masterKeyHandler & helper
 #@-node:ekr.20060321094013:Made Control-v work again in find command!
+#@+node:ekr.20060320113137:Fixed undo problem with clones
+# The dirty bits were not updated properly in several undo/redo operations.
+#@nonl
+#@+node:ekr.20060320113137.2:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3639193
+By: nobody
+
+I'm using Leo 4.3.1, build 1.266 , June 20, 2005. 
+
+I have a document of a few @thin nodes that in some hundred subnodes contain
+many nodes so that the same node is cloned in more than one file. This works
+mgaically greatly in Leo. Whatever I change in one cloned node is neatly distributed
+to all the files.
+
+But I've found a situation, that can be a bit dangerous. I changed the body
+(actually I did Ctrl-x to cut a part of it) of one of these cloned nodes and
+saved the whole document with Ctrl-s. Then I undid from the Edit menu with the
+"Undo Cut" and saved whole document with Ctrl-s again.
+
+After undo and before second saving I already noticed that the icons before
+changed clones did not get different, more black, colour that signifies changed
+nodes.
+
+But, more seriously, I've noticed in the log, that only the top .leo file was
+saved. I looked into other files containing the cloned node and really, there
+was still the old contents.
+
+There is a simple workaround. I simply type and delete one space into the body
+of the changed node and then the colour of the icons is OK and Ctrl-s saves
+oall the clones.
+
+May be it's not important that I have @thin nodes. May be the same situation
+would show in one self contained .leo document with a few clones. I didn't try.
+
+I hope I explained well enough. If anybody is interested to anylse and cannot
+reproduce the situation, I would try to prepare a simplified document to show
+the problem.
+
+maksr@snt.si
+#@nonl
+#@-node:ekr.20060320113137.2:Report
+#@+node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
+# This is the only key handler for the body pane.
+def onBodyChanged (self,undoType,
+    oldSel=None,oldText=None,oldYview=None,removeTrailing=None):
+    
+    '''Update Leo after the body has been changed.'''
+    
+    body = self ; c = self.c ; bodyCtrl = body.bodyCtrl
+    trace = self.trace_onBodyChanged
+    p = c.currentPosition()
+    insert = bodyCtrl.index('insert')
+    ch = g.choose(insert=='1.0','',bodyCtrl.get('insert-1c'))
+    newText = bodyCtrl.get('1.0','end')
+    newSel = g.app.gui.getTextSelection(bodyCtrl)
+    if oldText is None: oldText = p.bodyString()
+    if removeTrailing is None:
+        removeTrailing = self.removeTrailingNewlines(oldText,newText,ch)
+    if removeTrailing and newText:
+        newText = newText[:-1]
+    changed = oldText != newText
+    if trace:
+        g.trace(repr(ch),'changed:',changed)
+        # g.trace('removeTrailing:',removeTrailing)
+        g.trace('newText:',repr(newText))
+        #g.trace('oldText:',repr(oldText))
+    if changed:
+        c.undoer.setUndoTypingParams(p,undoType,
+            oldText=oldText,newText=newText,oldSel=oldSel,newSel=newSel,oldYview=oldYview)
+        p.v.setTnodeText(newText)
+        p.v.t.insertSpot = body.getInsertionPoint()
+        << recolor the body >>
+        if not c.changed: c.setChanged(True)
+        << redraw the screen if necessary >>
+#@nonl
+#@+node:ekr.20051026083733.6:<< recolor the body >>
+body.colorizer.interrupt()
+c.frame.scanForTabWidth(p)
+body.recolor_now(p,incremental=not self.forceFullRecolorFlag)
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20051026083733.6:<< recolor the body >>
+#@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+c.beginUpdate()
+try:
+    redraw_flag = False
+    # Update dirty bits.
+    # p.setDirty() sets all cloned and @file dirty bits.
+    if not p.isDirty() and p.setDirty():
+        redraw_flag = True
+        
+    # Update icons. p.v.iconVal may not exist during unit tests.
+    val = p.computeIcon()
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag)
+#@nonl
+#@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+#@+node:ekr.20051026143009:removeTrailingNewlines
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually
+done. We need only make a reasonable guess here. setUndoTypingParams stores the
+number of trailing newlines in each undo bead, so whatever we do here can be
+faithfully undone and redone.
+@c
+
+def removeTrailingNewlines (self,old,new,ch):
+
+    '''Return True if a Tk has erroneously added a trailing newline.'''
+
+    if not new.endswith('\n'):
+        # There is no newline to remove.  Probably will never happen.
+        return False
+    elif not old:
+        # Ambigous case.  Formerly always returned False.
+        if new == "\n\n":
+            return True # Handle a very strange special case.
+        else:
+            return ch not in ('\r','\n')
+    elif g.safeStringCompare(old,new[-1]): ## old == new[:-1]:
+        # A single trailing character has been added.
+        return ch not in ('\r','\n') # Was False.
+    else:
+        # The text didn't have a newline, and now it does.
+        # Moveover, some other change has been made to the text,
+        # So at worst we have misrepresented the user's intentions slightly.
+        return True
+#@nonl
+#@-node:ekr.20051026143009:removeTrailingNewlines
+#@-node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
+#@+node:ekr.20031218072017.1762:c.clone
+def clone (self,event=None):
+
+    c = self ; u = c.undoer ; p = c.currentPosition()
+    if not p: return
+    
+    c.beginUpdate()
+    try: # In update...
+        undoData = c.undoer.beforeCloneNode(p)
+        clone = p.clone(p)
+        dirtyVnodeList = clone.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        if c.validateOutline():
+            u.afterCloneNode(clone,'Clone Node',undoData,dirtyVnodeList=dirtyVnodeList)
+            c.selectPosition(clone)
+    finally:
+        c.endUpdate()
+
+    return clone # For mod_labels and chapters plugins.
+#@nonl
+#@-node:ekr.20031218072017.1762:c.clone
+#@+node:ekr.20050412084055:undoDeleteNode
+def undoDeleteNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.oldBack:
+        u.p.linkAfter(u.oldBack)
+    elif u.oldParent:
+        u.p.linkAsNthChild(u.oldParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.p.restoreLinksInTree()
+    u.p.setAllAncestorAtFileNodesDirty() # New in 4.4b3.
+    c.selectPosition(u.p)
+#@nonl
+#@-node:ekr.20050412084055:undoDeleteNode
+#@+node:EKR.20040526090701.4:undoTyping
+def undoTyping (self):
+    
+    u = self ; c = u.c ; current = c.currentPosition()
+    
+    # g.trace('oldSel',u.oldSel)
+
+    # selectPosition causes recoloring, so don't do this unless needed.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ("Cut","Paste",'Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.oldMiddleLines,u.newMiddleLines,
+        u.oldNewlines,u.newNewlines,
+        tag="undo",undoType=u.undoType)
+
+    for v in u.dirtyVnodeList: # New in 4.4b3.
+        v.t.clearDirty()
+
+    if u.oldSel:
+        c.bodyWantsFocus()
+        c.frame.body.setTextSelection(u.oldSel)
+    if u.yview:
+        c.bodyWantsFocus()
+        c.frame.body.setYScrollPosition(u.yview)
+#@nonl
+#@-node:EKR.20040526090701.4:undoTyping
+#@+node:ekr.20050412083057:redoCloneNode
+def redoCloneNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.newBack:
+        u.newP.linkAfter(u.newBack)
+    elif u.newParent:
+        u.newP.linkAsNthChild(u.newParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.newP.linkAsRoot(oldRoot)
+        
+    for v in u.dirtyVnodeList: # New in 4.4b3.
+        v.t.setDirty()
+
+    c.selectPosition(u.newP)
+#@nonl
+#@-node:ekr.20050412083057:redoCloneNode
+#@+node:ekr.20050412083057.1:undoCloneNode
+def undoCloneNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.newP)
+    c.deleteOutline()
+    
+    for v in u.dirtyVnodeList: # New in 4.4b3.
+        v.t.clearDirty()
+
+    c.selectPosition(u.p)
+#@nonl
+#@-node:ekr.20050412083057.1:undoCloneNode
+#@+node:EKR.20040526075238.5:redoTyping
+def redoTyping (self):
+
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectPosition causes recoloring, so avoid if possible.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ('Cut','Paste','Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.newMiddleLines,u.oldMiddleLines,
+        u.newNewlines,u.oldNewlines,
+        tag="redo",undoType=u.undoType)
+        
+    for v in u.dirtyVnodeList: # New in 4.4b3.
+        v.t.setDirty()
+    
+    if u.newSel:
+        c.bodyWantsFocus()
+        c.frame.body.setTextSelection(u.newSel)
+    if u.yview:
+        c.bodyWantsFocus()
+        c.frame.body.setYScrollPosition(u.yview)
+#@nonl
+#@-node:EKR.20040526075238.5:redoTyping
+#@+node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
+def setAllAncestorAtFileNodesDirty (self,setDescendentsDirty=False):
+
+    p = self ; c = p.c
+    dirtyVnodeList = []
+    
+    # Calculate all nodes that are joined to p or parents of such nodes.
+    nodes = p.findAllPotentiallyDirtyNodes()
+    
+    if setDescendentsDirty:
+        # N.B. Only mark _direct_ descendents of nodes.
+        # Using the findAllPotentiallyDirtyNodes algorithm would mark way too many nodes.
+        for p2 in p.subtree_iter():
+            # Only @thin nodes need to be marked.
+            if p2.v not in nodes and p2.isAtThinFileNode():
+                nodes.append(p2.v)
+                
+    dirtyVnodeList = [v for v in nodes
+        if not v.t.isDirty() and v.isAnyAtFileNode()]
+    changed = len(dirtyVnodeList) > 0
+
+    c.beginUpdate()
+    try:
+        for v in dirtyVnodeList:
+            v.t.setDirty() # Do not call v.setDirty here!
+    finally:
+        c.endUpdate(changed)
+
+    return dirtyVnodeList
+#@nonl
+#@-node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
+#@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@+node:ekr.20051011072903.2:copyText
+def copyText (self,event=None):
+    
+    '''Copy the selected text from the widget to the clipboard.'''
+    
+    f = self ; c = f.c ; w = event and event.widget
+    if not w or not g.app.gui.isTextWidget(w): return
+
+    # Set the clipboard text.
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        s = w.get(i,j)
+        g.app.gui.replaceClipboardWith(s)
+        
+OnCopyFromMenu = copyText
+#@nonl
+#@-node:ekr.20051011072903.2:copyText
+#@+node:ekr.20051011072049.2:cutText
+def cutText (self,event=None):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c ; w = event and event.widget
+    if not w or not g.app.gui.isTextWidget(w): return
+
+    name = c.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # Update the widget and set the clipboard text.
+    s = w.get(i,j)
+    if i != j:
+        w.delete(i,j)
+        g.app.gui.replaceClipboardWith(s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        # The headline is not officially changed yet.
+        # p.initHeadString(s)
+        w.configure(width=f.tree.headWidth(s=s))
+    else: pass
+
+OnCutFromMenu = cutText
+#@nonl
+#@-node:ekr.20051011072049.2:cutText
+#@+node:ekr.20051011072903.5:pasteText
+def pasteText (self,event=None):
+
+    '''Paste the clipboard into a widget.'''
+
+    f = self ; c = f.c ; w = event and event.widget
+    if not w or not g.app.gui.isTextWidget(w): return
+
+    wname = c.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    s = s1 = g.app.gui.getTextFromClipboard()
+    # g.trace(wname,s,i,j)
+    
+    singleLine = wname.startswith('head') or wname.startswith('minibuffer')
+    
+    if singleLine:
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+
+    try:
+        # Update the widget.
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,s)
+    
+        if wname.startswith('body'):
+            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+        elif singleLine:
+            s = w.get('1.0','end')
+            while s and s [ -1] in ('\n','\r'):
+                s = s [: -1]
+            if wname.startswith('head'):
+                # The headline is not officially changed yet.
+                # p.initHeadString(s)
+                w.configure(width=f.tree.headWidth(s=s))
+        else: pass
+    except Exception:
+        pass # Tk sometimes throws weird exceptions here.
+        
+    return 'break' # Essential
+
+OnPasteFromMenu = pasteText
+#@nonl
+#@-node:ekr.20051011072903.5:pasteText
+#@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@+node:ekr.20031218072017.1490:setUndoTypingParams
+@ This routine saves enough information so a typing operation can be undone and redone.
+
+We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+@c
+
+def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+    
+    __pychecker__ = 'maxlines=2000' # Ignore the size of this method.
+    
+    u = self ; c = u.c
+    << return if there is nothing to do >>
+    # g.trace(undo_type,g.callers(7))
+    << init the undo params >>
+    << compute leading, middle & trailing  lines >>
+    << save undo text info >>
+    << save the selection and scrolling position >>
+    << adjust the undo stack, clearing all forward entries >>
+    return bunch
+#@nonl
+#@+node:ekr.20040324061854:<< return if there is nothing to do >>
+if u.redoing or u.undoing:
+    return None
+
+if undo_type == None:
+    return None
+
+if undo_type == "Can't Undo":
+    u.clearUndoState()
+    u.setUndoTypes() # Must still recalculate the menu labels.
+    return None
+
+if oldText == newText:
+    # g.trace("no change")
+    u.setUndoTypes() # Must still recalculate the menu labels.
+    return None
+#@nonl
+#@-node:ekr.20040324061854:<< return if there is nothing to do >>
+#@+node:ekr.20040324061854.1:<< init the undo params >>
+# Clear all optional params.
+for ivar in u.optionalIvars:
+    setattr(u,ivar,None)
+
+# Set the params.
+u.undoType = undo_type
+u.p = p.copy()
+#@nonl
+#@-node:ekr.20040324061854.1:<< init the undo params >>
+#@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
+
+NB: the number of old and new middle lines may be different.
+@c
+
+old_lines = string.split(oldText,'\n')
+new_lines = string.split(newText,'\n')
+new_len = len(new_lines)
+old_len = len(old_lines)
+min_len = min(old_len,new_len)
+
+i = 0
+while i < min_len:
+    if old_lines[i] != new_lines[i]:
+        break
+    i += 1
+leading = i
+
+if leading == new_len:
+    # This happens when we remove lines from the end.
+    # The new text is simply the leading lines from the old text.
+    trailing = 0
+else:
+    i = 0
+    while i < min_len - leading:
+        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+            break
+        i += 1
+    trailing = i
+    
+# NB: the number of old and new middle lines may be different.
+if trailing == 0:
+    old_middle_lines = old_lines[leading:]
+    new_middle_lines = new_lines[leading:]
+else:
+    old_middle_lines = old_lines[leading:-trailing]
+    new_middle_lines = new_lines[leading:-trailing]
+
+# Remember how many trailing newlines in the old and new text.
+i = len(oldText) - 1 ; old_newlines = 0
+while i >= 0 and oldText[i] == '\n':
+    old_newlines += 1
+    i -= 1
+
+i = len(newText) - 1 ; new_newlines = 0
+while i >= 0 and newText[i] == '\n':
+    new_newlines += 1
+    i -= 1
+
+if u.debug_print:
+    print "lead,trail",leading,trailing
+    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
+    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
+    #print "lead,trail:",leading,trailing
+    #print "old mid:",old_middle_lines
+    #print "new mid:",new_middle_lines
+    print "---------------------"
+#@nonl
+#@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+#@+node:ekr.20031218072017.1492:<< save undo text info >>
+@ This is the start of the incremental undo algorithm.
+
+We must save enough info to do _both_ of the following:
+
+Undo: Given newText, recreate oldText.
+Redo: Given oldText, recreate oldText.
+
+The "given" texts for the undo and redo routines are simply p.bodyString().
+@c
+
+if u.debug:
+    # Remember the complete text for comparisons...
+    u.oldText = oldText
+    u.newText = newText
+    # Compute statistics comparing old and new ways...
+    # The old doesn't often store the old text, so don't count it here.
+    u.old_mem += len(newText)
+    s1 = string.join(old_middle_lines,'\n')
+    s2 = string.join(new_middle_lines,'\n')
+    u.new_mem += len(s1) + len(s2)
+else:
+    u.oldText = None
+    u.newText = None
+
+u.leading = leading
+u.trailing = trailing
+u.oldMiddleLines = old_middle_lines
+u.newMiddleLines = new_middle_lines
+u.oldNewlines = old_newlines
+u.newNewlines = new_newlines
+#@nonl
+#@-node:ekr.20031218072017.1492:<< save undo text info >>
+#@+node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#Remember the selection.
+u.oldSel = oldSel
+u.newSel = newSel
+
+# Remember the scrolling position.
+if oldYview:
+    u.yview = oldYview
+else:
+    u.yview = c.frame.body.getYScrollPosition()
+#@-node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+@ New in Leo 4.3. Instead of creating a new bead on every character, we may adjust the top bead:
+
+word granularity: adjust the top bead if the typing would continue the word.
+line granularity: adjust the top bead if the typing is on the same line.
+node granularity: adjust the top bead if the typing is anywhere on the same node.
+@c
+
+granularity = u.granularity
+
+old_d = u.peekBead(u.bead)
+old_p = old_d and old_d.get('p')
+
+<< set newBead if we can't share the previous bead >>
+
+if newBead:
+    # Push params on undo stack, clearing all forward entries.
+    bunch = g.Bunch(
+        p = p.copy(),
+        kind='typing',
+        undoType = undo_type,
+        undoHelper=u.undoTyping,
+        redoHelper=u.redoTyping,
+        oldText=u.oldText,
+        oldSel=u.oldSel,
+        oldNewlines=u.oldNewlines,
+        oldMiddleLines=u.oldMiddleLines,
+    )
+    u.pushBead(bunch)
+else:
+    bunch = old_d
+
+bunch.dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+if not p.isDirty():
+    bunch.dirtyVnodeList.append(p.copy())
+bunch.leading=u.leading
+bunch.trailing= u.trailing
+bunch.newNewlines=u.newNewlines
+bunch.newMiddleLines=u.newMiddleLines
+bunch.newSel=u.newSel
+bunch.newText=u.newText
+bunch.yview=u.yview
+#@nonl
+#@+node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+@ We must set newBead to True if undo_type is not 'Typing' so that commands that
+get treated like typing (by updateBodyPane and onBodyChanged) don't get lumped
+with 'real' typing.
+@c
+# g.trace(granularity)
+if (
+    not old_d or not old_p or
+    old_p.v != p.v or
+    old_d.get('kind') != 'typing' or
+    old_d.get('undoType') != 'Typing' or
+    undo_type != 'Typing'
+):
+    newBead = True # We can't share the previous node.
+elif granularity == 'char':
+    newBead = True # This was the old way.
+elif granularity == 'node':
+    newBead = False # Always replace previous bead.
+else:
+    assert granularity in ('line','word')
+    # Replace the previous bead if only the middle lines have changed.
+    newBead = (
+        old_d.get('leading',0)  != u.leading or 
+        old_d.get('trailing',0) != u.trailing
+    )
+    if granularity == 'word' and not newBead:
+        # Protect the method that may be changed by the user
+        try:
+            << set newBead if the change does not continue a word >>
+        except Exception:
+            if 0:
+                g.trace('old_lines',old_lines)
+                g.trace('new_lines',new_lines)
+            g.es('Exception in setUndoRedoTypingParams',color='blue')
+            g.es_exception()
+            newBead = True
+#@nonl
+#@+node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+old_start,old_end = oldSel
+new_start,new_end = newSel
+# g.trace('new_start',new_start,'old_start',old_start)
+if old_start != old_end or new_start != new_end:
+    # The new and old characters are not contiguous.
+    newBead = True
+else:
+    old_row,old_col = old_start.split('.')
+    new_row,new_col = new_start.split('.')
+    old_row,old_col = int(old_row),int(old_col)
+    new_row,new_col = int(new_row),int(new_col)
+    old_lines = g.splitLines(oldText)
+    new_lines = g.splitLines(newText)
+    # g.trace('old',old_row,old_col,len(old_lines))
+    # g.trace('new',new_row,new_col,len(new_lines))
+    # Recognize backspace, del, etc. as contiguous.
+    if old_row != new_row or abs(old_col- new_col) != 1:
+        # The new and old characters are not contiguous.
+        newBead = True
+    elif old_col == 0 or new_col == 0:
+        pass # We have just inserted a line.
+    else:
+        old_s = old_lines[old_row-1]
+        new_s = new_lines[new_row-1]
+        # New in 4.3b2:
+        # Guard against invalid oldSel or newSel params.
+        if old_col-1 >= len(old_s) or new_col-1 >= len(new_s):
+            newBead = True
+        else:
+            # g.trace(new_col,len(new_s),repr(new_s))
+            # g.trace(repr(old_ch),repr(new_ch))
+            old_ch = old_s[old_col-1]
+            new_ch = new_s[new_col-1]
+            newBead = self.recognizeStartOfTypingWord(
+                old_lines,old_row,old_col,old_ch,
+                new_lines,new_row,new_col,new_ch)
+#@nonl
+#@-node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+#@-node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+#@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+#@-node:ekr.20031218072017.1490:setUndoTypingParams
+#@-node:ekr.20060320113137:Fixed undo problem with clones
+#@+node:ekr.20060321140706:Investigated setting descendant @file nodes dirty when changing body text
+#@+node:ekr.20060323085310:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3642892
+By: thyrsus
+
+An unimportant bug presented when I tried this: the logic to interpret
+the @file didn't notice the change to the parent node, and I had to taint the
+@file node itself (I'm sure a child node would also have worked) to get Leo
+to notice that the @file needed to be rewritten.
+
+
+EKR: The present code is probably the best compromise between strict accuracy and marking too many nodes dirty.
+#@nonl
+#@-node:ekr.20060323085310:Report
+#@+node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
+# This is the only key handler for the body pane.
+def onBodyChanged (self,undoType,
+    oldSel=None,oldText=None,oldYview=None,removeTrailing=None):
+    
+    '''Update Leo after the body has been changed.'''
+    
+    body = self ; c = self.c ; bodyCtrl = body.bodyCtrl
+    trace = self.trace_onBodyChanged
+    p = c.currentPosition()
+    insert = bodyCtrl.index('insert')
+    ch = g.choose(insert=='1.0','',bodyCtrl.get('insert-1c'))
+    newText = bodyCtrl.get('1.0','end')
+    newSel = g.app.gui.getTextSelection(bodyCtrl)
+    if oldText is None: oldText = p.bodyString()
+    if removeTrailing is None:
+        removeTrailing = self.removeTrailingNewlines(oldText,newText,ch)
+    if removeTrailing and newText:
+        newText = newText[:-1]
+    changed = oldText != newText
+    if trace:
+        g.trace(repr(ch),'changed:',changed)
+        # g.trace('removeTrailing:',removeTrailing)
+        g.trace('newText:',repr(newText))
+        #g.trace('oldText:',repr(oldText))
+    if changed:
+        c.undoer.setUndoTypingParams(p,undoType,
+            oldText=oldText,newText=newText,oldSel=oldSel,newSel=newSel,oldYview=oldYview)
+        p.v.setTnodeText(newText)
+        p.v.t.insertSpot = body.getInsertionPoint()
+        << recolor the body >>
+        if not c.changed: c.setChanged(True)
+        << redraw the screen if necessary >>
+#@nonl
+#@+node:ekr.20051026083733.6:<< recolor the body >>
+body.colorizer.interrupt()
+c.frame.scanForTabWidth(p)
+body.recolor_now(p,incremental=not self.forceFullRecolorFlag)
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20051026083733.6:<< recolor the body >>
+#@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+c.beginUpdate()
+try:
+    redraw_flag = False
+    # Update dirty bits.
+    # p.setDirty() sets all cloned and @file dirty bits.
+    if not p.isDirty() and p.setDirty():
+        redraw_flag = True
+        
+    # Update icons. p.v.iconVal may not exist during unit tests.
+    val = p.computeIcon()
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    c.endUpdate(redraw_flag)
+#@nonl
+#@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+#@+node:ekr.20051026143009:removeTrailingNewlines
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually
+done. We need only make a reasonable guess here. setUndoTypingParams stores the
+number of trailing newlines in each undo bead, so whatever we do here can be
+faithfully undone and redone.
+@c
+
+def removeTrailingNewlines (self,old,new,ch):
+
+    '''Return True if a Tk has erroneously added a trailing newline.'''
+
+    if not new.endswith('\n'):
+        # There is no newline to remove.  Probably will never happen.
+        return False
+    elif not old:
+        # Ambigous case.  Formerly always returned False.
+        if new == "\n\n":
+            return True # Handle a very strange special case.
+        else:
+            return ch not in ('\r','\n')
+    elif g.safeStringCompare(old,new[-1]): ## old == new[:-1]:
+        # A single trailing character has been added.
+        return ch not in ('\r','\n') # Was False.
+    else:
+        # The text didn't have a newline, and now it does.
+        # Moveover, some other change has been made to the text,
+        # So at worst we have misrepresented the user's intentions slightly.
+        return True
+#@nonl
+#@-node:ekr.20051026143009:removeTrailingNewlines
+#@-node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
+#@+node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
+def setAllAncestorAtFileNodesDirty (self,setDescendentsDirty=False):
+
+    p = self ; c = p.c
+    dirtyVnodeList = []
+    
+    # Calculate all nodes that are joined to p or parents of such nodes.
+    nodes = p.findAllPotentiallyDirtyNodes()
+    
+    if setDescendentsDirty:
+        # N.B. Only mark _direct_ descendents of nodes.
+        # Using the findAllPotentiallyDirtyNodes algorithm would mark way too many nodes.
+        for p2 in p.subtree_iter():
+            # Only @thin nodes need to be marked.
+            if p2.v not in nodes and p2.isAtThinFileNode():
+                nodes.append(p2.v)
+                
+    dirtyVnodeList = [v for v in nodes
+        if not v.t.isDirty() and v.isAnyAtFileNode()]
+    changed = len(dirtyVnodeList) > 0
+
+    c.beginUpdate()
+    try:
+        for v in dirtyVnodeList:
+            v.t.setDirty() # Do not call v.setDirty here!
+    finally:
+        c.endUpdate(changed)
+
+    return dirtyVnodeList
+#@nonl
+#@-node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
+#@+node:ekr.20031218072017.1490:setUndoTypingParams
+@ This routine saves enough information so a typing operation can be undone and redone.
+
+We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+@c
+
+def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+    
+    __pychecker__ = 'maxlines=2000' # Ignore the size of this method.
+    
+    u = self ; c = u.c
+    << return if there is nothing to do >>
+    # g.trace(undo_type,g.callers(7))
+    << init the undo params >>
+    << compute leading, middle & trailing  lines >>
+    << save undo text info >>
+    << save the selection and scrolling position >>
+    << adjust the undo stack, clearing all forward entries >>
+    return bunch
+#@nonl
+#@+node:ekr.20040324061854:<< return if there is nothing to do >>
+if u.redoing or u.undoing:
+    return None
+
+if undo_type == None:
+    return None
+
+if undo_type == "Can't Undo":
+    u.clearUndoState()
+    u.setUndoTypes() # Must still recalculate the menu labels.
+    return None
+
+if oldText == newText:
+    # g.trace("no change")
+    u.setUndoTypes() # Must still recalculate the menu labels.
+    return None
+#@nonl
+#@-node:ekr.20040324061854:<< return if there is nothing to do >>
+#@+node:ekr.20040324061854.1:<< init the undo params >>
+# Clear all optional params.
+for ivar in u.optionalIvars:
+    setattr(u,ivar,None)
+
+# Set the params.
+u.undoType = undo_type
+u.p = p.copy()
+#@nonl
+#@-node:ekr.20040324061854.1:<< init the undo params >>
+#@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
+
+NB: the number of old and new middle lines may be different.
+@c
+
+old_lines = string.split(oldText,'\n')
+new_lines = string.split(newText,'\n')
+new_len = len(new_lines)
+old_len = len(old_lines)
+min_len = min(old_len,new_len)
+
+i = 0
+while i < min_len:
+    if old_lines[i] != new_lines[i]:
+        break
+    i += 1
+leading = i
+
+if leading == new_len:
+    # This happens when we remove lines from the end.
+    # The new text is simply the leading lines from the old text.
+    trailing = 0
+else:
+    i = 0
+    while i < min_len - leading:
+        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+            break
+        i += 1
+    trailing = i
+    
+# NB: the number of old and new middle lines may be different.
+if trailing == 0:
+    old_middle_lines = old_lines[leading:]
+    new_middle_lines = new_lines[leading:]
+else:
+    old_middle_lines = old_lines[leading:-trailing]
+    new_middle_lines = new_lines[leading:-trailing]
+
+# Remember how many trailing newlines in the old and new text.
+i = len(oldText) - 1 ; old_newlines = 0
+while i >= 0 and oldText[i] == '\n':
+    old_newlines += 1
+    i -= 1
+
+i = len(newText) - 1 ; new_newlines = 0
+while i >= 0 and newText[i] == '\n':
+    new_newlines += 1
+    i -= 1
+
+if u.debug_print:
+    print "lead,trail",leading,trailing
+    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
+    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
+    #print "lead,trail:",leading,trailing
+    #print "old mid:",old_middle_lines
+    #print "new mid:",new_middle_lines
+    print "---------------------"
+#@nonl
+#@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+#@+node:ekr.20031218072017.1492:<< save undo text info >>
+@ This is the start of the incremental undo algorithm.
+
+We must save enough info to do _both_ of the following:
+
+Undo: Given newText, recreate oldText.
+Redo: Given oldText, recreate oldText.
+
+The "given" texts for the undo and redo routines are simply p.bodyString().
+@c
+
+if u.debug:
+    # Remember the complete text for comparisons...
+    u.oldText = oldText
+    u.newText = newText
+    # Compute statistics comparing old and new ways...
+    # The old doesn't often store the old text, so don't count it here.
+    u.old_mem += len(newText)
+    s1 = string.join(old_middle_lines,'\n')
+    s2 = string.join(new_middle_lines,'\n')
+    u.new_mem += len(s1) + len(s2)
+else:
+    u.oldText = None
+    u.newText = None
+
+u.leading = leading
+u.trailing = trailing
+u.oldMiddleLines = old_middle_lines
+u.newMiddleLines = new_middle_lines
+u.oldNewlines = old_newlines
+u.newNewlines = new_newlines
+#@nonl
+#@-node:ekr.20031218072017.1492:<< save undo text info >>
+#@+node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#Remember the selection.
+u.oldSel = oldSel
+u.newSel = newSel
+
+# Remember the scrolling position.
+if oldYview:
+    u.yview = oldYview
+else:
+    u.yview = c.frame.body.getYScrollPosition()
+#@-node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+@ New in Leo 4.3. Instead of creating a new bead on every character, we may adjust the top bead:
+
+word granularity: adjust the top bead if the typing would continue the word.
+line granularity: adjust the top bead if the typing is on the same line.
+node granularity: adjust the top bead if the typing is anywhere on the same node.
+@c
+
+granularity = u.granularity
+
+old_d = u.peekBead(u.bead)
+old_p = old_d and old_d.get('p')
+
+<< set newBead if we can't share the previous bead >>
+
+if newBead:
+    # Push params on undo stack, clearing all forward entries.
+    bunch = g.Bunch(
+        p = p.copy(),
+        kind='typing',
+        undoType = undo_type,
+        undoHelper=u.undoTyping,
+        redoHelper=u.redoTyping,
+        oldText=u.oldText,
+        oldSel=u.oldSel,
+        oldNewlines=u.oldNewlines,
+        oldMiddleLines=u.oldMiddleLines,
+    )
+    u.pushBead(bunch)
+else:
+    bunch = old_d
+
+bunch.dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+if not p.isDirty():
+    bunch.dirtyVnodeList.append(p.copy())
+bunch.leading=u.leading
+bunch.trailing= u.trailing
+bunch.newNewlines=u.newNewlines
+bunch.newMiddleLines=u.newMiddleLines
+bunch.newSel=u.newSel
+bunch.newText=u.newText
+bunch.yview=u.yview
+#@nonl
+#@+node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+@ We must set newBead to True if undo_type is not 'Typing' so that commands that
+get treated like typing (by updateBodyPane and onBodyChanged) don't get lumped
+with 'real' typing.
+@c
+# g.trace(granularity)
+if (
+    not old_d or not old_p or
+    old_p.v != p.v or
+    old_d.get('kind') != 'typing' or
+    old_d.get('undoType') != 'Typing' or
+    undo_type != 'Typing'
+):
+    newBead = True # We can't share the previous node.
+elif granularity == 'char':
+    newBead = True # This was the old way.
+elif granularity == 'node':
+    newBead = False # Always replace previous bead.
+else:
+    assert granularity in ('line','word')
+    # Replace the previous bead if only the middle lines have changed.
+    newBead = (
+        old_d.get('leading',0)  != u.leading or 
+        old_d.get('trailing',0) != u.trailing
+    )
+    if granularity == 'word' and not newBead:
+        # Protect the method that may be changed by the user
+        try:
+            << set newBead if the change does not continue a word >>
+        except Exception:
+            if 0:
+                g.trace('old_lines',old_lines)
+                g.trace('new_lines',new_lines)
+            g.es('Exception in setUndoRedoTypingParams',color='blue')
+            g.es_exception()
+            newBead = True
+#@nonl
+#@+node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+old_start,old_end = oldSel
+new_start,new_end = newSel
+# g.trace('new_start',new_start,'old_start',old_start)
+if old_start != old_end or new_start != new_end:
+    # The new and old characters are not contiguous.
+    newBead = True
+else:
+    old_row,old_col = old_start.split('.')
+    new_row,new_col = new_start.split('.')
+    old_row,old_col = int(old_row),int(old_col)
+    new_row,new_col = int(new_row),int(new_col)
+    old_lines = g.splitLines(oldText)
+    new_lines = g.splitLines(newText)
+    # g.trace('old',old_row,old_col,len(old_lines))
+    # g.trace('new',new_row,new_col,len(new_lines))
+    # Recognize backspace, del, etc. as contiguous.
+    if old_row != new_row or abs(old_col- new_col) != 1:
+        # The new and old characters are not contiguous.
+        newBead = True
+    elif old_col == 0 or new_col == 0:
+        pass # We have just inserted a line.
+    else:
+        old_s = old_lines[old_row-1]
+        new_s = new_lines[new_row-1]
+        # New in 4.3b2:
+        # Guard against invalid oldSel or newSel params.
+        if old_col-1 >= len(old_s) or new_col-1 >= len(new_s):
+            newBead = True
+        else:
+            # g.trace(new_col,len(new_s),repr(new_s))
+            # g.trace(repr(old_ch),repr(new_ch))
+            old_ch = old_s[old_col-1]
+            new_ch = new_s[new_col-1]
+            newBead = self.recognizeStartOfTypingWord(
+                old_lines,old_row,old_col,old_ch,
+                new_lines,new_row,new_col,new_ch)
+#@nonl
+#@-node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+#@-node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+#@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+#@-node:ekr.20031218072017.1490:setUndoTypingParams
+#@-node:ekr.20060321140706:Investigated setting descendant @file nodes dirty when changing body text
 #@-node:ekr.20060306070425:4.4 b3 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
