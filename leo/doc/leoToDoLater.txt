@@ -1437,7 +1437,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
         
     # g.trace(stroke,k.abortAllModesKey)
 
-    if k.abortAllModesKey and g.safeStringCompare(stroke,k.abortAllModesKey): # 'Control-g'
+    if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
         return 'break'

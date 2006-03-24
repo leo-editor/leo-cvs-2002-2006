@@ -182,14 +182,14 @@ def create_open_with_menu (tag,keywords):
         if 1: # Default table.
             # g.trace('using subprocess')
             table = (
-                ("Idle", None, # "Alt+Ctrl+I",
+                ("Idle", "Alt+Ctrl+I",
                     ("subprocess.Popen",
                         ["pythonw", "C:/Python24/Lib/idlelib/idle.pyw"], ".py")),
-                ("Word", None, # "Alt+Ctrl+W",
+                ("Word", "Alt+Ctrl+W",
                     ("subprocess.Popen",
                     "C:/Program Files/Microsoft Office/Office/WINWORD.exe",
                     None)),
-                ("WordPad", None,# "Alt+Ctrl+T",
+                ("WordPad", "Alt+Ctrl+T",
                     ("subprocess.Popen",
                     "C:/Program Files/Windows NT/Accessories/wordpad.exe",
                     None)),

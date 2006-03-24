@@ -127,15 +127,15 @@
 <v t="ekr.20041119034357.3" annotate="7d71002e"><vh>General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
-<v t="ekr.20041119034357.7" a="E"><vh>.leo file options</vh>
+<v t="ekr.20041119034357.7"><vh>.leo file options</vh>
 <v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
 <v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
 </v>
-<v t="ekr.20041119034357.11" a="E"><vh>directory options</vh>
+<v t="ekr.20041119034357.11"><vh>directory options</vh>
 <v t="ekr.20041119041304"><vh>@bool create_nonexistent_directories = False</vh></v>
 <v t="ekr.20041119041304.1"><vh>@string relative_path_base_directory = .</vh></v>
 </v>
-<v t="ekr.20041119034357.12" a="E"><vh>derived files options</vh>
+<v t="ekr.20041119034357.12"><vh>derived files options</vh>
 <v t="ekr.20041119041747"><vh>@string output_newline = nl</vh></v>
 <v t="ekr.20041119041747.1"><vh>@string trailing_body_newlines = one</vh></v>
 <v t="ekr.20041119041747.4"><vh>@bool write_strips_blank_lines = True</vh></v>
@@ -394,13 +394,12 @@
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060301085047"><vh>@bool trace_chapters = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
-<v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
-<v t="ekr.20060131071947" a="V"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20060306031258"><vh>@bool trace_onBodyChanged = False</vh></v>
-<v t="ekr.20060309022759"><vh>@bool trace_colorizer = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20060323131801"><vh>@bool warn_about_missing_settings = False</vh></v>
+<v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1359,7 +1358,7 @@ else:
 <t tx="ekr.20051027175030">True: When typing an opening bracket '(','[' or '{', immediately type the
 corresponding closing bracket.  To move past the closing bracket, just type it.</t>
 <t tx="ekr.20051101160257">A shortcut specification has the form:
-    
+
 command-name = shortcutSpecifier
 
 or

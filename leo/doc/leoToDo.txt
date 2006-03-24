@@ -2,18 +2,21 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060301102950:To do 4.4 b3
-#@+node:ekr.20060321082832:To do first
-#@+node:ekr.20060309132452:Figure out what is really wrong with unicode in onBodyChanged
-#@-node:ekr.20060309132452:Figure out what is really wrong with unicode in onBodyChanged
-#@+node:ekr.20060306193910:Open with shortcuts
+#@+node:ekr.20060306195137:Document and test @ifgui and @ifplatform nodes
 @nocolor
-http://sourceforge.net/forum/message.php?msg_id=3607355
-By: vpe
+http://sourceforge.net/forum/message.php?msg_id=3607510
+By: spboulet
 
-Alt-Ctrl-T shortcut for Open With external editor does not work in a7. Is it
-possible to assign shortcuts to Open With items? I see that there is open-with
-minibuffer command, but do not understand how to use it.
-#@-node:ekr.20060306193910:Open with shortcuts
+One suggestion is to have more of the platform detection work be done by leo
+('if sys.platform ==' is not all that hard) instead of making it windows default
+(e.g. external editors program locations, command vs. control keys). Having
+to edit leoConfig.leo should be optional but not necessary in cases like these.
+
+Stephen (my 2 cents)
+#@-node:ekr.20060306195137:Document and test @ifgui and @ifplatform nodes
+#@+node:ekr.20060307074302.1:*set-change-text command should work when entering find text.
+#@-node:ekr.20060307074302.1:*set-change-text command should work when entering find text.
+#@+node:ekr.20060324062745:Plugins
 #@+node:ekr.20060308103043:Fix crasher in Word plugin
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3617936
@@ -82,6 +85,7 @@ You could try to do this yourself with these hints.  Otherwise you may have to w
 Edward
 
 #@-node:ekr.20060310093345:Improve groupoperations plugin
+#@-node:ekr.20060324062745:Plugins
 #@+node:ekr.20060307074624:Improve autocompleter
 #@+node:ekr.20060309132427:Add option to disable self completion
 #@-node:ekr.20060309132427:Add option to disable self completion
@@ -133,21 +137,7 @@ Edward
 #@nonl
 #@-node:ekr.20060309021641:Document autocompleter better
 #@-node:ekr.20060307074624:Improve autocompleter
-#@-node:ekr.20060321082832:To do first
-#@+node:ekr.20060307074302.1:*set-change-text command should work when entering find text.
-#@-node:ekr.20060307074302.1:*set-change-text command should work when entering find text.
-#@+node:ekr.20060306195137:Document and test @ifgui and @ifplatform nodes
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3607510
-By: spboulet
-
-One suggestion is to have more of the platform detection work be done by leo
-('if sys.platform ==' is not all that hard) instead of making it windows default
-(e.g. external editors program locations, command vs. control keys). Having
-to edit leoConfig.leo should be optional but not necessary in cases like these.
-
-Stephen (my 2 cents)
-#@-node:ekr.20060306195137:Document and test @ifgui and @ifplatform nodes
+#@+node:ekr.20060324075112:Maybe
 #@+node:ekr.20060227123644:There are still problems with focus: remove the optimizations?
 @ It's much better to call g.app.gui.set_focus a few extra times than to mess up the focus!
 
@@ -158,6 +148,7 @@ Stephen (my 2 cents)
 Can this be done?  How to tests keys in various states?
 #@nonl
 #@-node:ekr.20060321110256:Create better unit tests for master key handler
+#@-node:ekr.20060324075112:Maybe
 #@-node:ekr.20060301102950:To do 4.4 b3
 #@+node:ekr.20060226131603:To do 4.4 b4
 #@+node:ekr.20060301080026:Add support for chapters to Leo's core
