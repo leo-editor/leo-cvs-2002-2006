@@ -3755,23 +3755,35 @@ def executeFile(filename, options= ''):
 #@-node:ekr.20050503112513.7:g.executeFile
 #@-node:ekr.20040327103735.2:Script Tools (leoGlobals.py)
 #@+node:ekr.20031218072017.1498:Unicode utils...
-#@+node:ekr.20060216115304.2:g.safeStringCompare & test
-def safeStringCompare (s1,s2):
-
-    s1 = g.toUnicode(s1,'utf-8')
-    s2 = g.toUnicode(s2,'utf-8')
-    return s1 == s2
-    
-def test_g_safeStringCompare ():
-    
-    assert g.safeStringCompare('a','á') is False
-    assert g.safeStringCompare('','á') is False
-    assert g.safeStringCompare('',u'á') is False
-    assert g.safeStringCompare('a','a') is True
-    assert g.safeStringCompare('á','á') is True
-    assert g.safeStringCompare(u'á',u'á') is True
+#@+node:ekr.20060216115304.2:g.safeStringCompare & test (Do not use)
+#@+at 
 #@nonl
-#@-node:ekr.20060216115304.2:g.safeStringCompare & test
+# Important: Leo is supposed to convert all characters to unicode,
+# so there should never be a need for safeStringCompare.
+# 
+# The proper way to avoid UnicodeError's is to call 
+# g.toUnicode(s,g.app.tkEncoding)
+# 
+#@-at
+#@@c
+
+if 0:
+    def safeStringCompare (s1,s2):
+
+        s1 = g.toUnicode(s1,'utf-8')
+        s2 = g.toUnicode(s2,'utf-8')
+        return s1 == s2
+    
+    def xxx_test_g_safeStringCompare ():
+        
+        assert g.safeStringCompare('a','á') is False
+        assert g.safeStringCompare('','á') is False
+        assert g.safeStringCompare('',u'á') is False
+        assert g.safeStringCompare('a','a') is True
+        assert g.safeStringCompare('á','á') is True
+        assert g.safeStringCompare(u'á',u'á') is True
+#@nonl
+#@-node:ekr.20060216115304.2:g.safeStringCompare & test (Do not use)
 #@+node:ekr.20031218072017.1499:isUnicode
 def isUnicode(s):
     

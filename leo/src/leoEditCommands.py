@@ -2383,9 +2383,9 @@ class editCommandsClass (baseEditCommandsClass):
             return 'break' # New in 4.4a5: this method *always* returns 'break'
     
         # Update the text and handle undo.
-        newText = w.get('1.0','end')
+        newText = g.app.gui.getAllText(w) # New in 4.4b3: converts to unicode.
         w.see(w.index('insert'))
-        if not g.safeStringCompare(newText,oldText):
+        if newText != oldText:
             c.frame.body.onBodyChanged(undoType=undoType,
                 oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
                 

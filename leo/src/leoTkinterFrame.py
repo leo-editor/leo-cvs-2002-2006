@@ -2520,7 +2520,8 @@ class leoTkinterBody (leoFrame.leoBody):
         p = c.currentPosition()
         insert = bodyCtrl.index('insert')
         ch = g.choose(insert=='1.0','',bodyCtrl.get('insert-1c'))
-        newText = bodyCtrl.get('1.0','end')
+        ch = g.toUnicode(ch,g.app.tkEncoding) # New in 4.4b3.
+        newText = g.app.gui.getAllText(bodyCtrl) # New in 4.4b3: converts to unicode.
         newSel = g.app.gui.getTextSelection(bodyCtrl)
         if oldText is None: oldText = p.bodyString()
         if removeTrailing is None:
@@ -2600,7 +2601,8 @@ class leoTkinterBody (leoFrame.leoBody):
                 return True # Handle a very strange special case.
             else:
                 return ch not in ('\r','\n')
-        elif g.safeStringCompare(old,new[-1]): ## old == new[:-1]:
+        ### elif g.safeStringCompare(old,new[-1]):
+        elif old == new[:-1]:
             # A single trailing character has been added.
             return ch not in ('\r','\n') # Was False.
         else:
@@ -2975,7 +2977,7 @@ class leoTkinterBody (leoFrame.leoBody):
     #@nonl
     #@-node:ekr.20031218072017.4026:delete...
     #@+node:ekr.20031218072017.4027:get...
-    #@+node:ekr.20031218072017.4028:getAllText
+    #@+node:ekr.20031218072017.4028:tkBody.getAllText
     def getAllText (self):
         
         """Return all the body text, converted to unicode."""
@@ -2986,7 +2988,7 @@ class leoTkinterBody (leoFrame.leoBody):
         else:
             return g.toUnicode(s,g.app.tkEncoding)
     #@nonl
-    #@-node:ekr.20031218072017.4028:getAllText
+    #@-node:ekr.20031218072017.4028:tkBody.getAllText
     #@+node:ekr.20031218072017.4029:getCharAtIndex
     def getCharAtIndex (self,index):
         

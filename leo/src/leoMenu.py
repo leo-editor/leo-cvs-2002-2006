@@ -502,7 +502,7 @@ class leoMenu:
             return None
     #@nonl
     #@-node:ekr.20031218072017.3804:createNewMenu (contains Tk code)
-    #@+node:ekr.20031218072017.4116:createOpenWithMenuFromTable
+    #@+node:ekr.20031218072017.4116:createOpenWithMenuFromTable & helper
     #@+at 
     #@nonl
     # Entries in the table passed to createOpenWithMenuFromTable are
@@ -551,7 +551,48 @@ class leoMenu:
         for entry in table:
             name,shortcut,data = entry
             c.k.bindOpenWith (shortcut,name,data)
-    #@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
+    #@+node:ekr.20051022043608.1:createOpenWithMenuItemsFromTable
+    def createOpenWithMenuItemsFromTable (self,menu,table):
+        
+        '''Create an entry in the Open with Menu from the table.
+        
+        Each entry should be a sequence with 2 or 3 elements.'''
+        
+        c = self.c ; k = c.k
+    
+        if g.app.unitTesting: return
+    
+        for data in table:
+            #@        << get label, accelerator & command or continue >>
+            #@+node:ekr.20051022043713.1:<< get label, accelerator & command or continue >>
+            ok = (
+                type(data) in (type(()), type([])) and
+                len(data) in (2,3)
+            )
+                
+            if ok:
+                if len(data) == 2:
+                    label,openWithData = data ; accelerator = None
+                else:
+                    label,accelerator,openWithData = data
+                    accelerator = k.shortcutFromSetting(accelerator)
+                    accelerator = accelerator and k.prettyPrintKey(accelerator).lstrip('<').rstrip('>')
+            else:
+                g.trace('bad data in Open With table: %s' % repr(data))
+                continue # Ignore bad data
+            #@nonl
+            #@-node:ekr.20051022043713.1:<< get label, accelerator & command or continue >>
+            #@nl
+            realLabel = self.getRealMenuName(label)
+            underline=realLabel.find("&")
+            realLabel = realLabel.replace("&","")
+            callback = self.defineOpenWithMenuCallback(openWithData)
+        
+            self.add_command(menu,label=realLabel,
+                accelerator=accelerator or '',
+                command=callback,underline=underline)
+    #@-node:ekr.20051022043608.1:createOpenWithMenuItemsFromTable
+    #@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable & helper
     #@+node:ekr.20031218072017.2078:createRecentFilesMenuItems (leoMenu)
     def createRecentFilesMenuItems (self):
         
@@ -1418,46 +1459,6 @@ class leoMenu:
         return ''.join(result)
     #@nonl
     #@-node:ekr.20051022044950:computeOldStyleShortcutKey
-    #@+node:ekr.20051022043608.1:createOpenWithMenuItemsFromTable
-    def createOpenWithMenuItemsFromTable (self,menu,table):
-        
-        '''Create an entry in the Open with Menu from the table.
-        
-        Each entry should be a sequence with 2 or 3 elements.'''
-        
-        c = self.c ; k = c.k
-    
-        if g.app.unitTesting: return
-    
-        for data in table:
-            #@        << get label, accelerator & command or continue >>
-            #@+node:ekr.20051022043713.1:<< get label, accelerator & command or continue >>
-            ok = (
-                type(data) in (type(()), type([])) and
-                len(data) in (2,3)
-            )
-                
-            if ok:
-                if len(data) == 2:
-                    label,openWithData = data ; accelerator = None
-                else:
-                    label,accelerator,openWithData = data
-                    accelerator = k.shortcutFromSetting(accelerator)
-            else:
-                g.trace('bad data in Open With table: %s' % repr(data))
-                continue # Ignore bad data
-            #@nonl
-            #@-node:ekr.20051022043713.1:<< get label, accelerator & command or continue >>
-            #@nl
-            realLabel = self.getRealMenuName(label)
-            underline=realLabel.find("&")
-            realLabel = realLabel.replace("&","")
-            callback = self.defineOpenWithMenuCallback(openWithData)
-        
-            self.add_command(menu,label=realLabel,
-                accelerator=accelerator or '',
-                command=callback,underline=underline)
-    #@-node:ekr.20051022043608.1:createOpenWithMenuItemsFromTable
     #@+node:ekr.20031218072017.4117:defineMenuCallback
     def defineMenuCallback(self,command,name,minibufferCommand):
         
