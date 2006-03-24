@@ -1923,16 +1923,26 @@ class keyHandlerClass:
     #@+node:ekr.20051008135051.1:bindOpenWith
     def bindOpenWith (self,shortcut,name,data):
         
-        '''Make a binding for the Open With command.'''
+        '''Register an open-with command.'''
         
-        k = self ; c = k.c
+        k = self ; c = k.c ; f = c.frame
         
         # The first parameter must be event, and it must default to None.
-        def openWithCallback(event=None,self=self,data=data):
-            __pychecker__ = '--no-argsused' # event must be present.
-            return self.c.openWith(data=data)
+        def openWithCallback(event=None,c=c,data=data):
+            return c.openWith(data=data)
+    
+        # Use k.registerCommand to set the shortcuts in the various binding dicts.
+        commandName = 'open-with-%s' % name.lower()
+        k.registerCommand(commandName,shortcut,openWithCallback,pane='text',verbose=False)
         
-        return k.bindKey('all',shortcut,openWithCallback,'open-with')
+        # Duplicate the logic k.completeAllBindings to set the actual bindings.
+        stroke = k.shortcutFromSetting(shortcut)
+        
+        def bindKeyCallback (event,k=k,stroke=stroke):
+            return k.masterKeyHandler(event,stroke=stroke)
+    
+        for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
+            k.completeOneBindingForWidget(w,stroke,bindKeyCallback)
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
     #@+node:ekr.20051011103654:checkBindings
@@ -1959,7 +1969,7 @@ class keyHandlerClass:
                     g.trace('No shortcut for %s = %s' % (name,key))
     #@nonl
     #@-node:ekr.20051011103654:checkBindings
-    #@+node:ekr.20060216074643:k.completeAllBindings
+    #@+node:ekr.20060216074643:k.completeAllBindings & helpers
     def completeAllBindings (self):
         
         '''New in 4.4b3: make an actual binding in *all* the standard places.
@@ -1974,27 +1984,37 @@ class keyHandlerClass:
         if not bodyCtrl or not canvas: return
         
         for w in (c.miniBufferWidget,bodyCtrl,canvas,bindingWidget):
+        
             self.completeAllBindingsForWidget(w)
     #@+node:ekr.20060221141535:completeAllBindingsForWidget
     def completeAllBindingsForWidget (self,w):
         
-        k = self ; c = k.c
+        k = self
         
-        for stroke in  k.bindingsDict.keys():
-        
+        for stroke in k.bindingsDict.keys():
+            
             def bindKeyCallback (event,k=k,stroke=stroke):
                 return k.masterKeyHandler(event,stroke=stroke)
-            bindStroke = k.tkbindingFromStroke(stroke)
-    
-            try:
-                # g.trace(bindStroke,c.widget_name(w))
-                w.bind(bindStroke,bindKeyCallback)
-            except Exception:
-                g.es_print('exception binding %s to %s' % (
-                    bindStroke,c.widget_name(w)),color='blue')
+                
+            k.completeOneBindingForWidget(w,stroke,bindKeyCallback)
     #@nonl
     #@-node:ekr.20060221141535:completeAllBindingsForWidget
-    #@-node:ekr.20060216074643:k.completeAllBindings
+    #@+node:ekr.20060324092758:completeOneBindingForWidget
+    def completeOneBindingForWidget (self,w,stroke,callback):
+    
+        k = self ; c = k.c
+    
+        try:
+            bindStroke = k.tkbindingFromStroke(stroke)
+            # g.trace(bindStroke,c.widget_name(w))
+            w.bind(bindStroke,callback)
+    
+        except Exception:
+            g.es_print('exception binding %s to %s' % (
+                bindStroke, c.widget_name(w)), color = 'blue')
+    #@nonl
+    #@-node:ekr.20060324092758:completeOneBindingForWidget
+    #@-node:ekr.20060216074643:k.completeAllBindings & helpers
     #@+node:ekr.20051007080058:k.makeAllBindings
     def makeAllBindings (self):
         
@@ -2139,7 +2159,7 @@ class keyHandlerClass:
             
         # g.trace(stroke,k.abortAllModesKey)
     
-        if k.abortAllModesKey and g.safeStringCompare(stroke,k.abortAllModesKey): # 'Control-g'
+        if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
             k.keyboardQuit(event)
             k.endCommand(event,commandName)
             return 'break'
@@ -2670,11 +2690,11 @@ class keyHandlerClass:
             shortcut = k.shortcutFromSetting(shortcut)
             ok = k.bindKey (pane,shortcut,func,commandName)
             if verbose and ok:
-                 g.es_print('Registered %s bound to %s' % (commandName,shortcut),
-                    color='blue')
+                 g.es_print('Registered %s bound to %s' % (
+                    commandName,k.prettyPrintKey(shortcut)),color='blue')
         else:
             if verbose:
-                g.es_print('Registered %s' % (commandName), color='blue')
+                g.es_print('Registered %s' % (commandName),color='blue')
     #@-node:ekr.20051015110547:k.registerCommand
     #@-node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050924064254:Label...
@@ -2867,9 +2887,7 @@ class keyHandlerClass:
     
     def masterKeyHandler (self,event,stroke=None):
         
-        '''In the new binding scheme, there is only one key binding.
-        
-        This is the handler for that binding.'''
+        '''This is the handler for almost all key bindings.'''
         
         k = self ; c = k.c
         val = self.masterKeyHandlerHelper(event,stroke)
@@ -3618,10 +3636,11 @@ class keyHandlerClass:
             (ctrl,'Ctrl+'),
             (cmd, 'Command+'),
             (shift,'Shift+'),
-            (True,last),
+            (True, last),
         )
             
-        shortcut = ''.join([val for flag,val in table if flag])
+        # new in 4.4b3: convert all characters to unicode first.
+        shortcut = ''.join([g.toUnicode(val,g.app.tkEncoding) for flag,val in table if flag])
         #@nonl
         #@-node:ekr.20060128103640.4:<< compute shortcut >>
         #@nl
