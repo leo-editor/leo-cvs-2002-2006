@@ -1140,24 +1140,13 @@ class configClass:
         key = c.frame.menu.canonicalizeMenuName(shortcutName)
         key = key.replace('&','') # Allow '&' in names.
         
-        if 1:
-            bunchList = self.get(c,key,"shortcut")
-            if bunchList:
-                bunchList = [bunch for bunch in bunchList
-                    if bunch.val and bunch.val.lower() != 'none']
-                return key,bunchList
-            else:
-                return key,[]
+        bunchList = self.get(c,key,"shortcut")
+        if bunchList:
+            bunchList = [bunch for bunch in bunchList
+                if bunch.val and bunch.val.lower() != 'none']
+            return key,bunchList
         else:
-            bunch = self.get(c,key,"shortcut")
-            if bunch and bunch.val:
-                # g.trace(bunch.pane,key,repr(bunch.val))
-                if bunch.val.lower() == 'none':
-                    return key,None
-                else:
-                    return key,bunch
-            else:
-                return key,None
+            return key,[]
     #@nonl
     #@-node:ekr.20041117062717.14:getShortcut (config)
     #@+node:ekr.20041117081009.4:getString

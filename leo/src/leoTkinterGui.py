@@ -769,10 +769,10 @@ class tkinterGui(leoGui.leoGui):
     #@-node:ekr.20031218072017.4089:setTextSelection & setSelectionRange
     #@-node:ekr.20031218072017.4084:Selection
     #@+node:ekr.20031218072017.4090:Text
-    #@+node:ekr.20031218072017.4091:getAllText
+    #@+node:ekr.20031218072017.4091:g.app.gui.getAllText
     def getAllText (self,t):
         
-        """Return all the text of Tk.Text t converted to unicode."""
+        """Return all the text of Tk.Text widget t converted to unicode."""
     
         s = t.get("1.0","end")
         if s is None:
@@ -780,7 +780,7 @@ class tkinterGui(leoGui.leoGui):
         else:
             return g.toUnicode(s,g.app.tkEncoding)
     #@nonl
-    #@-node:ekr.20031218072017.4091:getAllText
+    #@-node:ekr.20031218072017.4091:g.app.gui.getAllText
     #@+node:ekr.20031218072017.4092:getCharAfterIndex
     def getCharAfterIndex (self,t,index):
         

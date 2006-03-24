@@ -14,7 +14,7 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051125080855,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051026143009,ekr.20051125080855,ekr.20051008135051.1,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.2052,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
@@ -99,8 +99,9 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20060221073409"><vh>Bugs</vh>
 <v t="ekr.20060218071531"><vh>Fixed binding bug</vh>
 <v t="ekr.20060218075614.1"><vh>R</vh></v>
-<v t="ekr.20060216074643"><vh>k.completeAllBindings</vh>
+<v t="ekr.20060216074643"><vh>k.completeAllBindings &amp; helpers</vh>
 <v t="ekr.20060221141535"><vh>completeAllBindingsForWidget</vh></v>
+<v t="ekr.20060324092758"><vh>completeOneBindingForWidget</vh></v>
 </v>
 <v t="ekr.20060131075440"><vh>k.tkbindingFromStroke</vh></v>
 <v t="ekr.20060128081317"><vh>shortcutFromSetting</vh>
@@ -332,6 +333,9 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="ekr.20060306070425"><vh>4.4 b3 projects</vh>
 <v t="ekr.20060323131536"><vh>New features</vh>
+<v t="ekr.20060307234849"><vh>Addded outline-scroll commands</vh>
+<v t="ekr.20060309060654.1"><vh>scrollOutlineUp/Down/Line/Page</vh></v>
+</v>
 <v t="ekr.20060307080642.1"><vh>Added some balloons to the tree pane</vh>
 <v t="ekr.20060307080642"><vh>&lt;&lt; create baloon bindings for tagged items on the canvas &gt;&gt;</vh></v>
 <v t="ekr.20040803072955.11"><vh>newText (leoTkinterTree)</vh>
@@ -343,13 +347,6 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20060306200304.1"><vh>Added scroll outline pane commands</vh></v>
 </v>
 <v t="ekr.20060323131536.1"><vh>Bugs</vh>
-<v t="ekr.20060306200304"><vh>Fixed unicode crasher??</vh></v>
-<v t="ekr.20060307234849"><vh>Addded outline-scroll commands</vh>
-<v t="ekr.20060309060654.1"><vh>scrollOutlineUp/Down/Line/Page</vh></v>
-</v>
-<v t="ekr.20060309063048"><vh>Fixed another unicode crasher</vh>
-<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
-</v>
 <v t="ekr.20060309022225"><vh>Fixed problem with left &amp; right arrows in outline mode</vh>
 <v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
 <v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
@@ -361,7 +358,7 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
 </v>
 </v>
-<v t="ekr.20060321094013"><vh>Made Control-v work again in find command!</vh>
+<v t="ekr.20060321094013"><vh>Made Control-v work again in find command</vh>
 <v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
 <v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
 <v t="ekr.20060321105403"><vh>&lt;&lt; define vars &gt;&gt;</vh></v>
@@ -374,10 +371,10 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="ekr.20060320113137"><vh>Fixed undo problem with clones</vh>
 <v t="ekr.20060320113137.2"><vh>Report</vh></v>
-<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20031218072017.1329" a="M"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
 <v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
 <v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+<v t="ekr.20051026143009" a="M"><vh>removeTrailingNewlines</vh></v>
 </v>
 <v t="ekr.20031218072017.1762"><vh>c.clone</vh></v>
 <v t="ekr.20050412084055"><vh>undoDeleteNode</vh></v>
@@ -406,10 +403,10 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="ekr.20060321140706"><vh>Investigated setting descendant @file nodes dirty when changing body text</vh>
 <v t="ekr.20060323085310"><vh>Report</vh></v>
-<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20031218072017.1329" a="M"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
 <v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
 <v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+<v t="ekr.20051026143009" a="M"><vh>removeTrailingNewlines</vh></v>
 </v>
 <v t="ekr.20040303214038"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
 <v t="ekr.20031218072017.1490"><vh>setUndoTypingParams</vh>
@@ -437,7 +434,7 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20050920084036.138"><vh>insertNewLine (not undoable)</vh></v>
 <v t="ekr.20050920084036.86"><vh>insertNewLineAndTab</vh></v>
 <v t="ekr.20050920084036.139"><vh>insertParentheses</vh></v>
-<v t="ekr.20051125080855"><vh>selfInsertCommand</vh>
+<v t="ekr.20051125080855" a="M"><vh>selfInsertCommand</vh>
 <v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
 <v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
 <v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
@@ -469,14 +466,92 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20041118104414"><vh>initEncoding</vh></v>
 </v>
 </v>
+<v t="ekr.20060309132452"><vh>Converted all shortcuts to unicode</vh>
+<v t="ekr.20060324065958"><vh>What I did</vh></v>
+<v t="ekr.20031218072017.1329" a="M"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+<v t="ekr.20051026143009" a="M"><vh>removeTrailingNewlines</vh></v>
+</v>
+<v t="ekr.20031218072017.4091"><vh>g.app.gui.getAllText</vh></v>
+<v t="ekr.20060323194410"><vh>Found: g.safeStringCompare</vh>
+<v t="ekr.20051026143009" a="M"><vh>removeTrailingNewlines</vh></v>
+<v t="ekr.20051125080855" a="M"><vh>selfInsertCommand</vh>
+<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
+<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
+<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
+<v t="ekr.20051026092433"><vh>updateTab</vh></v>
+</v>
+<v t="ekr.20050920085536.65"><vh>masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+</v>
+<v t="ekr.20041117062717.14"><vh>getShortcut (config)</vh></v>
+<v t="ekr.20060128081317"><vh>shortcutFromSetting</vh>
+<v t="ekr.20060201065809"><vh>&lt;&lt; define cmd, ctrl, alt, shift &gt;&gt;</vh></v>
+<v t="ekr.20060215104239"><vh>&lt;&lt; swap cmd and ctrl keys &gt;&gt;</vh></v>
+<v t="ekr.20060128103640.1"><vh>&lt;&lt; convert minus signs to plus signs &gt;&gt;</vh></v>
+<v t="ekr.20060128103640.2"><vh>&lt;&lt; compute the last field &gt;&gt;</vh></v>
+<v t="ekr.20060128103640.4"><vh>&lt;&lt; compute shortcut &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20060306193910"><vh>Made Open With shortcuts work again</vh>
+<v t="ekr.20060324080104"><vh>Report</vh></v>
+<v t="ekr.20060216074643"><vh>k.completeAllBindings &amp; helpers</vh>
+<v t="ekr.20060221141535"><vh>completeAllBindingsForWidget</vh></v>
+<v t="ekr.20060324092758"><vh>completeOneBindingForWidget</vh></v>
+</v>
+<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
+<v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
+<v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.4116"><vh>createOpenWithMenuFromTable &amp; helper</vh>
+<v t="ekr.20051022043608.1"><vh>createOpenWithMenuItemsFromTable</vh>
+<v t="ekr.20051022043713.1"><vh>&lt;&lt; get label, accelerator &amp; command or continue &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
+<v t="ekr.20060321105403"><vh>&lt;&lt; define vars &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.1"><vh>&lt;&lt; do key traces &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.2"><vh>&lt;&lt; handle mode bindings &gt;&gt;</vh></v>
+<v t="ekr.20060321105403.3"><vh>&lt;&lt; handle per-pane bindings &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
+</v>
+<v t="ekr.20051015110547"><vh>k.registerCommand</vh></v>
+<v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
+<v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
+<v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060130093055"><vh>bindKeyToDict</vh></v>
+<v t="ekr.20051008135051.1" a="M"><vh>bindOpenWith</vh></v>
+<v t="ekr.20051011103654"><vh>checkBindings</vh></v>
+<v t="ekr.20060216074643"><vh>k.completeAllBindings &amp; helpers</vh>
+<v t="ekr.20060221141535"><vh>completeAllBindingsForWidget</vh></v>
+<v t="ekr.20060324092758"><vh>completeOneBindingForWidget</vh></v>
+</v>
+<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
+<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20060323140748"><vh>Plugins</vh>
 <v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
 <v t="ekr.20060306030946.1"><vh>Event handling for multiple editors</vh>
-<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20031218072017.1329" a="M"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
 <v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
 <v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+<v t="ekr.20051026143009" a="M"><vh>removeTrailingNewlines</vh></v>
 </v>
 <v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
 <v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
@@ -501,7 +576,7 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20041221071131"><vh>createPmwTreeCanvas (not used)</vh></v>
 </v>
 <v t="ekr.20051104075904.42"><vh>leoTest.runLeoTest</vh></v>
-<v t="ekr.20031218072017.2052"><vh>g.openWithFileName</vh></v>
+<v t="ekr.20031218072017.2052" a="M"><vh>g.openWithFileName</vh></v>
 <v t="ekr.20031218072017.4121"><vh>setMenuLabel</vh></v>
 </v>
 <v t="ekr.20060306030946"><vh>Drawing</vh>
@@ -556,13 +631,14 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20060301102950"><vh>To do 4.4 b3</vh>
-<v t="ekr.20060321082832"><vh>To do first</vh>
-<v t="ekr.20060309132452"><vh>Figure out what is really wrong with unicode in onBodyChanged</vh></v>
-<v t="ekr.20060306193910"><vh>Open with shortcuts</vh></v>
+<v t="ekr.20060301102950" a="V"><vh>To do 4.4 b3</vh>
+<v t="ekr.20060306195137"><vh>Document and test @ifgui and @ifplatform nodes</vh></v>
+<v t="ekr.20060307074302.1"><vh>*set-change-text command should work when entering find text.</vh></v>
+<v t="ekr.20060324062745"><vh>Plugins</vh>
 <v t="ekr.20060308103043"><vh>Fix crasher in Word plugin</vh></v>
 <v t="ekr.20060307142612"><vh>Fix problem with labels plugin</vh></v>
 <v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
+</v>
 <v t="ekr.20060307074624"><vh>Improve autocompleter</vh>
 <v t="ekr.20060309132427"><vh>Add option to disable self completion</vh></v>
 <v t="ekr.20060305110016"><vh>*** autocompleter text not always sticking</vh></v>
@@ -572,11 +648,10 @@ marks="ekr.20040803072955.8,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20060228071700"><vh>Ignore autocompletion for number.</vh></v>
 <v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
 </v>
-</v>
-<v t="ekr.20060307074302.1"><vh>*set-change-text command should work when entering find text.</vh></v>
-<v t="ekr.20060306195137"><vh>Document and test @ifgui and @ifplatform nodes</vh></v>
+<v t="ekr.20060324075112"><vh>Maybe</vh>
 <v t="ekr.20060227123644"><vh>There are still problems with focus: remove the optimizations?</vh></v>
 <v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
+</v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -624,32 +699,18 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
 <v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
 <v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
-<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
+<v t="ekr.20031218072017.3939"
+marks="ekr.20031218072017.1329,ekr.20051026143009,"><vh>@thin leoTkinterFrame.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 <v t="ekr.20040803072955"
 marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
-<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20031218072017.3748"
+marks="ekr.20051008135051.1,ekr.20050920085536.65,"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20050710142719"
-marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
-</v>
-<v t="ekr.20060321082832" a="V"><vh>To do first</vh>
-<v t="ekr.20060309132452"><vh>Figure out what is really wrong with unicode in onBodyChanged</vh></v>
-<v t="ekr.20060306193910"><vh>Open with shortcuts</vh></v>
-<v t="ekr.20060308103043"><vh>Fix crasher in Word plugin</vh></v>
-<v t="ekr.20060307142612"><vh>Fix problem with labels plugin</vh></v>
-<v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
-<v t="ekr.20060307074624"><vh>Improve autocompleter</vh>
-<v t="ekr.20060309132427"><vh>Add option to disable self completion</vh></v>
-<v t="ekr.20060305110016"><vh>*** autocompleter text not always sticking</vh></v>
-<v t="ekr.20060306194204"><vh>Fix problems with autocompleter</vh></v>
-<v t="ekr.20060305073002"><vh>Separate config setting for self completion</vh></v>
-<v t="ekr.20060307074302"><vh>*Control-g doesn't work in find completion</vh></v>
-<v t="ekr.20060228071700"><vh>Ignore autocompletion for number.</vh></v>
-<v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
-</v>
+marks="ekr.20051022142249,ekr.20051125080855,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -743,7 +804,8 @@ def onBodyChanged (self,undoType,
     p = c.currentPosition()
     insert = bodyCtrl.index('insert')
     ch = g.choose(insert=='1.0','',bodyCtrl.get('insert-1c'))
-    newText = bodyCtrl.get('1.0','end')
+    ch = g.toUnicode(ch,g.app.tkEncoding) # New in 4.4b3.
+    newText = g.app.gui.getAllText(bodyCtrl) # New in 4.4b3: converts to unicode.
     newSel = g.app.gui.getTextSelection(bodyCtrl)
     if oldText is None: oldText = p.bodyString()
     if removeTrailing is None:
@@ -1572,6 +1634,57 @@ def onDragSplitterBar (self, event, verticalFlag):
     for panel in panels:
         if panel:
             panel.top.destroy()</t>
+<t tx="ekr.20031218072017.4091">def getAllText (self,t):
+    
+    """Return all the text of Tk.Text widget t converted to unicode."""
+
+    s = t.get("1.0","end")
+    if s is None:
+        return u""
+    else:
+        return g.toUnicode(s,g.app.tkEncoding)</t>
+<t tx="ekr.20031218072017.4116">@ Entries in the table passed to createOpenWithMenuFromTable are
+tuples of the form (commandName,shortcut,data).
+
+- command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
+- shortcut is a string describing a shortcut, just as for createMenuItemsFromTable.
+- data is a tuple of the form (command,arg,ext).
+
+Leo executes command(arg+path) where path is the full path to the temp file.
+If ext is not None, the temp file has the given extension.
+Otherwise, Leo computes an extension based on the @language directive in effect.
+@c
+
+def createOpenWithMenuFromTable (self,table):
+
+    c = self.c
+    g.app.openWithTable = table # Override any previous table.
+    # Delete the previous entry.
+    parent = self.getMenu("File")
+    label = self.getRealMenuName("Open &amp;With...")
+    amp_index = label.find("&amp;")
+    label = label.replace("&amp;","")
+    try:
+        index = parent.index(label)
+        parent.delete(index)
+    except:
+        try:
+            index = parent.index("Open With...")
+            parent.delete(index)
+        except: return
+    # Create the Open With menu.
+    openWithMenu = self.createOpenWithMenu(parent,label,index,amp_index)
+    self.setMenu("Open With...",openWithMenu)
+    # Create the menu items in of the Open With menu.
+    for entry in table:
+        if len(entry) != 3: # 6/22/03
+            g.es("createOpenWithMenuFromTable: invalid data",color="red")
+            return
+    self.createOpenWithMenuItemsFromTable(openWithMenu,table)
+    for entry in table:
+        name,shortcut,data = entry
+        c.k.bindOpenWith (shortcut,name,data)
+</t>
 <t tx="ekr.20031218072017.4121">def setMenuLabel (self,menu,name,label,underline=-1):
 
     try:
@@ -1804,7 +1917,7 @@ self.putPostlog()</t>
     return "Leo 4.4 a7, build %s, February 28, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.418 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.420 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -2301,6 +2414,20 @@ setCurrentVnode = setCurrentPosition</t>
     
 # For compatibiility with old scripts.
 setRootVnode = setRootPosition</t>
+<t tx="ekr.20041117062717.14">def getShortcut (self,c,shortcutName):
+    
+    '''Return rawKey,accel for shortcutName'''
+    
+    key = c.frame.menu.canonicalizeMenuName(shortcutName)
+    key = key.replace('&amp;','') # Allow '&amp;' in names.
+    
+    bunchList = self.get(c,key,"shortcut")
+    if bunchList:
+        bunchList = [bunch for bunch in bunchList
+            if bunch.val and bunch.val.lower() != 'none']
+        return key,bunchList
+    else:
+        return key,[]</t>
 <t tx="ekr.20041118104240">def initIvar(self,key):
     
     c = self.c
@@ -3128,6 +3255,39 @@ def iSearchStateHandler (self,event):
     &lt;&lt; define internal ivars &gt;&gt;
     
     self.autoCompleter = autoCompleterClass(self)</t>
+<t tx="ekr.20050920085536.16">def bindKey (self,pane,shortcut,callback,commandName):
+
+    '''Bind the indicated shortcut (a Tk keystroke) to the callback.
+    callback calls commandName (for error messages).'''
+    
+    k = self ; c = k.c
+
+    # g.trace(pane,shortcut,commandName)
+    if not shortcut:
+        # g.trace('No shortcut for %s' % commandName)
+        return False
+    if pane.endswith('-mode'):
+        g.trace('oops: ignoring mode binding',shortcut,commandName,g.callers())
+        return False
+    bunchList = k.bindingsDict.get(shortcut,[])
+    &lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;
+    &lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;
+    try:
+        k.bindKeyToDict(pane,shortcut,callback,commandName)
+        bunchList.append(
+            g.bunch(pane=pane,func=callback,commandName=commandName))
+        shortcut = shortcut.strip().lstrip('&lt;').rstrip('&gt;')
+        # if shortcut.startswith('&lt;Shift'): g.trace('ooops',shortcut,g.callers())
+        k.bindingsDict [shortcut] = bunchList
+        return True
+    except Exception: # Could be a user error.
+        if not g.app.menuWarningsGiven:
+            g.es_print('Exception binding %s to %s' % (shortcut,commandName))
+            g.es_exception()
+            g.app.menuWarningsGiven = True
+        return False
+        
+bindShortcut = bindKey # For compatibility</t>
 <t tx="ekr.20050920085536.35">def setLabelGrey (self,label=None):
 
     k = self ; w = self.widget
@@ -3297,6 +3457,104 @@ def doBackSpace (self,defaultCompletionList,completion=True):
     k.showStateAndMode()
     c.endEditing()
     c.bodyWantsFocus()</t>
+<t tx="ekr.20050920085536.65">def masterCommand (self,event,func,stroke,commandName=None):
+
+    '''This is the central dispatching method.
+    All commands and keystrokes pass through here.'''
+
+    k = self ; c = k.c
+    c.setLog()
+    trace = c.config.getBool('trace_masterCommand')
+  
+    c.startRedrawCount = c.frame.tree.redrawCount
+    k.stroke = stroke # Set this global for general use.
+    keysym = event and event.keysym or ''
+    ch = event and event.char or ''
+    w = event and event.widget
+    state = event and hasattr(event,'state') and event.state or 0
+    k.func = func
+    k.funcReturn = None # For unit testing.
+    commandName = commandName or func and func.__name__ or '&lt;no function&gt;'
+    special = keysym in (
+        'Caps_Lock','Num_Lock','Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+    interesting = func is not None
+
+    if trace and interesting:
+        g.trace(
+            # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
+            'w:',w and c.widget_name(w),'func:',func and func.__name__
+        )
+
+    # if interesting: g.trace(stroke,commandName,k.getStateKind())
+
+    inserted = not special or (
+        stroke != '&lt;Key&gt;' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=keysym))
+
+    if inserted:
+        # g.trace(stroke,keysym)
+        &lt;&lt; add character to history &gt;&gt;
+        
+    # We *must not* interfere with the global state in the macro class.
+    if c.macroCommands.recordingMacro:
+        done = c.macroCommands.startKbdMacro(event)
+        if done: return 'break'
+        
+    # g.trace(stroke,k.abortAllModesKey)
+
+    if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
+        k.keyboardQuit(event)
+        k.endCommand(event,commandName)
+        return 'break'
+        
+    if special: # Don't pass these on.
+        return 'break' 
+
+    if 0: # *** This is now handled by k.masterKeyHandler.
+        if k.inState():
+            val = k.callStateFunction(event) # Calls end-command.
+            if val != 'do-func': return 'break'
+            g.trace('Executing key outside of mode')
+
+    if k.regx.iter:
+        try:
+            k.regXKey = keysym
+            k.regx.iter.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if k.abbrevOn:
+        expanded = c.abbrevCommands.expandAbbrev(event)
+        if expanded: return 'break'
+
+    if func: # Func is an argument.
+        if trace: g.trace('command',commandName)
+        if commandName.startswith('specialCallback'):
+            # The callback function will call c.doCommand
+            val = func(event)
+            # k.simulateCommand uses k.funcReturn.
+            k.funcReturn = k.funcReturn or val # For unit tests.
+        else:
+            # Call c.doCommand directly
+            c.doCommand(func,commandName,event=event)
+        k.endCommand(event,commandName)
+        return 'break'
+    elif k.inState():
+        return 'break' # New in 4.4b2: ignore unbound keys in a state.
+    else:
+        val = k.handleDefaultChar(event)
+        return val</t>
+<t tx="ekr.20050920085536.67"># Don't add multiple special characters to history.
+k.keysymHistory.insert(0,keysym)
+
+if len(ch) &gt; 0:
+    if len(keyHandlerClass.lossage) &gt; 99:
+        keyHandlerClass.lossage.pop()
+    keyHandlerClass.lossage.insert(0,ch)
+
+if 0: # traces
+    g.trace(keysym,stroke)
+    g.trace(k.keysymHistory)
+    g.trace(keyHandlerClass.lossage)</t>
 <t tx="ekr.20050920093543">def finishCreate (self):  # New in 4.4.
     
     '''Finish creating the commander after frame.finishCreate.
@@ -3344,6 +3602,35 @@ def doBackSpace (self,defaultCompletionList,completion=True):
     k.makeAllBindings()
 
     k.setInputState(self.unboundKeyAction)</t>
+<t tx="ekr.20050923172809.1">def callStateFunction (self,event):
+    
+    k = self ; val = None
+    
+    # g.trace(k.state.kind)
+    
+    if k.state.kind:
+        if k.state.handler:
+            val = k.state.handler(event)
+            if val != 'continue':
+                k.endCommand(event,k.commandName)
+        else:
+            g.es_print('no state function for %s' % (k.state.kind),color='red')
+            
+    return val</t>
+<t tx="ekr.20050923174229.3">def callKeystrokeFunction (self,event):
+    
+    '''Handle a quick keystroke function.
+    Return the function or None.'''
+    
+    k = self
+    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
+
+    if func:
+        func(event)
+        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
+        k.endCommand(event,commandName)
+    
+    return func</t>
 <t tx="ekr.20050923213858">self.abbreviationsDict = {} # Abbreviations created by @alias nodes.
 
 # Previously defined bindings.
@@ -3425,6 +3712,22 @@ self.regx = g.bunch(iter=None,key=None)
 self.repeatCount = None
 self.state = g.bunch(kind=None,n=None,handler=None)
 self.setDefaultUnboundKeyAction()</t>
+<t tx="ekr.20051006125633"></t>
+<t tx="ekr.20051007080058">def makeAllBindings (self):
+    
+    k = self ; c = k.c
+
+    k.bindingsDict = {}
+    
+    k.addModeCommands() 
+    k.makeBindingsFromCommandsDict()
+    k.initSpecialIvars()
+    c.frame.body.createBindings()
+    c.frame.log.setTabBindings('Log')
+    c.frame.tree.setBindings()
+    c.frame.setMinibufferBindings()
+    k.completeAllBindings()
+    k.checkBindings()</t>
 <t tx="ekr.20051007143620">def printCommandsDict (self):
     
     c = self
@@ -3455,6 +3758,43 @@ self.setDefaultUnboundKeyAction()</t>
         except Exception:
             g.es_exception()
             g.trace(repr(name),repr(f),g.callers())</t>
+<t tx="ekr.20051008134059">def makeBindingsFromCommandsDict (self):
+    
+    '''Add bindings for all entries in c.commandDict.'''
+
+    k = self ; c = k.c
+    keys = c.commandsDict.keys() ; keys.sort()
+
+    for commandName in keys:
+        command = c.commandsDict.get(commandName)
+        key, bunchList = c.config.getShortcut(commandName)
+        for bunch in bunchList:
+            accel = bunch.val ; pane = bunch.pane
+            if accel and not pane.endswith('-mode'):
+                shortcut = k.shortcutFromSetting(accel)
+                k.bindKey(pane,shortcut,command,commandName)</t>
+<t tx="ekr.20051008135051.1">def bindOpenWith (self,shortcut,name,data):
+    
+    '''Register an open-with command.'''
+    
+    k = self ; c = k.c ; f = c.frame
+    
+    # The first parameter must be event, and it must default to None.
+    def openWithCallback(event=None,c=c,data=data):
+        return c.openWith(data=data)
+
+    # Use k.registerCommand to set the shortcuts in the various binding dicts.
+    commandName = 'open-with-%s' % name.lower()
+    k.registerCommand(commandName,shortcut,openWithCallback,pane='text',verbose=False)
+    
+    # Duplicate the logic k.completeAllBindings to set the actual bindings.
+    stroke = k.shortcutFromSetting(shortcut)
+    
+    def bindKeyCallback (event,k=k,stroke=stroke):
+        return k.masterKeyHandler(event,stroke=stroke)
+
+    for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
+        k.completeOneBindingForWidget(w,stroke,bindKeyCallback)</t>
 <t tx="ekr.20051008152134">def initSpecialIvars (self):
     
     '''Set ivars for special keystrokes from previously-existing bindings.'''
@@ -3673,6 +4013,34 @@ OnPasteFromMenu = pasteText</t>
                     name,abbrev,key))
             else:
                 g.trace('No shortcut for %s = %s' % (name,key))</t>
+<t tx="ekr.20051015110547">def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
+    
+    '''Make the function available as a minibuffer command,
+    and optionally attempt to bind a shortcut.
+    
+    You can wrap any method in a callback function, so the
+    restriction to functions is not significant.'''
+    
+    k = self ; c = k.c
+    
+    f = c.commandsDict.get(commandName)
+    if f:
+        g.es_trace('Redefining %s' % (commandName), color='red')
+        
+    c.commandsDict [commandName] = func
+    k.inverseCommandsDict [func.__name__] = commandName
+    # g.trace('leoCommands %24s = %s' % (func.__name__,commandName))
+    
+    if shortcut:
+        shortcut = k.shortcutFromSetting(shortcut)
+        ok = k.bindKey (pane,shortcut,func,commandName)
+        if verbose and ok:
+             g.es_print('Registered %s bound to %s' % (
+                commandName,k.prettyPrintKey(shortcut)),color='blue')
+    else:
+        if verbose:
+            g.es_print('Registered %s' % (commandName),color='blue')
+</t>
 <t tx="ekr.20051017212452"># Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
 
 def computeCompletionList (self,defaultTabList,backspace):
@@ -4162,6 +4530,42 @@ else:
         emacs_name = k.inverseCommandsDict.get(command.__name__)
     except Exception:
         emacs_name = None</t>
+<t tx="ekr.20051022043608.1">def createOpenWithMenuItemsFromTable (self,menu,table):
+    
+    '''Create an entry in the Open with Menu from the table.
+    
+    Each entry should be a sequence with 2 or 3 elements.'''
+    
+    c = self.c ; k = c.k
+
+    if g.app.unitTesting: return
+
+    for data in table:
+        &lt;&lt; get label, accelerator &amp; command or continue &gt;&gt;
+        realLabel = self.getRealMenuName(label)
+        underline=realLabel.find("&amp;")
+        realLabel = realLabel.replace("&amp;","")
+        callback = self.defineOpenWithMenuCallback(openWithData)
+    
+        self.add_command(menu,label=realLabel,
+            accelerator=accelerator or '',
+            command=callback,underline=underline)
+</t>
+<t tx="ekr.20051022043713.1">ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        label,openWithData = data ; accelerator = None
+    else:
+        label,accelerator,openWithData = data
+        accelerator = k.shortcutFromSetting(accelerator)
+        accelerator = accelerator and k.prettyPrintKey(accelerator).lstrip('&lt;').rstrip('&gt;')
+else:
+    g.trace('bad data in Open With table: %s' % repr(data))
+    continue # Ignore bad data</t>
 <t tx="ekr.20051022212004"># Just open the Find tab if it has never been opened.
 # For minibuffer commands, it would be good to force the Find tab to be visible.
 # However, this leads to unfortunate confusion when executed from a shortcut.
@@ -4361,6 +4765,26 @@ def changeThenFindCommand(self,event=None):
             if b1:
                 glist.append((a1,b1))
         return b </t>
+<t tx="ekr.20051026083544">def handleDefaultChar(self,event):
+    
+    k = self ; c = k.c
+    w = event and event.widget
+    name = c.widget_name(w)
+
+    if name.startswith('body'):
+        action = k.unboundKeyAction
+        if action in ('insert','overwrite'):
+            c.editCommands.selfInsertCommand(event,action=action)
+        else:
+            pass ; g.trace('ignoring key')
+        return 'break'
+    elif name.startswith('head'):
+        c.frame.tree.onHeadlineKey(event)
+        return 'break'
+    else:
+        # Let tkinter handle the event.
+        # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
+        return None</t>
 <t tx="ekr.20051026083733.6">body.colorizer.interrupt()
 c.frame.scanForTabWidth(p)
 body.recolor_now(p,incremental=not self.forceFullRecolorFlag)
@@ -4471,7 +4895,8 @@ def removeTrailingNewlines (self,old,new,ch):
             return True # Handle a very strange special case.
         else:
             return ch not in ('\r','\n')
-    elif g.safeStringCompare(old,new[-1]): ## old == new[:-1]:
+    ### elif g.safeStringCompare(old,new[-1]):
+    elif old == new[:-1]:
         # A single trailing character has been added.
         return ch not in ('\r','\n') # Was False.
     else:
@@ -4645,9 +5070,9 @@ C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionL
         return 'break' # New in 4.4a5: this method *always* returns 'break'
 
     # Update the text and handle undo.
-    newText = w.get('1.0','end')
+    newText = g.app.gui.getAllText(w) # New in 4.4b3: converts to unicode.
     w.see(w.index('insert'))
-    if not g.safeStringCompare(newText,oldText):
+    if newText != oldText:
         c.frame.body.onBodyChanged(undoType=undoType,
             oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
             
@@ -4920,6 +5345,41 @@ def endUpdate (self,flag,scroll=False):
             self.redraw_now(scroll=scroll)
         if self.updateCount &lt; 0:
             g.trace("Can't happen: negative updateCount",g.callers())</t>
+<t tx="ekr.20060104154937">def addModeCommands (self):
+    
+    '''Add commands created by @mode settings to c.commandsDict and k.inverseCommandsDict.'''
+
+    k = self ; c = k.c
+    d = g.app.config.modeCommandsDict
+    
+    # Create the callback functions and update c.commandsDict and k.inverseCommandsDict.
+    for key in d.keys():
+
+        def enterModeCallback (event=None,name=key):
+            k.enterNamedMode(event,name)
+
+        c.commandsDict[key] = f = enterModeCallback
+        k.inverseCommandsDict [f.__name__] = key
+        # g.trace('leoCommands %24s = %s' % (f.__name__,key))</t>
+<t tx="ekr.20060114110141">if c.config.getBool('trace_bindings'):
+    theFilter = c.config.getString('trace_bindings_filter') or ''
+    # g.trace(repr(theFilter))
+    if not theFilter or shortcut.find(theFilter) != -1:
+        pane_filter = c.config.getString('trace_bindings_pane_filter')
+        if not pane_filter or pane_filter.lower() == pane:
+            g.trace(pane,shortcut,commandName)</t>
+<t tx="ekr.20060114115648">for bunch in bunchList:
+    if ( bunch and
+        # (not bunch.pane.endswith('-mode') and not pane.endswith('-mode')) and
+        bunch.pane != 'mini' and # Minibuffer bindings are completely separate.
+        (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
+        commandName != bunch.commandName
+    ):
+        g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+            k.prettyPrintKey(shortcut),
+            bunch.commandName,commandName,pane),
+            color='blue')
+        return</t>
 <t tx="ekr.20060115195302">def setDefaultUnboundKeyAction (self):
     
     k = self ; c = k.c
@@ -5233,9 +5693,7 @@ def minibufferWantsFocusNow(self):
 
 def masterKeyHandler (self,event,stroke=None):
     
-    '''In the new binding scheme, there is only one key binding.
-    
-    This is the handler for that binding.'''
+    '''This is the handler for almost all key bindings.'''
     
     k = self ; c = k.c
     val = self.masterKeyHandlerHelper(event,stroke)
@@ -5318,10 +5776,11 @@ else:
     (ctrl,'Ctrl+'),
     (cmd, 'Command+'),
     (shift,'Shift+'),
-    (True,last),
+    (True, last),
 )
     
-shortcut = ''.join([val for flag,val in table if flag])</t>
+# new in 4.4b3: convert all characters to unicode first.
+shortcut = ''.join([g.toUnicode(val,g.app.tkEncoding) for flag,val in table if flag])</t>
 <t tx="ekr.20060129052538.2">def masterClickHandler (self,event,func=None):
 
     k = self ; c = k.c
@@ -5370,6 +5829,23 @@ shortcut = ''.join([val for flag,val in table if flag])</t>
 
 masterClick3Handler = masterClickHandler
 masterDoubleClick3Handler = masterClickHandler</t>
+<t tx="ekr.20060130093055">def bindKeyToDict (self,pane,stroke,func,commandName):
+    
+    k = self
+    d =  k.masterBindingsDict.get(pane,{})
+    
+    stroke = stroke.lstrip('&lt;').rstrip('&gt;')
+    
+    if 0:
+        g.trace('%-4s %-18s %-40s %s' % (
+            pane,repr(stroke),commandName,func and func.__name__)) # ,len(d.keys()))
+
+    if d.get(stroke):
+        g.es('ignoring duplicate definition of %s to %s in %s' % (
+            stroke,commandName,pane), color='blue')
+    else:
+        d [stroke] = g.Bunch(commandName=commandName,func=func,pane=pane,stroke=stroke)
+        k.masterBindingsDict [pane] = d</t>
 <t tx="ekr.20060131075440">def tkbindingFromStroke (self,stroke):
     
     '''Convert a stroke (key to k.bindingsDict) to an actual Tk binding.'''
@@ -5582,6 +6058,7 @@ if alt and not ctrl:
     if not bodyCtrl or not canvas: return
     
     for w in (c.miniBufferWidget,bodyCtrl,canvas,bindingWidget):
+    
         self.completeAllBindingsForWidget(w)
 </t>
 <t tx="ekr.20060216110502">for z in ('Alt','Ctrl','Command'):
@@ -6137,20 +6614,14 @@ TypeError: findButtonCallback() takes at least 1 argument (0 given)
                 # g.trace('adding',obj.__name__)</t>
 <t tx="ekr.20060221141535">def completeAllBindingsForWidget (self,w):
     
-    k = self ; c = k.c
+    k = self
     
-    for stroke in  k.bindingsDict.keys():
-    
+    for stroke in k.bindingsDict.keys():
+        
         def bindKeyCallback (event,k=k,stroke=stroke):
             return k.masterKeyHandler(event,stroke=stroke)
-        bindStroke = k.tkbindingFromStroke(stroke)
-
-        try:
-            # g.trace(bindStroke,c.widget_name(w))
-            w.bind(bindStroke,bindKeyCallback)
-        except Exception:
-            g.es_print('exception binding %s to %s' % (
-                bindStroke,c.widget_name(w)),color='blue')</t>
+            
+        k.completeOneBindingForWidget(w,stroke,bindKeyCallback)</t>
 <t tx="ekr.20060222082041">class classScannerClass:
     
     '''A class to find class definitions in a node or its parents.'''
@@ -6715,14 +7186,7 @@ AttributeError: LeoApp instance has no attribute 'dialogs'</t>
 <t tx="ekr.20060306103239"></t>
 <t tx="ekr.20060306130654"></t>
 <t tx="ekr.20060306193836"></t>
-<t tx="ekr.20060306193910">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3607355
-By: vpe
-
-Alt-Ctrl-T shortcut for Open With external editor does not work in a7. Is it
-possible to assign shortcuts to Open With items? I see that there is open-with
-minibuffer command, but do not understand how to use it.
-</t>
+<t tx="ekr.20060306193910"></t>
 <t tx="ekr.20060306194204">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3607477
 By: ktenney
@@ -6749,42 +7213,6 @@ One suggestion is to have more of the platform detection work be done by leo
 to edit leoConfig.leo should be optional but not necessary in cases like these.
 
 Stephen (my 2 cents)
-</t>
-<t tx="ekr.20060306200304">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3609953
-By: ramondiaz
-
-With Leo 4.4 a7, build  1.417 , February 28, 2006
-Python 2.3.5, Tk 8.4.11, Pmw 1.2, linux2, if I press Ctrl-space bar I get the
-following trace:
-
-Error: 5
-UnicodeDecodeError Exception in Tk callback
-  Function: &lt;bound method keyHandlerClass.masterKeyHandler of
-&lt;leoKeys.keyHandlerClass instance at 0xb68a1c6c&gt;&gt; (type: &lt;type
-'instancemethod'&gt;)
-  Args: (&lt;Tkinter.Event instance at 0xb660ea6c&gt;,)
-  Event type: KeyPress (type num: 2)
-Traceback (innermost last):
-  File "/usr/lib/python2.3/site-packages/Pmw/Pmw_1_2/lib/PmwBase.py", line 1747,
-in __call__
-    return apply(self.func, args)
-  File "/usr/local/lib/leo/src/leoKeys.py", line 2884, in masterKeyHandler
-    val = self.masterKeyHandlerHelper(event,stroke)
-  File "/usr/local/lib/leo/src/leoKeys.py", line 2989, in
-masterKeyHandlerHelper
-    return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
-  File "/usr/local/lib/leo/src/leoKeys.py", line 2192, in masterCommand
-    val = k.handleDefaultChar(event)
-  File "/usr/local/lib/leo/src/leoKeys.py", line 2240, in handleDefaultChar
-    c.editCommands.selfInsertCommand(event,action=action)
-  File "/usr/local/lib/leo/src/leoEditCommands.py", line 2383, in
-selfInsertCommand
-    if newText != oldText:
-UnicodeDecodeError: 'ascii' codec can't decode byte 0xc0 in position 138: ordinal
-not in range(128)
-
-Try this: if g.safeStringCompare (newText,oldText):
 </t>
 <t tx="ekr.20060306200304.1">@nocolor
 
@@ -6896,18 +7324,6 @@ def scrollOutlineUpPage (self,event=None):
 
 
 </t>
-<t tx="ekr.20060309063048">
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3619486
-By: ramondiaz
-
-File "/usr/local/lib/leo/src/leoTkinterFrame.py", line 2590, in
-removeTrailingNewlines
-
-elif old == new[:-1]:
-UnicodeDecodeError: 
-
-elif g.safeStringCompare(old,new[-1]):</t>
 <t tx="ekr.20060309065445">def handleMiniBindings (self,event,state,stroke):
     
     k = self ; c = k.c
@@ -7073,7 +7489,6 @@ the problem.
 
 maksr@snt.si</t>
 <t tx="ekr.20060321080150.6"></t>
-<t tx="ekr.20060321082832"></t>
 <t tx="ekr.20060321094013"></t>
 <t tx="ekr.20060321105403">k = self ; c = k.c
 w = event and event.widget
@@ -7267,5 +7682,41 @@ TypeError: encode() argument 1 must be string, not None
 
 In particular, this causes at.encoding to be inited to a reasonable value.</t>
 <t tx="ekr.20060323140748"></t>
+<t tx="ekr.20060323194410"></t>
+<t tx="ekr.20060324062745"></t>
+<t tx="ekr.20060324065958">@nocolor
+
+- onBodyChanged now converts everything to unicode, either directly or by calling g.app.gui.getAllText.
+
+- Replaced all calls to g.safeStringCompare by g.app.gui.getAllText which calls g.toUnicode.
+
+- Converted all shortcuts to unicode in shortcutFromSetting (a.k.a strokeFromSetting)
+
+- Removed g.safeStringCompare.  This function was a bad idea.
+
+Important: Leo is supposed to convert all characters to unicode, so there should
+never be a need for safeStringCompare. The proper way to avoid UnicodeError's is
+to call g.toUnicode(s,g.app.tkEncoding).</t>
+<t tx="ekr.20060324075112"></t>
+<t tx="ekr.20060324080104">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3607355
+By: vpe
+
+Alt-Ctrl-T shortcut for Open With external editor does not work in a7. Is it
+possible to assign shortcuts to Open With items? I see that there is open-with
+minibuffer command, but do not understand how to use it.
+</t>
+<t tx="ekr.20060324092758">def completeOneBindingForWidget (self,w,stroke,callback):
+
+    k = self ; c = k.c
+
+    try:
+        bindStroke = k.tkbindingFromStroke(stroke)
+        # g.trace(bindStroke,c.widget_name(w))
+        w.bind(bindStroke,callback)
+
+    except Exception:
+        g.es_print('exception binding %s to %s' % (
+            bindStroke, c.widget_name(w)), color = 'blue')</t>
 </tnodes>
 </leo_file>
