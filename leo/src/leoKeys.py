@@ -907,8 +907,8 @@ class autoCompleterClass:
             self.membersList = self.getMembersList(self.object)
         elif self.object:
             self.getObjectFromAttribute(word)
-        elif word == 'self':
-            self.completeSelf()
+        # elif word == 'self':
+            # self.completeSelf()
         else:
             obj = self.objectDict.get(word) or sys.modules.get(word)
             self.completeFromObject(obj)
@@ -1935,14 +1935,16 @@ class keyHandlerClass:
         commandName = 'open-with-%s' % name.lower()
         k.registerCommand(commandName,shortcut,openWithCallback,pane='text',verbose=False)
         
-        # Duplicate the logic k.completeAllBindings to set the actual bindings.
-        stroke = k.shortcutFromSetting(shortcut)
+        if 0: # now in k.registerCommand
         
-        def bindKeyCallback (event,k=k,stroke=stroke):
-            return k.masterKeyHandler(event,stroke=stroke)
-    
-        for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
-            k.completeOneBindingForWidget(w,stroke,bindKeyCallback)
+            # Duplicate the logic k.completeAllBindings to set the actual bindings.
+            stroke = k.shortcutFromSetting(shortcut)
+            
+            def bindKeyCallback (event,k=k,stroke=stroke):
+                return k.masterKeyHandler(event,stroke=stroke)
+        
+            for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
+                k.completeOneBindingForWidget(w,stroke,bindKeyCallback)
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
     #@+node:ekr.20051011103654:checkBindings
@@ -2687,14 +2689,44 @@ class keyHandlerClass:
         # g.trace('leoCommands %24s = %s' % (func.__name__,commandName))
         
         if shortcut:
-            shortcut = k.shortcutFromSetting(shortcut)
-            ok = k.bindKey (pane,shortcut,func,commandName)
+            stroke = k.shortcutFromSetting(shortcut)
+            ok = k.bindKey (pane,stroke,func,commandName)
+            k.registerBinding(shortcut)
             if verbose and ok:
                  g.es_print('Registered %s bound to %s' % (
-                    commandName,k.prettyPrintKey(shortcut)),color='blue')
+                    commandName,k.prettyPrintKey(stroke)),color='blue')
         else:
-            if verbose:
+            # New in 4.4b3: try to get a shortcut from leoSettings.leo.
+            junk,bunchList = c.config.getShortcut(commandName)
+            found = False
+            for bunch in bunchList:
+                accel = bunch.val ; pane = bunch.pane
+                if accel and not pane.endswith('-mode'):
+                    found = True
+                    shortcut = k.shortcutFromSetting(accel)
+                    k.bindKey(pane,shortcut,func,commandName)
+                    k.registerBinding(accel)
+                    if verbose:
+                        g.es_print('Registered %s bound to %s' % (
+                            commandName,k.prettyPrintKey(shortcut)),color='blue')
+            if verbose and not found:
                 g.es_print('Registered %s' % (commandName),color='blue')
+    #@+node:ekr.20060325110412:registerBinding
+    def registerBinding (self,shortcut):
+        
+        k = self ; f = k.c.frame
+    
+        # Duplicate the logic k.completeAllBindings to set the actual bindings.
+        stroke = k.shortcutFromSetting(shortcut)
+        # g.trace(stroke)
+            
+        def bindKeyCallback (event,k=k,stroke=stroke):
+            return k.masterKeyHandler(event,stroke=stroke)
+        
+        for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
+            k.completeOneBindingForWidget(w,stroke,bindKeyCallback)
+    #@nonl
+    #@-node:ekr.20060325110412:registerBinding
     #@-node:ekr.20051015110547:k.registerCommand
     #@-node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050924064254:Label...
