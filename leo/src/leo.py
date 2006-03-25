@@ -94,7 +94,7 @@ def run(fileName=None,*args,**keywords):
     fileName = completeFileName(fileName)
     reportDirectories(verbose)
     # Read settings *after* setting g.app.config.
-    # Read settings *before* opening plugins.
+    # Read settings *before* opening plugins.  This means if-gui has effect only in per-file settings.
     g.app.config.readSettingsFiles(fileName,verbose)
     g.app.setEncoding()
     if script:

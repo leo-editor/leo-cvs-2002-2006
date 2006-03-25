@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="261" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="77" left="336" height="789" width="895"/>
+	<global_window_position top="83" left="334" height="789" width="895"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -26,7 +26,6 @@
 </v>
 <v t="ekr.20041119035704.1"><vh> Organizer nodes</vh></v>
 <v t="ekr.20041119035931"><vh>@if expression</vh></v>
-<v t="ekr.20041120175840"><vh>@ifgui gui-name</vh></v>
 <v t="ekr.20041119110141"><vh>@ifplatform platform-name</vh></v>
 <v t="ekr.20041119035704.2"><vh>@ignore comment</vh></v>
 <v t="ekr.20041119035931.1"><vh>@page comment</vh></v>
@@ -45,7 +44,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
@@ -78,6 +77,14 @@
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 <v t="ekr.20060323131801"><vh>@bool warn_about_missing_settings = False</vh></v>
+<v t="ekr.20060325071916"><vh>For unit tests</vh>
+<v t="ekr.20060325071042"><vh>@ifplatform win32</vh>
+<v t="ekr.20060325071042.1"><vh>@bool test_win32_setting = True</vh></v>
+</v>
+<v t="ekr.20060325071042.2"><vh>@ifplatform darwin</vh>
+<v t="ekr.20060325071042.3"><vh>@bool test_darwin_setting = True</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 <v t="ekr.20060113182439"><vh>Other options</vh>
@@ -146,30 +153,6 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 <v t="ekr.20060127050605"><vh>@int max_undo_stack_size = 50</vh></v>
-</v>
-<v t="ekr.20051123100536" annotate="7d71002e"><vh>Plugins settings</vh>
-<v t="ekr.20060305100614"><vh>chapter plugin</vh>
-<v t="ekr.20060305100614.1"><vh>@color selected_chapter_tab_background_color = LightSteelBlue2</vh></v>
-<v t="ekr.20060306001441"><vh>@color selected_chapter_tab_foreground_color = black</vh></v>
-<v t="ekr.20060306001504"><vh>@color unselected_chapter_tab_background_color = lightgrey</vh></v>
-<v t="ekr.20060306001630"><vh>@color unselected_chapter_tab_foreground_color = black</vh></v>
-<v t="ekr.20060306124427"><vh>@color editor_label_background_color = wheat1</vh></v>
-<v t="ekr.20060306124427.1"><vh>@color editor_label_foreground_color = black</vh></v>
-</v>
-<v t="ekr.20060111091324"><vh>fastgotonode plugin</vh>
-<v t="ekr.20060111091324.1"><vh>@bool fastgotonode_useKeyBinding = True</vh></v>
-<v t="ekr.20060111091324.2"><vh>@string fastgotonode_binding =  Shift-space</vh></v>
-</v>
-<v t="ekr.20060109115046"><vh>library plugin</vh>
-<v t="ekr.20060109115046.1"><vh>@bool library_verbose = True</vh></v>
-<v t="ekr.20060109115046.2"><vh>@string library_lib = default</vh></v>
-<v t="ekr.20060109115046.3"><vh>@string library_lib0 = default/library.dbm</vh></v>
-<v t="ekr.20060109121753"><vh>@string library_lib1 = default/libraryS.dbm</vh></v>
-</v>
-<v t="ekr.20051123100536.1"><vh>vim plugin</vh>
-<v t="ekr.20051123100536.2"><vh>@string vim_cmd = c:\Program Files\vim\vim63\gvim --servername LEO</vh></v>
-<v t="ekr.20051123100536.3"><vh>@string vim_exe = c:\Program Files\vim\vim63\gvim</vh></v>
-</v>
 </v>
 <v t="ekr.20041119034357.28" annotate="7d71002e"><vh>Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
@@ -275,6 +258,30 @@
 </v>
 </v>
 </v>
+<v t="ekr.20051123100536" annotate="7d71002e"><vh>Plugins settings</vh>
+<v t="ekr.20060305100614"><vh>chapter plugin</vh>
+<v t="ekr.20060305100614.1"><vh>@color selected_chapter_tab_background_color = LightSteelBlue2</vh></v>
+<v t="ekr.20060306001441"><vh>@color selected_chapter_tab_foreground_color = black</vh></v>
+<v t="ekr.20060306001504"><vh>@color unselected_chapter_tab_background_color = lightgrey</vh></v>
+<v t="ekr.20060306001630"><vh>@color unselected_chapter_tab_foreground_color = black</vh></v>
+<v t="ekr.20060306124427"><vh>@color editor_label_background_color = wheat1</vh></v>
+<v t="ekr.20060306124427.1"><vh>@color editor_label_foreground_color = black</vh></v>
+</v>
+<v t="ekr.20060111091324"><vh>fastgotonode plugin</vh>
+<v t="ekr.20060111091324.1"><vh>@bool fastgotonode_useKeyBinding = True</vh></v>
+<v t="ekr.20060111091324.2"><vh>@string fastgotonode_binding =  Shift-space</vh></v>
+</v>
+<v t="ekr.20060109115046"><vh>library plugin</vh>
+<v t="ekr.20060109115046.1"><vh>@bool library_verbose = True</vh></v>
+<v t="ekr.20060109115046.2"><vh>@string library_lib = default</vh></v>
+<v t="ekr.20060109115046.3"><vh>@string library_lib0 = default/library.dbm</vh></v>
+<v t="ekr.20060109121753"><vh>@string library_lib1 = default/libraryS.dbm</vh></v>
+</v>
+<v t="ekr.20051123100536.1"><vh>vim plugin</vh>
+<v t="ekr.20051123100536.2"><vh>@string vim_cmd = c:\Program Files\vim\vim63\gvim --servername LEO</vh></v>
+<v t="ekr.20051123100536.3"><vh>@string vim_exe = c:\Program Files\vim\vim63\gvim</vh></v>
+</v>
+</v>
 <v t="ekr.20041119034357.20" annotate="7d71002e"><vh>Find/Change panel options</vh>
 <v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = True</vh></v>
 <v t="ekr.20060204124608"><vh>@bool minibufferSearchesShowFindTab = True</vh></v>
@@ -310,7 +317,7 @@
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 <v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 </v>
-<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
@@ -355,6 +362,7 @@
 </v>
 </v>
 </v>
+<v t="ekr.20060325091143" a="V"><vh>@shortcuts for groupoperations plugin</vh></v>
 <v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
@@ -389,14 +397,14 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060219103020" a="E"><vh>Recent settings</vh>
+<v t="ekr.20060219103020"><vh>Recent settings</vh>
 <v t="ekr.20060216145416"><vh>@bool trace_autocompleter = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060301085047"><vh>@bool trace_chapters = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20060306031258"><vh>@bool trace_onBodyChanged = False</vh></v>
-<v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20060323131801"><vh>@bool warn_about_missing_settings = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
@@ -1035,11 +1043,6 @@ commandName = shortcut specifier.</t>
 <t tx="ekr.20041120155431.2">Not implemented yet.
 
 Autments the settings parser and the dialog creator with scripts.</t>
-<t tx="ekr.20041120175840">Same as
-
-@if g.app.guiName == "gui-name":
-
-This would be a natural way to implement gui-dependent settings.</t>
 <t tx="ekr.20041120181045">A float value restricted to the range 0.0 to 1.0.</t>
 <t tx="ekr.20041122163623">When looking at @x, Leo converts to lower case and removes minus signs.
 Therefore, @if-platform and @ifPlatformare equivalent to @ifplatform.</t>
@@ -4634,5 +4637,17 @@ thistle2</t>
 <t tx="ekr.20060306124427.1"></t>
 <t tx="ekr.20060309022759"></t>
 <t tx="ekr.20060323131801">True: warn if a command has no setting.</t>
+<t tx="ekr.20060325071042"></t>
+<t tx="ekr.20060325071042.1"></t>
+<t tx="ekr.20060325071042.2"></t>
+<t tx="ekr.20060325071042.3"></t>
+<t tx="ekr.20060325071916"></t>
+<t tx="ekr.20060325091143">group-operations-clear-marked       = Alt-Ctrl-Shift-l
+group-operations-mark-for-copy      = Alt-Ctrl-Shift-c
+group-operations-mark-for-move      = Alt-Ctrl-Shift-m
+group-operations-mark-for-clone     = Alt-Ctrl-`
+group-operations-mark-target        = Alt-Ctrl-Shift-t
+group-operations-operate-on-marked  = Alt-Ctrl-Shift-o
+group-operations-transfer           = Alt-Ctrl-Shift-d</t>
 </tnodes>
 </leo_file>

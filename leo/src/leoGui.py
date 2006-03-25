@@ -85,7 +85,7 @@ class leoGui:
     #@+node:ekr.20031218072017.3722: leoGui.__init__
     def __init__ (self,guiName):
         
-        # g.trace("leoGui",guiName)
+        # g.trace("leoGui",guiName,g.callers())
         
         self.lastFrame = None
         self.leoIcon = None

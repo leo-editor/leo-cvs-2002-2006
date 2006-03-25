@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7983" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7984" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
 	<global_window_position top="40" left="450" height="857" width="781"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -224,7 +224,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051104081824" a="V" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -293,6 +293,7 @@
 <v t="ekr.20060306120904"><vh>import reportlab</vh></v>
 </v>
 </v>
+<v t="ekr.20060325071323" a="V"><vh>@test ifplatform</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4779,5 +4780,24 @@ def mouseEnterCallback (event=None,self=self,statusMessage=statusMessage):
 
 def mouseLeaveCallback (event=None,self=self):
    self.mouseLeave()</t>
+<t tx="ekr.20060325071323">import sys
+print sys.platform, g.app.gui.guiName()
+
+win32  = c.config.getBool('test_win32_setting')
+darwin = c.config.getBool('test_darwin_setting')
+gui     = c.config.getBool('test_tkinter_setting')
+
+print win32,darwin,gui
+
+if sys.platform == 'win32':
+    assert(win32)
+    assert(not darwin)
+
+if sys.platform== 'darwin':
+    assert(win32)
+    assert(not darwin)
+    
+
+</t>
 </tnodes>
 </leo_file>

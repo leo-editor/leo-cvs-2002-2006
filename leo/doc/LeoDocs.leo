@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647" a="V"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -759,7 +759,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="V"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20060206111717"><vh>Ancient...</vh>
 <v t="edream.110203163054.118"><vh>3.x...</vh>
@@ -2513,9 +2513,6 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.140"><vh>Specifying settings</vh>
-<v t="ekr.20060105214753"><vh>Input modes</vh></v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040518070558">Leo 4.2 alpha 2           May 18, 2004
@@ -3205,10 +3202,6 @@ You can use several other kinds of nodes to cause Leo to ignore parts of  an ``@
   A node whose headline starts with ``@if`` *expression* acts like an organizer node if the expression evaluates to True,    
   otherwise acts like an ``@ignore`` node.
   If the expression is empty the body text should contain a script that will be evaluated (in an empty context).
-
-- ``@ifgui`` *gui-name*
-
-  Same as ``@if g.app.guiName == "gui-name":``
   
 - ``@ifplatform`` *platform-name*
 

@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9369" clone_windows="0"/>
 <globals body_outline_ratio="0.535469107551">
-	<global_window_position top="38" left="365" height="878" width="882"/>
+	<global_window_position top="28" left="171" height="886" width="956"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,11 +14,12 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051125080855,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051026143009,ekr.20051125080855,ekr.20051008135051.1,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.2052,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051125080855,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051026143009,ekr.20051125080855,ekr.20050920085536.65,ekr.20051008135051.1,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.2052,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
-<v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
+<v t="ekr.20060207133601"
+marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -345,6 +346,12 @@ marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031
 <v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
 </v>
 <v t="ekr.20060306200304.1"><vh>Added scroll outline pane commands</vh></v>
+<v t="ekr.20060325093414"><vh>Improved registerCommand</vh>
+<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
+<v t="ekr.20051015110547"><vh>k.registerCommand</vh>
+<v t="ekr.20060325110412"><vh>registerBinding</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20060323131536.1"><vh>Bugs</vh>
 <v t="ekr.20060309022225"><vh>Fixed problem with left &amp; right arrows in outline mode</vh>
@@ -482,7 +489,7 @@ marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031
 <v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
 <v t="ekr.20051026092433"><vh>updateTab</vh></v>
 </v>
-<v t="ekr.20050920085536.65"><vh>masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.65" a="M"><vh>masterCommand &amp; helpers</vh>
 <v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
 <v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
 <v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
@@ -525,7 +532,9 @@ marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031
 </v>
 <v t="ekr.20060309065445"><vh>handleMiniBindings</vh></v>
 </v>
-<v t="ekr.20051015110547"><vh>k.registerCommand</vh></v>
+<v t="ekr.20051015110547"><vh>k.registerCommand</vh>
+<v t="ekr.20060325110412"><vh>registerBinding</vh></v>
+</v>
 <v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
 <v t="ekr.20050920085536.16"><vh>bindKey</vh>
 <v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
@@ -628,26 +637,32 @@ marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031
 <v t="ekr.20060319103111.2"><vh>Report 2</vh></v>
 <v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
 </v>
+<v t="ekr.20060310093345"><vh>Improved groupoperations plugin</vh></v>
+</v>
+<v t="ekr.20060325122134"><vh>Removed features</vh>
+<v t="ekr.20060325073234"><vh>Removed support @ifgui: it doesn't and can't work</vh></v>
+<v t="ekr.20060325122134.1"><vh>Removed autocompletion for self</vh></v>
+</v>
+<v t="ekr.20060325074410"><vh>Tests and documentation</vh>
+<v t="ekr.20060306195137"><vh>Documented and tested @ifplatform nodes</vh></v>
 </v>
 </v>
 </v>
 <v t="ekr.20060301102950" a="V"><vh>To do 4.4 b3</vh>
-<v t="ekr.20060306195137"><vh>Document and test @ifgui and @ifplatform nodes</vh></v>
-<v t="ekr.20060307074302.1"><vh>*set-change-text command should work when entering find text.</vh></v>
-<v t="ekr.20060324062745"><vh>Plugins</vh>
+<v t="ekr.20060325124056"><vh>Add unit tests for k.registerCommand</vh></v>
+<v t="ekr.20060324062745"><vh>Plugins 2</vh>
 <v t="ekr.20060308103043"><vh>Fix crasher in Word plugin</vh></v>
 <v t="ekr.20060307142612"><vh>Fix problem with labels plugin</vh></v>
-<v t="ekr.20060310093345"><vh>Improve groupoperations plugin</vh></v>
 </v>
-<v t="ekr.20060307074624"><vh>Improve autocompleter</vh>
-<v t="ekr.20060309132427"><vh>Add option to disable self completion</vh></v>
-<v t="ekr.20060305110016"><vh>*** autocompleter text not always sticking</vh></v>
-<v t="ekr.20060306194204"><vh>Fix problems with autocompleter</vh></v>
-<v t="ekr.20060305073002"><vh>Separate config setting for self completion</vh></v>
-<v t="ekr.20060307074302"><vh>*Control-g doesn't work in find completion</vh></v>
-<v t="ekr.20060228071700"><vh>Ignore autocompletion for number.</vh></v>
+<v t="ekr.20060325122553"><vh>Docs</vh>
 <v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
 </v>
+<v t="ekr.20060307074624"><vh>Improve autocompleter 3</vh>
+<v t="ekr.20060305110016"><vh>* autocompleter text not always sticking</vh></v>
+<v t="ekr.20060307074302"><vh>* Control-g doesn't work in find completion</vh></v>
+<v t="ekr.20060228071700"><vh>Ignore autocompletion for number.</vh></v>
+</v>
+<v t="ekr.20060307074302.1"><vh>set-change-text command should work when entering find text.</vh></v>
 <v t="ekr.20060324075112"><vh>Maybe</vh>
 <v t="ekr.20060227123644"><vh>There are still problems with focus: remove the optimizations?</vh></v>
 <v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
@@ -3787,14 +3802,16 @@ self.setDefaultUnboundKeyAction()</t>
     commandName = 'open-with-%s' % name.lower()
     k.registerCommand(commandName,shortcut,openWithCallback,pane='text',verbose=False)
     
-    # Duplicate the logic k.completeAllBindings to set the actual bindings.
-    stroke = k.shortcutFromSetting(shortcut)
+    if 0: # now in k.registerCommand
     
-    def bindKeyCallback (event,k=k,stroke=stroke):
-        return k.masterKeyHandler(event,stroke=stroke)
-
-    for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
-        k.completeOneBindingForWidget(w,stroke,bindKeyCallback)</t>
+        # Duplicate the logic k.completeAllBindings to set the actual bindings.
+        stroke = k.shortcutFromSetting(shortcut)
+        
+        def bindKeyCallback (event,k=k,stroke=stroke):
+            return k.masterKeyHandler(event,stroke=stroke)
+    
+        for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
+            k.completeOneBindingForWidget(w,stroke,bindKeyCallback)</t>
 <t tx="ekr.20051008152134">def initSpecialIvars (self):
     
     '''Set ivars for special keystrokes from previously-existing bindings.'''
@@ -4032,13 +4049,27 @@ OnPasteFromMenu = pasteText</t>
     # g.trace('leoCommands %24s = %s' % (func.__name__,commandName))
     
     if shortcut:
-        shortcut = k.shortcutFromSetting(shortcut)
-        ok = k.bindKey (pane,shortcut,func,commandName)
+        stroke = k.shortcutFromSetting(shortcut)
+        ok = k.bindKey (pane,stroke,func,commandName)
+        k.registerBinding(shortcut)
         if verbose and ok:
              g.es_print('Registered %s bound to %s' % (
-                commandName,k.prettyPrintKey(shortcut)),color='blue')
+                commandName,k.prettyPrintKey(stroke)),color='blue')
     else:
-        if verbose:
+        # New in 4.4b3: try to get a shortcut from leoSettings.leo.
+        junk,bunchList = c.config.getShortcut(commandName)
+        found = False
+        for bunch in bunchList:
+            accel = bunch.val ; pane = bunch.pane
+            if accel and not pane.endswith('-mode'):
+                found = True
+                shortcut = k.shortcutFromSetting(accel)
+                k.bindKey(pane,shortcut,func,commandName)
+                k.registerBinding(accel)
+                if verbose:
+                    g.es_print('Registered %s bound to %s' % (
+                        commandName,k.prettyPrintKey(shortcut)),color='blue')
+        if verbose and not found:
             g.es_print('Registered %s' % (commandName),color='blue')
 </t>
 <t tx="ekr.20051017212452"># Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
@@ -6598,8 +6629,8 @@ TypeError: findButtonCallback() takes at least 1 argument (0 given)
         self.membersList = self.getMembersList(self.object)
     elif self.object:
         self.getObjectFromAttribute(word)
-    elif word == 'self':
-        self.completeSelf()
+    # elif word == 'self':
+        # self.completeSelf()
     else:
         obj = self.objectDict.get(word) or sys.modules.get(word)
         self.completeFromObject(obj)
@@ -7177,7 +7208,6 @@ AttributeError: LeoApp instance has no attribute 'dialogs'</t>
 <t tx="ekr.20060228071700"></t>
 <t tx="ekr.20060301102950"></t>
 <t tx="ekr.20060301182319"></t>
-<t tx="ekr.20060305073002"></t>
 <t tx="ekr.20060305110016"></t>
 <t tx="ekr.20060306030946"></t>
 <t tx="ekr.20060306030946.1"></t>
@@ -7187,22 +7217,6 @@ AttributeError: LeoApp instance has no attribute 'dialogs'</t>
 <t tx="ekr.20060306130654"></t>
 <t tx="ekr.20060306193836"></t>
 <t tx="ekr.20060306193910"></t>
-<t tx="ekr.20060306194204">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3607477
-By: ktenney
-
-Howdy,
-
-With autocomplete active, try typing;
-.. url: http://leo.zwiki.org/LeoZWiki
-
-what I find is: (W2K, current CVS)
-
-I have to type 4 "."
-
-after typing "leo." 
-I can't type "zwiki", I need to accept a
-completion, backspace over it, _then_ type "zwiki".</t>
 <t tx="ekr.20060306195137">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3607510
 By: spboulet
@@ -7212,8 +7226,7 @@ One suggestion is to have more of the platform detection work be done by leo
 (e.g. external editors program locations, command vs. control keys). Having
 to edit leoConfig.leo should be optional but not necessary in cases like these.
 
-Stephen (my 2 cents)
-</t>
+@color</t>
 <t tx="ekr.20060306200304.1">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3608246
@@ -7225,7 +7238,7 @@ scroll-outline-down-page
 scroll-outline-up-line       
 scroll-outline-up-page</t>
 <t tx="ekr.20060307074302"></t>
-<t tx="ekr.20060307074302.1"></t>
+<t tx="ekr.20060307074302.1"># It's not clear how to do this.</t>
 <t tx="ekr.20060307074624"></t>
 <t tx="ekr.20060307080642">if 0: # I find these very irritating.
     for tag,text in (
@@ -7255,9 +7268,7 @@ Traceback (most recent call last):
     val = command(event)
 TypeError: marks_to_label() takes exactly 1 argument (2 given)
 
---Rich
-
-</t>
+--Rich</t>
 <t tx="ekr.20060307234849"></t>
 <t tx="ekr.20060308103043">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3617936
@@ -7340,30 +7351,20 @@ def scrollOutlineUpPage (self,event=None):
             return True
         
     return False</t>
-<t tx="ekr.20060309132427"></t>
 <t tx="ekr.20060309132452"></t>
 <t tx="ekr.20060310093345">@nocolor
 
-&gt; G.Ops is another plugin that I found very handy
+Cleaned up the code and added support minibuffer commands:
 
-OK, I found the groupOperations.py plugin.
+group-operations-clear-marked       = Alt-Ctrl-Shift-l
+group-operations-mark-for-copy      = Alt-Ctrl-Shift-c
+group-operations-mark-for-move      = Alt-Ctrl-Shift-m
+group-operations-mark-for-clone     = Alt-Ctrl-`
+group-operations-mark-target        = Alt-Ctrl-Shift-t
+group-operations-operate-on-marked  = Alt-Ctrl-Shift-o
+group-operations-transfer           = Alt-Ctrl-Shift-d
 
-All that is really required is a call to
-
-k.registerCommand for each command.
-
-However, you need to specify a shortcut to k.registerCommand, so the plugin also needs to handle shortcuts, say by calling c.config.getShortcut('groupOperations_x_shortcut')
-for each command x that you want to register.
-
-The value returned is ('setting_name',{list of settings])
-
-The user would define these shortcuts in individual @shortcut nodes.
-
-You could try to do this yourself with these hints.  Otherwise you may have to wait awhile for me to do it.
-
-Edward
-
-</t>
+This code has not been tested with the chapters2 plugin.</t>
 <t tx="ekr.20060319103111"></t>
 <t tx="ekr.20060319103111.1">@nocolor
 
@@ -7718,5 +7719,29 @@ minibuffer command, but do not understand how to use it.
     except Exception:
         g.es_print('exception binding %s to %s' % (
             bindStroke, c.widget_name(w)), color = 'blue')</t>
+<t tx="ekr.20060325073234">@nocolor
+
+Alas, @if-gui can't be made to work. The problem is that plugins can set
+g.app.gui, but plugins need settings so the leoSettings.leo files must be parsed
+before g.app.gui.guiName() is known.</t>
+<t tx="ekr.20060325074410"></t>
+<t tx="ekr.20060325093414"># It now properly creates bindings.</t>
+<t tx="ekr.20060325110412">def registerBinding (self,shortcut):
+    
+    k = self ; f = k.c.frame
+
+    # Duplicate the logic k.completeAllBindings to set the actual bindings.
+    stroke = k.shortcutFromSetting(shortcut)
+    # g.trace(stroke)
+        
+    def bindKeyCallback (event,k=k,stroke=stroke):
+        return k.masterKeyHandler(event,stroke=stroke)
+    
+    for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
+        k.completeOneBindingForWidget(w,stroke,bindKeyCallback)</t>
+<t tx="ekr.20060325122134"></t>
+<t tx="ekr.20060325122134.1"># It's not ready for prime time.</t>
+<t tx="ekr.20060325122553"></t>
+<t tx="ekr.20060325124056"></t>
 </tnodes>
 </leo_file>

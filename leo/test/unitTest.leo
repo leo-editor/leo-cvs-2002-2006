@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8637" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8641" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
 	<global_window_position top="65" left="329" height="781" width="828"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -19,6 +19,12 @@
 </v>
 <v t="ekr.20051013162226"><vh>@bool test_setting = True</vh></v>
 <v t="ekr.20051018071924"><vh>@@color log_pane_Completion_tab_background_color = yellow</vh></v>
+<v t="ekr.20060325072919"><vh>@@ifgui tkinter</vh>
+<v t="ekr.20060325072919.1"><vh>@bool test_tkinter_setting = True</vh></v>
+</v>
+<v t="ekr.20060325072919.2"><vh>@@ifgui wxWindows</vh>
+<v t="ekr.20060325072919.3"><vh>@bool test_wxWindows_setting = True</vh></v>
+</v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons</vh>
 <v t="ekr.20051025091355"><vh>@@button Spell</vh></v>
@@ -958,8 +964,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051108140810" a="E" annotate="7d71002e"><vh>All unit tests</vh>
-<v t="ekr.20060203200614" a="E"><vh>Basic Unit tests</vh>
+<v t="ekr.20051108140810" a="EV" annotate="7d71002e"><vh>All unit tests</vh>
+<v t="ekr.20060203200614"><vh>Basic Unit tests</vh>
 <v t="ekr.20060205165937"><vh>Doctests</vh>
 <v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20060131101825.1"><vh>@test print end of doctests</vh></v>
@@ -992,7 +998,7 @@
 </v>
 <v t="ekr.20060131102008"><vh>@test print end of test routines</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E" annotate="7d71002e"><vh>General unit tests</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>General unit tests</vh>
 <v t="ekr.20060131101806"><vh>@test all commands have an event arg</vh></v>
 <v t="ekr.20041012101944" annotate="7d71002e"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20041130092210" annotate="7d71002e"><vh>Batch mode tests...</vh>
@@ -1157,8 +1163,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060203181203.1" a="E"><vh>Key handling tests...</vh>
-<v t="ekr.20060208195054" a="V"><vh>@test k.inverseCommandsDict is inverse of c.commandsDict</vh></v>
+<v t="ekr.20060203181203.1"><vh>Key handling tests...</vh>
+<v t="ekr.20060208195054"><vh>@test k.inverseCommandsDict is inverse of c.commandsDict</vh></v>
 <v t="ekr.20060203181203.2"><vh>@test strokeFromSetting</vh></v>
 <v t="ekr.20060203181203.3"><vh>@test strokeFromEvent</vh></v>
 </v>
@@ -1308,6 +1314,10 @@
 <v t="ekr.20040712101754.212" annotate="7d71002e"><vh>@test vnode list</vh></v>
 <v t="ekr.20040722055040" annotate="7d71002e"><vh>@test isAncestorOf</vh></v>
 <v t="ekr.20041013062906" annotate="7d71002e"><vh>@test onHyperLinkControlClick</vh></v>
+</v>
+<v t="ekr.20060325071703"><vh>Settings tests...</vh>
+<v t="ekr.20060325071703.1"><vh>@test ifplatform</vh></v>
+<v t="ekr.20060325071703.2"><vh>@@test ifgui</vh></v>
 </v>
 <v t="ekr.20040723062819" annotate="7d71002e"><vh>Syntax Checks...</vh>
 <v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
@@ -7761,7 +7771,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14311,5 +14321,37 @@ for val in vals2:
     if val not in keys1:
         assert False, '%s not in commandsDict.keys()' % (val)</t>
 <t tx="ekr.20060211135917">assert type(c.getTime()) == type('')</t>
+<t tx="ekr.20060325071703"></t>
+<t tx="ekr.20060325071703.1">import sys
+
+win32  = c.config.getBool('test_win32_setting')
+darwin = c.config.getBool('test_darwin_setting')
+
+if sys.platform == 'win32':
+    assert(win32)
+    assert(not darwin)
+
+elif sys.platform== 'darwin':
+    assert(win32)
+    assert(not darwin)
+    </t>
+<t tx="ekr.20060325071703.2">guiname = g.app.gui.guiName()
+
+tkinter = c.config.getBool('test_tkinter_setting')
+wx      = c.config.getBool('test_wxWindows_setting')
+
+print guiname
+
+if guiname == 'tkinter':
+    assert(tkinter)
+    assert(not wx)
+    
+if guiname == 'wxWindows':
+    assert(not tkinter)
+    assert(wx)</t>
+<t tx="ekr.20060325072919"></t>
+<t tx="ekr.20060325072919.1"></t>
+<t tx="ekr.20060325072919.2"></t>
+<t tx="ekr.20060325072919.3"></t>
 </tnodes>
 </leo_file>

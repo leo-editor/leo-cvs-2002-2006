@@ -2,6 +2,22 @@
 #@+node:ekr.20060207133601:@thin ../doc/leoToDoLater.txt
 #@+all
 #@+node:ekr.20060209104733:Big and overdue
+#@+node:ekr.20060306194040:More screen shots or video tutorial on Leo's web site
+
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3615177
+By: ktenney
+
+High on my ToLearn list is vnc2swf
+http://www.unixuser.org/~euske/vnc2swf/
+
+
+http://sourceforge.net/forum/message.php?msg_id=3615278
+By: James
+
+A lot of people are now using Wink for demonstrations
+(http://www.debugmode.com/wink/), it's is free and seems to work well.
+#@-node:ekr.20060306194040:More screen shots or video tutorial on Leo's web site
 #@+node:ekr.20060224104109:Fix regex searches 1-day
 # \1 does not work in the replacement text.  Incredibly annoying.
 #@nonl
@@ -1083,22 +1099,6 @@ Tom
 #@nonl
 #@-node:ekr.20050831131452.2:DBGp standard
 #@-node:ekr.20041228092223.2:Integrated Leo debugger 3 weeks
-#@+node:ekr.20060306194040:More screen shots or video tutorial on Leo's web site
-
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3615177
-By: ktenney
-
-High on my ToLearn list is vnc2swf
-http://www.unixuser.org/~euske/vnc2swf/
-
-
-http://sourceforge.net/forum/message.php?msg_id=3615278
-By: James
-
-A lot of people are now using Wink for demonstrations
-(http://www.debugmode.com/wink/), it's is free and seems to work well.
-#@-node:ekr.20060306194040:More screen shots or video tutorial on Leo's web site
 #@-node:ekr.20060209104733:Big and overdue
 #@+node:ekr.20060219172147:To do 4.4
 #@+node:ekr.20060227163215:Bugs (minor)
@@ -1330,6 +1330,8 @@ IndentationError: unindent does not match any outer indentation level (line
   line 1279:                         g.es("end of script",color="purple")
 
 #@-node:ekr.20060107082929:Fix problem reporting indentation errors
+#@+node:ekr.20060325091249:@shortcut does not work
+#@-node:ekr.20060325091249:@shortcut does not work
 #@-node:ekr.20060227163215:Bugs (minor)
 #@+node:ekr.20060214072931:Improve unit testing
 @nocolor

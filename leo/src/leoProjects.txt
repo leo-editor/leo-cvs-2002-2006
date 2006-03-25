@@ -3933,8 +3933,8 @@ def setObjectAndMembersList (self,word):
         self.membersList = self.getMembersList(self.object)
     elif self.object:
         self.getObjectFromAttribute(word)
-    elif word == 'self':
-        self.completeSelf()
+    # elif word == 'self':
+        # self.completeSelf()
     else:
         obj = self.objectDict.get(word) or sys.modules.get(word)
         self.completeFromObject(obj)
@@ -4956,6 +4956,87 @@ scroll-outline-up-line
 scroll-outline-up-page
 #@nonl
 #@-node:ekr.20060306200304.1:Added scroll outline pane commands
+#@+node:ekr.20060325093414:Improved registerCommand
+# It now properly creates bindings.
+#@nonl
+#@+node:ekr.20051008134059:makeBindingsFromCommandsDict
+def makeBindingsFromCommandsDict (self):
+    
+    '''Add bindings for all entries in c.commandDict.'''
+
+    k = self ; c = k.c
+    keys = c.commandsDict.keys() ; keys.sort()
+
+    for commandName in keys:
+        command = c.commandsDict.get(commandName)
+        key, bunchList = c.config.getShortcut(commandName)
+        for bunch in bunchList:
+            accel = bunch.val ; pane = bunch.pane
+            if accel and not pane.endswith('-mode'):
+                shortcut = k.shortcutFromSetting(accel)
+                k.bindKey(pane,shortcut,command,commandName)
+#@nonl
+#@-node:ekr.20051008134059:makeBindingsFromCommandsDict
+#@+node:ekr.20051015110547:k.registerCommand
+def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
+    
+    '''Make the function available as a minibuffer command,
+    and optionally attempt to bind a shortcut.
+    
+    You can wrap any method in a callback function, so the
+    restriction to functions is not significant.'''
+    
+    k = self ; c = k.c
+    
+    f = c.commandsDict.get(commandName)
+    if f:
+        g.es_trace('Redefining %s' % (commandName), color='red')
+        
+    c.commandsDict [commandName] = func
+    k.inverseCommandsDict [func.__name__] = commandName
+    # g.trace('leoCommands %24s = %s' % (func.__name__,commandName))
+    
+    if shortcut:
+        stroke = k.shortcutFromSetting(shortcut)
+        ok = k.bindKey (pane,stroke,func,commandName)
+        k.registerBinding(shortcut)
+        if verbose and ok:
+             g.es_print('Registered %s bound to %s' % (
+                commandName,k.prettyPrintKey(stroke)),color='blue')
+    else:
+        # New in 4.4b3: try to get a shortcut from leoSettings.leo.
+        junk,bunchList = c.config.getShortcut(commandName)
+        found = False
+        for bunch in bunchList:
+            accel = bunch.val ; pane = bunch.pane
+            if accel and not pane.endswith('-mode'):
+                found = True
+                shortcut = k.shortcutFromSetting(accel)
+                k.bindKey(pane,shortcut,func,commandName)
+                k.registerBinding(accel)
+                if verbose:
+                    g.es_print('Registered %s bound to %s' % (
+                        commandName,k.prettyPrintKey(shortcut)),color='blue')
+        if verbose and not found:
+            g.es_print('Registered %s' % (commandName),color='blue')
+#@+node:ekr.20060325110412:registerBinding
+def registerBinding (self,shortcut):
+    
+    k = self ; f = k.c.frame
+
+    # Duplicate the logic k.completeAllBindings to set the actual bindings.
+    stroke = k.shortcutFromSetting(shortcut)
+    # g.trace(stroke)
+        
+    def bindKeyCallback (event,k=k,stroke=stroke):
+        return k.masterKeyHandler(event,stroke=stroke)
+    
+    for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
+        k.completeOneBindingForWidget(w,stroke,bindKeyCallback)
+#@nonl
+#@-node:ekr.20060325110412:registerBinding
+#@-node:ekr.20051015110547:k.registerCommand
+#@-node:ekr.20060325093414:Improved registerCommand
 #@-node:ekr.20060323131536:New features
 #@+node:ekr.20060323131536.1:Bugs
 #@+node:ekr.20060309022225:Fixed problem with left & right arrows in outline mode
@@ -8123,14 +8204,44 @@ def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
     # g.trace('leoCommands %24s = %s' % (func.__name__,commandName))
     
     if shortcut:
-        shortcut = k.shortcutFromSetting(shortcut)
-        ok = k.bindKey (pane,shortcut,func,commandName)
+        stroke = k.shortcutFromSetting(shortcut)
+        ok = k.bindKey (pane,stroke,func,commandName)
+        k.registerBinding(shortcut)
         if verbose and ok:
              g.es_print('Registered %s bound to %s' % (
-                commandName,k.prettyPrintKey(shortcut)),color='blue')
+                commandName,k.prettyPrintKey(stroke)),color='blue')
     else:
-        if verbose:
+        # New in 4.4b3: try to get a shortcut from leoSettings.leo.
+        junk,bunchList = c.config.getShortcut(commandName)
+        found = False
+        for bunch in bunchList:
+            accel = bunch.val ; pane = bunch.pane
+            if accel and not pane.endswith('-mode'):
+                found = True
+                shortcut = k.shortcutFromSetting(accel)
+                k.bindKey(pane,shortcut,func,commandName)
+                k.registerBinding(accel)
+                if verbose:
+                    g.es_print('Registered %s bound to %s' % (
+                        commandName,k.prettyPrintKey(shortcut)),color='blue')
+        if verbose and not found:
             g.es_print('Registered %s' % (commandName),color='blue')
+#@+node:ekr.20060325110412:registerBinding
+def registerBinding (self,shortcut):
+    
+    k = self ; f = k.c.frame
+
+    # Duplicate the logic k.completeAllBindings to set the actual bindings.
+    stroke = k.shortcutFromSetting(shortcut)
+    # g.trace(stroke)
+        
+    def bindKeyCallback (event,k=k,stroke=stroke):
+        return k.masterKeyHandler(event,stroke=stroke)
+    
+    for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
+        k.completeOneBindingForWidget(w,stroke,bindKeyCallback)
+#@nonl
+#@-node:ekr.20060325110412:registerBinding
 #@-node:ekr.20051015110547:k.registerCommand
 #@+node:ekr.20051006125633:Binding (keyHandler)
 #@+node:ekr.20050920085536.16:bindKey
@@ -8229,14 +8340,16 @@ def bindOpenWith (self,shortcut,name,data):
     commandName = 'open-with-%s' % name.lower()
     k.registerCommand(commandName,shortcut,openWithCallback,pane='text',verbose=False)
     
-    # Duplicate the logic k.completeAllBindings to set the actual bindings.
-    stroke = k.shortcutFromSetting(shortcut)
+    if 0: # now in k.registerCommand
     
-    def bindKeyCallback (event,k=k,stroke=stroke):
-        return k.masterKeyHandler(event,stroke=stroke)
-
-    for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
-        k.completeOneBindingForWidget(w,stroke,bindKeyCallback)
+        # Duplicate the logic k.completeAllBindings to set the actual bindings.
+        stroke = k.shortcutFromSetting(shortcut)
+        
+        def bindKeyCallback (event,k=k,stroke=stroke):
+            return k.masterKeyHandler(event,stroke=stroke)
+    
+        for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
+            k.completeOneBindingForWidget(w,stroke,bindKeyCallback)
 #@nonl
 #@-node:ekr.20051008135051.1:bindOpenWith
 #@+node:ekr.20051011103654:checkBindings
@@ -9789,7 +9902,52 @@ Darn, bug still seems to be present.
 Tom
 #@-node:ekr.20060319103111.3:Report 3
 #@-node:ekr.20060319103111:Fixed problems with chapters plugin
+#@+node:ekr.20060310093345:Improved groupoperations plugin
+@nocolor
+
+Cleaned up the code and added support minibuffer commands:
+
+group-operations-clear-marked       = Alt-Ctrl-Shift-l
+group-operations-mark-for-copy      = Alt-Ctrl-Shift-c
+group-operations-mark-for-move      = Alt-Ctrl-Shift-m
+group-operations-mark-for-clone     = Alt-Ctrl-`
+group-operations-mark-target        = Alt-Ctrl-Shift-t
+group-operations-operate-on-marked  = Alt-Ctrl-Shift-o
+group-operations-transfer           = Alt-Ctrl-Shift-d
+
+This code has not been tested with the chapters2 plugin.
+#@nonl
+#@-node:ekr.20060310093345:Improved groupoperations plugin
 #@-node:ekr.20060323140748:Plugins
+#@+node:ekr.20060325122134:Removed features
+#@+node:ekr.20060325073234:Removed support @ifgui: it doesn't and can't work
+@nocolor
+
+Alas, @if-gui can't be made to work. The problem is that plugins can set
+g.app.gui, but plugins need settings so the leoSettings.leo files must be parsed
+before g.app.gui.guiName() is known.
+#@nonl
+#@-node:ekr.20060325073234:Removed support @ifgui: it doesn't and can't work
+#@+node:ekr.20060325122134.1:Removed autocompletion for self
+# It's not ready for prime time.
+#@nonl
+#@-node:ekr.20060325122134.1:Removed autocompletion for self
+#@-node:ekr.20060325122134:Removed features
+#@+node:ekr.20060325074410:Tests and documentation
+#@+node:ekr.20060306195137:Documented and tested @ifplatform nodes
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3607510
+By: spboulet
+
+One suggestion is to have more of the platform detection work be done by leo
+('if sys.platform ==' is not all that hard) instead of making it windows default
+(e.g. external editors program locations, command vs. control keys). Having
+to edit leoConfig.leo should be optional but not necessary in cases like these.
+
+@color
+#@nonl
+#@-node:ekr.20060306195137:Documented and tested @ifplatform nodes
+#@-node:ekr.20060325074410:Tests and documentation
 #@-node:ekr.20060306070425:4.4 b3 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
