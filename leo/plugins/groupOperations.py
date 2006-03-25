@@ -153,7 +153,10 @@ transferFromPI = Tkinter.PhotoImage( data = transferFrom )
 #@-node:mork.20041021094915:<< images >>
 #@nl
 
-__version__ = ".4"
+# globals
+lassoers = {}
+
+__version__ = ".5"
 #@<<version history>>
 #@+node:mork.20041021120027:<<version history>>
 #@@killcolor
@@ -168,7 +171,6 @@ __version__ = ".4"
 # aren't bugs involved. Marks across chapters do not apparently move very well 
 # to
 # another window. Will work on for next version.
-# 
 # .2 EKR:
 # - Use g.importExtension to import Pmw and sets.
 # - Added init function.
@@ -177,93 +179,279 @@ __version__ = ".4"
 # - Use keywords to get c, not g.top().
 # .4 EKR
 # - Removed all calls to g.top().
+# .5 EKR
+# - Major cleanup of code.
+# - Added support for minibuffer commands.
 #@-at
 #@nonl
 #@-node:mork.20041021120027:<<version history>>
 #@nl
 
 #@+others
+#@+node:ekr.20060325104949:Module level
 #@+node:ekr.20050226114442:init
 def init ():
 
     ok = Tkinter and sets
     if ok:
         leoPlugins.registerHandler(('open2',"new"),addMenu)
+        leoPlugins.registerHandler("after-redraw-outline",drawImages)
         g.plugin_signon(__name__)
     return ok
 #@nonl
 #@-node:ekr.20050226114442:init
-#@+node:mork.20041018131258.5:class Lassoer
+#@+node:mork.20041018131258.34:drawImages
+def drawImages (tag,keywords):
+    ''' draws a little yellow box on the node image to indicate selection'''
 
+    c = keywords.get('c')
+    if not c or not c.exists: return
+    canvas = c.frame.tree.canvas
+    global lassoers
+    if not lassoers.has_key(c): return
+    lassoer = lassoers [c]
+
+    canvas.delete('lnodes')
+    mc = ((lassoer.mvForM,movePI),(lassoer.mvForCopy,copyPI),(lassoer.mvForClone,clonePI))
+    for l, col in mc:
+        for z in l:
+            if z.exists(c):
+                drawArrowImages(z,col,canvas)
+
+    canvas.delete('movenode')
+    if lassoer.moveNode and lassoer.moveNode.isVisible():
+        mN = lassoer.moveNode.v
+        x = mN.iconx
+        y = mN.icony
+        if lassoer.moveNode.exists(c):
+            canvas.create_image(x-5,y+7,image=bullseyePI,tag='movenode')
+            #canvas.create_polygon( x -10 , y + 2  , x , y + 7, x -10, y + 12, fill = 'red', tag = 'movenode' )
+    return None
+
+#@-node:mork.20041018131258.34:drawImages
+#@+node:mork.20041018131258.35:drawArrowImages
+def drawArrowImages (p,image,canvas):
+
+    if p.isVisible():
+        x = p.v.iconx
+        y = p.v.icony
+        canvas.create_image(x-5,y+7,image=image,tag='lnodes')
+#@nonl
+#@-node:mork.20041018131258.35:drawArrowImages
+#@+node:mork.20041018131258.36:addMenu & helper
+def addMenu (tag,keywords):
+   
+    global lassoers
+    c = keywords.get('c')
+    if not c or not c.exists or c in lassoers.keys(): return
+    lassoers [c] = las = Lassoer(c)
+    table = (("Mark RoundUp Spot",None,las.markTarget),)
+    men = c.frame.menu
+    tp = c.frame.top
+    mname = tp ['menu'].split('.') [ -1]
+    men = tp.children [mname]
+    nrumenu = Tkinter.Menu(men,tearoff=0)
+    men.add_cascade(menu=nrumenu,label='GroupOps') # image=groupOpPI)
+    nrumenu.add_command(image=markSpotPI,command=las.markTarget)
+    mmenu = Tkinter.Menu(nrumenu,tearoff=0)
+    nrumenu.add_cascade(menu=mmenu,image=markForPI)
+
+    for label,command,image in (
+        ('Moving', las.addForMove,move_arrowPI),
+        ('Copying',las.addForCopy,copy_arrowPI),
+        ('Cloning',las.addForClone,clone_arrowPI),
+    ):
+        mmenu.add_command(label=label,command=command,image=image)
+
+    nrumenu.add_command(command=las.operateOnMarked,image=operateOnMarkedPI)
+    nrumenu.add_command(command=las.reset,image=clearMarksPI)
+    imenu = Tkinter.Menu(nrumenu,tearoff=0)
+    nrumenu.add_cascade(menu=imenu,image=transferFromPI)
+    imenu.config(postcommand=lambda nm=imenu: createCommandsMenu(nm))
+    imenu.lassoer = las
+#@nonl
+#@+node:mork.20041018131258.33:createCommandsMenu
+def createCommandsMenu (menu):
+
+    menu.delete('1','end')
+
+    global lassoers
+    commanders = lassoers.keys()
+    commanders.remove(menu.lassoer.c)
+    mlas = lassoers [menu.lassoer.c]
+    event = None
+    for c in commanders:
+        if hasattr(c,"frame") and len(lassoers[c]) != 0:
+            las = lassoers [c]
+            menu.add_command(
+                label=c.frame.getTitle(),
+                command=lambda frm=las,to=mlas: frm.transfer(event,to))
+#@nonl
+#@-node:mork.20041018131258.33:createCommandsMenu
+#@-node:mork.20041018131258.36:addMenu & helper
+#@-node:ekr.20060325104949:Module level
+#@+node:mork.20041018131258.5:class Lassoer
 class Lassoer(object):
+
     #@	@+others
     #@+node:mork.20041018131258.7:__init__
-    def __init__( self , commander ):
+    def __init__( self , c ):
+    
         self.nodes = []
-        self.c = commander
+        self.c = c
+        self.k = k = c.k
         self.mover = []
         self.mvForM = []
         self.mvForCopy = []
         self.mvForClone = []
         self.moveNode = None
         self.canvases = sets.Set()
+    
+        for commandName,func in (
+            ('group-operations-clear-marked',       self.clear),
+            ('group-operations-mark-for-move',      self.addForMove),
+            ('group-operations-mark-for-copy',      self.addForCopy),
+            ('group-operations-mark-for-clone',     self.addForClone),
+            ('group-operations-mark-target',        self.markTarget),
+            ('group-operations-operate-on-marked',  self.operateOnMarked),
+            ('group-operations-transfer',           self.transfer),
+        ):
+            k.registerCommand (commandName,None,func,pane='all',verbose=False)
     #@nonl
     #@-node:mork.20041018131258.7:__init__
     #@+node:mork.20041018131258.6:__lcmp__
-    def __lcmp__( p1 , p2 ):
-        if p1.v.icony >  p2.v.icony : return 1 
-        elif p1.v.icony < p2.v.icony: return -1  
-        elif p1.v.icony == p2.v.icony: return 0
+    def __lcmp__ (p1,p2):
     
-    __lcmp__ = staticmethod( __lcmp__ )
+        if   p1.v.icony >  p2.v.icony: return  1
+        elif p1.v.icony <  p2.v.icony: return -1
+        elif p1.v.icony == p2.v.icony: return  0
+    
+    __lcmp__ = staticmethod(__lcmp__)
+    #@nonl
     #@-node:mork.20041018131258.6:__lcmp__
+    #@+node:mork.20041019124112:__len__
+    def __len__( self ):
+        
+        return len( self.mvForClone ) + \
+               len( self.mvForCopy ) + \
+               len( self.mvForM )
+    #@-node:mork.20041019124112:__len__
+    #@+node:ekr.20060325094821:Commands
     #@+node:mork.20041018131258.9:addForMove
-    def addForMove(self, vn ):
-        mover = self.mvForM
-        justRmv = False
-        if vn in mover:
-            justRmv = True
-        self.remove( vn ) 
-        if justRmv: return
-        mover.append( vn ) 
-        mover.sort( Lassoer.__lcmp__)
-        self.canvases.add( self.c.frame.canvas ) 
+    def addForMove (self,event=None):
     
+        c = self.c ; p = c.currentPosition()
+        aList = self.mvForM ; justRmv = p in aList
+        # g.trace(justRmv)
+    
+        self.remove(p)
+        if not justRmv:
+            aList.append(p)
+            aList.sort(Lassoer.__lcmp__)
+            self.canvases.add(c.frame.canvas)
+            # if p.hasNext(): c.selectPosition(p.next())
+        c.redraw()
+    #@nonl
     #@-node:mork.20041018131258.9:addForMove
     #@+node:mork.20041019102247:addForCopy
-    def addForCopy(self, vn ):
-        mover = self.mvForCopy
-        justRmv = False
-        if vn in mover:
-            justRmv = True
-        self.remove( vn ) 
-        if justRmv: return
-        mover.append( vn )
-        mover.sort( Lassoer.__lcmp__) 
-        self.canvases.add( self.c.frame.canvas )
+    def addForCopy (self,event=None):
     
+        c = self.c ; p = c.currentPosition()
+        aList = self.mvForCopy ; justRmv = p in aList
+    
+        self.remove(p)
+        if not justRmv:
+            aList.append(p)
+            aList.sort(Lassoer.__lcmp__)
+            self.canvases.add(self.c.frame.canvas)
+            # if p.hasNext(): c.selectPosition(p.next())
+        c.redraw()
+    #@nonl
     #@-node:mork.20041019102247:addForCopy
     #@+node:mork.20041019102247.1:addForClone
-    def addForClone(self, vn ):
-        mover = self.mvForClone
-        justRmv = False
-        if vn in mover:
-            justRmv = True
-        self.remove( vn )
-        if justRmv: return
-        mover.append( vn )
-        mover.sort( Lassoer.__lcmp__) 
-        self.canvases.add( self.c.frame.canvas )
+    def addForClone (self,event=None):
+        
+        c = self.c ; p = self.c.currentPosition()
+        aList = self.mvForClone ; justRmv = p in aList
     
+        self.remove(p)
+        if not justRmv:
+            aList.append(p)
+            aList.sort(Lassoer.__lcmp__)
+            self.canvases.add(c.frame.canvas)
+            # if p.hasNext(): c.selectPosition(p.next())
+        c.redraw()
+    #@nonl
     #@-node:mork.20041019102247.1:addForClone
-    #@+node:mork.20041019121125:markMovementSpot
-    def markMovementSpot( self, pos ):
-        
-        self.remove( pos )
-        self.moveNode = pos
-        
+    #@+node:mork.20041018131258.11:clear
+    def clear (self,event=None):
     
-    #@-node:mork.20041019121125:markMovementSpot
+        self.mvForM = []
+        self.mvForCopy = []
+        self.mvForClone = []
+        self.moveNode = None
+        for z in self.canvases:
+            z.delete('lnodes')
+            z.delete('movenode')
+        self.canvases.clear()
+    #@-node:mork.20041018131258.11:clear
+    #@+node:mork.20041019121125:markTarget
+    def markTarget (self,event=None):
+        
+        c = self.c ; p = c.currentPosition()
+    
+        if p == self.moveNode:
+            self.moveNode = None
+        else:
+            self.remove(p)
+            self.moveNode = p
+    
+        c.redraw()
+    #@nonl
+    #@-node:mork.20041019121125:markTarget
+    #@+node:ekr.20060325113340:operateOnMarked
+    def operateOnMarked (self,event=None):
+        
+        c = self.c
+    
+        if self.validMove():
+            c.beginUpdate()
+            self.moveTo()
+            self.copyTo()
+            self.cloneTo()
+            self.clear()
+            c.endUpdate()
+        else:
+            g.es('No valid move',color='blue')
+    #@nonl
+    #@-node:ekr.20060325113340:operateOnMarked
+    #@+node:mork.20041019125724.3:transfer
+    def transfer (self,event=None,lassoer=None):
+        
+        '''Inter-window transfer.'''
+    
+        c = self.c
+        if not lassoer.validMove():
+            g.es('Transfer not valid',color='blue')
+            return
+        cpos = self.c.currentPosition()
+        self.c.beginUpdate()
+        lassoer.c.beginUpdate()
+        mN = lassoer.moveNode
+        for z in self.mvForCopy:
+            self.copyTo(mN)
+        for z in self.mvForM:
+            self.moveTo(mN)
+        self.clear()
+        self.c.endUpdate()
+        lassoer.c.endUpdate()
+        c.selectPosition(cpos)
+        self.c.redraw()
+        lassoer.c.redraw()
+    #@nonl
+    #@-node:mork.20041019125724.3:transfer
+    #@-node:ekr.20060325094821:Commands
+    #@+node:ekr.20060325103727:Utils
     #@+node:mork.20041019125724:copyTo
     def copyTo( self, mN = None ):
     
@@ -275,271 +463,67 @@ class Lassoer(object):
     #@nonl
     #@-node:mork.20041019125724:copyTo
     #@+node:mork.20041019125724.1:cloneTo
-    def cloneTo( self, mN = None):
-     
-        if not mN: mN = self.moveNode   
+    def cloneTo (self,mN=None):
+    
+        if not mN: mN = self.moveNode
         for z in self.mvForClone:
-            clo = z.clone( z )
-            clo.moveAfter( mN )
+            clo = z.clone(z)
+            clo.moveAfter(mN)
             mN = clo
     #@-node:mork.20041019125724.1:cloneTo
     #@+node:mork.20041019125724.2:moveTo
-    def moveTo( self, mN = None):
-        
+    def moveTo (self,mN=None):
+    
         if not mN: mN = self.moveNode
         for z in self.mvForM:
-            if z.isRoot() :
+            if z.isRoot():
                 continue
-    
             if z.c != mN.c:
-                z.c.selectPosition( z )
+                z.c.selectPosition(z)
                 s = z.c.fileCommands.putLeoOutline()
-                p = mN.c.fileCommands.getLeoOutline( s, False )
-                p.moveAfter( mN )
-                z.doDelete( z.c.rootPosition() )
-            else:           
-                z.moveAfter( mN )
+                p = mN.c.fileCommands.getLeoOutline(s,False)
+                p.moveAfter(mN)
+                z.doDelete()
+            else:
+                z.moveAfter(mN)
                 mN = z
     
     
     #@-node:mork.20041019125724.2:moveTo
-    #@+node:mork.20041019125724.3:transfer
-    def transfer( self, lassoer ):
-        
-        if not lassoer.validMove(): return
-        cpos = self.c.currentPosition()
-        self.beginUpdate()
-        lassoer.beginUpdate()
-        mN = lassoer.moveNode
-        for z in self.mvForCopy:
-            self.copyTo( mN )
-        for z in self.mvForM:
-            self.moveTo( mN )
+    #@+node:ekr.20060325113814:reset
+    def reset (self):
         
         self.clear()
-        self.endUpdate()
-        lassoer.endUpdate()
-        self.c.selectPosition( cpos )
-        self.redraw()
-        lassoer.redraw()
+        self.c.redraw()
     #@nonl
-    #@-node:mork.20041019125724.3:transfer
+    #@-node:ekr.20060325113814:reset
     #@+node:mork.20041018131258.10:remove
-    def remove( self, vn ):
+    def remove (self,p):
+        
+        c = self.c
+        
+        for aList in (self.mvForCopy, self.mvForClone, self.mvForM):
+            if p in aList: aList.remove(p)
     
-        if vn in self.mvForCopy: self.mvForCopy.remove( vn )
-        if vn in self.mvForClone: self.mvForClone.remove( vn )
-        if vn in self.mvForM: self.mvForM.remove( vn )
-        if vn == self.moveNode: self.moveNode = None
+        if p == self.moveNode:
+            self.moveNode = None
     #@nonl
     #@-node:mork.20041018131258.10:remove
     #@+node:mork.20041019121125.1:contains
-    def contains( self, pos ):
+    def contains (self,p):
         
-        if pos in self.mvForClone: return True
-        if pos in self.mvForCopy: return True
-        if pos in self.mvForM: return True
-        return False
+        return p in self.mvForClone or p in self.mvForCopy or p in self.mvForM
     #@nonl
     #@-node:mork.20041019121125.1:contains
-    #@+node:mork.20041018131258.11:clear
-    def clear( self ): 
-    
-        self.mvForM = [] 
-        self.mvForCopy = []
-        self.mvForClone = []
-        self.moveNode = None
-        for z in self.canvases:
-            z.delete( 'lnodes' )
-            z.delete( 'movenode' )
-        self.canvases.clear()
-    #@-node:mork.20041018131258.11:clear
-    #@+node:mork.20041019124112:__len__
-    def __len__( self ):
-        
-        return len( self.mvForClone ) + \
-               len( self.mvForCopy ) + \
-               len( self.mvForM )
-    #@-node:mork.20041019124112:__len__
-    #@+node:mork.20041018131258.13:beginUpdate
-    def beginUpdate( self ):
-    
-        self.c.beginUpdate()
-    #@nonl
-    #@-node:mork.20041018131258.13:beginUpdate
-    #@+node:mork.20041018131258.14:endUpdate
-    def endUpdate( self ):
-    
-        self.c.endUpdate()
-    #@nonl
-    #@-node:mork.20041018131258.14:endUpdate
-    #@+node:mork.20041019150234:redraw
-    def redraw( self ):
-        
-        self.c.frame.tree.redraw() 
-    #@nonl
-    #@-node:mork.20041019150234:redraw
     #@+node:mork.20041019151511:validMove
-    def validMove( self ):
-        
-        if self.moveNode:
-            if not self.moveNode.exists( self.c ): pass
-            else:
-                return True
-        return False
+    def validMove (self):
+    
+        return self.moveNode and self.moveNode.exists(self.c)
+    #@nonl
     #@-node:mork.20041019151511:validMove
-    #@+node:mork.20041021122216:clearCanvases
-    #@-node:mork.20041021122216:clearCanvases
+    #@-node:ekr.20060325103727:Utils
     #@-others
 #@-node:mork.20041018131258.5:class Lassoer
-#@+node:mork.20041018131258.15:placeInsertNode
-movers = {}
-
-def placeInsertNode(c):
-    '''inserts the insert node under, not as a child, the currently selected node'''
-    lassoer = movers[ c ]
-    pos = c.currentPosition()
-    if pos == lassoer.moveNode: lassoer.moveNode = None
-    else:
-        lassoer.markMovementSpot( pos )
-    c.frame.tree.redraw()
-    return None
-#@-node:mork.20041018131258.15:placeInsertNode
-#@+node:mork.20041018131258.16:markForMoving
-def markForMoving(c, which ):
-    '''marks a node for moving. The insert node cannot be marked, nor any ancestor of the insert node.'''
-    global movers
-    lassoer = movers[ c ]
-    mvdict = { 'moving': lassoer.addForMove, 
-               'copying': lassoer.addForCopy,
-               'cloning': lassoer.addForClone }
-    
-    mover = mvdict[ which ]
-    pos = c.currentPosition()
-    mover( pos )
-    nxt = pos.next()
-    if nxt: c.selectPosition( nxt )
-    lassoer.redraw() 
-    return None
-#@-node:mork.20041018131258.16:markForMoving
-#@+node:mork.20041018131258.17:commenceMovement
-def commenceMovement( lassoer ):
-
-    if lassoer.moveNode:
-        lassoer.moveTo()
-        lassoer.copyTo()
-        lassoer.cloneTo()      
-#@-node:mork.20041018131258.17:commenceMovement
-#@+node:mork.20041018131258.21:setupChange
-def setupChange( lassoer ):
-    '''generic behavior that a method will need to execute before and after a tree update'''
-    if lassoer.validMove():
-        lassoer.beginUpdate()
-        commenceMovement( lassoer )
-        reset( lassoer )
-        lassoer.endUpdate()
-        return None     
-#@-node:mork.20041018131258.21:setupChange
-#@+node:mork.20041018131258.22:reset
-def reset( lassoer):
-    '''clears out the marked vnodes and removes the insert node'''
-
-    lassoer.clear()
-    lassoer.redraw()
-    return None
-#@-node:mork.20041018131258.22:reset
-#@+node:mork.20041018131258.33:listTops
-def listTops( menu ):
-
-    menu.delete( '1', 'end' )
-    names = movers.keys() 
-    names.remove( menu.lassoer.c )
-    mlassoer = movers[ menu.lassoer.c ]
-    for z in names:
-        if hasattr( z , "frame" ) and len( movers[ z ] ) != 0:
-            lassoer = movers[ z ]
-            menu.add_command( label = z.frame.getTitle(), command = lambda frm = lassoer, to = mlassoer: frm.transfer( to ) )
-#@-node:mork.20041018131258.33:listTops
-#@+node:mork.20041018131258.34:drawImages
-def drawImages( tag, keywords ):
-    ''' draws a little yellow box on the node image to indicate selection'''
-    
-    c = keywords.get('c')
-    if not c or not c.exists: return
-    canvas = c.frame.tree.canvas
-    if not movers.has_key( c ): return
-    lassoer = movers[ c ]
-    
-    canvas.delete( 'lnodes' )
-    mc = ( ( lassoer.mvForM, movePI ), ( lassoer.mvForCopy, copyPI ),( lassoer.mvForClone, clonePI ) )
-    for l, col in mc:
-        for z in l:
-            if z.exists( c ):
-                drawArrowImages( z , col , canvas)
-            
-    canvas.delete( 'movenode' )
-    if lassoer.moveNode and lassoer.moveNode.isVisible():
-        mN = lassoer.moveNode.v 
-        x = mN.iconx
-        y = mN.icony
-        if lassoer.moveNode.exists( c ):
-            canvas.create_image( x - 5, y + 7, image = bullseyePI , tag = 'movenode' )
-            #canvas.create_polygon( x -10 , y + 2  , x , y + 7, x -10, y + 12, fill = 'red', tag = 'movenode' )
-    return None
-
-#@-node:mork.20041018131258.34:drawImages
-#@+node:mork.20041018131258.35:drawArrowImages
-def drawArrowImages( pos , image, canvas ):
-    if( pos.isVisible() ):
-        x = pos.v.iconx 
-        y = pos.v.icony 
-        canvas.create_image( x - 5, y + 7 , image = image, tag = 'lnodes' )
-#@nonl
-#@-node:mork.20041018131258.35:drawArrowImages
-#@+node:mork.20041018131258.36:addMenu
-def addMenu (tag,keywords):
-    global movers
-    c = keywords.get('c')
-    if not c or not c.exists or c in movers.keys(): return
-    las = Lassoer(c)
-    movers [c] = las
-    def placeInsertNodeCallback(c=c):
-        placeInsertNode(c)
-    table = (("Mark RoundUp Spot",None,placeInsertNodeCallback),)
-    men = c.frame.menu
-    tp = c.frame.top
-    mname = tp ['menu'].split('.') [ -1]
-    men = tp.children [mname]
-    nrumenu = Tkinter.Menu(men,tearoff=0)
-    men.add_cascade(menu=nrumenu,image=groupOpPI)
-    nrumenu.add_command(image=markSpotPI,command=placeInsertNodeCallback)
-    mmenu = Tkinter.Menu(nrumenu,tearoff=0)
-    nrumenu.add_cascade(menu=mmenu,image=markForPI)
-    commands = getMoveCommands(c)
-    for z in commands:
-        mmenu.add_command(label=z[0],command=z[1],image=z[2])
-    nrumenu.add_command(command=lambda l=las: setupChange(l),image=operateOnMarkedPI)
-    nrumenu.add_command(command=lambda l=las: reset(l),image=clearMarksPI)
-    imenu = Tkinter.Menu(nrumenu,tearoff=0)
-    nrumenu.add_cascade(menu=imenu,image=transferFromPI)
-    imenu.config(postcommand=lambda nm=imenu: listTops(nm))
-    imenu.lassoer = las
-    leoPlugins.registerHandler("after-redraw-outline",drawImages)
-    return
-#@nonl
-#@-node:mork.20041018131258.36:addMenu
-#@+node:mork.20041019171725:getMoveCommands
-def getMoveCommands (c):
-
-    commands = (
-        ("Moving", lambda c=c,a='moving':  markForMoving(c,a),move_arrowPI),
-        ("Copying",lambda c=c,a='copying': markForMoving(c,a),copy_arrowPI),
-        ("Cloning",lambda c=c,a='cloning': markForMoving(c,a),clone_arrowPI),
-    )
-
-    return commands
-#@nonl
-#@-node:mork.20041019171725:getMoveCommands
 #@-others
 #@nonl
 #@-node:mork.20041018131258.1:@thin groupOperations.py
