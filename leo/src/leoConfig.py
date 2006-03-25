@@ -54,7 +54,7 @@ class parserBaseClass:
             'directory':    self.doDirectory,
             'font':         self.doFont,
             'if':           self.doIf,
-            'ifgui':        self.doIfGui,
+            # 'ifgui':        self.doIfGui,  # Removed in 4.4b3.
             'ifplatform':   self.doIfPlatform,
             'ignore':       self.doIgnore,
             'int':          self.doInt,
@@ -161,20 +161,31 @@ class parserBaseClass:
     #@nonl
     #@-node:ekr.20041120103933:doIf
     #@+node:ekr.20041121125416:doIfGui
-    def doIfGui (self,p,kind,name,val):
-        
-        __pychecker__ = '--no-argsused' # args not used.
-        
-        # g.trace(repr(name))
-        
-        if not g.app.gui or not g.app.gui.guiName():
-            s = '@if-gui has no effect: g.app.gui not defined yet'
-            g.es_print(s,color='blue')
-            return "skip"
-        elif g.app.gui.guiName().lower() == name.lower():
-            return None
-        else:
-            return "skip"
+    #@+at 
+    #@nonl
+    # Alas, @if-gui can't be made to work. The problem is that plugins can set
+    # g.app.gui, but plugins need settings so the leoSettings.leo files must 
+    # be parsed
+    # before g.app.gui.guiName() is known.
+    #@-at
+    #@@c
+    
+    if 0:
+    
+        def doIfGui (self,p,kind,name,val):
+            
+            __pychecker__ = '--no-argsused' # args not used.
+            
+            # g.trace(repr(name))
+            
+            if not g.app.gui or not g.app.gui.guiName():
+                s = '@if-gui has no effect: g.app.gui not defined yet'
+                g.es_print(s,color='blue')
+                return "skip"
+            elif g.app.gui.guiName().lower() == name.lower():
+                return None
+            else:
+                return "skip"
     #@nonl
     #@-node:ekr.20041121125416:doIfGui
     #@+node:ekr.20041120104215:doIfPlatform
