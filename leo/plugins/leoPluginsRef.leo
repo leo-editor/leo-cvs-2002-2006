@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6305" clone_windows="0"/>
 <globals body_outline_ratio="0.595562130178">
-	<global_window_position top="36" left="239" height="850" width="852"/>
+	<global_window_position top="27" left="362" height="850" width="852"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -72,8 +72,7 @@
 </v>
 </v>
 <v t="ekr.20060306151759"><vh>Chapters plugin</vh>
-<v t="ekr.20060306151759.1"
-expanded="ekr.20060306151759.3,"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060306151759.1"><vh>@thin chapters2.py</vh></v>
 </v>
 <v t="edream.110203113231.667"><vh>Commands &amp; directives</vh>
 <v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
@@ -160,7 +159,7 @@ expanded="ekr.20060306151759.3,"><vh>@thin chapters2.py</vh></v>
 <v t="ekr.20050130120433"><vh>@thin failed_import.py</vh></v>
 <v t="edream.110203113231.734"><vh>@thin quit_leo.py</vh></v>
 <v t="ekr.20051016160700"><vh>@thin testRegisterCommand.py</vh></v>
-<v t="edream.110203113231.735"><vh>@thin trace_gc.py</vh></v>
+<v t="edream.110203113231.735"><vh>@thin trace_gc_plugin.py</vh></v>
 <v t="edream.110203113231.736"><vh>@thin trace_keys.py</vh></v>
 <v t="edream.110203113231.738"><vh>@thin trace_tags.py</vh></v>
 <v t="ekr.20040205071616"><vh>mnplugins.py</vh>
@@ -187,7 +186,8 @@ expanded="ekr.20060306151759.3,"><vh>@thin chapters2.py</vh></v>
 <v t="ktenney.20041211072654.1"><vh>@thin at_view.py</vh></v>
 <v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
 <v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
-<v t="ekr.20050301095332"><vh>@thin mod_labels.py</vh></v>
+<v t="ekr.20050301095332"
+expanded="ekr.20050301095332.37,ekr.20050301095332.40,ekr.20050301095332.44,ekr.20050301095332.48,ekr.20050301095332.49,ekr.20050301095332.53,ekr.20050301095332.57,"><vh>@thin mod_labels.py</vh></v>
 <v t="edream.110203113231.876"><vh>@thin read_only_nodes.py</vh></v>
 <v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
 <v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
@@ -431,7 +431,7 @@ expanded="ekr.20060306151759.3,"><vh>@thin chapters2.py</vh></v>
 <v t="ekr.20050303080042.1" tnodeList="ekr.20050303080042.1"><vh>@nosent footprints.ini</vh></v>
 <v t="pap.20041020001240"><vh>@thin footprints.py</vh></v>
 </v>
-<v t="mork.20041018162155.1" a="E"><vh>@thin EditAttributes.py</vh></v>
+<v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
 <v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
 <v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
@@ -1127,7 +1127,8 @@ expanded="ekr.20060306151759.3,"><vh>@thin chapters2.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050805162550"><vh>@thin rst3.py</vh></v>
+<v t="ekr.20050805162550"
+marks="ekr.20050809082854.1,"><vh>@thin rst3.py</vh></v>
 </v>
 </v>
 <v t="ekr.20050830091910"><vh>Zodb</vh>

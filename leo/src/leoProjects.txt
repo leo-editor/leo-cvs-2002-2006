@@ -9918,6 +9918,55 @@ group-operations-transfer           = Alt-Ctrl-Shift-d
 This code has not been tested with the chapters2 plugin.
 #@nonl
 #@-node:ekr.20060310093345:Improved groupoperations plugin
+#@+node:ekr.20060308103043:Fixed crasher in Word (and other) plugins
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3617936
+By: nobody
+
+I did a clean install of A7. I have the export to word plugin enabled. When
+I try to export my outline to word I get the following:
+
+Leo Log Window...
+Leo 4.4 a7, build  1.417 , February 28, 2006
+Python 2.3.5, Tk 8.4.3, Pmw 1.2
+Windows 5, 1, 2600, 2, Service Pack 2
+
+reading: C:\Development\VL4\VL4 outline.leo
+Trying to connect to Word
+Writing tree to Word
+Exception writing Word
+Traceback (most recent call last):
+  File "C:\Program Files\Leo\plugins\word_export.py", line 163, in cmd_Export
+    "")
+  File "C:\Program Files\Leo\plugins\word_export.py", line 122, in
+writeNodeAndTree
+    vnode = c.currentVnode()
+AttributeError: 'Bunch' object has no attribute 'currentVnode'
+
+The fix was to plugins_menu.py: the cmd_callback must have an event argument.
+#@-node:ekr.20060308103043:Fixed crasher in Word (and other) plugins
+#@+node:ekr.20060307142612:Fixed problem with labels plugin
+@nocolor
+
+I tried the Labels plugin, and got:
+
+exception executing command
+Traceback (most recent call last):
+  File "C:\Software Engineering\Leo\src\leoCommands.py", line 265, in doCommand
+    val = command(event)
+TypeError: menu_add_label() takes exactly 1 argument (2 given)
+
+exception executing command
+Traceback (most recent call last):
+  File "C:\Software Engineering\Leo\src\leoCommands.py", line 265, in doCommand
+    val = command(event)
+TypeError: marks_to_label() takes exactly 1 argument (2 given)
+
+--Rich
+
+The fix: all menu commands now have event=None in their argument list.
+#@nonl
+#@-node:ekr.20060307142612:Fixed problem with labels plugin
 #@-node:ekr.20060323140748:Plugins
 #@+node:ekr.20060325122134:Removed features
 #@+node:ekr.20060325073234:Removed support @ifgui: it doesn't and can't work

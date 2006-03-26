@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9369" clone_windows="0"/>
 <globals body_outline_ratio="0.535469107551">
-	<global_window_position top="28" left="171" height="886" width="956"/>
+	<global_window_position top="29" left="196" height="886" width="956"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,12 +14,14 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051125080855,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051026143009,ekr.20051125080855,ekr.20050920085536.65,ekr.20051008135051.1,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.2052,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051125080855,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051026143009,ekr.20051125080855,ekr.20050920085536.65,ekr.20051008135051.1,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.2052,"
+expanded="ekr.20031218072017.1723,ekr.20031218072017.1723,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601"
-marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
+marks="ekr.20050920085536.65,"
+expanded="ekr.20031218072017.1723,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -450,7 +452,7 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 </v>
 <v t="ekr.20060321111639"><vh>Got rid of settings messages</vh>
-<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
+<v t="ekr.20031218072017.1723" a="E"><vh>createMenuEntries</vh>
 <v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
 <v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
@@ -511,7 +513,7 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20060221141535"><vh>completeAllBindingsForWidget</vh></v>
 <v t="ekr.20060324092758"><vh>completeOneBindingForWidget</vh></v>
 </v>
-<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
+<v t="ekr.20031218072017.1723" a="E"><vh>createMenuEntries</vh>
 <v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
 <v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
@@ -638,6 +640,8 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20060319103111.3"><vh>Report 3</vh></v>
 </v>
 <v t="ekr.20060310093345"><vh>Improved groupoperations plugin</vh></v>
+<v t="ekr.20060308103043"><vh>Fixed crasher in Word (and other) plugins</vh></v>
+<v t="ekr.20060307142612"><vh>Fixed problem with labels plugin</vh></v>
 </v>
 <v t="ekr.20060325122134"><vh>Removed features</vh>
 <v t="ekr.20060325073234"><vh>Removed support @ifgui: it doesn't and can't work</vh></v>
@@ -650,17 +654,13 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20060301102950" a="V"><vh>To do 4.4 b3</vh>
 <v t="ekr.20060325124056"><vh>Add unit tests for k.registerCommand</vh></v>
-<v t="ekr.20060324062745"><vh>Plugins 2</vh>
-<v t="ekr.20060308103043"><vh>Fix crasher in Word plugin</vh></v>
-<v t="ekr.20060307142612"><vh>Fix problem with labels plugin</vh></v>
-</v>
-<v t="ekr.20060325122553"><vh>Docs</vh>
-<v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
-</v>
 <v t="ekr.20060307074624"><vh>Improve autocompleter 3</vh>
 <v t="ekr.20060305110016"><vh>* autocompleter text not always sticking</vh></v>
 <v t="ekr.20060307074302"><vh>* Control-g doesn't work in find completion</vh></v>
 <v t="ekr.20060228071700"><vh>Ignore autocompletion for number.</vh></v>
+</v>
+<v t="ekr.20060325122553"><vh>Docs</vh>
+<v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
 </v>
 <v t="ekr.20060307074302.1"><vh>set-change-text command should work when entering find text.</vh></v>
 <v t="ekr.20060324075112"><vh>Maybe</vh>
@@ -708,7 +708,8 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20060123151617"><vh>@thin leoFind.py</vh></v>
 <v t="ekr.20031218072017.3655"><vh>@thin leoFrame.py</vh></v>
 <v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
-<v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
+<v t="ekr.20031218072017.3749"
+expanded="ekr.20031218072017.3750,ekr.20031218072017.3781,ekr.20031218072017.1723,"><vh>@thin leoMenu.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3821"><vh>Gui Tkinter classes</vh>
 <v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
@@ -722,7 +723,7 @@ marks="ekr.20031218072017.1329,ekr.20051026143009,"><vh>@thin leoTkinterFrame.py
 <v t="ekr.20040803072955"
 marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
-<v t="ekr.20031218072017.3748"
+<v t="ekr.20031218072017.3748" a="E"
 marks="ekr.20051008135051.1,ekr.20050920085536.65,"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,ekr.20051125080855,"><vh>@thin leoEditCommands.py</vh></v>
@@ -7268,7 +7269,9 @@ Traceback (most recent call last):
     val = command(event)
 TypeError: marks_to_label() takes exactly 1 argument (2 given)
 
---Rich</t>
+--Rich
+
+The fix: all menu commands now have event=None in their argument list.</t>
 <t tx="ekr.20060307234849"></t>
 <t tx="ekr.20060308103043">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3617936
@@ -7293,6 +7296,8 @@ Traceback (most recent call last):
 writeNodeAndTree
     vnode = c.currentVnode()
 AttributeError: 'Bunch' object has no attribute 'currentVnode'
+
+The fix was to plugins_menu.py: the cmd_callback must have an event argument.
 </t>
 <t tx="ekr.20060309021641">@nocolor
 
@@ -7684,7 +7689,6 @@ TypeError: encode() argument 1 must be string, not None
 In particular, this causes at.encoding to be inited to a reasonable value.</t>
 <t tx="ekr.20060323140748"></t>
 <t tx="ekr.20060323194410"></t>
-<t tx="ekr.20060324062745"></t>
 <t tx="ekr.20060324065958">@nocolor
 
 - onBodyChanged now converts everything to unicode, either directly or by calling g.app.gui.getAllText.
