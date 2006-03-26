@@ -56,41 +56,38 @@ import pickle
 #@nonl
 #@-node:ekr.20050301095332.2:<<imports>>
 #@nl
-__version__ = "1.4"
+__version__ = "1.5"
 #@<< version history >>
 #@+node:ekr.20050301103957:<< version history >>
 #@@killcolor
 
 #@+at
-# 
 # 1.2: By Bernhard Mulder.
-# 
 # 1.3 EKR: Mods for 4.3 code base.
-#     - Import Tk and Pmw using g.importExtension.
-#     - Created init and onCreate methods.
-#         onCreate sets c.mod_label_controller to the newly created controller 
+# - Import Tk and Pmw using g.importExtension.
+# - Created init and onCreate methods.
+#     onCreate sets c.mod_label_controller to the newly created controller 
 # class.
-#         Do not change the name of this ivar: it is used by 
+#     Do not change the name of this ivar: it is used by 
 # atFile.copyAllTempBodyStringsToTnodes
-#         (see below)
-#     - Added support for this plugin to Leo's core so the plugin doesn't have 
-# to override any core methods.
-#         - Returned the inserted node in c.insertHeadline and c.clone.
-#         - Added atFile.copyAllTempBodyStringsToTnodes method.
-#           This method contains the following code:
-#             if hasattr(c,'mod_label_controller'):
-#                 c.mod_label_controller.add_label(p,"before 
+#     (see below)
+# - Added support for this plugin to Leo's core so the plugin doesn't have to 
+# override any core methods.
+#     - Returned the inserted node in c.insertHeadline and c.clone.
+#     - Added atFile.copyAllTempBodyStringsToTnodes method.
+#       This method contains the following code:
+#         if hasattr(c,'mod_label_controller'):
+#             c.mod_label_controller.add_label(p,"before 
 # change:",p.bodyString())
-#     - Renamed handle_mark_labels to labelsController.
-#     - Moved onCreateOptionalMenus into labelsController class.
-#     - Replaced g.top() by self.c.
-#     - get_labels_dict now always returns a dictionary, never None.
-#     - Renamed current_node_and_labels to current_position_and_labels.
-#     - Renamed get_labellist_for_node to get_labellist_for_current_position.
-#     - Replaced self.iterator by self.c.allNodes_iter
-# 
-# 1.4 EKR:
-#     - Removed call to Pmw.initialise.  This is now done in Leo's core.
+# - Renamed handle_mark_labels to labelsController.
+# - Moved onCreateOptionalMenus into labelsController class.
+# - Replaced g.top() by self.c.
+# - get_labels_dict now always returns a dictionary, never None.
+# - Renamed current_node_and_labels to current_position_and_labels.
+# - Renamed get_labellist_for_node to get_labellist_for_current_position.
+# - Replaced self.iterator by self.c.allNodes_iter
+# 1.4 EKR: Removed call to Pmw.initialise.  This is now done in Leo's core.
+# 1.5 EKR: Added event=None to argument list for all commands in the menu.
 #@-at
 #@nonl
 #@-node:ekr.20050301103957:<< version history >>
@@ -441,18 +438,18 @@ class labelsController(object):
     #@-node:ekr.20050301095332.19:subroutines
     #@+node:ekr.20050301095332.37:showing labels
     #@+node:ekr.20050301095332.38:show_labels
-    def show_labels(self, title="show labels"):
+    def show_labels (self,event=None,title="show labels"):
         """
         Present a combobox with all the labels defined in the current Leo file.
         Returns result, widget, labellist
             where result in ("Cancel", "OK").
         """
         labellist = self.collect_labels()
-        return self.show_label_list_box(title = title, label_text = "Existing labels", labellist = labellist)
+        return self.show_label_list_box(title=title,label_text="Existing labels",labellist=labellist)
     #@nonl
     #@-node:ekr.20050301095332.38:show_labels
     #@+node:ekr.20050301095332.39:show_labels_for_current_position
-    def show_labels_for_current_position(self):
+    def show_labels_for_current_position(self,event=None):
             
         """Show the labels for the current position."""
     
@@ -466,7 +463,7 @@ class labelsController(object):
     #@-node:ekr.20050301095332.37:showing labels
     #@+node:ekr.20050301095332.40:deleting labels.
     #@+node:ekr.20050301095332.41:delete_labels
-    def delete_all_labels(self):
+    def delete_all_labels(self,event=None):
         """
         Delete all labels in the outline.
         Ask for confirmation before doing so!
@@ -489,7 +486,7 @@ class labelsController(object):
     #@nonl
     #@-node:ekr.20050301095332.41:delete_labels
     #@+node:ekr.20050301095332.42:delete_label
-    def delete_label(self):
+    def delete_label(self,event=None):
         """
         Delete one label in the whole outline.
         """
@@ -504,7 +501,7 @@ class labelsController(object):
     #@nonl
     #@-node:ekr.20050301095332.42:delete_label
     #@+node:ekr.20050301095332.43:delete_node_label
-    def delete_node_label(self):
+    def delete_node_label(self,event=None):
         """
         Delete a label for the current node only.
         """
@@ -517,7 +514,7 @@ class labelsController(object):
     #@-node:ekr.20050301095332.40:deleting labels.
     #@+node:ekr.20050301095332.44:Creating labels and marking nodes
     #@+node:ekr.20050301095332.45:marks_to_label
-    def marks_to_label(self):
+    def marks_to_label(self,event=None):
         """
         Convert the existing marks to a label.
         """
@@ -543,11 +540,11 @@ class labelsController(object):
                     labels_dict[labelname] = ''
                     self.set_labels_dict(p, labels_dict)
                     p.setDirty()
-                    print p
+                    # print p
     #@nonl
     #@-node:ekr.20050301095332.45:marks_to_label
     #@+node:ekr.20050301095332.46:label_to_marks
-    def label_to_marks(self):
+    def label_to_marks(self,event=None):
         """
         Mark nodes with label:
             Ask for the name of an existing label.
@@ -572,7 +569,7 @@ class labelsController(object):
     #@nonl
     #@-node:ekr.20050301095332.46:label_to_marks
     #@+node:ekr.20050301095332.47:menu_add_label
-    def menu_add_label(self):
+    def menu_add_label(self,event=None):
     
         """Add a (new) label to the current node."""
         
@@ -586,7 +583,7 @@ class labelsController(object):
     #@+node:ekr.20050301095332.48:Converting labels to subnodes and back.
     #@+node:ekr.20050301095332.49:creating subnodes
     #@+node:ekr.20050301095332.50:label_to_subnode
-    def label_to_subnode(self):
+    def label_to_subnode(self,event=None):
         """
         Convert a label of the current node to a subnode.
         """
@@ -614,14 +611,14 @@ class labelsController(object):
     #@nonl
     #@-node:ekr.20050301095332.50:label_to_subnode
     #@+node:ekr.20050301095332.51:label_to_subnodes
-    def label_to_subnodes(self):   
+    def label_to_subnodes(self,event=None):   
         # Find out which labels exist.
         labelname = self.select_label("Select label to expand")
         return self.create_subnodes_for_labelname(labelname)
     
     #@-node:ekr.20050301095332.51:label_to_subnodes
     #@+node:ekr.20050301095332.52:labels_to_subnodes
-    def labels_to_subnodes(self):
+    def labels_to_subnodes(self,event=None):
         """
         Convert all labels to subnodes.
         """
@@ -639,7 +636,7 @@ class labelsController(object):
     #@-node:ekr.20050301095332.49:creating subnodes
     #@+node:ekr.20050301095332.53:updating labels from subnodes
     #@+node:ekr.20050301095332.54:subnode_to_label
-    def subnode_to_label(self):
+    def subnode_to_label(self,event=None):
         """
         Update a label from a subnode.
         Delete the subnode.
@@ -693,7 +690,7 @@ class labelsController(object):
     
     #@-node:ekr.20050301095332.54:subnode_to_label
     #@+node:ekr.20050301095332.55:subnodes_to_label
-    def subnodes_to_label(self):
+    def subnodes_to_label(self,event=None):
         """
         Update the label from subnodes, as far as they exist.
         Delete those subnodes.
@@ -730,7 +727,7 @@ class labelsController(object):
     
     #@-node:ekr.20050301095332.55:subnodes_to_label
     #@+node:ekr.20050301095332.56:subnodes_to_labels
-    def subnodes_to_labels(self):
+    def subnodes_to_labels(self,event=None):
         """
         Update all labels from subnodes, if those subnodes exist.
         
@@ -764,7 +761,7 @@ class labelsController(object):
     #@-node:ekr.20050301095332.48:Converting labels to subnodes and back.
     #@+node:ekr.20050301095332.57:cloning
     #@+node:ekr.20050301095332.58:clone_label_subnodes
-    def clone_label_subnodes(self):
+    def clone_label_subnodes(self,event=None):
         """
         Collect clones of all nodes with a label and move them to a child position of the current node.
         """
