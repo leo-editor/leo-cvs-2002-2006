@@ -57,38 +57,33 @@ import sys
 #@nonl
 #@-node:ekr.20050101090207.10:<< imports >>
 #@nl
-__version__ = "1.10"
+__version__ = "1.11"
 #@<< version history >>
 #@+node:ekr.20050101100033:<< version history >>
 #@+at
 # 
-# 1.4 EKR:
-#     - Check at runtime to make sure that the plugin has been loaded before 
-# calling topLevelMenu function.
-# 
+# 1.4 EKR: Check at runtime to make sure that the plugin has been loaded 
+# before calling topLevelMenu function.
 # 1.5 EKR:
-#     - Check for ImportError directly in Plugin.__init__.
-#       Alas, this can not report import problems without more work.
-#       This _really_ should be done, but it will have to wait.
-#       As a workaround, plugins_manager.py now has an init method and reports 
-# its own import problems.
-# 
+# - Check for ImportError directly in Plugin.__init__.
+#   Alas, this can not report import problems without more work.
+#   This _really_ should be done, but it will have to wait.
+#   As a workaround, plugins_manager.py now has an init method and reports its 
+# own import problems.
 # 1.6 Paul Paterson:
-#     - Add support for plugin groups. Each group gets its own sub menu now
-#     - Set __plugin_group__ to "Core"
-# 1.7 EKR:
-#     - Set default version in Plugin.__init__ so plugins without version 
+# - Add support for plugin groups. Each group gets its own sub menu now
+# - Set __plugin_group__ to "Core"
+# 1.7 EKR: Set default version in Plugin.__init__ so plugins without version 
 # still appear in plugin menu.
-# 
-# 1.8 Paul Paterson:
-#     - Changed the names in the plugin menu to remove at_, mod_ and 
-# capitalized
+# 1.8 Paul Paterson: Changed the names in the plugin menu to remove at_, mod_ 
+# and capitalized.
 # 1.9 Paul Paterson:
-#     - Refactored to allow dynamically adding plugins to the menu after 
-# initial load
-#     - Reformatted menu items for cmd_ThisIsIt to be "This Is It"
-# 1.10 EKR:
-#     - Removed the g.app.dialog hack.
+# - Refactored to allow dynamically adding plugins to the menu after initial 
+# load
+# - Reformatted menu items for cmd_ThisIsIt to be "This Is It"
+# 1.10 EKR: Removed the g.app.dialog hack.
+# 1.11 EKR: Added event arg to cmd_callback.  This was causing crashes in 
+# several plugins.
 #@-at
 #@nonl
 #@-node:ekr.20050101100033:<< version history >>
@@ -102,6 +97,7 @@ __plugin_group__ = "Core"
 #@+node:ekr.20060107091318:Functions
 #@+node:EKR.20040517080555.24:addPluginMenuItem
 def addPluginMenuItem (p,c):
+
     if p.hastoplevel:
         # Check at runtime to see if the plugin has actually been loaded.
         # This prevents us from calling hasTopLevel() on unloaded plugins.
@@ -132,7 +128,8 @@ def addPluginMenuItem (p,c):
             table.append(("-",None,None))
             items = []
             for cmd, fn in p.othercmds.iteritems():
-                def cmd_callback (c=c,fn=fn):
+                # New in 4.4: this callback gets called with an event arg.
+                def cmd_callback (event,c=c,fn=fn):
                     fn(c)
                 items.append((cmd,None,cmd_callback),)
             items.sort()
