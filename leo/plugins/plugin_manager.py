@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.21"
+__version__ = "0.22"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -19,90 +19,81 @@ __plugin_group__ = "Core"
 #@+node:pap.20041006184225.2:<< version history >>
 #@+at
 # 
-# 0.1 Paul Paterson:
-#     - Initial version
-# 
+# 0.1 Paul Paterson: Initial version
 # 0.2 EKR:
-#     - The check for .ini files looks for the actual x.ini file.
-#       (This required that spellpyx uses spellpyx.ini rather than 
+# - The check for .ini files looks for the actual x.ini file.
+#   (This required that spellpyx uses spellpyx.ini rather than 
 # mod_spelling.ini.)
-#     - Minor stylistic changes.
+# - Minor stylistic changes.
 # 0.4 EKR:
-#     - Added USE_PRIORITY switch.
-#       Priority is non-functional, and isn't needed.
-#       Leo loads plugins in the order in which they appear in 
-# pluginsManager.txt.
-#       Furthermore, this plugin preserves that order.
-# 0.5 EKR:
-#     - Make sure to do nothing if Pmw is not defined.
+# - Added USE_PRIORITY switch.
+#   Priority is non-functional, and isn't needed.
+#   Leo loads plugins in the order in which they appear in pluginsManager.txt.
+#   Furthermore, this plugin preserves that order.
+# 0.5 EKR: Make sure to do nothing if Pmw is not defined.
 # 0.6 Paul Paterson:
-#     - Fixed incorrect detection of version if single quotes used
-#     - Now always detects a file as a plugin (previously only did this if it 
+# - Fixed incorrect detection of version if single quotes used
+# - Now always detects a file as a plugin (previously only did this if it 
 # imported leoPlugins)
-#     - Fixed incorrect detection of handlers if single quotes used
-#     - Fixed incorrect detection of multiple handlers in a single line.
+# - Fixed incorrect detection of handlers if single quotes used
+# - Fixed incorrect detection of multiple handlers in a single line.
 # 0.7 EKR:
-#     - Grrrrrrrrrr.  The Sets module is not defined in Python 2.2.
-#       This must be replaced.  This is too important a plugin for it not to 
-# work everywhere.
-#     - Added better import tests, and message when import fails.
-#     - Added an init method, although a simple raise would also work.
+# - The Sets module is not defined in Python 2.2.
+#   This must be replaced.  This is too important a plugin for it not to work 
+# everywhere.
+# - Added better import tests, and message when import fails.
+# - Added an init method, although a simple raise would also work.
 # 0.8 EKR:
-#     - Well, that was easy.  Put sets.py from Python 2.4 in extensions 
-# folder.
-#     - Use g.importExtension rather than import to get sets module.
+# - Put sets.py from Python 2.4 in extensions folder.
+# - Use g.importExtension rather than import to get sets module.
 # 0.9 Paul Paterson:
-#     - Remove the "not referenced" status. All plugins are not active or 
+# - Remove the "not referenced" status. All plugins are not active or 
 # inactive.
-#     - Changed the list view to have the status at the end of the line
-#     - Changed format of list view to be fixed font so that it looks cleaner
-#     - Also changed format of conflict list view
-#     - If a file contains "__not_a_plugin__ = True" then it will be omitted 
-# from the list
-#     - Now looks for and reports the __plugin_group__ in the view and list
-#     - Can now filter the plugins by their __plugin__group__
-#     - Set __plugin_group__ to "Core"
-#     - Renamed active/inactive to on/off as this works better with the groups
-#     - Added version history display to plugin view
+# - Changed the list view to have the status at the end of the line
+# - Changed format of list view to be fixed font so that it looks cleaner
+# - Also changed format of conflict list view
+# - If a file contains "__not_a_plugin__ = True" then it will be omitted from 
+# the list
+# - Now looks for and reports the __plugin_group__ in the view and list
+# - Can now filter the plugins by their __plugin__group__
+# - Set __plugin_group__ to "Core"
+# - Renamed active/inactive to on/off as this works better with the groups
+# - Added version history display to plugin view
 # 0.10 Paul Paterson:
-#     - Changed the names in the plugin list view to remove at_, mod_ and 
+# - Changed the names in the plugin list view to remove at_, mod_ and 
 # capitalized
-#     - Remove dblClick event from plugin list - it wasn't doing anything
-#     - Can now be run stand-alone to aid in debugging problems
-# 0.11 EKR:
-#     - Use stand-alone leoGlobals module to simplify code.
-# 0.12 EKR:
-#     - Folded in some minor changes from Paul to support AutoTrees plugin.
+# - Remove dblClick event from plugin list - it wasn't doing anything
+# - Can now be run stand-alone to aid in debugging problems
+# 0.11 EKR: Use stand-alone leoGlobals module to simplify code.
+# 0.12 EKR: Folded in some minor changes from Paul to support AutoTrees 
+# plugin.
 # 0.13 Paul Paterson
-#     - Fixed path in installPlugin that ignore the local_paths setting
-#     - Generalized code to support LeoUpdate plugin.
+# - Fixed path in installPlugin that ignore the local_paths setting
+# - Generalized code to support LeoUpdate plugin.
 # 0.14 EKR:
-#     - Several methods now return if get.keywords('c') is None.
-#       This may fix some startup bugs, or not.
+# - Several methods now return if get.keywords('c') is None.
+#   This may fix some startup bugs, or not.
 # 0.15 Paul Paterson:
-#     - Reorganized to speed loading of initial display
-#     - Added a "Close" button. Guess what it does?!
-#     - Added code to dynamically enable a plugin at runtime
-# 0.16 Paul Paterson:
-#     - Complete code to dynamically enable plugins
+# - Reorganized to speed loading of initial display
+# - Added a "Close" button. Guess what it does?!
+# - Added code to dynamically enable a plugin at runtime
+# 0.16 Paul Paterson: Complete code to dynamically enable plugins
 # 0.17 Paul Paterson:
-#     - Speeded up the getVersionHistory step of reading plugins
-#     - Allow specification of plugin load order.
-# 0.18 EKR:
-#     - Added g.app.dialogs hack to ensure dialog stays in front.
-# 0.19 EKR:
-#     - Removed call to Pmw.initialise [sic].
-#       This is now done in Leo's core.
+# - Speeded up the getVersionHistory step of reading plugins
+# - Allow specification of plugin load order.
+# 0.18 EKR: Added g.app.dialogs hack to ensure dialog stays in front.
+# 0.19 EKR: Removed call to Pmw.initialise [sic]. This is now done in Leo's 
+# core.
 # 0.20 EKR: (removed g.top)
-#     - Init registers no hooks.
-#     - Added new 'c' arg to topLevelMenu.
-#     - ManagerDialog now remembers c (c will be None if called standalone).
-#     - Added ctor to LocalPluginCollection.
-#     - LocalPluginCollection uses self.c rather than g.top>
-#     - Can't enable plugins dynamically when called stand-alone.
-#     - Removed KEYWORDS hack.
-# 0.21 EKR
-#     - Removed the g.app.dialog hack.
+# - Init registers no hooks.
+# - Added new 'c' arg to topLevelMenu.
+# - ManagerDialog now remembers c (c will be None if called standalone).
+# - Added ctor to LocalPluginCollection.
+# - LocalPluginCollection uses self.c rather than g.top>
+# - Can't enable plugins dynamically when called stand-alone.
+# - Removed KEYWORDS hack.
+# 0.21 EKR: Removed the g.app.dialog hack.
+# 0.22 EKR: Just changed these comments.
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
