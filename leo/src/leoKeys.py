@@ -751,7 +751,7 @@ class autoCompleterClass:
         start = g.app.gui.getInsertPoint(w)
         start = w.index(start+'-1c')
         i,word = self.findAnchor(w)
-        if word.isdigit: return False
+        if word.isdigit(): return False
         self.setObjectAndMembersList(word)
         
         # g.trace(word,self.object,len(self.membersList))
