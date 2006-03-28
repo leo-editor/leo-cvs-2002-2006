@@ -492,6 +492,7 @@ class baseCommands:
         try:
             openType,arg,ext=data
             if not g.doHook("openwith1",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext):
+                enableIdleTimeHook(idleTimeDelay=100)
                 #@            << set ext based on the present language >>
                 #@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
                 if not ext:

@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9369" clone_windows="0"/>
-<globals body_outline_ratio="0.535469107551">
-	<global_window_position top="29" left="196" height="886" width="956"/>
+<globals body_outline_ratio="0.515801354402">
+	<global_window_position top="16" left="265" height="886" width="956"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,14 +14,12 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051125080855,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051026143009,ekr.20051125080855,ekr.20050920085536.65,ekr.20051008135051.1,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.2052,"
-expanded="ekr.20031218072017.1723,ekr.20031218072017.1723,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051125080855,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051026143009,ekr.20051125080855,ekr.20050920085536.65,ekr.20051008135051.1,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.2052,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601"
-marks="ekr.20050920085536.65,"
-expanded="ekr.20031218072017.1723,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
+marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -354,6 +352,39 @@ expanded="ekr.20031218072017.1723,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20060325110412"><vh>registerBinding</vh></v>
 </v>
 </v>
+<v t="ekr.20060228071700"><vh>Suppressed autocompletion after numbers</vh></v>
+<v t="ekr.20060227120635"><vh>Added Lua patch</vh>
+<v t="ekr.20060328110802.1"><vh>Report</vh></v>
+<v t="ekr.20031218072017.367"><vh>How to add support for a new language</vh>
+<v t="EKR.20040623090054"><vh>&lt;&lt; define global colorizer data &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+<v t="ekr.20031218072017.370"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
+<v t="ekr.20031218072017.371"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
+<v t="ekr.20031218072017.372"><vh>actionscript keywords</vh></v>
+<v t="bwmulder.20041023131509"><vh>ada keywords</vh></v>
+<v t="ekr.20040206072057"><vh>c# keywords</vh></v>
+<v t="ekr.20031218072017.373"><vh>c/c++ keywords</vh></v>
+<v t="ekr.20040401103539"><vh>css keywords</vh></v>
+<v t="ekr.20031218072017.374"><vh>elisp keywords</vh></v>
+<v t="ekr.20041107093834"><vh>forth keywords</vh></v>
+<v t="ekr.20031218072017.375"><vh>html keywords</vh></v>
+<v t="ekr.20031218072017.376"><vh>java keywords</vh></v>
+<v t="ekr.20031218072017.377"><vh>latex keywords</vh></v>
+<v t="ekr.20060328110802"><vh>lua keywords</vh></v>
+<v t="ekr.20031218072017.378"><vh>pascal keywords</vh></v>
+<v t="ekr.20031218072017.379"><vh>perl keywords</vh></v>
+<v t="ekr.20031218072017.380"><vh>php keywords</vh></v>
+<v t="ekr.20050618052653"><vh>plsql keywords</vh></v>
+<v t="ekr.20031218072017.381"><vh>python keywords</vh></v>
+<v t="ekr.20040331145826"><vh>rapidq keywords</vh></v>
+<v t="ekr.20031218072017.382"><vh>rebol keywords</vh></v>
+<v t="ekr.20040401111125"><vh>shell keywords</vh></v>
+<v t="ekr.20031218072017.383"><vh>tcl/tk keywords</vh></v>
+</v>
+<v t="ekr.20050618052621"><vh>Add the language name to @language default_target_language entry in leoSettings.leo</vh></v>
+</v>
+<v t="ekr.20031218072017.1809"><vh>importDerivedFile</vh></v>
+</v>
 </v>
 <v t="ekr.20060323131536.1"><vh>Bugs</vh>
 <v t="ekr.20060309022225"><vh>Fixed problem with left &amp; right arrows in outline mode</vh>
@@ -452,7 +483,7 @@ expanded="ekr.20031218072017.1723,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 </v>
 <v t="ekr.20060321111639"><vh>Got rid of settings messages</vh>
-<v t="ekr.20031218072017.1723" a="E"><vh>createMenuEntries</vh>
+<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
 <v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
 <v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
@@ -513,7 +544,7 @@ expanded="ekr.20031218072017.1723,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20060221141535"><vh>completeAllBindingsForWidget</vh></v>
 <v t="ekr.20060324092758"><vh>completeOneBindingForWidget</vh></v>
 </v>
-<v t="ekr.20031218072017.1723" a="E"><vh>createMenuEntries</vh>
+<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
 <v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
 <v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
@@ -555,6 +586,7 @@ expanded="ekr.20031218072017.1723,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
 </v>
 </v>
+<v t="ekr.20060305110016"><vh>Made sure autocompleter and calltip text stick</vh></v>
 </v>
 <v t="ekr.20060323140748"><vh>Plugins</vh>
 <v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
@@ -653,20 +685,7 @@ expanded="ekr.20031218072017.1723,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 </v>
 <v t="ekr.20060301102950" a="V"><vh>To do 4.4 b3</vh>
-<v t="ekr.20060325124056"><vh>Add unit tests for k.registerCommand</vh></v>
-<v t="ekr.20060307074624"><vh>Improve autocompleter 3</vh>
-<v t="ekr.20060305110016"><vh>* autocompleter text not always sticking</vh></v>
-<v t="ekr.20060307074302"><vh>* Control-g doesn't work in find completion</vh></v>
-<v t="ekr.20060228071700"><vh>Ignore autocompletion for number.</vh></v>
-</v>
-<v t="ekr.20060325122553"><vh>Docs</vh>
-<v t="ekr.20060309021641"><vh>Document autocompleter better</vh></v>
-</v>
 <v t="ekr.20060307074302.1"><vh>set-change-text command should work when entering find text.</vh></v>
-<v t="ekr.20060324075112"><vh>Maybe</vh>
-<v t="ekr.20060227123644"><vh>There are still problems with focus: remove the optimizations?</vh></v>
-<v t="ekr.20060321110256"><vh>Create better unit tests for master key handler</vh></v>
-</v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -708,8 +727,7 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20060123151617"><vh>@thin leoFind.py</vh></v>
 <v t="ekr.20031218072017.3655"><vh>@thin leoFrame.py</vh></v>
 <v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
-<v t="ekr.20031218072017.3749"
-expanded="ekr.20031218072017.3750,ekr.20031218072017.3781,ekr.20031218072017.1723,"><vh>@thin leoMenu.py</vh></v>
+<v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3821"><vh>Gui Tkinter classes</vh>
 <v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
@@ -723,7 +741,7 @@ marks="ekr.20031218072017.1329,ekr.20051026143009,"><vh>@thin leoTkinterFrame.py
 <v t="ekr.20040803072955"
 marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
-<v t="ekr.20031218072017.3748" a="E"
+<v t="ekr.20031218072017.3748"
 marks="ekr.20051008135051.1,ekr.20050920085536.65,"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,ekr.20051125080855,"><vh>@thin leoEditCommands.py</vh></v>
@@ -785,6 +803,621 @@ marks="ekr.20051022142249,ekr.20051125080855,"><vh>@thin leoEditCommands.py</vh>
     if u.yview:
         c.bodyWantsFocus()
         c.frame.body.setYScrollPosition(u.yview)</t>
+<t tx="EKR.20040623090054">case_insensitiveLanguages = ['plsql',]</t>
+<t tx="bwmulder.20041023131509">ada_keywords = [
+    "abort",       "else",       "new",        "return",
+    "abs",         "elsif",      "not",        "reverse",
+    "abstract",    "end",        "null",
+    "accept",      "entry",      "select",
+    "access",      "exception",  "separate",
+    "aliased",     "exit",       "of",         "subtype",
+    "all",                       "or",
+    "and",         "for",        "others",     "tagged",
+    "array",       "function",   "out",        "task",
+    "at",                                      "terminate",
+                   "generic",    "package",    "then",
+    "begin",       "goto",       "pragma",     "type",
+    "body",                      "private",
+                   "if",         "procedure",
+    "case",        "in",         "protected",  "until",
+    "constant",    "is",                       "use",
+                                 "raise",
+    "declare",                   "range",      "when",
+    "delay",       "limited",    "record",     "while",
+    "delta",       "loop",       "rem",        "with",
+    "digits",                    "renames",
+    "do",          "mod",        "requeue",    "xor"
+   ]</t>
+<t tx="ekr.20031218072017.367">@nocolor
+
+- Add a new entries in &lt;&lt; define global data structures &gt;&gt; app
+
+- Add a new Tk.Radiobutton in &lt;&lt;create the Target Language frame&gt;&gt;
+
+- Add an entry to the languages list in &lt;&lt;configure language-specific settings&gt;&gt;
+
+- Add a list of the keywords of the language to &lt;&lt; define colorizer keywords &gt;&gt;
+
+  N.B.: the name of this list must be x_keywords, where x is the entry in language in step a.
+
+- Add any language-specifig code to leoColor.colorizeAnyLanguage.
+  For most languages nothing need be done in this step.
+  
+- If the language is case insensitive, add it to the list of
+case_insensitiveLanguages found in  &lt;&lt; define global colorizer data &gt;&gt;
+
+TESTS
+
+- Test the syntax coloring for the new language by using the @language directive.
+
+- Test workings of the Preferences Panel by choosing the language in the panel and by looking at code that is _not_ under control of an @language directive.
+
+- Test the leoConfig.txt by setting default_target_language to the name of the new language.  When you restart Leo, the new language should be selected in the Prefs panel.
+
+- Remove leoConfig.txt, select the new language in the Prefs panel, and save the .leo file.  Open the file with a text editor and check to make sure that the &lt;preferences&gt; tag (near the top) contains an entry like this:
+
+&lt;preferences allow_rich_text="0" defaultTargetLanguage="Python"&gt;
+&lt;/preferences&gt;
+
+but with the name of your new language instead of "Python".
+
+- Create an @root node and verify that you can Tangle it.
+
+@color</t>
+<t tx="ekr.20031218072017.368"># Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */", # C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @&gt;", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "&lt;!-- --&gt;",
+    "java" : "// /* */",
+    "latex" : "%",
+    "lua" : "--",  # ddm 13/02/06
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "lua" : "lua",  # ddm 13/02/06
+    "noweb" : "nw",
+    "pascal" : "p",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "plsql" : "sql", # qt02537 2005-05-27
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "lua" : "lua",  # ddm 13/02/06
+    "noweb" : "nw",
+    "p"     : "pascal",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlpod", # 11/7/05
+    "php"   : "php",
+    "py"    : "python",
+    "sql"   : "plsql", # qt02537 2005-05-27
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }</t>
+<t tx="ekr.20031218072017.370"># Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
+
+if self.language == "cweb": # Use C comments, not cweb sentinel comments.
+    delim1,delim2,delim3 = g.set_delims_from_language("c")
+elif self.comment_string:
+    delim1,delim2,delim3 = g.set_delims_from_string(self.comment_string)
+elif self.language == "plain": # 1/30/03
+    delim1,delim2,delim3 = None,None,None
+else:
+    delim1,delim2,delim3 = g.set_delims_from_language(self.language)
+
+self.single_comment_start = delim1
+self.block_comment_start = delim2
+self.block_comment_end = delim3
+
+# A strong case can be made for making this code as fast as possible.
+# Whether this is compatible with general language descriptions remains to be seen.
+self.case_sensitiveLanguage = self.language not in case_insensitiveLanguages
+self.has_string = self.language != "plain"
+if self.language == "plain":
+    self.string_delims = ()
+elif self.language in ("elisp","html"):
+    self.string_delims = ('"')
+else:
+    self.string_delims = ("'",'"')
+self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
+
+# The list of languages for which keywords exist.
+# Eventually we might just use language_delims_dict.keys()
+languages = [
+    "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex","lua",
+    "pascal","perl","perlpod","php","plsql","python","rapidq","rebol","shell","tcltk"]
+
+self.keywords = []
+if self.language == "cweb":
+    for i in self.c_keywords:
+        self.keywords.append(i)
+    for i in self.cweb_keywords:
+        self.keywords.append(i)
+else:
+    for name in languages:
+        if self.language==name: 
+            # g.trace("setting keywords for",name)
+            self.keywords = getattr(self, name + "_keywords")
+
+# For forth.
+self.nextForthWordIsNew = False
+
+# Color plain text unless we are under the control of @nocolor.
+# state = g.choose(self.flag,"normal","nocolor")
+state = self.setFirstLineState()
+
+if 1: # 10/25/02: we color both kinds of references in cweb mode.
+    self.lb = "&lt;&lt;"
+    self.rb = "&gt;&gt;"
+else:
+    self.lb = g.choose(self.language == "cweb","@&lt;","&lt;&lt;")
+    self.rb = g.choose(self.language == "cweb","@&gt;","&gt;&gt;")</t>
+<t tx="ekr.20031218072017.371">@others
+
+cweb_keywords = c_keywords
+perlpod_keywords = perl_keywords</t>
+<t tx="ekr.20031218072017.372">actionscript_keywords = [
+#Jason 2003-07-03 
+#Actionscript keywords for Leo adapted from UltraEdit syntax highlighting
+"break", "call", "continue", "delete", "do", "else", "false", "for", "function", "goto", "if", "in", "new", "null", "return", "true", "typeof", "undefined", "var", "void", "while", "with", "#include", "catch", "constructor", "prototype", "this", "try", "_parent", "_root", "__proto__", "ASnative", "abs", "acos", "appendChild", "asfunction", "asin", "atan", "atan2", "attachMovie", "attachSound", "attributes", "BACKSPACE", "CAPSLOCK", "CONTROL", "ceil", "charAt", "charCodeAt", "childNodes", "chr", "cloneNode", "close", "concat", "connect", "cos", "createElement", "createTextNode", "DELETEKEY", "DOWN", "docTypeDecl", "duplicateMovieClip", "END", "ENTER", "ESCAPE", "enterFrame", "entry", "equal", "eval", "evaluate", "exp", "firstChild", "floor", "fromCharCode", "fscommand", "getAscii", "getBeginIndex", "getBounds", "getBytesLoaded", "getBytesTotal", "getCaretIndex", "getCode", "getDate", "getDay", "getEndIndex", "getFocus", "getFullYear", "getHours", "getMilliseconds", "getMinutes", "getMonth", "getPan", "getProperty", "getRGB", "getSeconds", "getTime", "getTimer", "getTimezoneOffset", "getTransform", "getURL", "getUTCDate", "getUTCDay", "getUTCFullYear", "getUTCHours", "getUTCMilliseconds", "getUTCMinutes", "getUTCMonth", "getUTCSeconds", "getVersion", "getVolume", "getYear", "globalToLocal", "gotoAndPlay", "gotoAndStop", "HOME", "haschildNodes", "hide", "hitTest", "INSERT", "Infinity", "ifFrameLoaded", "ignoreWhite", "indexOf", "insertBefore", "int", "isDown", "isFinite", "isNaN", "isToggled", "join", "keycode", "keyDown", "keyUp", "LEFT", "LN10", "LN2", "LOG10E", "LOG2E", "lastChild", "lastIndexOf", "length", "load", "loaded", "loadMovie", "loadMovieNum", "loadVariables", "loadVariablesNum", "localToGlobal", "log", "MAX_VALUE", "MIN_VALUE", "max", "maxscroll", "mbchr", "mblength", "mbord", "mbsubstring", "min", "NEGATIVE_INFINITY", "NaN", "newline", "nextFrame", "nextScene", "nextSibling", "nodeName", "nodeType", "nodeValue", "on", "onClipEvent", "onClose", "onConnect", "onData", "onLoad", "onXML", "ord", "PGDN", "PGUP", "PI", "POSITIVE_INFINITY", "parentNode", "parseFloat", "parseInt", "parseXML", "play", "pop", "pow", "press", "prevFrame", "previousSibling", "prevScene", "print", "printAsBitmap", "printAsBitmapNum", "printNum", "push", "RIGHT", "random", "release", "removeMovieClip", "removeNode", "reverse", "round", "SPACE", "SQRT1_2", "SQRT2", "scroll", "send", "sendAndLoad", "set", "setDate", "setFocus", "setFullYear", "setHours", "setMilliseconds", "setMinutes", "setMonth", "setPan", "setProperty", "setRGB", "setSeconds", "setSelection", "setTime", "setTransform", "setUTCDate", "setUTCFullYear", "setUTCHours", "setUTCMilliseconds", "setUTCMinutes", "setUTCMonth", "setUTCSeconds", "setVolume", "setYear", "shift", "show", "sin", "slice", "sort", "start", "startDrag", "status", "stop", "stopAllSounds", "stopDrag", "substr", "substring", "swapDepths", "splice", "split", "sqrt", "TAB", "tan", "targetPath", "tellTarget", "toggleHighQuality", "toLowerCase", "toString", "toUpperCase", "trace", "UP", "UTC", "unescape", "unloadMovie", "unLoadMovieNum", "unshift", "updateAfterEvent", "valueOf", "xmlDecl", "_alpha", "_currentframe", "_droptarget", "_focusrect", "_framesloaded", "_height", "_highquality", "_name", "_quality", "_rotation", "_soundbuftime", "_target", "_totalframes", "_url", "_visible", "_width", "_x", "_xmouse", "_xscale", "_y", "_ymouse", "_yscale", "and", "add", "eq", "ge", "gt", "le", "lt", "ne", "not", "or", "Array", "Boolean", "Color", "Date", "Key", "Math", "MovieClip", "Mouse", "Number", "Object", "Selection", "Sound", "String", "XML", "XMLSocket"
+]</t>
+<t tx="ekr.20031218072017.373">c_keywords = [
+    # C keywords
+    "auto","break","case","char","continue",
+    "default","do","double","else","enum","extern",
+    "float","for","goto","if","int","long","register","return",
+    "short","signed","sizeof","static","struct","switch",
+    "typedef","union","unsigned","void","volatile","while",
+    # C++ keywords
+    "asm","bool","catch","class","const","const_cast",
+    "delete","dynamic_cast","explicit","false","friend",
+    "inline","mutable","namespace","new","operator",
+    "private","protected","public","reinterpret_cast","static_cast",
+    "template","this","throw","true","try",
+    "typeid","typename","using","virtual","wchar_t"]</t>
+<t tx="ekr.20031218072017.374"># EKR: needs more work.
+elisp_keywords = [
+    # Maybe...
+    "error","princ",
+    # More typical of other lisps...
+    "apply","eval",
+    "t","nil",
+    "and","or","not",
+    "cons","car","cdr",
+    "cond",
+    "defconst","defun","defvar",
+    "eq","ne","equal","gt","ge","lt","le",
+    "if",
+    "let",
+    "mapcar",
+    "prog","progn",
+    "set","setq",
+    "type-of",
+    "unless",
+    "when","while"]</t>
+<t tx="ekr.20031218072017.375"># No longer used by syntax colorer.
+html_keywords = []
+
+if 0: # Not used at present.
+    unused_keywords = [
+        # html constructs.
+        "a","body","cf",
+        "h1","h2","h3","h4","h5","h6",
+        "head","html","hr",
+        "i","img","li","lu","meta",
+        "p","title","ul",
+        # Common tags
+        "caption","col","colgroup",
+        "table","tbody","td","tfoot","th","thead","tr",
+        "script","style"]
+
+    html_specials = [ "&lt;%","%&gt;" ]</t>
+<t tx="ekr.20031218072017.376">java_keywords = [
+    "abstract","boolean","break","byte","byvalue",
+    "case","cast","catch","char","class","const","continue",
+    "default","do","double","else","extends",
+    "false","final","finally","float","for","future",
+    "generic","goto","if","implements","import","inner",
+    "instanceof","int","interface","long","native",
+    "new","null","operator","outer",
+    "package","private","protected","public","rest","return",
+    "short","static","super","switch","synchronized",
+    "this","throw","transient","true","try",
+    "var","void","volatile","while"]</t>
+<t tx="ekr.20031218072017.377">#If you see two idenitical words, with minor capitalization differences
+#DO NOT ASSUME that they are the same word. For example \vert produces
+#a single vertical line and \Vert produces a double vertical line
+#Marcus A. Martin.
+
+latex_special_keyword_characters = "@(){}%"
+
+latex_keywords = [
+    #special keyworlds
+    "\\%", # 11/9/03
+    "\\@", "\\(", "\\)", "\\{", "\\}",
+    #A
+    "\\acute", "\\addcontentsline", "\\addtocontents", "\\addtocounter", "\\address",
+    "\\addtolength", "\\addvspace", "\\AE", "\\ae", "\\aleph", "\\alph", "\\angle",
+    "\\appendix", 
+    "\\approx", "\\arabic", "\\arccos", "\\arcsin", "\\arctan", "\\ast", "\\author",
+    #B
+    "\\b", "\\backmatter", "\\backslash", "\\bar", "\\baselineskip", "\\baselinestretch",
+    "\\begin", "\\beta", "\\bezier", "\\bf", "\\bfseries", "\\bibitem", "\\bigcap",
+    "\\bigcup", "\\bigodot", "\\bigoplus", "\\bigotimes", "\\bigskip", "\\biguplus",
+    "\\bigvee", "\\bigwedge", "\\bmod", "\\boldmath", "\\Box", "\\breve", "\\bullet",
+    #C
+    "\\c", "\\cal", "\\caption", "\\cdot", "\\cdots", "\\centering", "\\chapter",
+    "\\check", "\\chi", "\\circ", "\\circle", "\\cite", "\\cleardoublepage", "\\clearpage",
+    "\\cline", "\\closing", "\\clubsuit", "\\coprod", "\\copywright", "\\cos", "\\cosh",
+    "\\cot", "\\coth", "csc",
+    #D
+    "\\d", "\\dag", "\\dashbox", "\\date", "\\ddag", "\\ddot", "\\ddots", "\\decl",
+    "\\deg", "\\Delta", 
+    "\\delta", "\\depthits", "\\det", 
+    "\\DH", "\\dh", "\\Diamond", "\\diamondsuit", "\\dim", "\\div", "\\DJ", "\\dj",
+    "\\documentclass", "\\documentstyle", 
+    "\\dot", "\\dotfil", "\\downarrow",
+    #E
+    "\\ell", "\\em", "\\emph", "\\end", "\\enlargethispage", "\\ensuremath",
+    "\\enumi", "\\enuii", "\\enumiii", "\\enuiv", "\\epsilon", "\\equation", "\\equiv",
+    "\\eta", "\\example", "\\exists", "\\exp",
+    #F
+    "\\fbox", "\\figure", "\\flat", "\\flushbottom", "\\fnsymbol", "\\footnote",
+    "\\footnotemark", "\\fotenotesize", 
+    "\\footnotetext", "\\forall", "\\frac", "\\frame", "\\framebox", "\\frenchspacing",
+    "\\frontmatter",
+    #G
+    "\\Gamma", "\\gamma", "\\gcd", "\\geq", "\\gg", "\\grave", "\\guillemotleft", 
+    "\\guillemotright", "\\guilsinglleft", "\\guilsinglright",
+    #H
+    "\\H", "\\hat", "\\hbar", "\\heartsuit", "\\heightits", "\\hfill", "\\hline", "\\hom",
+    "\\hrulefill", "\\hspace", "\\huge", "\\Huge", "\\hyphenation"
+    #I
+    "\\Im", "\\imath", "\\include", "includeonly", "indent", "\\index", "\\inf", "\\infty", 
+    "\\input", "\\int", "\\iota", "\\it", "\\item", "\\itshape",
+    #J
+    "\\jmath", "\\Join",
+    #K
+    "\\k", "\\kappa", "\\ker", "\\kill",
+    #L
+    "\\label", "\\Lambda", "\\lambda", "\\langle", "\\large", "\\Large", "\\LARGE", 
+    "\\LaTeX", "\\LaTeXe", 
+    "\\ldots", "\\leadsto", "\\left", "\\Leftarrow", "\\leftarrow", "\\lefteqn", "\\leq",
+    "\\lg", "\\lhd", "\\lim", "\\liminf", "\\limsup", "\\line", "\\linebreak", 
+    "\\linethickness", "\\linewidth", "\\listfiles",
+    "\\ll", "\\ln", "\\location", "\\log", "\\Longleftarrow", "\\longleftarrow", 
+    "\\Longrightarrow", "longrightarrow",
+    #M
+    "\\mainmatter", "\\makebox", "\\makeglossary", "\\makeindex","\\maketitle", "\\markboth", "\\markright",
+    "\\mathbf", "\\mathcal", "\\mathit", "\\mathnormal", "\\mathop",
+    "\\mathrm", "\\mathsf", "\\mathtt", "\\max", "\\mbox", "\\mdseries", "\\medskip",
+    "\\mho", "\\min", "\\mp", "\\mpfootnote", "\\mu", "\\multicolumn", "\\multiput",
+    #N
+    "\\nabla", "\\natural", "\\nearrow", "\\neq", "\\newcommand", "\\newcounter", 
+    "\\newenvironment", "\\newfont",
+    "\\newlength", "\\newline", "\\newpage", "\\newsavebox", "\\newtheorem", "\\NG", "\\ng",
+    "\\nocite", "\\noindent", "\\nolinbreak", "\\nopagebreak", "\\normalsize",
+    "\\not", "\\nu", "nwarrow",
+    #O
+    "\\Omega", "\\omega", "\\onecolumn", "\\oint", "\\opening", "\\oval", 
+    "\\overbrace", "\\overline",
+    #P
+    "\\P", "\\page", "\\pagebreak", "\\pagenumbering", "\\pageref", "\\pagestyle", 
+    "\\par", "\\parbox", "\\paragraph", "\\parindent", "\\parskip", "\\part", 
+    "\\partial", "\\per", "\\Phi", "\\phi", "\\Pi", "\\pi", "\\pm", 
+    "\\pmod", "\\pounds", "\\prime", "\\printindex", "\\prod", "\\propto", "\\protext", 
+    "\\providecomamnd", "\\Psi", "\\psi", "\\put",
+    #Q
+    "\\qbezier", "\\quoteblbase", "\\quotesinglbase",
+    #R
+    "\\r", "\\raggedbottom", "\\raggedleft", "\\raggedright", "\\raisebox", "\\rangle", 
+    "\\Re", "\\ref", "\\renewcommand", "\\renewenvironment", "\\rhd", "\\rho", "\\right", 
+    "\\Rightarrow", "\\rightarrow", "\\rm", "\\rmfamily",
+    "\\Roman", "\\roman", "\\rule", 
+    #S
+    "\\s", "\\samepage", "\\savebox", "\\sbox", "\\sc", "\\scriptsize", "\\scshape", 
+    "\\searrow", "\\sec", "\\section",
+    "\\setcounter", "\\setlength", "\\settowidth", "\\settodepth", "\\settoheight", 
+    "\\settowidth", "\\sf", "\\sffamily", "\\sharp", "\\shortstack", "\\Sigma", "\\sigma", 
+    "\\signature", "\\sim", "\\simeq", "\\sin", "\\sinh", "\\sl", "\\SLiTeX",
+    "\\slshape", "\\small", "\\smallskip", "\\spadesuit", "\\sqrt", "\\sqsubset",
+    "\\sqsupset", "\\SS",
+    "\\stackrel", "\\star", "\\subsection", "\\subset", 
+    "\\subsubsection", "\\sum", "\\sup", "\\supressfloats", "\\surd", "\\swarrow",
+    #T
+    "\\t", "\\table", "\\tableofcontents", "\\tabularnewline", "\\tan", "\\tanh", 
+    "\\tau", "\\telephone", "\\TeX", "\\textbf",
+    "\\textbullet", "\\textcircled", "\\textcompworkmark", "\\textemdash", 
+    "\\textendash", "\\textexclamdown", "\\textheight", "\\textquestiondown", 
+    "\\textquoteblleft", "\\textquoteblright", "\\textquoteleft",
+    "\\textperiod", "\\textquotebl", "\\textquoteright", "\\textmd", "\\textit", "\\textrm", 
+    "\\textsc", "\\textsl", "\\textsf", "\\textsuperscript", "\\texttt", "\\textup",
+    "\\textvisiblespace", "\\textwidth", "\\TH", "\\th", "\\thanks", "\\thebibligraphy",
+    "\\Theta", "theta", 
+    "\\tilde", "\\thinlines", 
+    "\\thispagestyle", "\\times", "\\tiny", "\\title", "\\today", "\\totalheightits", 
+    "\\triangle", "\\tt", 
+    "\\ttfamily", "\\twocoloumn", "\\typeout", "\\typein",
+    #U
+    "\\u", "\\underbrace", "\\underline", "\\unitlength", "\\unlhd", "\\unrhd", "\\Uparrow",
+    "\\uparrow", "\\updownarrow", "\\upshape", "\\Upsilon", "\\upsilon", "\\usebox",
+    "\\usecounter", "\\usepackage", 
+    #V
+    "\\v", "\\value", "\\varepsilon", "\\varphi", "\\varpi", "\\varrho", "\\varsigma", 
+    "\\vartheta", "\\vdots", "\\vec", "\\vector", "\\verb", "\\Vert", "\\vert", "\\vfill",
+    "\\vline", "\\vphantom", "\\vspace",
+    #W
+    "\\widehat", "\\widetilde", "\\widthits", "\\wp",
+    #X
+    "\\Xi", "\\xi",
+    #Z
+    "\\zeta" ]</t>
+<t tx="ekr.20031218072017.378">pascal_keywords = [
+    "and","array","as","begin",
+    "case","const","class","constructor","cdecl"
+    "div","do","downto","destructor","dispid","dynamic",
+    "else","end","except","external",
+    "false","file","for","forward","function","finally",
+    "goto","if","in","is","label","library",
+    "mod","message","nil","not","nodefault""of","or","on",
+    "procedure","program","packed","pascal",
+    "private","protected","public","published",
+    "record","repeat","raise","read","register",
+    "set","string","shl","shr","stdcall",
+    "then","to","true","type","try","until","unit","uses",
+    "var","virtual","while","with","xor"
+    # object pascal
+    "asm","absolute","abstract","assembler","at","automated",
+    "finalization",
+    "implementation","inherited","initialization","inline","interface",
+    "object","override","resident","resourcestring",
+    "threadvar",
+    # limited contexts
+    "exports","property","default","write","stored","index","name" ]</t>
+<t tx="ekr.20031218072017.379">perl_keywords = [
+    "continue","do","else","elsif","format","for","format","for","foreach",
+    "if","local","package","sub","tr","unless","until","while","y",
+    # Comparison operators
+    "cmp","eq","ge","gt","le","lt","ne",
+    # Matching ooperators
+    "m","s",
+    # Unary functions
+    "alarm","caller","chdir","cos","chroot","exit","eval","exp",
+    "getpgrp","getprotobyname","gethostbyname","getnetbyname","gmtime",
+    "hex","int","length","localtime","log","ord","oct",
+    "require","reset","rand","rmdir","readlink",
+    "scalar","sin","sleep","sqrt","srand","umask",
+    # Transfer ops
+    "next","last","redo","go","dump",
+    # File operations...
+    "select","open",
+    # FL ops
+    "binmode","close","closedir","eof",
+    "fileno","getc","getpeername","getsockname","lstat",
+    "readdir","rewinddir","stat","tell","telldir","write",
+    # FL2 ops
+    "bind","connect","flock","listen","opendir",
+    "seekdir","shutdown","truncate",
+    # FL32 ops
+    "accept","pipe",
+    # FL3 ops
+    "fcntl","getsockopt","ioctl","read",
+    "seek","send","sysread","syswrite",
+    # FL4 &amp; FL5 ops
+    "recv","setsocket","socket","socketpair",
+    # Array operations
+    "pop","shift","split","delete",
+    # FLIST ops
+    "sprintf","grep","join","pack",
+    # LVAL ops
+    "chop","defined","study","undef",
+    # f0 ops
+    "endhostent","endnetent","endservent","endprotoent",
+    "endpwent","endgrent","fork",
+    "getgrent","gethostent","getlogin","getnetent","getppid",
+    "getprotoent","getpwent","getservent",
+    "setgrent","setpwent","time","times","wait","wantarray",
+    # f1 ops
+    "getgrgid","getgrnam","getprotobynumber","getpwnam","getpwuid",
+    "sethostent","setnetent","setprotoent","setservent",
+    # f2 ops
+    "atan2","crypt",
+    "gethostbyaddr","getnetbyaddr","getpriority","getservbyname","getservbyport",
+    "index","link","mkdir","msgget","rename",
+    "semop","setpgrp","symlink","unpack","waitpid",
+    # f2 or 3 ops
+    "index","rindex","substr",
+    # f3 ops
+    "msgctl","msgsnd","semget","setpriority","shmctl","shmget","vec",
+    # f4 &amp; f5 ops
+    "semctl","shmread","shmwrite","msgrcv",
+    # Assoc ops
+    "dbmclose","each","keys","values",
+    # List ops
+    "chmod","chown","die","exec","kill",
+    "print","printf","return","reverse",
+    "sort","system","syscall","unlink","utime","warn"]</t>
+<t tx="ekr.20031218072017.380">php_keywords = [ # 08-SEP-2002 DTHEIN
+    "__CLASS__", "__FILE__", "__FUNCTION__", "__LINE__",
+    "and", "as", "break",
+    "case", "cfunction", "class", "const", "continue",
+    "declare", "default", "do",
+    "else", "elseif", "enddeclare", "endfor", "endforeach",
+    "endif", "endswitch",  "endwhile", "eval", "extends",
+    "for", "foreach", "function", "global", "if",
+    "new", "old_function", "or", "static", "switch",
+    "use", "var", "while", "xor" ]
+    
+# The following are supposed to be followed by ()
+php_paren_keywords = [
+    "array", "die", "echo", "empty", "exit",
+    "include", "include_once", "isset", "list",
+    "print", "require", "require_once", "return",
+    "unset" ]
+    
+# The following are handled by special case code:
+# "&lt;?php", "?&gt;"
+</t>
+<t tx="ekr.20031218072017.381">python_keywords = [
+    "and",       "del",       "for",       "is",        "raise",    
+    "assert",    "elif",      "from",      "lambda",    "return",   
+    "break",     "else",      "global",    "not",       "try",      
+    "class",     "except",    "if",        "or",        "yield",   
+    "continue",  "exec",      "import",    "pass",      "while",
+    "def",       "finally",   "in",        "print"]</t>
+<t tx="ekr.20031218072017.382">rebol_keywords = [
+#Jason 2003-07-03 
+#based on UltraEdit syntax highlighting
+"about", "abs", "absolute", "add", "alert", "alias", "all", "alter", "and", "and~", "any", "append", "arccosine", "arcsine", "arctangent", "array", "ask", "at",  
+"back", "bind", "boot-prefs", "break", "browse", "build-port", "build-tag",  
+"call", "caret-to-offset", "catch", "center-face", "change", "change-dir", "charset", "checksum", "choose", "clean-path", "clear", "clear-fields", "close", "comment", "complement", "compose", "compress", "confirm", "continue-post", "context", "copy", "cosine", "create-request", "crypt", "cvs-date", "cvs-version",  
+"debase", "decode-cgi", "decode-url", "decompress", "deflag-face", "dehex", "delete", "demo", "desktop", "detab", "dh-compute-key", "dh-generate-key", "dh-make-key", "difference", "dirize", "disarm", "dispatch", "divide", "do", "do-boot", "do-events", "do-face", "do-face-alt", "does", "dsa-generate-key", "dsa-make-key", "dsa-make-signature", "dsa-verify-signature",  
+"echo", "editor", "either", "else", "emailer", "enbase", "entab", "exclude", "exit", "exp", "extract", 
+"fifth", "find", "find-key-face", "find-window", "flag-face", "first", "flash", "focus", "for", "forall", "foreach", "forever", "form", "forskip", "fourth", "free", "func", "function",  
+"get", "get-modes", "get-net-info", "get-style",  
+"halt", "has", "head", "help", "hide", "hide-popup",  
+"if", "import-email", "in", "inform", "input", "insert", "insert-event-func", "intersect", 
+"join", 
+"last", "launch", "launch-thru", "layout", "license", "list-dir", "load", "load-image", "load-prefs", "load-thru", "log-10", "log-2", "log-e", "loop", "lowercase",  
+"make", "make-dir", "make-face", "max", "maximum", "maximum-of", "min", "minimum", "minimum-of", "mold", "multiply",  
+"negate", "net-error", "next", "not", "now",  
+"offset-to-caret", "open", "open-events", "or", "or~", 
+"parse", "parse-email-addrs", "parse-header", "parse-header-date", "parse-xml", "path-thru", "pick", "poke", "power", "prin", "print", "probe", "protect", "protect-system",  
+"q", "query", "quit",  
+"random", "read", "read-io", "read-net", "read-thru", "reboot", "recycle", "reduce", "reform", "rejoin", "remainder", "remold", "remove", "remove-event-func", "rename", "repeat", "repend", "replace", "request", "request-color", "request-date", "request-download", "request-file", "request-list", "request-pass", "request-text", "resend", "return", "reverse", "rsa-encrypt", "rsa-generate-key", "rsa-make-key", 
+"save", "save-prefs", "save-user", "scroll-para", "second", "secure", "select", "send", "send-and-check", "set", "set-modes", "set-font", "set-net", "set-para", "set-style", "set-user", "set-user-name", "show", "show-popup", "sine", "size-text", "skip", "sort", "source", "split-path", "square-root", "stylize", "subtract", "switch",  
+"tail", "tangent", "textinfo", "third", "throw", "throw-on-error", "to", "to-binary", "to-bitset", "to-block", "to-char", "to-date", "to-decimal", "to-email", "to-event", "to-file", "to-get-word", "to-hash", "to-hex", "to-idate", "to-image", "to-integer", "to-issue", "to-list", "to-lit-path", "to-lit-word", "to-local-file", "to-logic", "to-money", "to-none", "to-pair", "to-paren", "to-path", "to-rebol-file", "to-refinement", "to-set-path", "to-set-word", "to-string", "to-tag", "to-time", "to-tuple", "to-url", "to-word", "trace", "trim", "try",  
+"unfocus", "union", "unique", "uninstall", "unprotect", "unset", "until", "unview", "update", "upgrade", "uppercase", "usage", "use",  
+"vbug", "view", "view-install", "view-prefs",  
+"wait", "what", "what-dir", "while", "write", "write-io",  
+"xor", "xor~",  
+"action!", "any-block!", "any-function!", "any-string!", "any-type!", "any-word!",  
+"binary!", "bitset!", "block!",  
+"char!",  
+"datatype!", "date!", "decimal!", 
+"email!", "error!", "event!",  
+"file!", "function!",  
+"get-word!",  
+"hash!",  
+"image!", "integer!", "issue!",  
+"library!", "list!", "lit-path!", "lit-word!", "logic!",  
+"money!",  
+"native!", "none!", "number!",  
+"object!", "op!",  
+"pair!", "paren!", "path!", "port!",  
+"refinement!", "routine!",  
+"series!", "set-path!", "set-word!", "string!", "struct!", "symbol!",  
+"tag!", "time!", "tuple!",  
+"unset!", "url!",  
+"word!",  
+"any-block?", "any-function?", "any-string?", "any-type?", "any-word?",  
+"binary?", "bitset?", "block?",  
+"char?", "connected?", "crypt-strength?", 
+"datatype?", "date?", "decimal?", "dir?",  
+"email?", "empty?", "equal?", "error?", "even?", "event?", "exists?", "exists-key?",
+"file?", "flag-face?", "found?", "function?",  
+"get-word?", "greater-or-equal?", "greater?",  
+"hash?", "head?",  
+"image?", "in-window?", "index?", "info?", "input?", "inside?", "integer?", "issue?",  
+"length?", "lesser-or-equal?", "lesser?", "library?", "link-app?", "link?", "list?", "lit-path?", "lit-word?", "logic?",  
+"modified?", "money?",  
+"native?", "negative?", "none?", "not-equal?", "number?",  
+"object?", "odd?", "offset?", "op?", "outside?",  
+"pair?", "paren?", "path?", "port?", "positive?",  
+"refinement?", "routine?",  
+"same?", "screen-offset?", "script?", "series?", "set-path?", "set-word?", "size?", "span?", "strict-equal?", "strict-not-equal?", "string?", "struct?",  
+"tag?", "tail?", "time?", "tuple?", "type?",  
+"unset?", "url?",  
+"value?", "view?", 
+"within?", "word?",  
+"zero?"
+]</t>
+<t tx="ekr.20031218072017.383">tcltk_keywords = [ # Only the tcl keywords are here.
+    "after",     "append",    "array",
+    "bgerror",   "binary",    "break",
+    "catch",     "cd",        "clock",
+    "close",     "concat",    "continue",
+    "dde",
+    "encoding",  "eof",       "eval",
+    "exec",      "exit",      "expr",
+    "fblocked",  "fconfigure","fcopy",     "file",      "fileevent",
+    "filename",  "flush",     "for",       "foreach",   "format",
+    "gets",      "glob",      "global",
+    "history",
+    "if",        "incr",      "info",      "interp",
+    "join",
+    "lappend",   "lindex",    "linsert",   "list",      "llength",
+    "load",      "lrange",    "lreplace",  "lsearch",   "lsort",
+    "memory",    "msgcat",
+    "namespace",
+    "open",
+    "package",   "parray",    "pid",
+    "proc",      "puts",      "pwd",
+    "read",      "regexp",    "registry",   "regsub",
+    "rename",    "resource",  "return",
+    "scan",      "seek",      "set",        "socket",   "source",
+    "split",     "string",    "subst",      "switch",
+    "tell",      "time",      "trace",
+    "unknown",   "unset",     "update",     "uplevel",   "upvar",
+    "variable",  "vwait",
+    "while" ]</t>
 <t tx="ekr.20031218072017.840"></t>
 <t tx="ekr.20031218072017.998">def setCallback (self,*args,**keys):
     
@@ -1102,6 +1735,31 @@ self.redrawCount = 0
 self.wantedWidget = None
 self.wantedCallbackScheduled = False
 self.scrollWay = None</t>
+<t tx="ekr.20031218072017.1809">def importDerivedFile (self,event=None):
+    
+    """Create a new outline from a 4.0 derived file."""
+    
+    c = self ; p = c.currentPosition()
+    
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Lua files", "*.lua"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+    
+    names = g.app.gui.runOpenFileDialog(
+        title="Import Derived File",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importDerivedFiles(parent=p,paths=names)</t>
 <t tx="ekr.20031218072017.1974">def destroySelf (self):
     
     # Remember these: we are about to destroy all of our ivars!
@@ -1719,6 +2377,27 @@ def createOpenWithMenuFromTable (self,table):
         if not g.app.unitTesting:
             print "setMenuLabel menu,name,label:",menu,name,label
             g.es_exception()</t>
+<t tx="ekr.20040206072057">csharp_keywords = [
+    "abstract","as",
+    "base","bool","break","byte",
+    "case","catch","char","checked","class","const","continue",
+    "decimal","default","delegate","do","double",
+    "else","enum","event","explicit","extern",
+    "false","finally","fixed","float","for","foreach",
+    "get","goto",
+    "if","implicit","in","int","interface","internal","is",
+    "lock","long",
+    "namespace","new","null",
+    "object","operator","out","override",
+    "params","partial","private","protected","public",
+    "readonly","ref","return",
+    "sbyte","sealed","set","short","sizeof","stackalloc",
+    "static","string","struct","switch",
+    "this","throw","true","try","typeof",
+    "uint","ulong","unchecked","unsafe","ushort","using",
+    "value","virtual","void","volatile",
+    "where","while",
+    "yield"]</t>
 <t tx="ekr.20040303175026.11">def moveToNthChildOf (self,parent,n):
 
     """Move a position to the nth child of parent."""
@@ -1925,6 +2604,109 @@ self.putVnodes()
 self.putTnodes()
 #start = g.printDiffTime("tnodes ",start)
 self.putPostlog()</t>
+<t tx="ekr.20040331145826">rapidq_keywords = [
+# Syntax file for RapidQ
+"$APPTYPE","$DEFINE","$ELSE","$ENDIF","$ESCAPECHARS","$IFDEF","$IFNDEF",
+"$INCLUDE","$MACRO","$OPTIMIZE","$OPTION","$RESOURCE","$TYPECHECK","$UNDEF",
+"ABS","ACOS","ALIAS","AND","AS","ASC","ASIN","ATAN","ATN","BIN$","BIND","BYTE",
+"CALL","CALLBACK","CALLFUNC","CASE","CEIL","CHDIR","CHDRIVE","CHR$","CINT",
+"CLNG","CLS","CODEPTR","COMMAND$","COMMANDCOUNT","CONSOLE","CONST","CONSTRUCTOR",
+"CONVBASE$","COS","CREATE","CSRLIN","CURDIR$","DATA","DATE$","DEC","DECLARE",
+"DEFBYTE","DEFDBL","DEFDWORD","DEFINT","DEFLNG","DEFSHORT","DEFSNG","DEFSTR",
+"DEFWORD","DELETE$","DIM","DIR$","DIREXISTS","DO","DOEVENTS","DOUBLE","DWORD",
+"ELSE","ELSEIF","END","ENVIRON","ENVIRON$","EVENT","EXIT","EXP","EXTENDS",
+"EXTRACTRESOURCE","FIELD$","FILEEXISTS","FIX","FLOOR","FOR","FORMAT$","FRAC",
+"FUNCTION","FUNCTIONI","GET$","GOSUB","GOTO","HEX$","IF","INC","INITARRAY",
+"INKEY$","INP","INPUT","INPUT$","INPUTHANDLE","INSERT$","INSTR","INT","INTEGER",
+"INV","IS","ISCONSOLE","KILL","KILLMESSAGE","LBOUND","LCASE$","LEFT$","LEN",
+"LFLUSH","LIB","LIBRARYINST","LOCATE","LOG","LONG","LOOP","LPRINT","LTRIM$",
+"MEMCMP","MESSAGEBOX","MESSAGEDLG","MID$","MKDIR","MOD","MOUSEX","MOUSEY",
+"NEXT","NOT","OFF","ON","OR","OUT","OUTPUTHANDLE","PARAMSTR$","PARAMSTRCOUNT",
+"PARAMVAL","PARAMVALCOUNT","PCOPY","PEEK","PLAYWAV","POKE","POS","POSTMESSAGE",
+"PRINT","PROPERTY","QUICKSORT","RANDOMIZE","REDIM","RENAME","REPLACE$",
+"REPLACESUBSTR$","RESOURCE","RESOURCECOUNT","RESTORE","RESULT","RETURN",
+"REVERSE$","RGB","RIGHT$","RINSTR","RMDIR","RND","ROUND","RTRIM$","RUN",
+"SCREEN","SELECT","SENDER","SENDMESSAGE","SETCONSOLETITLE","SGN","SHELL",
+"SHL","SHORT","SHOWMESSAGE","SHR","SIN","SINGLE","SIZEOF","SLEEP","SOUND",
+"SPACE$","SQR","STACK","STATIC","STEP","STR$","STRF$","STRING","STRING$",
+"SUB","SUBI","SWAP","TALLY","TAN","THEN","TIME$","TIMER","TO","TYPE","UBOUND",
+"UCASE$","UNLOADLIBRARY","UNTIL","VAL","VARIANT","VARPTR","VARPTR$","VARTYPE",
+"WEND","WHILE","WITH","WORD","XOR"]</t>
+<t tx="ekr.20040401103539">css_keywords = [
+#html tags
+"address", "applet", "area", "a", "base", "basefont",
+"big", "blockquote", "body", "br", "b", "caption", "center",
+"cite", "code", "dd", "dfn", "dir", "div", "dl", "dt", "em", "font",
+"form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "hr", "html", "img",
+"input", "isindex", "i", "kbd", "link", "li", "link", "map", "menu",
+"meta", "ol", "option", "param", "pre", "p", "samp",
+"select", "small", "span", "strike", "strong", "style", "sub", "sup",
+"table", "td", "textarea", "th", "title", "tr", "tt", "ul", "u", "var",
+#units
+"mm", "cm", "in", "pt", "pc", "em", "ex", "px",
+#colors
+"aqua", "black", "blue", "fuchsia", "gray", "green", "lime", "maroon", "navy", "olive", "purple", "red", "silver", "teal", "yellow", "white",
+#important directive
+"!important",
+#font rules
+"font", "font-family", "font-style", "font-variant", "font-weight", "font-size",
+#font values
+"cursive", "fantasy", "monospace", "normal", "italic", "oblique", "small-caps",
+"bold", "bolder", "lighter", "medium", "larger", "smaller",
+"serif", "sans-serif",
+#background rules
+"background", "background-color", "background-image", "background-repeat", "background-attachment", "background-position",
+#background values
+"contained", "none", "top", "center", "bottom", "left", "right", "scroll", "fixed",
+"repeat", "repeat-x", "repeat-y", "no-repeat",
+#text rules
+"word-spacing", "letter-spacing", "text-decoration", "vertical-align", "text-transform", "text-align", "text-indent", "text-transform", "text-shadow", "unicode-bidi", "line-height",
+#text values
+"normal", "none", "underline", "overline", "blink", "sub", "super", "middle", "top", "text-top", "text-bottom",
+"capitalize", "uppercase", "lowercase", "none", "left", "right", "center", "justify",
+"line-through",
+#box rules
+"margin", "margin-top", "margin-bottom", "margin-left", "margin-right",
+"margin", "padding-top", "padding-bottom", "padding-left", "padding-right",
+"border", "border-width", "border-style", "border-top", "border-top-width", "border-top-style", "border-bottom", "border-bottom-width", "border-bottom-style", "border-left", "border-left-width", "border-left-style", "border-right", "border-right-width", "border-right-style", "border-color",
+#box values
+"width", "height", "float", "clear",
+"auto", "thin", "medium", "thick", "left", "right", "none", "both",
+"none", "dotted", "dashed", "solid", "double", "groove", "ridge", "inset", "outset",
+#display rules
+"display", "white-space", 
+"min-width", "max-width", "min-height", "max-height",
+"outline-color", "outline-style", "outline-width",
+#display values
+"run-in", "inline-block", "list-item", "block", "inline", "none", "normal", "pre", "nowrap", "table-cell", "table-row", "table-row-group", "table-header-group", "inline-table", "table-column", "table-column-group", "table-cell", "table-caption"
+#list rules
+"list-style", "list-style-type", "list-style-image", "list-style-position",
+#list values
+"disc", "circle", "square", "decimal", "decimal-leading-zero", "none",
+"lower-roman", "upper-roman", "lower-alpha", "upper-alpha", "lower-latin", "upper-latin",
+#table rules
+"border-collapse", "caption-side",
+#table-values
+"empty-cells", "table-layout",
+#misc values/rules
+"counter-increment", "counter-reset",
+"marker-offset", "z-index",
+"cursor", "direction", "marks", "quotes",
+"clip", "content", "orphans", "overflow", "visibility",
+#aural rules
+"pitch", "range", "pitch-during", "cue-after", "pause-after", "cue-before", "pause-before", "speak-header", "speak-numeral", "speak-punctuation", "speed-rate", "play-during", "voice-family",
+#aural values
+"stress", "azimuth", "elevation", "pitch", "richness", "volume",
+"page-break", "page-after", "page-inside"]</t>
+<t tx="ekr.20040401111125">shell_keywords = [
+    # reserved keywords
+    "case","do","done","elif","else","esac","fi",
+    "for","if","in","then",
+    "until","while",
+    "break","cd","chdir","continue","eval","exec",
+    "exit","kill","newgrp","pwd","read","readonly",
+    "return","shift","test","trap","ulimit",
+    "umask","wait" ]</t>
 <t tx="ekr.20040629121554">def getBuildNumber(self):
     c = self
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
@@ -2430,6 +3212,43 @@ setCurrentVnode = setCurrentPosition</t>
     
 # For compatibiility with old scripts.
 setRootVnode = setRootPosition</t>
+<t tx="ekr.20041107093834"># Default forth keywords: extended by leo-forthwords.txt.
+forth_keywords = [
+    "variable", "constant", "code", "end-code",
+    "dup", "2dup", "swap", "2swap", "drop", "2drop",
+    "r&gt;", "&gt;r", "2r&gt;", "2&gt;r",
+    "if", "else", "then",
+    "begin", "again", "until", "while", "repeat",
+    "v-for", "v-next", "exit",
+    "meta", "host", "target", "picasm", "macro",
+    "needs", "include",
+    "'", "[']",
+    ":", ";",
+    "@", "!", ",", "1+", "+", "-",
+    "&lt;", "&lt;=", "=", "&gt;=", "&gt;",
+    "invert", "and", "or", 
+    ]
+
+# Forth words which define other words: extended by leo-forthdefwords.txt.
+forth_definingwords = [
+    ":", "variable", "constant", "code",
+    ]
+
+# Forth words which start strings: extended by leo-forthstringwords.txt.
+forth_stringwords = [
+    's"', '."', '"', '."',
+    'abort"',
+    ]
+
+# Forth words to be rendered in boldface: extended by leo-forthboldwords.txt.
+forth_boldwords = [ ]
+
+# Forth words to be rendered in italics: extended by leo-forthitalicwords.txt.
+forth_italicwords = [ ]
+
+# Forth bold-italics words: extemded leo-forthbolditalicwords.txt if present
+# Note: on some boxen, bold italics may show in plain bold.
+forth_bolditalicwords = [ ]</t>
 <t tx="ekr.20041117062717.14">def getShortcut (self,c,shortcutName):
     
     '''Return rawKey,accel for shortcutName'''
@@ -2886,6 +3705,386 @@ instance_tag = t.bindtags()[0]
 t.bind_class(instance_tag, "&lt;Button-4&gt;", PropagateButton4)
 t.bind_class(instance_tag, "&lt;Button-5&gt;", PropagateButton5)
 t.bind_class(instance_tag, "&lt;MouseWheel&gt;",PropagateMouseWheel)</t>
+<t tx="ekr.20050618052621"></t>
+<t tx="ekr.20050618052653">plsql_keywords = [
+# reserved keywords
+"abort",
+"accept",
+"access",
+"add",
+"admin",
+"after",
+"all",
+"allocate",
+"alter",
+"analyze",
+"and",
+"any",
+"archive",
+"archivelog",
+"array",
+"arraylen",
+"as",
+"asc",
+"assert",
+"assign",
+"at",
+"audit",
+"authorization",
+"avg",
+"backup",
+"base_table",
+"become",
+"before",
+"begin",
+"between",
+"binary_integer",
+"block",
+"body",
+"boolean",
+"by",
+"cache",
+"cancel",
+"cascade",
+"case",
+"change",
+"char",
+"char_base",
+"character",
+"check",
+"checkpoint",
+"close",
+"cluster",
+"clusters",
+"cobol",
+"colauth",
+"column",
+"columns",
+"comment",
+"commit",
+"compile",
+"compress",
+"connect",
+"constant",
+"constraint",
+"constraints",
+"contents",
+"continue",
+"controlfile",
+"count",
+"crash",
+"create",
+"current",
+"currval",
+"cursor",
+"cycle",
+"data_base",
+"database",
+"datafile",
+"date",
+"dba",
+"debugoff",
+"debugon",
+"dec",
+"decimal",
+"declare",
+"default",
+"definition",
+"delay",
+"delete",
+"delta",
+"desc",
+"digits",
+"disable",
+"dismount",
+"dispose",
+"distinct",
+"distinct",
+"do",
+"double",
+"drop",
+"drop",
+"dump",
+"each",
+"else",
+"else",
+"elsif",
+"enable",
+"end",
+"end",
+"entry",
+"escape",
+"events",
+"except",
+"exception",
+"exception_init",
+"exceptions",
+"exclusive",
+"exec",
+"execute",
+"exists",
+"exists",
+"exit",
+"explain",
+"extent",
+"externally",
+"false",
+"fetch",
+"fetch",
+"file",
+"float",
+"float",
+"flush",
+"for",
+"for",
+"force",
+"foreign",
+"form",
+"fortran",
+"found",
+"freelist",
+"freelists",
+"from",
+"from",
+"function",
+"generic",
+"go",
+"goto",
+"grant",
+"group",
+"groups",
+"having",
+"identified",
+"if",
+"immediate",
+"in",
+"including",
+"increment",
+"index",
+"indexes",
+"indicator",
+"initial",
+"initrans",
+"insert",
+"instance",
+"int",
+"integer",
+"intersect",
+"into",
+"is",
+"key",
+"language",
+"layer",
+"level",
+"like",
+"limited",
+"link",
+"lists",
+"lock",
+"logfile",
+"long",
+"loop",
+"manage",
+"manual",
+"max",
+"maxdatafiles",
+"maxextents",
+"maxinstances",
+"maxlogfiles",
+"maxloghistory",
+"maxlogmembers",
+"maxtrans",
+"maxvalue",
+"min",
+"minextents",
+"minus",
+"minvalue",
+"mlslabel",
+"mod",
+"mode",
+"modify",
+"module",
+"mount",
+"natural",
+"new",
+"new",
+"next",
+"nextval",
+"noarchivelog",
+"noaudit",
+"nocache",
+"nocompress",
+"nocycle",
+"nomaxvalue",
+"nominvalue",
+"none",
+"noorder",
+"noresetlogs",
+"normal",
+"nosort",
+"not",
+"notfound",
+"nowait",
+"null",
+"number",
+"number_base",
+"numeric",
+"of",
+"off",
+"offline",
+"old",
+"on",
+"online",
+"only",
+"open",
+"open",
+"optimal",
+"option",
+"or",
+"order",
+"others",
+"out",
+"own",
+"package",
+"package",
+"parallel",
+"partition",
+"pctfree",
+"pctincrease",
+"pctused",
+"plan",
+"pli",
+"positive",
+"pragma",
+"precision",
+"primary",
+"prior",
+"private",
+"private",
+"privileges",
+"procedure",
+"procedure",
+"profile",
+"public",
+"quota",
+"raise",
+"range",
+"raw",
+"read",
+"real",
+"record",
+"recover",
+"references",
+"referencing",
+"release",
+"remr",
+"rename",
+"resetlogs",
+"resource",
+"restricted",
+"return",
+"reuse",
+"reverse",
+"revoke",
+"role",
+"roles",
+"rollback",
+"row",
+"rowid",
+"rowlabel",
+"rownum",
+"rows",
+"rowtype",
+"run",
+"savepoint",
+"schema",
+"scn",
+"section",
+"segment",
+"select",
+"select",
+"separate",
+"sequence",
+"session",
+"set",
+"set",
+"share",
+"shared",
+"size",
+"size",
+"smallint",
+"smallint",
+"snapshot",
+"some",
+"sort",
+"space",
+"sql",
+"sqlbuf",
+"sqlcode",
+"sqlerrm",
+"sqlerror",
+"sqlstate",
+"start",
+"start",
+"statement",
+"statement_id",
+"statistics",
+"stddev",
+"stop",
+"storage",
+"subtype",
+"successful",
+"sum",
+"sum",
+"switch",
+"synonym",
+"sysdate",
+"system",
+"tabauth",
+"table",
+"tables",
+"tables",
+"tablespace",
+"task",
+"temporary",
+"terminate",
+"then",
+"thread",
+"time",
+"to",
+"tracing",
+"transaction",
+"trigger",
+"triggers",
+"true",
+"truncate",
+"type",
+"uid",
+"under",
+"union",
+"unique",
+"unlimited",
+"until",
+"update",
+"use",
+"user",
+"using",
+"validate",
+"values",
+"varchar",
+"varchar2",
+"variance",
+"view",
+"views",
+"when",
+"whenever",
+"where",
+"while",
+"with",
+"work",
+"write",
+"xor" ]
+</t>
 <t tx="ekr.20050721093241">@nocolor
 
 The following are notes for anyone who is interested in writing alternate gui's for Leo.
@@ -5311,7 +6510,8 @@ C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionL
     
     w.insert(j,s)
     j = w.index('%s + 1c' % (j))
-    g.app.gui.setSelectionRange(w,i,j,insert=j)</t>
+    g.app.gui.setSelectionRange(w,i,j,insert=j)
+    c.frame.body.onBodyChanged('Typing')</t>
 <t tx="ekr.20051127070018">def setSelection (self,s):
     
     c = self.c ; w = self.widget
@@ -5329,7 +6529,8 @@ C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionL
     
     w.insert(i,s)
     j = w.index('%s + %dc' % (i,len(s)))
-    g.app.gui.setSelectionRange(w,i,j,insert=j)</t>
+    g.app.gui.setSelectionRange(w,i,j,insert=j)
+    c.frame.body.onBodyChanged('Typing')</t>
 <t tx="ekr.20051127105102">def finish (self):
     
     c = self.c ; k = self.k
@@ -6292,6 +7493,7 @@ def initialScan (self):
     start = g.app.gui.getInsertPoint(w)
     start = w.index(start+'-1c')
     i,word = self.findAnchor(w)
+    if word.isdigit(): return False
     self.setObjectAndMembersList(word)
     
     # g.trace(word,self.object,len(self.membersList))
@@ -7078,6 +8280,7 @@ elif g.match_word(s,1,'s'):
 else:
     i = j = g.app.gui.getInsertPoint(w)
 w.insert(j,s)
+c.frame.body.onBodyChanged('Typing')
 
 if 1:
     j1 = w.index('%s + 1c' % j)
@@ -7203,13 +8406,11 @@ Traceback (most recent call last):
   File "c:\Leo_Cvs\Leo\plugins\plugins_menu.py", line 576, in __init__
     g.app.dialogs += 1
 AttributeError: LeoApp instance has no attribute 'dialogs'</t>
-<t tx="ekr.20060227123644">@ It's much better to call g.app.gui.set_focus a few extra times than to mess up the focus!
-
-- Make c.invalidateFocus a do-nothing method.</t>
+<t tx="ekr.20060227120635"></t>
 <t tx="ekr.20060228071700"></t>
 <t tx="ekr.20060301102950"></t>
 <t tx="ekr.20060301182319"></t>
-<t tx="ekr.20060305110016"></t>
+<t tx="ekr.20060305110016">g.</t>
 <t tx="ekr.20060306030946"></t>
 <t tx="ekr.20060306030946.1"></t>
 <t tx="ekr.20060306070425"></t>
@@ -7238,9 +8439,7 @@ scroll-outline-down-line
 scroll-outline-down-page       
 scroll-outline-up-line       
 scroll-outline-up-page</t>
-<t tx="ekr.20060307074302"></t>
 <t tx="ekr.20060307074302.1"># It's not clear how to do this.</t>
-<t tx="ekr.20060307074624"></t>
 <t tx="ekr.20060307080642">if 0: # I find these very irritating.
     for tag,text in (
         # ('plusBox','plusBox'),
@@ -7299,23 +8498,6 @@ AttributeError: 'Bunch' object has no attribute 'currentVnode'
 
 The fix was to plugins_menu.py: the cmd_callback must have an event argument.
 </t>
-<t tx="ekr.20060309021641">@nocolor
-
-&gt; is it correct that only ctrl, and a mouse click, should trigger insertion,
-
-No.  The main way to start autocompletion is to type a period.  For example, the last period in:
-
-x.y.z.
-
-Leo will scan to the start (x) to see if x is something it knows about.  In particular, if x is 'self' Leo will see if the current node is in the range of an class definition.  Also, Leo 'knows about' c, g and p, and a few others.  I need to find some way of generalizing what Leo knows about.  Leo also knows about all the modules in sys.modules so typing 'sys.' will bring up the autocompleter.
-
-&gt;Does the autocompleter sometimes insert a word into text with some special markup?
-
-The presently suggested text is highlighted.  You can see the status of the autocompletion by looking at the name of the tab.  For example, after typing 'sys.' the tab will show 'Autocomplete sys.'
-
-Forget the other ways of invoking the autocompleter.
-
-Edward</t>
 <t tx="ekr.20060309022225">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3619340
@@ -7578,7 +8760,6 @@ if k.ignore_unbound_non_ascii_keys and len(event.char) &gt; 1:
 else:
     if trace: g.trace(repr(stroke),'no func')
     return k.masterCommand(event,func=None,stroke=stroke,commandName=None)</t>
-<t tx="ekr.20060321110256">Can this be done?  How to tests keys in various states?</t>
 <t tx="ekr.20060321111639">Apparently g.app.unitTesting isn't set properly for the new-window test.
 
 ### It's a button in some .leo file.
@@ -7702,7 +8883,6 @@ In particular, this causes at.encoding to be inited to a reasonable value.</t>
 Important: Leo is supposed to convert all characters to unicode, so there should
 never be a need for safeStringCompare. The proper way to avoid UnicodeError's is
 to call g.toUnicode(s,g.app.tkEncoding).</t>
-<t tx="ekr.20060324075112"></t>
 <t tx="ekr.20060324080104">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3607355
 By: vpe
@@ -7745,7 +8925,30 @@ before g.app.gui.guiName() is known.</t>
         k.completeOneBindingForWidget(w,stroke,bindKeyCallback)</t>
 <t tx="ekr.20060325122134"></t>
 <t tx="ekr.20060325122134.1"># It's not ready for prime time.</t>
-<t tx="ekr.20060325122553"></t>
-<t tx="ekr.20060325124056"></t>
+<t tx="ekr.20060328110802"># ddm 13/02/06
+lua_keywords = [
+    "and", "break", "do", "else", "elseif", "end",
+    "false", "for", "function", "if", "in", "local",
+    "nil", "not", "or", "repeat", "return", "then",
+    "true", "until", "while",
+]
+</t>
+<t tx="ekr.20060328110802.1">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3572598
+By: davidmcnab
+
+I have added support to Leo for the Lua programming language (www.lua.org).
+
+A patch, against Leo 4.4 beta 1, build  1.375, is up at:
+http://www.freenet.org.nz/misc/leo-with-lua.patch.gz
+
+Patch should be executed with '-p1' inside the leo 'src' directory.
+
+Summary: support for importing Lua files; support for Lua comments and keywords;
+no auto-detect of Lua function definitions or classes (because Lua function/class
+idioms vary); no support for Lua v5+ metamethods.
+
+Implementation method - I loaded LeoPy.leo, searched the whole outline for 'java',
+and added lua counterparts throughout, including a Lua comment scanner.</t>
 </tnodes>
 </leo_file>

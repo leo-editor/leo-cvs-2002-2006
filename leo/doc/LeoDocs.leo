@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="V"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -209,6 +209,7 @@
 <v t="EKR.20040524104904.26"><vh>Chapter 3: Using Outlines</vh>
 <v t="ekr.20050901101608"><vh>@rst html\outlines.html</vh>
 <v t="ekr.20050901101608.1"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20060227102028.111"><vh>Autocompletion and calltips</vh></v>
 <v t="EKR.20040524104904.27"><vh>Cloning nodes</vh></v>
 <v t="EKR.20040524104904.36"><vh>Creating and destroying nodes</vh></v>
 <v t="EKR.20040524104904.37"><vh>Cutting, pasting and deleting nodes</vh></v>
@@ -759,7 +760,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="V"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20060206111717"><vh>Ancient...</vh>
 <v t="edream.110203163054.118"><vh>3.x...</vh>
@@ -24571,16 +24572,15 @@ Traceback (most recent call last):
   File "c:\Leo_Cvs\Leo\plugins\plugins_menu.py", line 576, in __init__
     g.app.dialogs += 1
 AttributeError: LeoApp instance has no attribute 'dialogs'</t>
-<t tx="ekr.20060227102028.111">This documentation describes both autocompletion and calltips.
-
-Typing a period when @language python is in effect starts autocompletion. Typing
+<t tx="ekr.20060227102028.111">Typing a period when @language python is in effect starts autocompletion. Typing
 '(' during autocompletion shows the calltip. Typing Return or Control-g
 (keyboard-quit) exits autocompletion or calltips.
 
 Autocompletion
-    
-Autocompletion shows what may follow a period in code. For example, after typing
-g. Leo will show a list of all the global functions in leoGlobals.py.
+
+Autocompletion shows what may follow a period in code. (Actually you can specify
+any character using the auto-complete shortcut setting.) For example, after
+typing g. Leo will show a list of all the global functions in leoGlobals.py.
 Autocompletion works much like tab completion in the minibuffer. Unlike the
 minibuffer, the presently selected completion appears directly in the body
 pane.

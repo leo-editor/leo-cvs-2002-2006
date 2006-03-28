@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7984" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
-	<global_window_position top="40" left="450" height="857" width="781"/>
+	<global_window_position top="40" left="453" height="857" width="778"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -224,7 +224,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051104081824" a="V" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -292,8 +292,8 @@
 <v t="ekr.20060119170038"><vh>python show bindings</vh></v>
 <v t="ekr.20060306120904"><vh>import reportlab</vh></v>
 </v>
+<v t="ekr.20060325071323"><vh>@test ifplatform</vh></v>
 </v>
-<v t="ekr.20060325071323" a="V"><vh>@test ifplatform</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.

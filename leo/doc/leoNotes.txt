@@ -167,6 +167,7 @@ self.language_delims_dict = {
     "html" : "<!-- -->",
     "java" : "// /* */",
     "latex" : "%",
+    "lua" : "--",  # ddm 13/02/06
     "pascal" : "// { }",
     "perl" : "#",
     "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
@@ -193,6 +194,7 @@ self.language_extension_dict = {
     "html" : "html",
     "java" : "java",
     "latex" : "tex", # 1/8/04
+    "lua" : "lua",  # ddm 13/02/06
     "noweb" : "nw",
     "pascal" : "p",
     # "perl" : "perl",
@@ -222,6 +224,7 @@ self.extension_dict = {
     "f"     : "fortran90", # or fortran ?
     "html"  : "html",
     "java"  : "java",
+    "lua" : "lua",  # ddm 13/02/06
     "noweb" : "nw",
     "p"     : "pascal",
     # "perl"  : "perl",
@@ -269,7 +272,7 @@ self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
 # The list of languages for which keywords exist.
 # Eventually we might just use language_delims_dict.keys()
 languages = [
-    "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex",
+    "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex","lua",
     "pascal","perl","perlpod","php","plsql","python","rapidq","rebol","shell","tcltk"]
 
 self.keywords = []
@@ -679,6 +682,15 @@ latex_keywords = [
     "\\zeta" ]
 #@nonl
 #@-node:ekr.20031218072017.377:latex keywords
+#@+node:ekr.20060328110802:lua keywords
+# ddm 13/02/06
+lua_keywords = [
+    "and", "break", "do", "else", "elseif", "end",
+    "false", "for", "function", "if", "in", "local",
+    "nil", "not", "or", "repeat", "return", "then",
+    "true", "until", "while",
+]
+#@-node:ekr.20060328110802:lua keywords
 #@+node:ekr.20031218072017.378:pascal keywords
 pascal_keywords = [
     "and","array","as","begin",

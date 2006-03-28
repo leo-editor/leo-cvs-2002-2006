@@ -965,7 +965,7 @@
 </v>
 </v>
 <v t="ekr.20051108140810" a="E" annotate="7d71002e"><vh>All unit tests</vh>
-<v t="ekr.20060203200614" a="E"><vh>Basic Unit tests</vh>
+<v t="ekr.20060203200614" a="V"><vh>Basic Unit tests</vh>
 <v t="ekr.20060205165937"><vh>Doctests</vh>
 <v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20060131101825.1"><vh>@test print end of doctests</vh></v>
@@ -998,7 +998,7 @@
 </v>
 <v t="ekr.20060131102008"><vh>@test print end of test routines</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E" annotate="7d71002e"><vh>General unit tests</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>General unit tests</vh>
 <v t="ekr.20060131101806"><vh>@test all commands have an event arg</vh></v>
 <v t="ekr.20041012101944" annotate="7d71002e"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20041130092210" annotate="7d71002e"><vh>Batch mode tests...</vh>
@@ -1163,11 +1163,11 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060203181203.1" a="E"><vh>Key handling tests...</vh>
+<v t="ekr.20060203181203.1"><vh>Key handling tests...</vh>
 <v t="ekr.20060208195054"><vh>@test k.inverseCommandsDict is inverse of c.commandsDict</vh></v>
 <v t="ekr.20060203181203.2"><vh>@test strokeFromSetting</vh></v>
 <v t="ekr.20060203181203.3"><vh>@test strokeFromEvent</vh></v>
-<v t="ekr.20060328091154" a="V"><vh>@test k.registerCommand</vh></v>
+<v t="ekr.20060328091154"><vh>@test k.registerCommand</vh></v>
 </v>
 <v t="ekr.20050112095306.1" annotate="7d71002e"><vh>leoAtFile.py tests...</vh>
 <v t="ekr.20050105093136"><vh>@test atFile.remove</vh></v>
@@ -7772,7 +7772,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14367,9 +14367,9 @@ k.registerCommand(commandName,'Alt-Ctrl-Shift-z',callback,pane='all',verbose=Tru
 k.simulateCommand(commandName)
 assert g.app.unitTestDict.get(commandName)
 
-# Test 2
-g.app.unitTestDict[commandName] = False
-k.manufactureKeyPressForCommandName(w,commandName)
-assert g.app.unitTestDict.get(commandName)</t>
+if 0: # Test 2
+    g.app.unitTestDict[commandName] = False
+    k.manufactureKeyPressForCommandName(w,commandName)
+    assert g.app.unitTestDict.get(commandName)</t>
 </tnodes>
 </leo_file>
