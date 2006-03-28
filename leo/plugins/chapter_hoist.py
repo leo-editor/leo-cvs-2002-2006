@@ -27,7 +27,7 @@ Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 #@-node:ekr.20060328125925.2:<< imports >>
 #@nl
 
-__version__ = "0.1"
+__version__ = "0.2"
 #@<< version history >>
 #@+node:ekr.20060328125925.3:<< version history >>
 #@+at
