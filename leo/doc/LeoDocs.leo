@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="23130" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="23382" clone_windows="0"/>
 <globals body_outline_ratio="0.60175879397">
 	<global_window_position top="24" left="339" height="857" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647" a="V"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -2485,10 +2485,7 @@
 <v t="ekr.20060217072324"><vh>Minor bugs fixed</vh></v>
 <v t="ekr.20060217072647"><vh>New debugging options in leoSettings.leo</vh></v>
 </v>
-</v>
-</v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="ekr.20060227102028"><vh>4.4a7</vh>
+<v t="ekr.20060227102028"><vh>4.4 a7</vh>
 <v t="ekr.20060227102028.2"><vh>Bugs Fixed</vh>
 <v t="ekr.20060227102028.3"><vh>Fixed binding bug</vh>
 <v t="ekr.20060227102028.4"><vh>R</vh></v>
@@ -2511,6 +2508,42 @@
 <v t="ekr.20060227102028.18"><vh>Fix crasher in plugin</vh></v>
 </v>
 <v t="ekr.20060227102028.111"><vh>Autocompletion and calltips</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20060328171518" a="EV"><vh>4.4 b3</vh>
+<v t="ekr.20060328171518.1"><vh>New features</vh>
+<v t="ekr.20060328171518.10"><vh>Added scroll outline pane commands</vh></v>
+<v t="ekr.20060328171518.11"><vh>Improved registerCommand</vh></v>
+<v t="ekr.20060328171518.15"><vh>Suppressed autocompletion after numbers</vh></v>
+<v t="ekr.20060328171518.16"><vh>Added colorizing support for Lua language</vh></v>
+<v t="ekr.20060328171518.45"><vh>Added run-unit-test command</vh></v>
+</v>
+<v t="ekr.20060328171518.47"><vh>Bugs</vh>
+<v t="ekr.20060328171518.48"><vh>Fixed problem with left &amp; right arrows in outline mode</vh></v>
+<v t="ekr.20060328171518.57"><vh>Fixed undo problem with clones</vh></v>
+<v t="ekr.20060328171518.83"><vh>Investigated setting descendant @file nodes dirty when changing body text</vh></v>
+<v t="ekr.20060328171518.85"><vh>Work around newline problems on the Mac</vh></v>
+<v t="ekr.20060328171518.101"><vh>Got rid of settings messages</vh></v>
+<v t="ekr.20060328171518.108"><vh>Clicks outside minibuffer no longer rip focus</vh></v>
+<v t="ekr.20060328171518.111"><vh>Handled missing leoSettings.leo files more gracefully</vh></v>
+<v t="ekr.20060328171518.119"><vh>Converted all shortcuts to unicode</vh></v>
+<v t="ekr.20060328171518.135"><vh>Made Open With shortcuts work again</vh></v>
+<v t="ekr.20060328171518.151"><vh>Made sure autocompleter and calltip text stick</vh></v>
+<v t="ekr.20060328171518.152"><vh>Fixed a bug in c.openWith</vh></v>
+<v t="ekr.20060328171518.169"><vh>Import/export commands now set directory for next open</vh></v>
+<v t="ekr.20060328171518.190"><vh>Investigated colorizer problems: can not reproduce</vh></v>
+<v t="ekr.20060328171518.248"><vh>Removed support @ifgui: it doesn't and can't work</vh></v>
+<v t="ekr.20060328171518.249"><vh>Removed autocompletion for self</vh></v>
+</v>
+<v t="ekr.20060328171518.191"><vh>Plugins</vh>
+<v t="ekr.20060328171518.238"><vh>Changed path to stylesheet in the rst3 plugin</vh></v>
+<v t="ekr.20060328171518.240"><vh>Fixed problems with chapters plugin</vh></v>
+<v t="ekr.20060328171518.244"><vh>Improved groupoperations plugin</vh></v>
+<v t="ekr.20060328171518.245"><vh>Fixed crasher in Word (and other) plugins</vh></v>
+<v t="ekr.20060328171518.246"><vh>Fixed problem with labels plugin</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -24628,5 +24661,136 @@ disable-auto-completer-command and disable-calltips-command.</t>
 <t tx="ekr.20060323105214">You must create .leoRecentFiles.txt in the config directory.
 .leoRecentFiles.txt is part of the standard releases but is not part of the cvs repository.
 </t>
+<t tx="ekr.20060328171518">Leo 4.4 beta 3                                             March 31, 2006
+
+This version fixes some minor problems and adds various features.  This code
+has been in use for several weeks without any major problems reported.
+
+Leo is a text editor, data organizer, project manager and much more. See:
+http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of Leo 4.4:
+--------------------------
+- An Emacs-like mini-buffer: you can now execute any command by typing its long
+name, with tab completion.
+
+- Many new commands, including cursor and screen movement, basic character, word
+and paragraph manipulation, and commands to manipulate buffers, the kill ring,
+regions and rectangles. You can use Leo without using a mouse.
+
+- Flexible key bindings and input modes. You can emulate the operation of Emacs,
+Vim, or any other editor.
+
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of
+dialogs, making those commands much easier to use. Plugins or scripts can easily
+create new tabs. The Completion tab shows possible typing completions.
+
+- Autocompletion and calltips.  Autocompletion works much like tab completion.
+
+- Dozens of other new features and bug fixes since Leo 4.3.3.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html</t>
+<t tx="ekr.20060328171518.1"></t>
+<t tx="ekr.20060328171518.10">http://sourceforge.net/forum/message.php?msg_id=3608246
+
+Added the following commands:
+
+scroll-outline-down-line       
+scroll-outline-down-page       
+scroll-outline-up-line       
+scroll-outline-up-page</t>
+<t tx="ekr.20060328171518.11">It now properly creates bindings.</t>
+<t tx="ekr.20060328171518.15"></t>
+<t tx="ekr.20060328171518.16">http://sourceforge.net/forum/message.php?msg_id=3572598</t>
+<t tx="ekr.20060328171518.45">This is equivalent to the Unit Test script button in unitTest.leo</t>
+<t tx="ekr.20060328171518.47"></t>
+<t tx="ekr.20060328171518.48">http://sourceforge.net/forum/message.php?msg_id=3619340
+
+Just tried out CVS today, and on Linux left/right and L/R in outline mode
+(Ctrl-Shift-O) seem to do nothing, whereas they should expand/contract parent
+nodes.</t>
+<t tx="ekr.20060328171518.57">http://sourceforge.net/forum/message.php?msg_id=3639193
+
+The dirty bits were not updated properly in several undo/redo operations.</t>
+<t tx="ekr.20060328171518.83">http://sourceforge.net/forum/message.php?msg_id=3642892
+
+The present code is probably the best compromise between strict accuracy and marking too many nodes dirty.</t>
+<t tx="ekr.20060328171518.85">http://sourceforge.net/forum/message.php?msg_id=3606515
+
+Added insert-newline command and fixed some related commands.</t>
+<t tx="ekr.20060328171518.101">Apparently g.app.unitTesting isn't set properly for the new-window test.</t>
+<t tx="ekr.20060328171518.108">The bug: Hit control-f, then select the text that doesn't have focus.</t>
+<t tx="ekr.20060328171518.111">http://sourceforge.net/forum/message.php?msg_id=3641107
+
+ConfigSettings.initEncoding now uses the g.app.config settings if no other settings are available.
+
+In particular, this causes at.encoding to be inited to a reasonable value.</t>
+<t tx="ekr.20060328171518.119">- onBodyChanged now converts everything to unicode, either directly or by calling g.app.gui.getAllText.
+
+- Replaced all calls to g.safeStringCompare by g.app.gui.getAllText which calls g.toUnicode.
+
+- Converted all shortcuts to unicode in shortcutFromSetting (a.k.a strokeFromSetting)
+
+- Removed g.safeStringCompare.  This function was a bad idea.
+
+Important: Leo is supposed to convert all characters to unicode, so there should
+never be a need for safeStringCompare. The proper way to avoid UnicodeError's is
+to call g.toUnicode(s,g.app.tkEncoding).</t>
+<t tx="ekr.20060328171518.135">http://sourceforge.net/forum/message.php?msg_id=3607355</t>
+<t tx="ekr.20060328171518.151"></t>
+<t tx="ekr.20060328171518.152">http://sourceforge.net/forum/message.php?msg_id=3573148
+
+c.openWith now dcalls g.enableIdleTimeHook</t>
+<t tx="ekr.20060328171518.169">These commands now set g.app.globalOpenDir.</t>
+<t tx="ekr.20060328171518.190">http://sourceforge.net/forum/message.php?msg_id=3585710</t>
+<t tx="ekr.20060328171518.191"></t>
+<t tx="ekr.20060328171518.238">http://sourceforge.net/forum/message.php?msg_id=3637393
+
+I'm trying to set up a default stylesheet for a project and want this to be
+held relative to the project directory (where the .leo file is). The default
+is to place it in the same directory as the output, which is a couple of levels
+down.
+
+http://sourceforge.net/forum/message.php?msg_id=3639216
+
+g.os_path_dirname(self.outputFileName) with self.c.frame.openDirectory. This
+makes the path relative to the project. Not 100% as the stylesheet filename
+would need a path embedded in it to move the location down the tree. However,
+it is consistent with the way the output file is named.</t>
+<t tx="ekr.20060328171518.240">See the chapters2 in leoPlugins.leo.
+
+See also:
+
+http://sourceforge.net/forum/message.php?msg_id=3626542
+
+https://sourceforge.net/forum/message.php?msg_id=3629055
+
+http://sourceforge.net/forum/message.php?msg_id=3632004</t>
+<t tx="ekr.20060328171518.244">Cleaned up the code and added support minibuffer commands:
+
+group-operations-clear-marked       = Alt-Ctrl-Shift-l
+group-operations-mark-for-copy      = Alt-Ctrl-Shift-c
+group-operations-mark-for-move      = Alt-Ctrl-Shift-m
+group-operations-mark-for-clone     = Alt-Ctrl-`
+group-operations-mark-target        = Alt-Ctrl-Shift-t
+group-operations-operate-on-marked  = Alt-Ctrl-Shift-o
+group-operations-transfer           = Alt-Ctrl-Shift-d
+
+This code has not been tested with the chapters2 plugin.</t>
+<t tx="ekr.20060328171518.245">http://sourceforge.net/forum/message.php?msg_id=3617936
+
+The fix was to plugins_menu.py: the cmd_callback must have an event argument.
+</t>
+<t tx="ekr.20060328171518.246">The fix: all menu commands now have event=None in their argument list.</t>
+<t tx="ekr.20060328171518.248">Alas, @if-gui can't be made to work. The problem is that plugins can set
+g.app.gui, but plugins need settings so the leoSettings.leo files must be parsed
+before g.app.gui.guiName() is known.</t>
+<t tx="ekr.20060328171518.249">It's not ready for prime time.</t>
 </tnodes>
 </leo_file>
