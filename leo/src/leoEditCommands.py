@@ -15,6 +15,7 @@ import leoGlobals as g
 
 import leoFind
 import leoKeys
+import leoTest
 
 import cPickle
 import difflib
@@ -1043,6 +1044,7 @@ class debugCommandsClass (baseEditCommandsClass):
             'print-focus':          self.printFocus,
             'print-stats':          self.printStats,
             'print-gc-summary':     self.printGcSummary,
+            'run-unit-tests':       self.runUnitTests,
             'verbose-dump-objects': self.verboseDumpObjects,
         }
     #@nonl
@@ -1116,6 +1118,16 @@ class debugCommandsClass (baseEditCommandsClass):
         self.dumpAllObjects()
     #@nonl
     #@-node:ekr.20060202133313:printStats
+    #@+node:ekr.20060328121145:runUnitTest
+    def runUnitTests (self,event=None):
+        
+        '''Run all unit tests contained in the presently selected outline.'''
+        
+        c = self.c
+    
+        leoTest.doTests(c,all=False)
+    #@nonl
+    #@-node:ekr.20060328121145:runUnitTest
     #@-others
 #@nonl
 #@-node:ekr.20060127162818.1:class debugCommandsClass
