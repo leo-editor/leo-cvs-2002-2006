@@ -10183,6 +10183,492 @@ def openWithTempFilePath (self,p,ext):
 #@-node:ekr.20031218072017.2832:c.openWithTempFilePath
 #@-node:ekr.20031218072017.2823:openWith and allies
 #@-node:ekr.20060213094300:Added call to g.enableIdleTimeHook to c.openWith
+#@+node:ekr.20060328150113.1:Set g.app.globalOpenDir in import/export commands
+#@+node:ekr.20060328150113:setGlobalOpenDir
+def setGlobalOpenDir (fileName):
+    
+    if fileName:
+        g.app.globalOpenDir = g.os_path_dirname(fileName)
+        # g.es('current directory: %s' %  g.app.globalOpenDir)
+#@nonl
+#@-node:ekr.20060328150113:setGlobalOpenDir
+#@+node:ekr.20060328150113.2:Found: globalOpenDir 
+#@+node:ekr.20031218072017.1416:app.__init__
+def __init__(self):
+
+    # These ivars are the global vars of this program.
+    self.afterHandler = None
+    self.batchMode = False # True: run in batch mode.
+    self.commandName = None # The name of the command being executed.
+    self.config = None # The leoConfig instance.
+    self.count = 0 # General purpose debugging count.
+    self.debug = False # True: enable extra debugging tests (not used at present).
+        # WARNING: this could greatly slow things down.
+    self.debugSwitch = 0
+        # 0: default behavior
+        # 1: full traces in g.es_exception.
+        # 2: call pdb.set_trace in g.es_exception, etc.
+    self.disableSave = False
+    self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
+    self.globalOpenDir = None # The directory last used to open a file.
+    self.gui = None # The gui class.
+    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
+    self.hookError = False # True: suppress further calls to hooks.
+    self.hookFunction = None # Application wide hook function.
+    self.homeDir = None # The user's home directory.
+    self.idle_imported = False # True: we have done an import idle
+    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
+    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
+    self.initing = True # True: we are initiing the app.
+    self.killed = False # True: we are about to destroy the root window.
+    self.leoID = None # The id part of gnx's.
+    self.loadDir = None # The directory from which Leo was loaded.
+    self.loadedPlugins = [] # List of loaded plugins that have signed on.
+    self.log = None # The LeoFrame containing the present log.
+    self.logIsLocked = False # True: no changes to log are allowed.
+    self.logWaiting = [] # List of messages waiting to go to a log.
+    self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.nodeIndices = None # Singleton node indices instance.
+    self.numberOfWindows = 0 # Number of opened windows.
+    self.openWithFiles = [] # List of data used by Open With command.
+    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
+    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
+    self.quitting = False # True if quitting.  Locks out some events.
+    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
+    self.root = None # The hidden main window. Set later.
+    self.searchDict = {} # For communication between find/change scripts.
+    self.scanErrors = 0 # The number of errors seen by g.scanError.
+    self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
+    self.trace = False # True: enable debugging traces.
+    self.trace_gc = False # defined in run()
+    self.trace_gc_calls = False # defined in run()
+    self.trace_gc_verbose = False # defined in run()
+    self.trace_gc_inited = False
+    self.tracePositions = False
+    self.trace_list = [] # "Sherlock" argument list for tracing().
+    self.tkEncoding = "utf-8"
+    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
+    self.unitTestDict = {} # For communication between unit tests and code.
+    self.unitTesting = False # True if unit testing.
+    self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
+    self.user_xresources_path = None # Resource file for Tk/tcl.
+    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
+
+    # Global panels.  Destroyed when Leo ends.
+    self.pythonFrame = None
+    
+    << Define global constants >>
+    << Define global data structures >>
+#@nonl
+#@+node:ekr.20031218072017.1417:<< define global constants >>
+self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+
+# New in leo.py 3.0
+self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
+self.prolog_postfix_string = "?>"
+
+# leo.py 3.11
+self.use_unicode = True # True: use new unicode logic.
+#@-node:ekr.20031218072017.1417:<< define global constants >>
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */", # C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "lua" : "--",  # ddm 13/02/06
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "lua" : "lua",  # ddm 13/02/06
+    "noweb" : "nw",
+    "pascal" : "p",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "plsql" : "sql", # qt02537 2005-05-27
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "lua" : "lua",  # ddm 13/02/06
+    "noweb" : "nw",
+    "p"     : "pascal",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlpod", # 11/7/05
+    "php"   : "php",
+    "py"    : "python",
+    "sql"   : "plsql", # qt02537 2005-05-27
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@nonl
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@-node:ekr.20031218072017.1416:app.__init__
+#@+node:ekr.20031218072017.2821:open
+def open (self,event=None):
+
+    c = self
+    << Set closeFlag if the only open window is empty >>
+
+    fileName = g.app.gui.runOpenFileDialog(
+        title = "Open",
+        filetypes = [("Leo files","*.leo"), ("All files","*")],
+        defaultextension = ".leo")
+
+    if fileName and len(fileName) > 0:
+        ok, frame = g.openWithFileName(fileName,c)
+        if ok:
+            g.setGlobalOpenDir(fileName)
+        if ok and closeFlag:
+            g.app.destroyWindow(c.frame)
+    else:
+        c.bodyWantsFocus()
+#@nonl
+#@+node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
+@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
+@c
+    
+closeFlag = (
+    c.frame.startupWindow and # The window was open on startup
+    not c.changed and not c.frame.saved and # The window has never been changed
+    g.app.numberOfWindows == 1) # Only one untitled window has ever been opened
+#@nonl
+#@-node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
+#@-node:ekr.20031218072017.2821:open
+#@+node:ekr.20060212061804:runOpenFileDialog
+def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
+
+    """Create and run an Tkinter open file dialog ."""
+    
+    __pychecker__ = '--no-argsused' # defaultextension not used.
+    
+    initialdir = g.app.globalOpenDir or g.os_path_abspath(os.getcwd())
+    
+    if multiple:
+        # askopenfilenames requires Python 2.3 and Tk 8.4.
+        if (
+            g.CheckVersion(sys.version,"2.3") and
+            g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4")
+        ):
+            files = tkFileDialog.askopenfilenames(
+                title=title,filetypes=filetypes,initialdir=initialdir)
+            # g.trace(files)
+            return list(files)
+        else:
+            # Get one file and return it as a list.
+            theFile = tkFileDialog.askopenfilename(
+                title=title,filetypes=filetypes,initialdir=initialdir)
+            return [theFile]
+    else:
+        # Return a single file name as a string.
+        return tkFileDialog.askopenfilename(
+            title=title,filetypes=filetypes,initialdir=initialdir)
+#@nonl
+#@-node:ekr.20060212061804:runOpenFileDialog
+#@+node:ekr.20060212061804.1:runSaveFileDialog
+def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+
+    """Create and run an Tkinter save file dialog ."""
+    
+    __pychecker__ = '--no-argsused' # defaultextension not used.
+    
+    initialdir=g.app.globalOpenDir or g.os_path_abspath(os.getcwd()),
+
+    return tkFileDialog.asksaveasfilename(
+        initialdir=initialdir,initialfile=initialfile,
+        title=title,filetypes=filetypes)
+#@nonl
+#@-node:ekr.20060212061804.1:runSaveFileDialog
+#@-node:ekr.20060328150113.2:Found: globalOpenDir 
+#@+node:ekr.20031218072017.2849:Import&Export submenu
+#@+node:ekr.20031218072017.2850:exportHeadlines
+def exportHeadlines (self,event=None):
+    
+    c = self
+
+    filetypes = [("Text files", "*.txt"),("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="headlines.txt",
+        title="Export Headlines",
+        filetypes=filetypes,
+        defaultextension=".txt")
+
+    if fileName and len(fileName) > 0:
+        g.setGlobalOpenDir(fileName)
+        c.importCommands.exportHeadlines(fileName)
+
+#@-node:ekr.20031218072017.2850:exportHeadlines
+#@+node:ekr.20031218072017.2851:flattenOutline
+def flattenOutline (self,event=None):
+    
+    c = self
+
+    filetypes = [("Text files", "*.txt"),("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="flat.txt",
+        title="Flatten Outline",
+        filetypes=filetypes,
+        defaultextension=".txt")
+
+    if fileName and len(fileName) > 0:
+        g.setGlobalOpenDir(fileName)
+        c.importCommands.flattenOutline(fileName)
+
+#@-node:ekr.20031218072017.2851:flattenOutline
+#@+node:ekr.20031218072017.2852:importAtRoot
+def importAtRoot (self,event=None):
+    
+    c = self
+    
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Lua files", "*.lua"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import To @root",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importFilesCommand (names,"@root")
+#@-node:ekr.20031218072017.2852:importAtRoot
+#@+node:ekr.20031218072017.2853:importAtFile
+def importAtFile (self,event=None):
+    
+    c = self
+
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Lua files", "*.lua"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import To @file",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importFilesCommand(names,"@file")
+#@nonl
+#@-node:ekr.20031218072017.2853:importAtFile
+#@+node:ekr.20031218072017.2854:importCWEBFiles
+def importCWEBFiles (self,event=None):
+    
+    c = self
+    
+    filetypes = [
+        ("CWEB files", "*.w"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import CWEB Files",
+        filetypes=filetypes,
+        defaultextension=".w",
+        multiple=True)
+
+    if names:
+        c.importCommands.importWebCommand(names,"cweb")
+#@-node:ekr.20031218072017.2854:importCWEBFiles
+#@+node:ekr.20031218072017.2855:importFlattenedOutline
+def importFlattenedOutline (self,event=None):
+    
+    c = self
+    
+    types = [("Text files","*.txt"), ("All files","*")]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import MORE Text",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importFlattenedOutline(names)
+#@-node:ekr.20031218072017.2855:importFlattenedOutline
+#@+node:ekr.20031218072017.2856:importNowebFiles
+def importNowebFiles (self,event=None):
+    
+    c = self
+
+    filetypes = [
+        ("Noweb files", "*.nw"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import Noweb Files",
+        filetypes=filetypes,
+        defaultextension=".nw",
+        multiple=True)
+
+    if names:
+        c.importCommands.importWebCommand(names,"noweb")
+#@-node:ekr.20031218072017.2856:importNowebFiles
+#@+node:ekr.20031218072017.2857:outlineToCWEB
+def outlineToCWEB (self,event=None):
+    
+    c = self
+
+    filetypes=[
+        ("CWEB files", "*.w"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="cweb.w",
+        title="Outline To CWEB",
+        filetypes=filetypes,
+        defaultextension=".w")
+
+    if fileName and len(fileName) > 0:
+        g.setGlobalOpenDir(fileName)
+        c.importCommands.outlineToWeb(fileName,"cweb")
+
+#@-node:ekr.20031218072017.2857:outlineToCWEB
+#@+node:ekr.20031218072017.2858:outlineToNoweb
+def outlineToNoweb (self,event=None):
+    
+    c = self
+    
+    filetypes=[
+        ("Noweb files", "*.nw"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile=self.outlineToNowebDefaultFileName,
+        title="Outline To Noweb",
+        filetypes=filetypes,
+        defaultextension=".nw")
+
+    if fileName and len(fileName) > 0:
+        g.setGlobalOpenDir(fileName)
+        c.importCommands.outlineToWeb(fileName,"noweb")
+        c.outlineToNowebDefaultFileName = fileName
+
+#@-node:ekr.20031218072017.2858:outlineToNoweb
+#@+node:ekr.20031218072017.2859:removeSentinels
+def removeSentinels (self,event=None):
+    
+    c = self
+    
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Lua files", "*.lua"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Remove Sentinels",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.removeSentinelsCommand (names)
+#@nonl
+#@-node:ekr.20031218072017.2859:removeSentinels
+#@+node:ekr.20031218072017.2860:weave
+def weave (self,event=None):
+    
+    c = self
+
+    filetypes = [("Text files", "*.txt"),("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="weave.txt",
+        title="Weave",
+        filetypes=filetypes,
+        defaultextension=".txt")
+
+    if fileName and len(fileName) > 0:
+        g.setGlobalOpenDir(fileName)
+        c.importCommands.weave(fileName)
+#@-node:ekr.20031218072017.2860:weave
+#@-node:ekr.20031218072017.2849:Import&Export submenu
+#@-node:ekr.20060328150113.1:Set g.app.globalOpenDir in import/export commands
 #@-node:ekr.20060323131536.1:Bugs
 #@+node:ekr.20060323140748:Plugins
 #@+node:ekr.20060301182319:Support for chapters plugin
@@ -10738,8 +11224,7 @@ def openWithFileName(fileName,old_c,
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
-        if 1: ### not g.app.unitTesting:
-            g.es("can not open: %s" % (fileName), color="blue")
+        g.es("can not open: %s" % (fileName), color="blue")
         return False, None
     except Exception:
         g.es("exceptions opening: %s" % (fileName),color="red")

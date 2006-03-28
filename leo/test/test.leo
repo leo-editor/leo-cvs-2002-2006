@@ -3,13 +3,13 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7984" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
-	<global_window_position top="40" left="453" height="857" width="778"/>
+	<global_window_position top="28" left="271" height="857" width="778"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -21,7 +21,6 @@
 <v t="ekr.20050821081021.1" a="M"><vh>moveLinesDown</vh></v>
 </v>
 <v t="ekr.20050930124917"><vh>@@button outlineToClipboard</vh></v>
-<v t="ekr.20041001194357"><vh>@@button Unit Test</vh></v>
 <v t="ekr.20051221091553"><vh>@@command dbl-click @key = Alt-Shift-C</vh></v>
 <v t="ekr.20051121143509"><vh>@@button shorten-lines</vh>
 <v t="ekr.20051124065932"><vh>to do</vh></v>
@@ -42,6 +41,7 @@
 <v t="ekr.20051105114247"><vh>@button scripts.leo</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
+<v t="ekr.20041001194357" a="V"><vh>@button Unit Test</vh></v>
 <v t="ekr.20051201090822"><vh>@settings</vh>
 <v t="ekr.20051201063427.1"><vh>@shortcuts</vh></v>
 </v>
@@ -224,7 +224,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051104081824" a="V" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051104081824" a="E" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -300,7 +300,7 @@
 
 import leoTest
 
-leoTest.doTests(all=False)</t>
+leoTest.doTests(c,all=False)</t>
 <t tx="ekr.20041001211817"></t>
 <t tx="ekr.20041230121429">import os, sys, threading
 

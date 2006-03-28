@@ -13,15 +13,13 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"
-marks="ekr.20040803072955.8,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051125080855,ekr.20031218072017.1329,ekr.20051026143009,ekr.20051026143009,ekr.20051125080855,ekr.20050920085536.65,ekr.20051008135051.1,ekr.20031218072017.1329,ekr.20051026143009,ekr.20031218072017.2052,"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
-<v t="ekr.20060207133601"
-marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
+<v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -342,7 +340,7 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20040803072955.11"><vh>newText (leoTkinterTree)</vh>
 <v t="ekr.20050618045715"><vh>&lt;&lt; patch by Maciej Kalisiak  to handle scroll-wheel events &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040803072955.8" a="M"><vh>newClickBox</vh></v>
+<v t="ekr.20040803072955.8"><vh>newClickBox</vh></v>
 <v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
 </v>
 <v t="ekr.20060306200304.1"><vh>Added scroll outline pane commands</vh></v>
@@ -385,6 +383,9 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20031218072017.1809"><vh>importDerivedFile</vh></v>
 </v>
+<v t="ekr.20060328121145.1"><vh>Added run-unit-test command</vh>
+<v t="ekr.20060328121145"><vh>runUnitTest</vh></v>
+</v>
 </v>
 <v t="ekr.20060323131536.1"><vh>Bugs</vh>
 <v t="ekr.20060309022225"><vh>Fixed problem with left &amp; right arrows in outline mode</vh>
@@ -411,10 +412,10 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20060320113137"><vh>Fixed undo problem with clones</vh>
 <v t="ekr.20060320113137.2"><vh>Report</vh></v>
-<v t="ekr.20031218072017.1329" a="M"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
 <v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
 <v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051026143009" a="M"><vh>removeTrailingNewlines</vh></v>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
 </v>
 <v t="ekr.20031218072017.1762"><vh>c.clone</vh></v>
 <v t="ekr.20050412084055"><vh>undoDeleteNode</vh></v>
@@ -443,10 +444,10 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20060321140706"><vh>Investigated setting descendant @file nodes dirty when changing body text</vh>
 <v t="ekr.20060323085310"><vh>Report</vh></v>
-<v t="ekr.20031218072017.1329" a="M"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
 <v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
 <v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051026143009" a="M"><vh>removeTrailingNewlines</vh></v>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
 </v>
 <v t="ekr.20040303214038"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
 <v t="ekr.20031218072017.1490"><vh>setUndoTypingParams</vh>
@@ -474,7 +475,7 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20050920084036.138"><vh>insertNewLine (not undoable)</vh></v>
 <v t="ekr.20050920084036.86"><vh>insertNewLineAndTab</vh></v>
 <v t="ekr.20050920084036.139"><vh>insertParentheses</vh></v>
-<v t="ekr.20051125080855" a="M"><vh>selfInsertCommand</vh>
+<v t="ekr.20051125080855"><vh>selfInsertCommand</vh>
 <v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
 <v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
 <v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
@@ -508,21 +509,21 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20060309132452"><vh>Converted all shortcuts to unicode</vh>
 <v t="ekr.20060324065958"><vh>What I did</vh></v>
-<v t="ekr.20031218072017.1329" a="M"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
 <v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
 <v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051026143009" a="M"><vh>removeTrailingNewlines</vh></v>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
 </v>
 <v t="ekr.20031218072017.4091"><vh>g.app.gui.getAllText</vh></v>
 <v t="ekr.20060323194410"><vh>Found: g.safeStringCompare</vh>
-<v t="ekr.20051026143009" a="M"><vh>removeTrailingNewlines</vh></v>
-<v t="ekr.20051125080855" a="M"><vh>selfInsertCommand</vh>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+<v t="ekr.20051125080855"><vh>selfInsertCommand</vh>
 <v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
 <v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
 <v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
 <v t="ekr.20051026092433"><vh>updateTab</vh></v>
 </v>
-<v t="ekr.20050920085536.65" a="M"><vh>masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.65"><vh>masterCommand &amp; helpers</vh>
 <v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
 <v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
 <v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
@@ -574,7 +575,7 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20060130093055"><vh>bindKeyToDict</vh></v>
-<v t="ekr.20051008135051.1" a="M"><vh>bindOpenWith</vh></v>
+<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
 <v t="ekr.20051011103654"><vh>checkBindings</vh></v>
 <v t="ekr.20060216074643"><vh>k.completeAllBindings &amp; helpers</vh>
 <v t="ekr.20060221141535"><vh>completeAllBindingsForWidget</vh></v>
@@ -587,14 +588,64 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 </v>
 <v t="ekr.20060305110016"><vh>Made sure autocompleter and calltip text stick</vh></v>
+<v t="ekr.20060213094300"><vh>Added call to g.enableIdleTimeHook to c.openWith</vh>
+<v t="ekr.20060213145539"><vh>The causes</vh></v>
+<v t="ekr.20060213144352"><vh>Report</vh></v>
+<v t="ekr.20031218072017.1315"><vh>idle time functions (leoGlobals)</vh>
+<v t="EKR.20040602125018"><vh>enableIdleTimeHook</vh></v>
+<v t="EKR.20040602125018.1"><vh>disableIdleTimeHook</vh></v>
+<v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
+</v>
+<v t="ekr.20031218072017.2823"><vh>openWith and allies</vh>
+<v t="ekr.20031218072017.2824"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2825"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
+<v t="ekr.20031218072017.2826"><vh>&lt;&lt;set dict and path if a temp file already refers to p.v.t &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2827"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
+<v t="ekr.20031218072017.2828"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2829"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2830"><vh>createOpenWithTempFile</vh>
+<v t="ekr.20031218072017.2831"><vh>&lt;&lt; remove previous entry from app.openWithFiles if it exists &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2832"><vh>c.openWithTempFilePath</vh></v>
+</v>
+</v>
+<v t="ekr.20060328150113.1"><vh>Set g.app.globalOpenDir in import/export commands</vh>
+<v t="ekr.20060328150113"><vh>setGlobalOpenDir</vh></v>
+<v t="ekr.20060328150113.2"><vh>Found: globalOpenDir </vh>
+<v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
+<v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+</v>
+<v t="ekr.20031218072017.2821"><vh>open</vh>
+<v t="ekr.20031218072017.2822"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060212061804"><vh>runOpenFileDialog</vh></v>
+<v t="ekr.20060212061804.1"><vh>runSaveFileDialog</vh></v>
+</v>
+<v t="ekr.20031218072017.2849"><vh>Import&amp;Export submenu</vh>
+<v t="ekr.20031218072017.2850"><vh>exportHeadlines</vh></v>
+<v t="ekr.20031218072017.2851"><vh>flattenOutline</vh></v>
+<v t="ekr.20031218072017.2852"><vh>importAtRoot</vh></v>
+<v t="ekr.20031218072017.2853"><vh>importAtFile</vh></v>
+<v t="ekr.20031218072017.2854"><vh>importCWEBFiles</vh></v>
+<v t="ekr.20031218072017.2855"><vh>importFlattenedOutline</vh></v>
+<v t="ekr.20031218072017.2856"><vh>importNowebFiles</vh></v>
+<v t="ekr.20031218072017.2857"><vh>outlineToCWEB</vh></v>
+<v t="ekr.20031218072017.2858"><vh>outlineToNoweb</vh></v>
+<v t="ekr.20031218072017.2859"><vh>removeSentinels</vh></v>
+<v t="ekr.20031218072017.2860"><vh>weave</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20060323140748"><vh>Plugins</vh>
 <v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
 <v t="ekr.20060306030946.1"><vh>Event handling for multiple editors</vh>
-<v t="ekr.20031218072017.1329" a="M"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
 <v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
 <v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051026143009" a="M"><vh>removeTrailingNewlines</vh></v>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
 </v>
 <v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
 <v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh>
@@ -619,7 +670,7 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20041221071131"><vh>createPmwTreeCanvas (not used)</vh></v>
 </v>
 <v t="ekr.20051104075904.42"><vh>leoTest.runLeoTest</vh></v>
-<v t="ekr.20031218072017.2052" a="M"><vh>g.openWithFileName</vh></v>
+<v t="ekr.20031218072017.2052"><vh>g.openWithFileName</vh></v>
 <v t="ekr.20031218072017.4121"><vh>setMenuLabel</vh></v>
 </v>
 <v t="ekr.20060306030946"><vh>Drawing</vh>
@@ -684,15 +735,41 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20060301102950" a="V"><vh>To do 4.4 b3</vh>
+<v t="ekr.20060226131603"><vh>To do 4.4 b4</vh>
+<v t="ekr.20060220155313"><vh>Script: update-leo-settings-file</vh></v>
+<v t="ekr.20060210140415"><vh>Most important 10</vh>
 <v t="ekr.20060307074302.1"><vh>set-change-text command should work when entering find text.</vh></v>
+<v t="ekr.20060122183544"><vh>Improve isearch</vh></v>
+<v t="ekr.20060123095316"><vh>clear-selection</vh></v>
+<v t="ekr.20060113090042"><vh>open-outline-by-name &amp; filename completion</vh></v>
+<v t="ekr.20060122194643"><vh>isearch-headline (forward &amp; backward)</vh></v>
+<v t="ekr.20060116085649"><vh>find-word-on-line, find-character-on-line (forward &amp; backward)</vh></v>
+<v t="ekr.20060116074839.2"><vh>extend-to-word</vh></v>
+<v t="ekr.20060123091352"><vh>Incremental search in switch-to-buffer</vh></v>
+<v t="ekr.20060206103922"><vh>Minibuffer interface for GoToLine number (rewrite goto-line)</vh></v>
+<v t="ekr.20060122185244.2"><vh>Fix unindent command</vh></v>
+</v>
+<v t="ekr.20060328120455"><vh>Next 7</vh>
+<v t="ekr.20051202095626"><vh>help-for-command</vh></v>
+<v t="ekr.20060116084526.1"><vh>insert/remove spaces/tabs from lines (LeoUser)</vh></v>
+<v t="ekr.20060117115212"><vh>Fix rename-buffer command</vh></v>
+<v t="ekr.20060104083551"><vh>move-line-up/down (LeoUser)</vh></v>
+<v t="ekr.20060211093935"><vh>Support for @list and on-enter-mode</vh></v>
+<v t="ekr.20060116090428"><vh>Expand 'point' so it indicates node as well as text location</vh></v>
+<v t="ekr.20060211184834"><vh>Review all commands in leoEditCommands.py</vh></v>
+</v>
+<v t="ekr.20060227163504.1"><vh>Bugs 2</vh>
+<v t="ekr.20060227125713"><vh>Fix colorizer problems</vh></v>
+<v t="ekr.20060227123644"><vh>There are still problems with focus: remove the optimizations?</vh></v>
+</v>
+<v t="ekr.20060227163911.1"><vh>Leo's web site</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
 <v t="ekr.20040629121554.1"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
-<v t="ekr.20040629121554.2" a="M" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
+<v t="ekr.20040629121554.2" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
 <v t="ekr.20040629121554.3"><vh>c.signOnWithVersion</vh></v>
 </v>
 <v t="ekr.20051031040240"><vh>Buttons and settings</vh>
@@ -708,12 +785,10 @@ marks="ekr.20050920085536.65,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20031218072017.2608"><vh>@thin leoApp.py</vh></v>
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
-<v t="ekr.20031218072017.2810"
-marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
+<v t="ekr.20031218072017.2810"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
-<v t="ekr.20031218072017.3093"
-marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
+<v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
@@ -733,18 +808,14 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
 <v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
 <v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
-<v t="ekr.20031218072017.3939"
-marks="ekr.20031218072017.1329,ekr.20051026143009,"><vh>@thin leoTkinterFrame.py</vh></v>
+<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
-<v t="ekr.20040803072955"
-marks="ekr.20040803072955.8,"><vh>@thin leoTkinterTree.py</vh></v>
+<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
-<v t="ekr.20031218072017.3748"
-marks="ekr.20051008135051.1,ekr.20050920085536.65,"><vh>@thin leoKeys.py</vh></v>
-<v t="ekr.20050710142719"
-marks="ekr.20051022142249,ekr.20051125080855,"><vh>@thin leoEditCommands.py</vh></v>
+<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -803,6 +874,57 @@ marks="ekr.20051022142249,ekr.20051125080855,"><vh>@thin leoEditCommands.py</vh>
     if u.yview:
         c.bodyWantsFocus()
         c.frame.body.setYScrollPosition(u.yview)</t>
+<t tx="EKR.20040602125018">@ Enables the "idle" hook.
+After enableIdleTimeHook is called, Leo will call the "idle" hook
+approximately every g.idleTimeDelay milliseconds.
+@c
+
+def enableIdleTimeHook(idleTimeDelay=100):
+
+    if not g.app.idleTimeHook:
+        # g.trace('start idle-time hook: %d msec.' % idleTimeDelay)
+        # Start idle-time processing only after the first idle-time event.
+        g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+        
+    # 1/4/05: Always update these.
+    g.app.idleTimeHook = True
+    g.app.idleTimeDelay = idleTimeDelay # Delay in msec.</t>
+<t tx="EKR.20040602125018.1"># Disables the "idle" hook.
+def disableIdleTimeHook():
+    
+    g.app.idleTimeHook = False</t>
+<t tx="EKR.20040602125018.2"># An internal routine used to dispatch the "idle" hook.
+trace_count = 0
+
+def idleTimeHookHandler(*args,**keys):
+    
+    __pychecker__ = '--no-argsused' # args &amp; keys not used.
+    
+    if 0: # Do not use g.trace here!
+        global trace_count ; trace_count += 1
+        if trace_count % 10 == 0:
+            for w in g.app.windowList:
+                c = w.c
+                print "idleTimeHookHandler",trace_count,c.shortFileName()
+
+    # New for Python 2.3: may be called during shutdown.
+    if g.app.killed: return
+    
+    for w in g.app.windowList:
+        c = w.c
+        # Do NOT compute c.currentPosition.
+        # This would be a MAJOR leak of positions.
+        g.doHook("idle",c=c)
+
+    # Requeue this routine after g.app.idleTimeDelay msec.
+    # (This delay is set by g.enableIdleTimeHook.)
+    # Faster requeues overload the system.
+    if g.app.idleTimeHook:
+        g.app.gui.setIdleTimeHookAfterDelay(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+    else:
+        g.app.afterHandler = None</t>
 <t tx="EKR.20040623090054">case_insensitiveLanguages = ['plsql',]</t>
 <t tx="bwmulder.20041023131509">ada_keywords = [
     "abort",       "else",       "new",        "return",
@@ -1442,6 +1564,7 @@ def yviewCallback (self,*args,**keys):
         self.tree.allocateNodesBeforeScrolling(args)
 
     apply(self.canvas.yview,args,keys)</t>
+<t tx="ekr.20031218072017.1315"></t>
 <t tx="ekr.20031218072017.1329"># This is the only key handler for the body pane.
 def onBodyChanged (self,undoType,
     oldSel=None,oldText=None,oldYview=None,removeTrailing=None):
@@ -1475,6 +1598,82 @@ def onBodyChanged (self,undoType,
         &lt;&lt; recolor the body &gt;&gt;
         if not c.changed: c.setChanged(True)
         &lt;&lt; redraw the screen if necessary &gt;&gt;</t>
+<t tx="ekr.20031218072017.1416">def __init__(self):
+
+    # These ivars are the global vars of this program.
+    self.afterHandler = None
+    self.batchMode = False # True: run in batch mode.
+    self.commandName = None # The name of the command being executed.
+    self.config = None # The leoConfig instance.
+    self.count = 0 # General purpose debugging count.
+    self.debug = False # True: enable extra debugging tests (not used at present).
+        # WARNING: this could greatly slow things down.
+    self.debugSwitch = 0
+        # 0: default behavior
+        # 1: full traces in g.es_exception.
+        # 2: call pdb.set_trace in g.es_exception, etc.
+    self.disableSave = False
+    self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
+    self.globalOpenDir = None # The directory last used to open a file.
+    self.gui = None # The gui class.
+    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
+    self.hookError = False # True: suppress further calls to hooks.
+    self.hookFunction = None # Application wide hook function.
+    self.homeDir = None # The user's home directory.
+    self.idle_imported = False # True: we have done an import idle
+    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
+    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
+    self.initing = True # True: we are initiing the app.
+    self.killed = False # True: we are about to destroy the root window.
+    self.leoID = None # The id part of gnx's.
+    self.loadDir = None # The directory from which Leo was loaded.
+    self.loadedPlugins = [] # List of loaded plugins that have signed on.
+    self.log = None # The LeoFrame containing the present log.
+    self.logIsLocked = False # True: no changes to log are allowed.
+    self.logWaiting = [] # List of messages waiting to go to a log.
+    self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.nodeIndices = None # Singleton node indices instance.
+    self.numberOfWindows = 0 # Number of opened windows.
+    self.openWithFiles = [] # List of data used by Open With command.
+    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
+    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
+    self.quitting = False # True if quitting.  Locks out some events.
+    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
+    self.root = None # The hidden main window. Set later.
+    self.searchDict = {} # For communication between find/change scripts.
+    self.scanErrors = 0 # The number of errors seen by g.scanError.
+    self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
+    self.trace = False # True: enable debugging traces.
+    self.trace_gc = False # defined in run()
+    self.trace_gc_calls = False # defined in run()
+    self.trace_gc_verbose = False # defined in run()
+    self.trace_gc_inited = False
+    self.tracePositions = False
+    self.trace_list = [] # "Sherlock" argument list for tracing().
+    self.tkEncoding = "utf-8"
+    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
+    self.unitTestDict = {} # For communication between unit tests and code.
+    self.unitTesting = False # True if unit testing.
+    self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
+    self.user_xresources_path = None # Resource file for Tk/tcl.
+    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
+
+    # Global panels.  Destroyed when Leo ends.
+    self.pythonFrame = None
+    
+    &lt;&lt; Define global constants &gt;&gt;
+    &lt;&lt; Define global data structures &gt;&gt;</t>
+<t tx="ekr.20031218072017.1417">self.prolog_string = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;"
+
+# New in leo.py 3.0
+self.prolog_prefix_string = "&lt;?xml version=\"1.0\" encoding="
+self.prolog_postfix_string = "?&gt;"
+
+# leo.py 3.11
+self.use_unicode = True # True: use new unicode logic.
+</t>
 <t tx="ekr.20031218072017.1490">@ This routine saves enough information so a typing operation can be undone and redone.
 
 We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
@@ -1874,8 +2073,7 @@ vList = [] ; tDict = {} # Remove these references immediately.</t>
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
-        if 1: ### not g.app.unitTesting:
-            g.es("can not open: %s" % (fileName), color="blue")
+        g.es("can not open: %s" % (fileName), color="blue")
         return False, None
     except Exception:
         g.es("exceptions opening: %s" % (fileName),color="red")
@@ -2039,6 +2237,475 @@ self.recentFiles = [] # List of recent files</t>
         
 __str__ = __repr__
 
+</t>
+<t tx="ekr.20031218072017.2821">def open (self,event=None):
+
+    c = self
+    &lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;
+
+    fileName = g.app.gui.runOpenFileDialog(
+        title = "Open",
+        filetypes = [("Leo files","*.leo"), ("All files","*")],
+        defaultextension = ".leo")
+
+    if fileName and len(fileName) &gt; 0:
+        ok, frame = g.openWithFileName(fileName,c)
+        if ok:
+            g.setGlobalOpenDir(fileName)
+        if ok and closeFlag:
+            g.app.destroyWindow(c.frame)
+    else:
+        c.bodyWantsFocus()</t>
+<t tx="ekr.20031218072017.2822">@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
+@c
+    
+closeFlag = (
+    c.frame.startupWindow and # The window was open on startup
+    not c.changed and not c.frame.saved and # The window has never been changed
+    g.app.numberOfWindows == 1) # Only one untitled window has ever been opened</t>
+<t tx="ekr.20031218072017.2823">def openWith(self,event=None,data=None):
+
+    """This routine handles the items in the Open With... menu.
+
+    These items can only be created by createOpenWithMenuFromTable().
+    Typically this would be done from the "open2" hook.
+    
+    New in 4.3: The "os.spawnv" now works. You may specify arguments to spawnv
+    using a list, e.g.:
+        
+    openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
+    """
+    
+    c = self ; p = c.currentPosition()
+    n = data and len(data) or 0
+    if n != 3:
+        g.trace('bad data, length must be 3, got %d' % n)
+        return
+    try:
+        openType,arg,ext=data
+        if not g.doHook("openwith1",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext):
+            enableIdleTimeHook(idleTimeDelay=100)
+            &lt;&lt; set ext based on the present language &gt;&gt;
+            &lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;
+            &lt;&lt; execute a command to open path in external editor &gt;&gt;
+        g.doHook("openwith2",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext)
+    except Exception:
+        g.es("unexpected exception in c.openWith")
+        g.es_exception()
+
+    return "break"
+</t>
+<t tx="ekr.20031218072017.2824">if not ext:
+    theDict = g.scanDirectives(c)
+    language = theDict.get("language")
+    ext = g.app.language_extension_dict.get(language)
+    # print language,ext
+    if ext == None:
+        ext = "txt"
+    
+if ext[0] != ".":
+    ext = "."+ext
+    
+# print "ext",ext</t>
+<t tx="ekr.20031218072017.2825">theDict = None ; path = None
+&lt;&lt; set dict and path if a temp file already refers to p.v.t &gt;&gt;
+if path:
+    &lt;&lt; create or recreate temp file as needed &gt;&gt;
+else:
+    path = c.createOpenWithTempFile(p,ext)
+
+if not path:
+    return # An error has occured.</t>
+<t tx="ekr.20031218072017.2826">searchPath = c.openWithTempFilePath(p,ext)
+
+if g.os_path_exists(searchPath):
+    for theDict in g.app.openWithFiles:
+        if p.v == theDict.get('v') and searchPath == theDict.get("path"):
+            path = searchPath
+            break
+</t>
+<t tx="ekr.20031218072017.2827">@ We test for changes in both p and the temp file:
+
+- If only p's body text has changed, we recreate the temp file.
+- If only the temp file has changed, do nothing here.
+- If both have changed we must prompt the user to see which code to use.
+@c
+
+encoding = theDict.get("encoding")
+old_body = theDict.get("body")
+new_body = p.bodyString()
+new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
+
+old_time = theDict.get("time")
+try:
+    new_time = g.os_path_getmtime(path)
+except:
+    new_time = None
+    
+body_changed = old_body != new_body
+temp_changed = old_time != new_time
+
+if body_changed and temp_changed:
+    &lt;&lt; Raise dialog about conflict and set result &gt;&gt;
+    if result == "cancel": return
+    rewrite = result == "outline"
+else:
+    rewrite = body_changed
+        
+if rewrite:
+    path = c.createOpenWithTempFile(p,ext)
+else:
+    g.es("reopening: " + g.shortFileName(path),color="blue")</t>
+<t tx="ekr.20031218072017.2828">message = (
+    "Conflicting changes in outline and temp file\n\n" +
+    "Do you want to use the code in the outline or the temp file?\n\n")
+
+result = g.app.gui.runAskYesNoCancelDialog(c,
+    "Conflict!", message,
+    yesMessage = "Outline",
+    noMessage = "File",
+    defaultButton = "Cancel")</t>
+<t tx="ekr.20031218072017.2829">try:
+    if arg == None: arg = ""
+    shortPath = path # g.shortFileName(path)
+    if openType == "os.system":
+        if 1:
+            # This works, _provided_ that arg does not contain blanks.  Sheesh.
+            command = 'os.system(%s)' % (arg+shortPath)
+            os.system(arg+shortPath)
+        else:
+            # XP does not like this format!
+            command = 'os.system("%s" "%s")' % (arg,shortPath)
+            os.system('"%s" "%s"' % (arg,shortPath))
+    elif openType == "os.startfile":
+        command = "os.startfile(%s)" % (arg+shortPath)
+        os.startfile(arg+path)
+    elif openType == "exec":
+        command = "exec(%s)" % (arg+shortPath)
+        exec arg+path in {}
+    elif openType == "os.spawnl":
+        filename = g.os_path_basename(arg)
+        command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
+        apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
+    elif openType == "os.spawnv":
+        filename = os.path.basename(arg[0]) 
+        vtuple = arg[1:]
+        vtuple.insert(0, filename)
+            # add the name of the program as the first argument.
+            # Change suggested by Jim Sizelove.
+        vtuple.append(path)
+        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+    # This clause by Jim Sizelove.
+    elif openType == "subprocess.Popen":
+        if isinstance(arg, basestring):
+            vtuple = arg + " " + path
+        elif isinstance(arg, (list, tuple)):
+            vtuple = arg[:]
+            vtuple.append(path)
+        command = "subprocess.Popen(%s)" % repr(vtuple)
+        if subprocess:
+            subprocess.Popen(vtuple)
+        else:
+            g.grace('Can not import subprocess.  Skipping: "%s"' % command)
+    else:
+        command="bad command:"+str(openType)
+        g.trace(command)
+except Exception:
+    g.es("exception executing: "+command)
+    g.es_exception()</t>
+<t tx="ekr.20031218072017.2830">def createOpenWithTempFile (self,p,ext):
+    
+    c = self
+    path = c.openWithTempFilePath(p,ext)
+    try:
+        if g.os_path_exists(path):
+            g.es("recreating:  " + g.shortFileName(path),color="red")
+        else:
+            g.es("creating:  " + g.shortFileName(path),color="blue")
+        theFile = open(path,"w")
+        # Convert s to whatever encoding is in effect.
+        s = p.bodyString()
+        theDict = g.scanDirectives(c,p=p)
+        encoding = theDict.get("encoding",None)
+        if encoding == None:
+            encoding = c.config.default_derived_file_encoding
+        s = g.toEncodedString(s,encoding,reportErrors=True) 
+        theFile.write(s)
+        theFile.flush()
+        theFile.close()
+        try:    time = g.os_path_getmtime(path)
+        except: time = None
+        # g.es("time: " + str(time))
+        # New in 4.3: theDict now contains both 'p' and 'v' entries, of the expected type.
+        theDict = {
+            "body":s, "c":c, "encoding":encoding,
+            "f":theFile, "path":path, "time":time,
+            "p":p, "v":p.v }
+        &lt;&lt; remove previous entry from app.openWithFiles if it exists &gt;&gt;
+        g.app.openWithFiles.append(theDict)
+        return path
+    except:
+        if theFile:
+            theFile.close()
+        theFile = None
+        g.es("exception creating temp file",color="red")
+        g.es_exception()
+        return None</t>
+<t tx="ekr.20031218072017.2831">for d in g.app.openWithFiles[:]:
+    p2 = d.get("p")
+    if p.v.t == p2.v.t:
+        # print "removing previous entry in g.app.openWithFiles for",p.headString()
+        g.app.openWithFiles.remove(d)</t>
+<t tx="ekr.20031218072017.2832">def openWithTempFilePath (self,p,ext):
+    
+    """Return the path to the temp file corresponding to p and ext."""
+    
+    if 0: # new code: similar to code in mod_tempfname.py plugin.
+        try:
+            # At least in Windows, user name may contain special characters
+            # which would require escaping quotes.
+            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+        except:
+            leoTempDir = "LeoTemp"
+            g.es("Could not retrieve your user name.")
+            g.es("Temporary files will be stored in: %s" % leoTempDir)
+        
+        td = os.path.join(g.os_path_abspath(tempfile.gettempdir()),leoTempDir)
+        if not os.path.exists(td):
+            os.mkdir(td)
+        
+        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+        path = os.path.join(td,name)
+        return path
+    else: # Original code.
+        name = "LeoTemp_%s_%s%s" % (
+            str(id(p.v.t)),
+            g.sanitize_filename(p.headString()),
+            ext)
+    
+        name = g.toUnicode(name,g.app.tkEncoding)
+    
+        if 1:
+            td = g.os_path_abspath(tempfile.gettempdir())
+        else:
+            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+    
+        path = g.os_path_join(td,name)
+    
+        return path</t>
+<t tx="ekr.20031218072017.2849"></t>
+<t tx="ekr.20031218072017.2850">def exportHeadlines (self,event=None):
+    
+    c = self
+
+    filetypes = [("Text files", "*.txt"),("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="headlines.txt",
+        title="Export Headlines",
+        filetypes=filetypes,
+        defaultextension=".txt")
+
+    if fileName and len(fileName) &gt; 0:
+        g.setGlobalOpenDir(fileName)
+        c.importCommands.exportHeadlines(fileName)
+
+</t>
+<t tx="ekr.20031218072017.2851">def flattenOutline (self,event=None):
+    
+    c = self
+
+    filetypes = [("Text files", "*.txt"),("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="flat.txt",
+        title="Flatten Outline",
+        filetypes=filetypes,
+        defaultextension=".txt")
+
+    if fileName and len(fileName) &gt; 0:
+        g.setGlobalOpenDir(fileName)
+        c.importCommands.flattenOutline(fileName)
+
+</t>
+<t tx="ekr.20031218072017.2852">def importAtRoot (self,event=None):
+    
+    c = self
+    
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Lua files", "*.lua"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import To @root",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importFilesCommand (names,"@root")
+</t>
+<t tx="ekr.20031218072017.2853">def importAtFile (self,event=None):
+    
+    c = self
+
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Lua files", "*.lua"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import To @file",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importFilesCommand(names,"@file")</t>
+<t tx="ekr.20031218072017.2854">def importCWEBFiles (self,event=None):
+    
+    c = self
+    
+    filetypes = [
+        ("CWEB files", "*.w"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import CWEB Files",
+        filetypes=filetypes,
+        defaultextension=".w",
+        multiple=True)
+
+    if names:
+        c.importCommands.importWebCommand(names,"cweb")
+</t>
+<t tx="ekr.20031218072017.2855">def importFlattenedOutline (self,event=None):
+    
+    c = self
+    
+    types = [("Text files","*.txt"), ("All files","*")]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import MORE Text",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importFlattenedOutline(names)
+</t>
+<t tx="ekr.20031218072017.2856">def importNowebFiles (self,event=None):
+    
+    c = self
+
+    filetypes = [
+        ("Noweb files", "*.nw"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import Noweb Files",
+        filetypes=filetypes,
+        defaultextension=".nw",
+        multiple=True)
+
+    if names:
+        c.importCommands.importWebCommand(names,"noweb")
+</t>
+<t tx="ekr.20031218072017.2857">def outlineToCWEB (self,event=None):
+    
+    c = self
+
+    filetypes=[
+        ("CWEB files", "*.w"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="cweb.w",
+        title="Outline To CWEB",
+        filetypes=filetypes,
+        defaultextension=".w")
+
+    if fileName and len(fileName) &gt; 0:
+        g.setGlobalOpenDir(fileName)
+        c.importCommands.outlineToWeb(fileName,"cweb")
+
+</t>
+<t tx="ekr.20031218072017.2858">def outlineToNoweb (self,event=None):
+    
+    c = self
+    
+    filetypes=[
+        ("Noweb files", "*.nw"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile=self.outlineToNowebDefaultFileName,
+        title="Outline To Noweb",
+        filetypes=filetypes,
+        defaultextension=".nw")
+
+    if fileName and len(fileName) &gt; 0:
+        g.setGlobalOpenDir(fileName)
+        c.importCommands.outlineToWeb(fileName,"noweb")
+        c.outlineToNowebDefaultFileName = fileName
+
+</t>
+<t tx="ekr.20031218072017.2859">def removeSentinels (self,event=None):
+    
+    c = self
+    
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Lua files", "*.lua"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Remove Sentinels",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.removeSentinelsCommand (names)</t>
+<t tx="ekr.20031218072017.2860">def weave (self,event=None):
+    
+    c = self
+
+    filetypes = [("Text files", "*.txt"),("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="weave.txt",
+        title="Weave",
+        filetypes=filetypes,
+        defaultextension=".txt")
+
+    if fileName and len(fileName) &gt; 0:
+        g.setGlobalOpenDir(fileName)
+        c.importCommands.weave(fileName)
 </t>
 <t tx="ekr.20031218072017.2950">@
 **Important** These methods ensure that exactly zero or one (depending on the
@@ -6563,6 +7230,7 @@ def exit (self,restore=False): # Called from keyboard-quit.
     
     self.clear()
     self.object = None</t>
+<t tx="ekr.20051202095626">Use docstrings as the help message.</t>
 <t tx="ekr.20051216155728">def beginUpdate (self):
     
     self.updateCount += 1
@@ -6578,6 +7246,21 @@ def endUpdate (self,flag,scroll=False):
             self.redraw_now(scroll=scroll)
         if self.updateCount &lt; 0:
             g.trace("Can't happen: negative updateCount",g.callers())</t>
+<t tx="ekr.20060104083551">http://sourceforge.net/forum/message.php?msg_id=3488030
+
+move-region-up
+
+Swap the selection with the line above it. If we are at the top of a node, the
+node identified by threadBack() is selected and the text is moved to the bottom
+of the node.
+
+move-region-down
+
+Swap the selection with the line below it. If we are at the bottom of the node,
+the node identified by threadNext() is selected and the text is moved to the top
+of the node.
+
+In all cases the moved text remains selected, even when the text moves to another node.</t>
 <t tx="ekr.20060104154937">def addModeCommands (self):
     
     '''Add commands created by @mode settings to c.commandsDict and k.inverseCommandsDict.'''
@@ -6594,6 +7277,7 @@ def endUpdate (self,flag,scroll=False):
         c.commandsDict[key] = f = enterModeCallback
         k.inverseCommandsDict [f.__name__] = key
         # g.trace('leoCommands %24s = %s' % (f.__name__,key))</t>
+<t tx="ekr.20060113090042"></t>
 <t tx="ekr.20060114110141">if c.config.getBool('trace_bindings'):
     theFilter = c.config.getString('trace_bindings_filter') or ''
     # g.trace(repr(theFilter))
@@ -6626,6 +7310,28 @@ def endUpdate (self,flag,scroll=False):
         self.unboundKeyAction = 'insert'
         
     k.setInputState(self.unboundKeyAction)</t>
+<t tx="ekr.20060116074839.2"></t>
+<t tx="ekr.20060116084526.1">http://sourceforge.net/forum/message.php?msg_id=3488030
+
+add-space-to-lines      Adds a space is added to start of all selected lines.
+
+add-tab-to-line         Adds 4 spaces to start of all selected lines.
+
+remove-space-from lines Removes a space from start of all selected lines.
+
+remove-tab-from lines   Removes a space from start of all selected lines.</t>
+<t tx="ekr.20060116085649"></t>
+<t tx="ekr.20060116090428"></t>
+<t tx="ekr.20060117115212"></t>
+<t tx="ekr.20060122183544">@nocolor
+
+- Handle backspace for isearch: keep a stack of previous matches.
+- Allow cross-node isearches.
+</t>
+<t tx="ekr.20060122185244.2"># unindent-region should work in all panes.</t>
+<t tx="ekr.20060122194643"></t>
+<t tx="ekr.20060123091352"></t>
+<t tx="ekr.20060123095316">Useful, e.g., after a find.</t>
 <t tx="ekr.20060123115459">def setFindScopeEveryWhere     (self, event): return self.setFindScope('entire-outline')
 def setFindScopeNodeOnly       (self, event): return self.setFindScope('node-only')
 def setFindScopeSuboutlineOnly (self, event): return self.setFindScope('suboutline-only')
@@ -7199,6 +7905,7 @@ shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0</t>
         if protect:
             k.protectLabel()
 </t>
+<t tx="ekr.20060206103922"></t>
 <t tx="ekr.20060209064140">def findAll (self,event):
 
     k = self.k ; state = k.getState('find-all')
@@ -7216,6 +7923,7 @@ shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0</t>
 
     self.setup_command()
     self.findAll()</t>
+<t tx="ekr.20060210140415"></t>
 <t tx="ekr.20060210141604.1">def getEditableTextRange (self):
     
     k = self ; w = self.widget ; n = 0
@@ -7273,6 +7981,90 @@ shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0</t>
 
     k.extendLabel(s,select=True,protect=protect)
 </t>
+<t tx="ekr.20060211093935"></t>
+<t tx="ekr.20060211184834">Any command that alters text should call begin/endCommand.</t>
+<t tx="ekr.20060212061804">def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
+
+    """Create and run an Tkinter open file dialog ."""
+    
+    __pychecker__ = '--no-argsused' # defaultextension not used.
+    
+    initialdir = g.app.globalOpenDir or g.os_path_abspath(os.getcwd())
+    
+    if multiple:
+        # askopenfilenames requires Python 2.3 and Tk 8.4.
+        if (
+            g.CheckVersion(sys.version,"2.3") and
+            g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4")
+        ):
+            files = tkFileDialog.askopenfilenames(
+                title=title,filetypes=filetypes,initialdir=initialdir)
+            # g.trace(files)
+            return list(files)
+        else:
+            # Get one file and return it as a list.
+            theFile = tkFileDialog.askopenfilename(
+                title=title,filetypes=filetypes,initialdir=initialdir)
+            return [theFile]
+    else:
+        # Return a single file name as a string.
+        return tkFileDialog.askopenfilename(
+            title=title,filetypes=filetypes,initialdir=initialdir)</t>
+<t tx="ekr.20060212061804.1">def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+
+    """Create and run an Tkinter save file dialog ."""
+    
+    __pychecker__ = '--no-argsused' # defaultextension not used.
+    
+    initialdir=g.app.globalOpenDir or g.os_path_abspath(os.getcwd()),
+
+    return tkFileDialog.asksaveasfilename(
+        initialdir=initialdir,initialfile=initialfile,
+        title=title,filetypes=filetypes)</t>
+<t tx="ekr.20060213094300"></t>
+<t tx="ekr.20060213144352">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3573148
+By: yarkot
+
+With the "latest" CVS snapshot. Do this:
+
+[] Open LeoDocs.leo from the latest workspace;
+[] Expand node "What's new in Leo 4.4" (I'll refer to this as the "parent");
+[] Dbl-click parent (VIM opens text; text is single line: "@nocolor");
+[] Add a second "@nocolor" line; write and save from VIM;
+[] Leo view does not show line;
+[] re-open w/ vim - vim shows new line;
+
+[] Save;  add more text;  shows w/ vim, not in Leo; Apparently doesn't get save.
+You can add a line in Leo, "This is a test", modify it in vim - "This was a
+test", save vim, save Leo - close leo, re-open leo - the vim changes never got
+saved.
+
+Ok  - that's one.
+
+Here's the second (same file, node, fresh session):
+
+[] Open parent w/ vim (dbl-clk); opens ok;
+[] open child "New commands not in legacy Leo" w/ vim; opens ok.
+[] FAILS:  try to open first child: "Minibuffer-oriented find commands" - vim
+doesn't open, status line flashes node name (once for each click it looks like),
+and console window shows this:
+
+open_in_vim: {'p': &lt;pos 20987888 lvl: 1 [0] New commands not in legacy Leo&gt;,
+'c'
+: Commander 25144936: u'C:\\Workspace\\Leo\\leo\\doc\\LeoDocs.leo', 'event':
+&lt;Tk
+inter.Event instance at 0x0132BE90&gt;, 'v': &lt;pos 20987888 lvl: 1 [0] New commands
+not in legacy Leo&gt;}</t>
+<t tx="ekr.20060213145539">@nocolor
+
+1.  Both the vim and xemacs plugins require that open_with plugin be enabled.
+    I changed the docstrings for each.
+
+2.  The open_with plugin now explicitly calls g.enableIdleTimeHook.
+    That is, the idle time hook is no longer enabled by default.
+   
+These were easy fixes to make.  A similar fix should be done for files opened from the Open With menu, but it's too late to do that for b2.</t>
 <t tx="ekr.20060215104239">if ctrl and not cmd:
     cmd = True ; ctrl = False
 if alt and not ctrl:
@@ -7778,6 +8570,7 @@ def setTabName (self,s):
     if doc:
         c.frame.log.clearTab('Info',wrap='word')
         g.es(doc,tabName='Info')</t>
+<t tx="ekr.20060220155313"></t>
 <t tx="ekr.20060221073238">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3586962
@@ -8325,6 +9118,7 @@ diff -r1.42 rst3.py
 &lt;             output = self.writeToDocutils(source)
 ---
 &gt;             output = self.writeToDocutils(self.source)</t>
+<t tx="ekr.20060226131603"></t>
 <t tx="ekr.20060226131603.1">def aproposAutocompletion (self,event=None):
     
     c = self.c ; s = '''
@@ -8407,8 +9201,46 @@ Traceback (most recent call last):
     g.app.dialogs += 1
 AttributeError: LeoApp instance has no attribute 'dialogs'</t>
 <t tx="ekr.20060227120635"></t>
+<t tx="ekr.20060227123644">@ It's much better to call g.app.gui.set_focus a few extra times than to mess up the focus!
+
+- Make c.invalidateFocus a do-nothing method.</t>
+<t tx="ekr.20060227125713">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3585710
+By: e
+
+sometimes it seems to happen no matter what.
+here are two (I hope) repeatable cases.
+
+happens if the previous line has a comment or string
+@language python
+some=expr #trailing comment
+another line
+copy then paste 'another line' line
+it colorized like a comment, or all one color.
+a sure way to fix it is goto another node then back.
+it won't naturally resynch by itself 
+even if you goto end of body and back.
+
+after that,
+cut something inside next line after a comment same thing.
+similar problem if previous line ends in a string.
+same if cut/paste and trailing comment is on the same line.
+undo restores the previous coloring, correct or not.
+its been this way since early 4.4alpha I think.
+still using 4.4b1
+
+the final color was comment color as I write this,
+as I open a fresh Leo and repeat, its text color.
+there may be more than one trigger to the problem.
+
+I know its a tradeoff of constant colorizing runs vrs incremental update, its
+not technically a new problem, but this seems way buggier.</t>
+<t tx="ekr.20060227163504.1"></t>
+<t tx="ekr.20060227163911.1">@nocolor
+
+- Put more screen shots on Leo's web site.
+- Put complete slide show on Leo's web site.</t>
 <t tx="ekr.20060228071700"></t>
-<t tx="ekr.20060301102950"></t>
 <t tx="ekr.20060301182319"></t>
 <t tx="ekr.20060305110016">g.</t>
 <t tx="ekr.20060306030946"></t>
@@ -8950,5 +9782,21 @@ idioms vary); no support for Lua v5+ metamethods.
 
 Implementation method - I loaded LeoPy.leo, searched the whole outline for 'java',
 and added lua counterparts throughout, including a Lua comment scanner.</t>
+<t tx="ekr.20060328120455"></t>
+<t tx="ekr.20060328121145">def runUnitTests (self,event=None):
+    
+    '''Run all unit tests contained in the presently selected outline.'''
+    
+    c = self.c
+
+    leoTest.doTests(c,all=False)</t>
+<t tx="ekr.20060328121145.1"></t>
+<t tx="ekr.20060328150113">def setGlobalOpenDir (fileName):
+    
+    if fileName:
+        g.app.globalOpenDir = g.os_path_dirname(fileName)
+        # g.es('current directory: %s' %  g.app.globalOpenDir)</t>
+<t tx="ekr.20060328150113.1"></t>
+<t tx="ekr.20060328150113.2"></t>
 </tnodes>
 </leo_file>
