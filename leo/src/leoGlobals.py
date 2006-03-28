@@ -810,8 +810,7 @@ def openWithFileName(fileName,old_c,
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
-        if 1: ### not g.app.unitTesting:
-            g.es("can not open: %s" % (fileName), color="blue")
+        g.es("can not open: %s" % (fileName), color="blue")
         return False, None
     except Exception:
         g.es("exceptions opening: %s" % (fileName),color="red")
@@ -2103,6 +2102,14 @@ def sanitize_filename(s):
     return result [:128]
 #@nonl
 #@-node:ekr.20031218072017.3124:sanitize_filename
+#@+node:ekr.20060328150113:setGlobalOpenDir
+def setGlobalOpenDir (fileName):
+    
+    if fileName:
+        g.app.globalOpenDir = g.os_path_dirname(fileName)
+        # g.es('current directory: %s' %  g.app.globalOpenDir)
+#@nonl
+#@-node:ekr.20060328150113:setGlobalOpenDir
 #@+node:ekr.20031218072017.3125:shortFileName & shortFilename
 def shortFileName (fileName):
     

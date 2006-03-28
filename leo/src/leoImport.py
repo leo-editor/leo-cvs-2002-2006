@@ -129,6 +129,7 @@ class baseLeoImportCommands:
         try:
             u.beforeChangeGroup(current,command)
             for fileName in paths:
+                g.setGlobalOpenDir(fileName)
                 #@            << set isThin if fileName is a thin derived file >>
                 #@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
                 fileName = g.os_path_normpath(fileName)
@@ -204,6 +205,7 @@ class baseLeoImportCommands:
                 #@-node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
                 #@nl
             for fileName in files:
+                g.setGlobalOpenDir(fileName)
                 v = self.createOutline(fileName,current)
                 if v: # createOutline may fail.
                     perfectImport = False ###
@@ -338,6 +340,7 @@ class baseLeoImportCommands:
     
         self.setEncoding()
         fileName = files[0] # files contains at most one file.
+        g.setGlobalOpenDir(fileName)
         #@    << Read the file into array >>
         #@+node:ekr.20031218072017.3221:<< Read the file into array >>
         try:
@@ -451,6 +454,7 @@ class baseLeoImportCommands:
         c.beginUpdate()
         try:
             for fileName in files:
+                g.setGlobalOpenDir(fileName)
                 v = self.createOutlineFromWeb(fileName,current)
                 v.contract()
                 v.setDirty()
@@ -2685,7 +2689,7 @@ class baseLeoImportCommands:
         self.setEncoding()
     
         for fileName in paths:
-    
+            g.setGlobalOpenDir(fileName)
             path, self.fileName = g.os_path_split(fileName)
             #@        << Read file into s >>
             #@+node:ekr.20031218072017.3301:<< Read file into s >>

@@ -462,8 +462,7 @@ class baseCommands:
         if fileName and len(fileName) > 0:
             ok, frame = g.openWithFileName(fileName,c)
             if ok:
-                g.app.globalOpenDir = frame.openDirectory
-                # g.es('current directory: %s' %  g.app.globalOpenDir)
+                g.setGlobalOpenDir(fileName)
             if ok and closeFlag:
                 g.app.destroyWindow(c.frame)
         else:
@@ -1077,6 +1076,7 @@ class baseCommands:
             defaultextension=".txt")
     
         if fileName and len(fileName) > 0:
+            g.setGlobalOpenDir(fileName)
             c.importCommands.exportHeadlines(fileName)
     
     #@-node:ekr.20031218072017.2850:exportHeadlines
@@ -1094,6 +1094,7 @@ class baseCommands:
             defaultextension=".txt")
     
         if fileName and len(fileName) > 0:
+            g.setGlobalOpenDir(fileName)
             c.importCommands.flattenOutline(fileName)
     
     #@-node:ekr.20031218072017.2851:flattenOutline
@@ -1219,6 +1220,7 @@ class baseCommands:
             defaultextension=".w")
     
         if fileName and len(fileName) > 0:
+            g.setGlobalOpenDir(fileName)
             c.importCommands.outlineToWeb(fileName,"cweb")
     
     #@-node:ekr.20031218072017.2857:outlineToCWEB
@@ -1239,6 +1241,7 @@ class baseCommands:
             defaultextension=".nw")
     
         if fileName and len(fileName) > 0:
+            g.setGlobalOpenDir(fileName)
             c.importCommands.outlineToWeb(fileName,"noweb")
             c.outlineToNowebDefaultFileName = fileName
     
@@ -1283,6 +1286,7 @@ class baseCommands:
             defaultextension=".txt")
     
         if fileName and len(fileName) > 0:
+            g.setGlobalOpenDir(fileName)
             c.importCommands.weave(fileName)
     #@-node:ekr.20031218072017.2860:weave
     #@-node:ekr.20031218072017.2849:Import&Export submenu
