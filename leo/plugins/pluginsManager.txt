@@ -48,6 +48,7 @@ rst3.py
 #run_nodes.py
 #FileActions.py
 #scripts_menu.py
+#chapter_hoist.py
 plugin_manager.py
 
 # Icon area: order is important.

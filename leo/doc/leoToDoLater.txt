@@ -6029,6 +6029,12 @@ commands they create. its very difficult to do now.
 e
 #@nonl
 #@-node:ekr.20060102092148.1:--safe option
+#@+node:ekr.20060227123644:There are still problems with focus: remove the optimizations?
+@ It's much better to call g.app.gui.set_focus a few extra times than to mess up the focus!
+
+- Make c.invalidateFocus a do-nothing method.
+#@nonl
+#@-node:ekr.20060227123644:There are still problems with focus: remove the optimizations?
 #@-node:ekr.20060116073938.2:Other
 #@-node:ekr.20060116073229:To do 4.4.1
 #@+node:ekr.20050816165305:Important

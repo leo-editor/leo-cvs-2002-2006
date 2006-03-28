@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9369" clone_windows="0"/>
-<globals body_outline_ratio="0.515801354402">
-	<global_window_position top="16" left="265" height="886" width="956"/>
+<globals body_outline_ratio="0.715460526316">
+	<global_window_position top="79" left="142" height="789" width="973"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -17,7 +17,7 @@
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
-<v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
+<v t="ekr.20060207133601" a="E"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -638,6 +638,9 @@
 <v t="ekr.20031218072017.2860"><vh>weave</vh></v>
 </v>
 </v>
+<v t="ekr.20060227125713" a="E"><vh>Investigated colorizer problems: can not reproduce</vh></v>
+<v t="ekr.20060325073234"><vh>Removed support @ifgui: it doesn't and can't work</vh></v>
+<v t="ekr.20060325122134.1"><vh>Removed autocompletion for self</vh></v>
 </v>
 <v t="ekr.20060323140748"><vh>Plugins</vh>
 <v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
@@ -726,13 +729,6 @@
 <v t="ekr.20060308103043"><vh>Fixed crasher in Word (and other) plugins</vh></v>
 <v t="ekr.20060307142612"><vh>Fixed problem with labels plugin</vh></v>
 </v>
-<v t="ekr.20060325122134"><vh>Removed features</vh>
-<v t="ekr.20060325073234"><vh>Removed support @ifgui: it doesn't and can't work</vh></v>
-<v t="ekr.20060325122134.1"><vh>Removed autocompletion for self</vh></v>
-</v>
-<v t="ekr.20060325074410"><vh>Tests and documentation</vh>
-<v t="ekr.20060306195137"><vh>Documented and tested @ifplatform nodes</vh></v>
-</v>
 </v>
 </v>
 <v t="ekr.20060226131603"><vh>To do 4.4 b4</vh>
@@ -758,10 +754,6 @@
 <v t="ekr.20060116090428"><vh>Expand 'point' so it indicates node as well as text location</vh></v>
 <v t="ekr.20060211184834"><vh>Review all commands in leoEditCommands.py</vh></v>
 </v>
-<v t="ekr.20060227163504.1"><vh>Bugs 2</vh>
-<v t="ekr.20060227125713"><vh>Fix colorizer problems</vh></v>
-<v t="ekr.20060227123644"><vh>There are still problems with focus: remove the optimizations?</vh></v>
-</v>
 <v t="ekr.20060227163911.1"><vh>Leo's web site</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -769,7 +761,7 @@
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
 <v t="ekr.20040629121554.1"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
-<v t="ekr.20040629121554.2" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
+<v t="ekr.20040629121554.2" a="M" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
 <v t="ekr.20040629121554.3"><vh>c.signOnWithVersion</vh></v>
 </v>
 <v t="ekr.20051031040240"><vh>Buttons and settings</vh>
@@ -785,7 +777,8 @@
 <v t="ekr.20031218072017.2608"><vh>@thin leoApp.py</vh></v>
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
-<v t="ekr.20031218072017.2810"><vh>@thin leoCommands.py</vh></v>
+<v t="ekr.20031218072017.2810"
+marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
@@ -3382,7 +3375,7 @@ self.putPostlog()</t>
     return "Leo 4.4 a7, build %s, February 28, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.420 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.423 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -9201,9 +9194,6 @@ Traceback (most recent call last):
     g.app.dialogs += 1
 AttributeError: LeoApp instance has no attribute 'dialogs'</t>
 <t tx="ekr.20060227120635"></t>
-<t tx="ekr.20060227123644">@ It's much better to call g.app.gui.set_focus a few extra times than to mess up the focus!
-
-- Make c.invalidateFocus a do-nothing method.</t>
 <t tx="ekr.20060227125713">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3585710
 By: e
@@ -9234,8 +9224,9 @@ as I open a fresh Leo and repeat, its text color.
 there may be more than one trigger to the problem.
 
 I know its a tradeoff of constant colorizing runs vrs incremental update, its
-not technically a new problem, but this seems way buggier.</t>
-<t tx="ekr.20060227163504.1"></t>
+not technically a new problem, but this seems way buggier.
+
+@color</t>
 <t tx="ekr.20060227163911.1">@nocolor
 
 - Put more screen shots on Leo's web site.
@@ -9251,16 +9242,6 @@ not technically a new problem, but this seems way buggier.</t>
 <t tx="ekr.20060306130654"></t>
 <t tx="ekr.20060306193836"></t>
 <t tx="ekr.20060306193910"></t>
-<t tx="ekr.20060306195137">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3607510
-By: spboulet
-
-One suggestion is to have more of the platform detection work be done by leo
-('if sys.platform ==' is not all that hard) instead of making it windows default
-(e.g. external editors program locations, command vs. control keys). Having
-to edit leoConfig.leo should be optional but not necessary in cases like these.
-
-@color</t>
 <t tx="ekr.20060306200304.1">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3608246
@@ -9740,7 +9721,6 @@ minibuffer command, but do not understand how to use it.
 Alas, @if-gui can't be made to work. The problem is that plugins can set
 g.app.gui, but plugins need settings so the leoSettings.leo files must be parsed
 before g.app.gui.guiName() is known.</t>
-<t tx="ekr.20060325074410"></t>
 <t tx="ekr.20060325093414"># It now properly creates bindings.</t>
 <t tx="ekr.20060325110412">def registerBinding (self,shortcut):
     
@@ -9755,7 +9735,6 @@ before g.app.gui.guiName() is known.</t>
     
     for w in (f.body.bodyCtrl,f.tree.canvas,f.tree.bindingWidget):
         k.completeOneBindingForWidget(w,stroke,bindKeyCallback)</t>
-<t tx="ekr.20060325122134"></t>
 <t tx="ekr.20060325122134.1"># It's not ready for prime time.</t>
 <t tx="ekr.20060328110802"># ddm 13/02/06
 lua_keywords = [

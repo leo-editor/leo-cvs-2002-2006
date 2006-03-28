@@ -82,48 +82,6 @@ Any command that alters text should call begin/endCommand.
 #@nonl
 #@-node:ekr.20060211184834:Review all commands in leoEditCommands.py
 #@-node:ekr.20060328120455:Next 7
-#@+node:ekr.20060227163504.1:Bugs 2
-#@+node:ekr.20060227125713:Fix colorizer problems
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3585710
-By: e
-
-sometimes it seems to happen no matter what.
-here are two (I hope) repeatable cases.
-
-happens if the previous line has a comment or string
-@language python
-some=expr #trailing comment
-another line
-copy then paste 'another line' line
-it colorized like a comment, or all one color.
-a sure way to fix it is goto another node then back.
-it won't naturally resynch by itself 
-even if you goto end of body and back.
-
-after that,
-cut something inside next line after a comment same thing.
-similar problem if previous line ends in a string.
-same if cut/paste and trailing comment is on the same line.
-undo restores the previous coloring, correct or not.
-its been this way since early 4.4alpha I think.
-still using 4.4b1
-
-the final color was comment color as I write this,
-as I open a fresh Leo and repeat, its text color.
-there may be more than one trigger to the problem.
-
-I know its a tradeoff of constant colorizing runs vrs incremental update, its
-not technically a new problem, but this seems way buggier.
-#@nonl
-#@-node:ekr.20060227125713:Fix colorizer problems
-#@+node:ekr.20060227123644:There are still problems with focus: remove the optimizations?
-@ It's much better to call g.app.gui.set_focus a few extra times than to mess up the focus!
-
-- Make c.invalidateFocus a do-nothing method.
-#@nonl
-#@-node:ekr.20060227123644:There are still problems with focus: remove the optimizations?
-#@-node:ekr.20060227163504.1:Bugs 2
 #@+node:ekr.20060227163911.1:Leo's web site
 @nocolor
 

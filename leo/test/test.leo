@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="V" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -41,7 +41,7 @@
 <v t="ekr.20051105114247"><vh>@button scripts.leo</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
-<v t="ekr.20041001194357" a="V"><vh>@button Unit Test</vh></v>
+<v t="ekr.20041001194357"><vh>@button Unit Test</vh></v>
 <v t="ekr.20051201090822"><vh>@settings</vh>
 <v t="ekr.20051201063427.1"><vh>@shortcuts</vh></v>
 </v>
@@ -218,13 +218,13 @@
 <v t="ekr.20060308015826"><vh>ctor: leoPyShell</vh></v>
 <v t="ekr.20060308015826.1"><vh>begin</vh></v>
 </v>
-<v t="ekr.20060308005321" a="E"><vh>leoPyShellFileList</vh>
+<v t="ekr.20060308005321"><vh>leoPyShellFileList</vh>
 <v t="ekr.20060308014551"><vh>ctor: leoPyShellFileList</vh></v>
 <v t="ekr.20060308014050.1"><vh>open_shell</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20051104081824" a="E" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -244,8 +244,8 @@
 <v t="ekr.20060216163942"><vh>reverseFindWhitespace</vh></v>
 </v>
 <v t="ekr.20060222140651"><vh>testClass (for test of self completion)</vh>
-<v t="ekr.20060222140651.1" a="E"><vh>ctor</vh></v>
-<v t="ekr.20060222140651.2" a="E"><vh>spam</vh></v>
+<v t="ekr.20060222140651.1"><vh>ctor</vh></v>
+<v t="ekr.20060222140651.2"><vh>spam</vh></v>
 <v t="ekr.20060223125426"><vh>eggs</vh></v>
 <v t="ekr.20060222140651.3"><vh>bad</vh></v>
 <v t="ekr.20060223120040"><vh>test of self</vh></v>
@@ -259,8 +259,8 @@
 <v t="ekr.20060228082132"><vh>@@button addChapter</vh></v>
 <v t="ekr.20060301121002"><vh>@@button rmChapter</vh></v>
 <v t="ekr.20060301132108"><vh>@@button addEditor</vh></v>
-<v t="ekr.20060301132108.1" a="E"><vh>@@button rmEditor</vh></v>
-<v t="ekr.20060301151555" a="E"><vh>@@button index</vh></v>
+<v t="ekr.20060301132108.1"><vh>@@button rmEditor</vh></v>
+<v t="ekr.20060301151555"><vh>@@button index</vh></v>
 </v>
 <v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>

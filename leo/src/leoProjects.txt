@@ -10669,6 +10669,54 @@ def weave (self,event=None):
 #@-node:ekr.20031218072017.2860:weave
 #@-node:ekr.20031218072017.2849:Import&Export submenu
 #@-node:ekr.20060328150113.1:Set g.app.globalOpenDir in import/export commands
+#@+node:ekr.20060227125713:Investigated colorizer problems: can not reproduce
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3585710
+By: e
+
+sometimes it seems to happen no matter what.
+here are two (I hope) repeatable cases.
+
+happens if the previous line has a comment or string
+@language python
+some=expr #trailing comment
+another line
+copy then paste 'another line' line
+it colorized like a comment, or all one color.
+a sure way to fix it is goto another node then back.
+it won't naturally resynch by itself 
+even if you goto end of body and back.
+
+after that,
+cut something inside next line after a comment same thing.
+similar problem if previous line ends in a string.
+same if cut/paste and trailing comment is on the same line.
+undo restores the previous coloring, correct or not.
+its been this way since early 4.4alpha I think.
+still using 4.4b1
+
+the final color was comment color as I write this,
+as I open a fresh Leo and repeat, its text color.
+there may be more than one trigger to the problem.
+
+I know its a tradeoff of constant colorizing runs vrs incremental update, its
+not technically a new problem, but this seems way buggier.
+
+@color
+#@nonl
+#@-node:ekr.20060227125713:Investigated colorizer problems: can not reproduce
+#@+node:ekr.20060325073234:Removed support @ifgui: it doesn't and can't work
+@nocolor
+
+Alas, @if-gui can't be made to work. The problem is that plugins can set
+g.app.gui, but plugins need settings so the leoSettings.leo files must be parsed
+before g.app.gui.guiName() is known.
+#@nonl
+#@-node:ekr.20060325073234:Removed support @ifgui: it doesn't and can't work
+#@+node:ekr.20060325122134.1:Removed autocompletion for self
+# It's not ready for prime time.
+#@nonl
+#@-node:ekr.20060325122134.1:Removed autocompletion for self
 #@-node:ekr.20060323131536.1:Bugs
 #@+node:ekr.20060323140748:Plugins
 #@+node:ekr.20060301182319:Support for chapters plugin
@@ -12131,35 +12179,6 @@ The fix: all menu commands now have event=None in their argument list.
 #@nonl
 #@-node:ekr.20060307142612:Fixed problem with labels plugin
 #@-node:ekr.20060323140748:Plugins
-#@+node:ekr.20060325122134:Removed features
-#@+node:ekr.20060325073234:Removed support @ifgui: it doesn't and can't work
-@nocolor
-
-Alas, @if-gui can't be made to work. The problem is that plugins can set
-g.app.gui, but plugins need settings so the leoSettings.leo files must be parsed
-before g.app.gui.guiName() is known.
-#@nonl
-#@-node:ekr.20060325073234:Removed support @ifgui: it doesn't and can't work
-#@+node:ekr.20060325122134.1:Removed autocompletion for self
-# It's not ready for prime time.
-#@nonl
-#@-node:ekr.20060325122134.1:Removed autocompletion for self
-#@-node:ekr.20060325122134:Removed features
-#@+node:ekr.20060325074410:Tests and documentation
-#@+node:ekr.20060306195137:Documented and tested @ifplatform nodes
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3607510
-By: spboulet
-
-One suggestion is to have more of the platform detection work be done by leo
-('if sys.platform ==' is not all that hard) instead of making it windows default
-(e.g. external editors program locations, command vs. control keys). Having
-to edit leoConfig.leo should be optional but not necessary in cases like these.
-
-@color
-#@nonl
-#@-node:ekr.20060306195137:Documented and tested @ifplatform nodes
-#@-node:ekr.20060325074410:Tests and documentation
 #@-node:ekr.20060306070425:4.4 b3 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
