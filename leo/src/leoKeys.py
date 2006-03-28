@@ -498,6 +498,7 @@ class autoCompleterClass:
         else:
             i = j = g.app.gui.getInsertPoint(w)
         w.insert(j,s)
+        c.frame.body.onBodyChanged('Typing')
         
         if 1:
             j1 = w.index('%s + 1c' % j)
@@ -669,6 +670,7 @@ class autoCompleterClass:
         w.insert(j,s)
         j = w.index('%s + 1c' % (j))
         g.app.gui.setSelectionRange(w,i,j,insert=j)
+        c.frame.body.onBodyChanged('Typing')
     #@nonl
     #@-node:ekr.20051127065601:extendSelection
     #@+node:ekr.20060221104137:findAnchor
@@ -749,6 +751,7 @@ class autoCompleterClass:
         start = g.app.gui.getInsertPoint(w)
         start = w.index(start+'-1c')
         i,word = self.findAnchor(w)
+        if word.isdigit: return False
         self.setObjectAndMembersList(word)
         
         # g.trace(word,self.object,len(self.membersList))
@@ -1000,6 +1003,7 @@ class autoCompleterClass:
         w.insert(i,s)
         j = w.index('%s + %dc' % (i,len(s)))
         g.app.gui.setSelectionRange(w,i,j,insert=j)
+        c.frame.body.onBodyChanged('Typing')
     #@nonl
     #@-node:ekr.20051127070018:setSelection
     #@+node:ekr.20060220062710:start
