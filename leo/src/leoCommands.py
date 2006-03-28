@@ -1002,6 +1002,7 @@ class baseCommands:
             ("C/C++ files","*.h"),
             ("C/C++ files","*.hpp"),
             ("Java files","*.java"),
+            ("Lua files", "*.lua"),
             ("Pascal files","*.pas"),
             ("Python files","*.py") ]
         
@@ -1107,6 +1108,7 @@ class baseCommands:
             ("C/C++ files","*.h"),
             ("C/C++ files","*.hpp"),
             ("Java files","*.java"),
+            ("Lua files", "*.lua"),
             ("Pascal files","*.pas"),
             ("Python files","*.py") ]
     
@@ -1131,6 +1133,7 @@ class baseCommands:
             ("C/C++ files","*.h"),
             ("C/C++ files","*.hpp"),
             ("Java files","*.java"),
+            ("Lua files", "*.lua"),
             ("Pascal files","*.pas"),
             ("Python files","*.py") ]
     
@@ -1251,6 +1254,7 @@ class baseCommands:
             ("C/C++ files","*.h"),
             ("C/C++ files","*.hpp"),
             ("Java files","*.java"),
+            ("Lua files", "*.lua"),
             ("Pascal files","*.pas"),
             ("Python files","*.py") ]
     

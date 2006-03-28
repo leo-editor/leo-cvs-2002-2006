@@ -399,6 +399,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
             ("C/C++ files","*.h"),
             ("C/C++ files","*.hpp"),
             ("Java files","*.java"),
+            ("Lua files", "*.lua"),
             ("Pascal files","*.pas"),
             ("Python files","*.py"),
             ("Text files","*.txt"),

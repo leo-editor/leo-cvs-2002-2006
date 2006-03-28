@@ -37,7 +37,7 @@ import string
 #@@c
 
 xml_language_names = (
-    "CWEB","C","HTML","Java","LaTeX",
+    "CWEB","C","HTML","Java","LaTeX","Lua",
     "Pascal","PerlPod","Perl","Plain","Python","tcl/tk")
 #@nonl
 #@-node:ekr.20050405141130.1:<< xml_language_names >>

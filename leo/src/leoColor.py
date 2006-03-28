@@ -439,6 +439,15 @@ class baseColorizer:
         "\\zeta" ]
     #@nonl
     #@-node:ekr.20031218072017.377:latex keywords
+    #@+node:ekr.20060328110802:lua keywords
+    # ddm 13/02/06
+    lua_keywords = [
+        "and", "break", "do", "else", "elseif", "end",
+        "false", "for", "function", "if", "in", "local",
+        "nil", "not", "or", "repeat", "return", "then",
+        "true", "until", "while",
+    ]
+    #@-node:ekr.20060328110802:lua keywords
     #@+node:ekr.20031218072017.378:pascal keywords
     pascal_keywords = [
         "and","array","as","begin",
@@ -1477,7 +1486,7 @@ class baseColorizer:
             # The list of languages for which keywords exist.
             # Eventually we might just use language_delims_dict.keys()
             languages = [
-                "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex",
+                "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex","lua",
                 "pascal","perl","perlpod","php","plsql","python","rapidq","rebol","shell","tcltk"]
             
             self.keywords = []

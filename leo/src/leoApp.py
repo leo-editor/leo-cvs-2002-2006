@@ -113,6 +113,7 @@ class LeoApp:
             "html" : "<!-- -->",
             "java" : "// /* */",
             "latex" : "%",
+            "lua" : "--",  # ddm 13/02/06
             "pascal" : "// { }",
             "perl" : "#",
             "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
@@ -139,6 +140,7 @@ class LeoApp:
             "html" : "html",
             "java" : "java",
             "latex" : "tex", # 1/8/04
+            "lua" : "lua",  # ddm 13/02/06
             "noweb" : "nw",
             "pascal" : "p",
             # "perl" : "perl",
@@ -168,6 +170,7 @@ class LeoApp:
             "f"     : "fortran90", # or fortran ?
             "html"  : "html",
             "java"  : "java",
+            "lua" : "lua",  # ddm 13/02/06
             "noweb" : "nw",
             "p"     : "pascal",
             # "perl"  : "perl",

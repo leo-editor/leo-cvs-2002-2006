@@ -54,7 +54,7 @@ class baseLeoImportCommands:
         # All file types except the following just get copied to the parent node.
         ext = ext.lower()
         appendFileFlag = ext not in (
-            ".c", ".cpp", ".cxx", ".el", ".java", ".pas", ".py", ".pyw", ".php")
+            ".c", ".cpp", ".cxx", ".el", ".java", ".lua", ".pas", ".py", ".pyw", ".php")
         #@    << Read file into s >>
         #@+node:ekr.20031218072017.3211:<< Read file into s >>
         try:
@@ -93,6 +93,8 @@ class baseLeoImportCommands:
             self.scanForthText(s,p)
         elif ext == ".java":
             self.scanJavaText(s,p,True) #outer level
+        elif ext == ".lua":
+            self.scanLuaText(s,p)
         elif ext == ".pas":
             self.scanPascalText(s,p)
         elif ext in (".py", ".pyw"):
@@ -1928,6 +1930,14 @@ class baseLeoImportCommands:
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.3270:scanJavaText
+    #@+node:ekr.20060328112327:scanLuaText
+    def scanLuaText (self,s,parent):
+         
+        """Minimal Lua scanner - leave it to user to create nodes as they see fit."""
+     
+        parent.setBodyStringOrPane("@ignore\n" + "@language lua\n" + self.rootLine + s)
+    #@nonl
+    #@-node:ekr.20060328112327:scanLuaText
     #@+node:ekr.20031218072017.3281:scanPascalText
     # Creates a child of parent for each Pascal function definition seen.
     
@@ -3094,6 +3104,22 @@ class baseLeoImportCommands:
                 else: break
             #@nonl
             #@-node:ekr.20031218072017.3316:<< scan for C-style comments >>
+            #@nl
+        elif self.fileType == ".lua":
+            #@        << scan for Lua comments >>
+            #@+node:ekr.20060328112327.1:<< scan for Lua comments >>
+            while i < len(s):
+                if g.match(s,i,"--"): # Handle a Lua line comment.
+                    while g.match(s,i,'/'):
+                        i += 1
+                    j = i ; i = g.skip_line(s,i)
+                    comment = comment + self.massageComment(s[j:i]) + "\n"
+                    # 8/2/02: Preserve leading whitespace for undentBody
+                    i = g.skip_ws(s,i)
+                    i = g.skip_blank_lines(s,i)
+                else: break
+            #@nonl
+            #@-node:ekr.20060328112327.1:<< scan for Lua comments >>
             #@nl
         elif self.fileType == ".pas":
             #@        << scan for Pascal comments >>

@@ -36,6 +36,7 @@ class leoGui:
         ("C/C++ files", "*.h"),
         ("C/C++ files", "*.hpp"),
         ("Java files",  "*.java"),
+        ("Lua files",   "*.lua"),
         ("Pascal files","*.pas"),
         ("Python files","*.py")]
         # To do: *.php, *.php3, *.php4")
@@ -47,6 +48,7 @@ class leoGui:
         ("C/C++ files","*.h"),
         ("C/C++ files","*.hpp"),
         ("Java files","*.java"),
+        ("Lua files",   "*.lua"),
         ("Pascal files","*.pas")]
         # To do: *.php, *.php3, *.php4")
     textFullFiletypes = [
@@ -56,6 +58,7 @@ class leoGui:
         ("C/C++ files","*.h"),
         ("C/C++ files","*.hpp"),
         ("Java files","*.java"),
+        ("Lua files",   "*.lua"),
         ("Pascal files","*.pas"),
         ("Python files","*.py"),
         ("All files","*")]
