@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7991" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
-	<global_window_position top="28" left="271" height="857" width="778"/>
+	<global_window_position top="27" left="455" height="857" width="778"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -284,17 +284,24 @@
 <v t="ekr.20060329082300"><vh>createButtons</vh></v>
 </v>
 </v>
+<v t="ekr.20060329160534" a="E"><vh>Reference</vh>
+<v t="ekr.20060329160534.4"><vh>class PyShell(OutputWindow)</vh></v>
+<v t="ekr.20060329160534.1"><vh>PyShellEditorWindow (EditorWindow)</vh></v>
+<v t="ekr.20060329160534.3" a="E"><vh>class FileList</vh>
+<v t="ekr.20060329160534.2"><vh>class PyShellFileList (FileList)</vh></v>
+</v>
+</v>
 <v t="ekr.20060308001046" a="E"><vh>@button IdleLeo</vh>
 <v t="ekr.20060308004027"><vh>myMain</vh></v>
 <v t="ekr.20060308062532" a="E"><vh>leoPyShellEditorWindow</vh>
-<v t="ekr.20060308062532.1"><vh>ctor: leoPyShellEditorWindow </vh></v>
+<v t="ekr.20060308062532.1" a="V"><vh>ctor: leoPyShellEditorWindow </vh></v>
 </v>
-<v t="ekr.20060308014050" a="E"><vh>leoPyShell</vh>
+<v t="ekr.20060308014050" a="E"><vh>leoPyShell (PyShell)</vh>
 <v t="ekr.20060308015826"><vh>ctor: leoPyShell</vh></v>
 <v t="ekr.20060308015826.1"><vh>begin</vh></v>
 </v>
-<v t="ekr.20060308005321" a="E"><vh>leoPyShellFileList</vh>
-<v t="ekr.20060308014551" a="V"><vh>ctor: leoPyShellFileList</vh></v>
+<v t="ekr.20060308005321" a="E"><vh>leoPyShellFileList (FileList)</vh>
+<v t="ekr.20060308014551"><vh>ctor: leoPyShellFileList</vh></v>
 <v t="ekr.20060308014050.1"><vh>open_shell</vh></v>
 </v>
 </v>
@@ -4594,9 +4601,12 @@ def myMain(args):
     script = False
     startup = False
     
-    #flist = idlelib.PyShell.PyShellFileList(root) # works.
-
-    flist = leoPyShellFileList(root)
+    print '-' * 40
+    
+    if 1:
+        flist = leoPyShellFileList(root)
+    else:
+        flist = idlelib.PyShell.PyShellFileList(root) # works.
     
     # Set the globals.
     idlelib.PyShell.use_subprocess = True 
@@ -4638,24 +4648,25 @@ def myMain(args):
             
     root.mainloop()
     # root.destroy() # This causes problems.</t>
-<t tx="ekr.20060308005321">class leoPyShellFileList(idlelib.PyShell.PyShellFileList):
+<t tx="ekr.20060308005321">class leoPyShellFileList(idlelib.FileList.FileList): ## idlelib.PyShell.PyShellFileList):
     
     # override FileList's class variable, instances return PyShellEditorWindow
     # instead of EditorWindow when new edit windows are created.
-
     pyshell = None
+    
+    # This is a class variable, originally defined in the FileList class.
+    EditorWindow = leoPyShellEditorWindow
 
     @others</t>
 <t tx="ekr.20060308014050">class leoPyShell (idlelib.PyShell.PyShell):
     
     @others
-        
-    </t>
-<t tx="ekr.20060308014050.1"># Same as base open_shell except that it creates a leoPyShell.
+</t>
+<t tx="ekr.20060308014050.1"># Same as PyShellFileList open_shell except that it creates a leoPyShell.
 
 def open_shell(self, event=None):
     
-    g.trace('leoPyShellFileList.pyshell:',self.pyshell)
+    g.trace('leoPyShellFileList.open_shell  pyshell:',self.pyshell)
 
     if self.pyshell:
         self.pyshell.top.wakeup()
@@ -4665,24 +4676,17 @@ def open_shell(self, event=None):
             if not self.pyshell.begin():
                 return None
     return self.pyshell</t>
-<t tx="ekr.20060308014551">def __init__ (self,root,*args,**keys):
+<t tx="ekr.20060308014551">def __init__ (self,root):
         
-    print 'leoPyShellFileList',self,args,keys
+    print 'leoPyShellFileList.__init__ root:',root
     
-    self.EditorWindow = leoPyShellEditorWindow # Crashes.
+    idlelib.FileList.FileList.__init__(self,root)</t>
+<t tx="ekr.20060308015826">def __init__ (self,flist=None):
         
-    # idlelib.PyShell.PyShellFileList.__init__(self,root,*args,**keys)
-    
-    idlelib.FileList.FileList.__init__(self,root)
-    
-
-    print 'leoPyShellFileList.__init__: self.root',self.root   </t>
-<t tx="ekr.20060308015826">def __init__ (self,*args,**keys):
-        
-    print 'leoPythonShell',self,args,keys
+    print 'leoPythonShell.__init__','flist',flist
     
     # Init the base class.
-    idlelib.PyShell.PyShell.__init__(self,*args,**keys)</t>
+    idlelib.PyShell.PyShell.__init__(self,flist)</t>
 <t tx="ekr.20060308015826.1">def begin(self):
     self.resetoutput()
     if idlelib.PyShell.use_subprocess:
@@ -4708,12 +4712,13 @@ def open_shell(self, event=None):
 <t tx="ekr.20060308062532">class leoPyShellEditorWindow (idlelib.PyShell.PyShellEditorWindow):
     
     @others</t>
-<t tx="ekr.20060308062532.1">def __init__ (self,*args,**keys):
+<t tx="ekr.20060308062532.1">def __init__ (self,*args):
     
-    print 'leoPyShellEditorWindow',self,'args',g.listToString(args)
+    print 'leoPyShellEditorWindow',self,'args...\n',g.listToString(args)
     
     # Init the base class.
-    idlelib.PyShell.PyShellEditorWindow(self,*args,**keys) #args[0],args[1],**keys)</t>
+    # Weird: somehow self has become appended to args.
+    idlelib.PyShell.PyShellEditorWindow(*args)</t>
 <t tx="ekr.20060309024008"></t>
 <t tx="ekr.20060309024008.1">c.frame.tree.canvas.yview_scroll(-1, "page")</t>
 <t tx="ekr.20060309024008.2">c.frame.tree.canvas.yview_scroll(1,"page")</t>
@@ -4888,5 +4893,714 @@ if sys.platform== 'darwin':
                     return None
         return self.pyshell
     </t>
+<t tx="ekr.20060329160534"></t>
+<t tx="ekr.20060329160534.1">class PyShellEditorWindow(EditorWindow):
+    "Regular text edit window in IDLE, supports breakpoints"
+
+    def __init__(self, *args):
+        self.breakpoints = []
+        EditorWindow.__init__(self, *args)
+        self.text.bind("&lt;&lt;set-breakpoint-here&gt;&gt;", self.set_breakpoint_here)
+        self.text.bind("&lt;&lt;clear-breakpoint-here&gt;&gt;", self.clear_breakpoint_here)
+        self.text.bind("&lt;&lt;open-python-shell&gt;&gt;", self.flist.open_shell)
+
+        self.breakpointPath = os.path.join(idleConf.GetUserCfgDir(),
+                                           'breakpoints.lst')
+        # whenever a file is changed, restore breakpoints
+        if self.io.filename: self.restore_file_breaks()
+        def filename_changed_hook(old_hook=self.io.filename_change_hook,
+                                  self=self):
+            self.restore_file_breaks()
+            old_hook()
+        self.io.set_filename_change_hook(filename_changed_hook)
+
+    rmenu_specs = [("Set Breakpoint", "&lt;&lt;set-breakpoint-here&gt;&gt;"),
+                   ("Clear Breakpoint", "&lt;&lt;clear-breakpoint-here&gt;&gt;")]
+
+    def set_breakpoint(self, lineno):
+        text = self.text
+        filename = self.io.filename
+        text.tag_add("BREAK", "%d.0" % lineno, "%d.0" % (lineno+1))
+        try:
+            i = self.breakpoints.index(lineno)
+        except ValueError:  # only add if missing, i.e. do once
+            self.breakpoints.append(lineno)
+        try:    # update the subprocess debugger
+            debug = self.flist.pyshell.interp.debugger
+            debug.set_breakpoint_here(filename, lineno)
+        except: # but debugger may not be active right now....
+            pass
+
+    def set_breakpoint_here(self, event=None):
+        text = self.text
+        filename = self.io.filename
+        if not filename:
+            text.bell()
+            return
+        lineno = int(float(text.index("insert")))
+        self.set_breakpoint(lineno)
+
+    def clear_breakpoint_here(self, event=None):
+        text = self.text
+        filename = self.io.filename
+        if not filename:
+            text.bell()
+            return
+        lineno = int(float(text.index("insert")))
+        try:
+            self.breakpoints.remove(lineno)
+        except:
+            pass
+        text.tag_remove("BREAK", "insert linestart",\
+                        "insert lineend +1char")
+        try:
+            debug = self.flist.pyshell.interp.debugger
+            debug.clear_breakpoint_here(filename, lineno)
+        except:
+            pass
+
+    def clear_file_breaks(self):
+        if self.breakpoints:
+            text = self.text
+            filename = self.io.filename
+            if not filename:
+                text.bell()
+                return
+            self.breakpoints = []
+            text.tag_remove("BREAK", "1.0", END)
+            try:
+                debug = self.flist.pyshell.interp.debugger
+                debug.clear_file_breaks(filename)
+            except:
+                pass
+
+    def store_file_breaks(self):
+        "Save breakpoints when file is saved"
+        # XXX 13 Dec 2002 KBK Currently the file must be saved before it can
+        #     be run.  The breaks are saved at that time.  If we introduce
+        #     a temporary file save feature the save breaks functionality
+        #     needs to be re-verified, since the breaks at the time the
+        #     temp file is created may differ from the breaks at the last
+        #     permanent save of the file.  Currently, a break introduced
+        #     after a save will be effective, but not persistent.
+        #     This is necessary to keep the saved breaks synched with the
+        #     saved file.
+        #
+        #     Breakpoints are set as tagged ranges in the text.  Certain
+        #     kinds of edits cause these ranges to be deleted: Inserting
+        #     or deleting a line just before a breakpoint, and certain
+        #     deletions prior to a breakpoint.  These issues need to be
+        #     investigated and understood.  It's not clear if they are
+        #     Tk issues or IDLE issues, or whether they can actually
+        #     be fixed.  Since a modified file has to be saved before it is
+        #     run, and since self.breakpoints (from which the subprocess
+        #     debugger is loaded) is updated during the save, the visible
+        #     breaks stay synched with the subprocess even if one of these
+        #     unexpected breakpoint deletions occurs.
+        breaks = self.breakpoints
+        filename = self.io.filename
+        try:
+            lines = open(self.breakpointPath,"r").readlines()
+        except IOError:
+            lines = []
+        new_file = open(self.breakpointPath,"w")
+        for line in lines:
+            if not line.startswith(filename + '='):
+                new_file.write(line)
+        self.update_breakpoints()
+        breaks = self.breakpoints
+        if breaks:
+            new_file.write(filename + '=' + str(breaks) + '\n')
+        new_file.close()
+
+    def restore_file_breaks(self):
+        self.text.update()   # this enables setting "BREAK" tags to be visible
+        filename = self.io.filename
+        if filename is None:
+            return
+        if os.path.isfile(self.breakpointPath):
+            lines = open(self.breakpointPath,"r").readlines()
+            for line in lines:
+                if line.startswith(filename + '='):
+                    breakpoint_linenumbers = eval(line[len(filename)+1:])
+                    for breakpoint_linenumber in breakpoint_linenumbers:
+                        self.set_breakpoint(breakpoint_linenumber)
+
+    def update_breakpoints(self):
+        "Retrieves all the breakpoints in the current window"
+        text = self.text
+        ranges = text.tag_ranges("BREAK")
+        linenumber_list = self.ranges_to_linenumbers(ranges)
+        self.breakpoints = linenumber_list
+
+    def ranges_to_linenumbers(self, ranges):
+        lines = []
+        for index in range(0, len(ranges), 2):
+            lineno = int(float(ranges[index]))
+            end = int(float(ranges[index+1]))
+            while lineno &lt; end:
+                lines.append(lineno)
+                lineno += 1
+        return lines
+
+# XXX 13 Dec 2002 KBK Not used currently
+#    def saved_change_hook(self):
+#        "Extend base method - clear breaks if module is modified"
+#        if not self.get_saved():
+#            self.clear_file_breaks()
+#        EditorWindow.saved_change_hook(self)
+
+    def _close(self):
+        "Extend base method - clear breaks when module is closed"
+        self.clear_file_breaks()
+        EditorWindow._close(self)</t>
+<t tx="ekr.20060329160534.2">class PyShellFileList(FileList):
+    "Extend base class: IDLE supports a shell and breakpoints"
+
+    # override FileList's class variable, instances return PyShellEditorWindow
+    # instead of EditorWindow when new edit windows are created.
+    EditorWindow = PyShellEditorWindow
+
+    pyshell = None
+
+    def open_shell(self, event=None):
+        if self.pyshell:
+            self.pyshell.top.wakeup()
+        else:
+            self.pyshell = PyShell(self)
+            if self.pyshell:
+                if not self.pyshell.begin():
+                    return None
+        return self.pyshell</t>
+<t tx="ekr.20060329160534.3">class FileList:
+
+    from EditorWindow import EditorWindow  # class variable, may be overridden
+                                           # e.g. by PyShellFileList
+
+    def __init__(self, root):
+        print 'EKR: FileList.__init__ root',root
+        self.root = root
+        self.dict = {}
+        self.inversedict = {}
+        self.vars = {} # For EditorWindow.getrawvar (shared Tcl variables)
+
+    def open(self, filename, action=None):
+        assert filename
+        filename = self.canonize(filename)
+        if os.path.isdir(filename):
+            # This can happen when bad filename is passed on command line:
+            tkMessageBox.showerror(
+                "File Error",
+                "%r is a directory." % (filename,),
+                master=self.root)
+            return None
+        key = os.path.normcase(filename)
+        if self.dict.has_key(key):
+            edit = self.dict[key]
+            edit.top.wakeup()
+            return edit
+        if action:
+            # Don't create window, perform 'action', e.g. open in same window
+            return action(filename)
+        else:
+            return self.EditorWindow(self, filename, key)
+
+    def gotofileline(self, filename, lineno=None):
+        edit = self.open(filename)
+        if edit is not None and lineno is not None:
+            edit.gotoline(lineno)
+
+    def new(self, filename=None):
+        return self.EditorWindow(self, filename)
+
+    def close_all_callback(self, event):
+        for edit in self.inversedict.keys():
+            reply = edit.close()
+            if reply == "cancel":
+                break
+        return "break"
+
+    def close_edit(self, edit):
+        try:
+            key = self.inversedict[edit]
+        except KeyError:
+            print "Don't know this EditorWindow object.  (close)"
+            return
+        if key:
+            del self.dict[key]
+        del self.inversedict[edit]
+        if not self.inversedict:
+            self.root.quit()
+
+    def filename_changed_edit(self, edit):
+        edit.saved_change_hook()
+        try:
+            key = self.inversedict[edit]
+        except KeyError:
+            print "Don't know this EditorWindow object.  (rename)"
+            return
+        filename = edit.io.filename
+        if not filename:
+            if key:
+                del self.dict[key]
+            self.inversedict[edit] = None
+            return
+        filename = self.canonize(filename)
+        newkey = os.path.normcase(filename)
+        if newkey == key:
+            return
+        if self.dict.has_key(newkey):
+            conflict = self.dict[newkey]
+            self.inversedict[conflict] = None
+            tkMessageBox.showerror(
+                "Name Conflict",
+                "You now have multiple edit windows open for %r" % (filename,),
+                master=self.root)
+        self.dict[newkey] = edit
+        self.inversedict[edit] = newkey
+        if key:
+            try:
+                del self.dict[key]
+            except KeyError:
+                pass
+
+    def canonize(self, filename):
+        if not os.path.isabs(filename):
+            try:
+                pwd = os.getcwd()
+            except os.error:
+                pass
+            else:
+                filename = os.path.join(pwd, filename)
+        return os.path.normpath(filename)
+</t>
+<t tx="ekr.20060329160534.4">class PyShell(OutputWindow):
+
+    shell_title = "Python Shell"
+
+    # Override classes
+    ColorDelegator = ModifiedColorDelegator
+    UndoDelegator = ModifiedUndoDelegator
+
+    # Override menus
+    menu_specs = [
+        ("file", "_File"),
+        ("edit", "_Edit"),
+        ("debug", "_Debug"),
+        ("options", "_Options"),
+        ("windows", "_Windows"),
+        ("help", "_Help"),
+    ]
+
+    # New classes
+    from IdleHistory import History
+
+    def __init__(self, flist=None):
+        if use_subprocess:
+            ms = self.menu_specs
+            if ms[2][0] != "shell":
+                ms.insert(2, ("shell", "_Shell"))
+        self.interp = ModifiedInterpreter(self)
+        if flist is None:
+            root = Tk()
+            fixwordbreaks(root)
+            root.withdraw()
+            flist = PyShellFileList(root)
+        #
+        OutputWindow.__init__(self, flist, None, None)
+        #
+        import __builtin__
+        __builtin__.quit = __builtin__.exit = "To exit, type Ctrl-D."
+        #
+        self.config(usetabs=1, indentwidth=8, context_use_ps1=1)
+        #
+        text = self.text
+        text.configure(wrap="char")
+        text.bind("&lt;&lt;newline-and-indent&gt;&gt;", self.enter_callback)
+        text.bind("&lt;&lt;plain-newline-and-indent&gt;&gt;", self.linefeed_callback)
+        text.bind("&lt;&lt;interrupt-execution&gt;&gt;", self.cancel_callback)
+        text.bind("&lt;&lt;beginning-of-line&gt;&gt;", self.home_callback)
+        text.bind("&lt;&lt;end-of-file&gt;&gt;", self.eof_callback)
+        text.bind("&lt;&lt;open-stack-viewer&gt;&gt;", self.open_stack_viewer)
+        text.bind("&lt;&lt;toggle-debugger&gt;&gt;", self.toggle_debugger)
+        text.bind("&lt;&lt;toggle-jit-stack-viewer&gt;&gt;", self.toggle_jit_stack_viewer)
+        if use_subprocess:
+            text.bind("&lt;&lt;view-restart&gt;&gt;", self.view_restart_mark)
+            text.bind("&lt;&lt;restart-shell&gt;&gt;", self.restart_shell)
+        #
+        self.save_stdout = sys.stdout
+        self.save_stderr = sys.stderr
+        self.save_stdin = sys.stdin
+        import IOBinding
+        self.stdout = PseudoFile(self, "stdout", IOBinding.encoding)
+        self.stderr = PseudoFile(self, "stderr", IOBinding.encoding)
+        self.console = PseudoFile(self, "console", IOBinding.encoding)
+        if not use_subprocess:
+            sys.stdout = self.stdout
+            sys.stderr = self.stderr
+            sys.stdin = self
+        #
+        self.history = self.History(self.text)
+        #
+        self.pollinterval = 50  # millisec
+
+    def get_standard_extension_names(self):
+        return idleConf.GetExtensions(shell_only=True)
+
+    reading = False
+    executing = False
+    canceled = False
+    endoffile = False
+    closing = False
+
+    def set_warning_stream(self, stream):
+        global warning_stream
+        warning_stream = stream
+
+    def get_warning_stream(self):
+        return warning_stream
+
+    def toggle_debugger(self, event=None):
+        if self.executing:
+            tkMessageBox.showerror("Don't debug now",
+                "You can only toggle the debugger when idle",
+                master=self.text)
+            self.set_debugger_indicator()
+            return "break"
+        else:
+            db = self.interp.getdebugger()
+            if db:
+                self.close_debugger()
+            else:
+                self.open_debugger()
+
+    def set_debugger_indicator(self):
+        db = self.interp.getdebugger()
+        self.setvar("&lt;&lt;toggle-debugger&gt;&gt;", not not db)
+
+    def toggle_jit_stack_viewer(self, event=None):
+        pass # All we need is the variable
+
+    def close_debugger(self):
+        db = self.interp.getdebugger()
+        if db:
+            self.interp.setdebugger(None)
+            db.close()
+            if self.interp.rpcclt:
+                RemoteDebugger.close_remote_debugger(self.interp.rpcclt)
+            self.resetoutput()
+            self.console.write("[DEBUG OFF]\n")
+            sys.ps1 = "&gt;&gt;&gt; "
+            self.showprompt()
+        self.set_debugger_indicator()
+
+    def open_debugger(self):
+        if self.interp.rpcclt:
+            dbg_gui = RemoteDebugger.start_remote_debugger(self.interp.rpcclt,
+                                                           self)
+        else:
+            dbg_gui = Debugger.Debugger(self)
+        self.interp.setdebugger(dbg_gui)
+        dbg_gui.load_breakpoints()
+        sys.ps1 = "[DEBUG ON]\n&gt;&gt;&gt; "
+        self.showprompt()
+        self.set_debugger_indicator()
+
+    def beginexecuting(self):
+        "Helper for ModifiedInterpreter"
+        self.resetoutput()
+        self.executing = 1
+
+    def endexecuting(self):
+        "Helper for ModifiedInterpreter"
+        self.executing = 0
+        self.canceled = 0
+        self.showprompt()
+
+    def close(self):
+        "Extend EditorWindow.close()"
+        if self.executing:
+            response = tkMessageBox.askokcancel(
+                "Kill?",
+                "The program is still running!\n Do you want to kill it?",
+                default="ok",
+                parent=self.text)
+            if response == False:
+                return "cancel"
+        self.closing = True
+        # Wait for poll_subprocess() rescheduling to stop
+        self.text.after(2 * self.pollinterval, self.close2)
+
+    def close2(self):
+        return EditorWindow.close(self)
+
+    def _close(self):
+        "Extend EditorWindow._close(), shut down debugger and execution server"
+        self.close_debugger()
+        if use_subprocess:
+            self.interp.kill_subprocess()
+        # Restore std streams
+        sys.stdout = self.save_stdout
+        sys.stderr = self.save_stderr
+        sys.stdin = self.save_stdin
+        # Break cycles
+        self.interp = None
+        self.console = None
+        self.flist.pyshell = None
+        self.history = None
+        EditorWindow._close(self)
+
+    def ispythonsource(self, filename):
+        "Override EditorWindow method: never remove the colorizer"
+        return True
+
+    def short_title(self):
+        return self.shell_title
+
+    COPYRIGHT = \
+          'Type "copyright", "credits" or "license()" for more information.'
+
+    firewallmessage = """
+    ****************************************************************
+    Personal firewall software may warn about the connection IDLE
+    makes to its subprocess using this computer's internal loopback
+    interface.  This connection is not visible on any external
+    interface and no data is sent to or received from the Internet.
+    ****************************************************************
+    """
+
+    def begin(self):
+        self.resetoutput()
+        if use_subprocess:
+            nosub = ''
+            client = self.interp.start_subprocess()
+            if not client:
+                self.close()
+                return False
+        else:
+            nosub = "==== No Subprocess ===="
+        self.write("Python %s on %s\n%s\n%s\nIDLE %s      %s\n" %
+                   (sys.version, sys.platform, self.COPYRIGHT,
+                    self.firewallmessage, idlever.IDLE_VERSION, nosub))
+        self.showprompt()
+        import Tkinter
+        Tkinter._default_root = None # 03Jan04 KBK What's this?
+        return True
+
+    def readline(self):
+        save = self.reading
+        try:
+            self.reading = 1
+            self.top.mainloop()
+        finally:
+            self.reading = save
+        line = self.text.get("iomark", "end-1c")
+        if isinstance(line, unicode):
+            import IOBinding
+            try:
+                line = line.encode(IOBinding.encoding)
+            except UnicodeError:
+                pass
+        self.resetoutput()
+        if self.canceled:
+            self.canceled = 0
+            raise KeyboardInterrupt
+        if self.endoffile:
+            self.endoffile = 0
+            return ""
+        return line
+
+    def isatty(self):
+        return True
+
+    def cancel_callback(self, event=None):
+        try:
+            if self.text.compare("sel.first", "!=", "sel.last"):
+                return # Active selection -- always use default binding
+        except:
+            pass
+        if not (self.executing or self.reading):
+            self.resetoutput()
+            self.interp.write("KeyboardInterrupt\n")
+            self.showprompt()
+            return "break"
+        self.endoffile = 0
+        self.canceled = 1
+        if self.reading:
+            self.top.quit()
+        elif (self.executing and self.interp.rpcclt):
+            if self.interp.getdebugger():
+                self.interp.restart_subprocess()
+            else:
+                self.interp.interrupt_subprocess()
+        return "break"
+
+    def eof_callback(self, event):
+        if self.executing and not self.reading:
+            return # Let the default binding (delete next char) take over
+        if not (self.text.compare("iomark", "==", "insert") and
+                self.text.compare("insert", "==", "end-1c")):
+            return # Let the default binding (delete next char) take over
+        if not self.executing:
+            self.resetoutput()
+            self.close()
+        else:
+            self.canceled = 0
+            self.endoffile = 1
+            self.top.quit()
+        return "break"
+
+    def home_callback(self, event):
+        if event.state != 0 and event.keysym == "Home":
+            return # &lt;Modifier-Home&gt;; fall back to class binding
+        if self.text.compare("iomark", "&lt;=", "insert") and \
+           self.text.compare("insert linestart", "&lt;=", "iomark"):
+            self.text.mark_set("insert", "iomark")
+            self.text.tag_remove("sel", "1.0", "end")
+            self.text.see("insert")
+            return "break"
+
+    def linefeed_callback(self, event):
+        # Insert a linefeed without entering anything (still autoindented)
+        if self.reading:
+            self.text.insert("insert", "\n")
+            self.text.see("insert")
+        else:
+            self.newline_and_indent_event(event)
+        return "break"
+
+    def enter_callback(self, event):
+        if self.executing and not self.reading:
+            return # Let the default binding (insert '\n') take over
+        # If some text is selected, recall the selection
+        # (but only if this before the I/O mark)
+        try:
+            sel = self.text.get("sel.first", "sel.last")
+            if sel:
+                if self.text.compare("sel.last", "&lt;=", "iomark"):
+                    self.recall(sel)
+                    return "break"
+        except:
+            pass
+        # If we're strictly before the line containing iomark, recall
+        # the current line, less a leading prompt, less leading or
+        # trailing whitespace
+        if self.text.compare("insert", "&lt;", "iomark linestart"):
+            # Check if there's a relevant stdin range -- if so, use it
+            prev = self.text.tag_prevrange("stdin", "insert")
+            if prev and self.text.compare("insert", "&lt;", prev[1]):
+                self.recall(self.text.get(prev[0], prev[1]))
+                return "break"
+            next = self.text.tag_nextrange("stdin", "insert")
+            if next and self.text.compare("insert lineend", "&gt;=", next[0]):
+                self.recall(self.text.get(next[0], next[1]))
+                return "break"
+            # No stdin mark -- just get the current line, less any prompt
+            line = self.text.get("insert linestart", "insert lineend")
+            last_line_of_prompt = sys.ps1.split('\n')[-1]
+            if line.startswith(last_line_of_prompt):
+                line = line[len(last_line_of_prompt):]
+            self.recall(line)
+            return "break"
+        # If we're between the beginning of the line and the iomark, i.e.
+        # in the prompt area, move to the end of the prompt
+        if self.text.compare("insert", "&lt;", "iomark"):
+            self.text.mark_set("insert", "iomark")
+        # If we're in the current input and there's only whitespace
+        # beyond the cursor, erase that whitespace first
+        s = self.text.get("insert", "end-1c")
+        if s and not s.strip():
+            self.text.delete("insert", "end-1c")
+        # If we're in the current input before its last line,
+        # insert a newline right at the insert point
+        if self.text.compare("insert", "&lt;", "end-1c linestart"):
+            self.newline_and_indent_event(event)
+            return "break"
+        # We're in the last line; append a newline and submit it
+        self.text.mark_set("insert", "end-1c")
+        if self.reading:
+            self.text.insert("insert", "\n")
+            self.text.see("insert")
+        else:
+            self.newline_and_indent_event(event)
+        self.text.tag_add("stdin", "iomark", "end-1c")
+        self.text.update_idletasks()
+        if self.reading:
+            self.top.quit() # Break out of recursive mainloop() in raw_input()
+        else:
+            self.runit()
+        return "break"
+
+    def recall(self, s):
+        if self.history:
+            self.history.recall(s)
+
+    def runit(self):
+        line = self.text.get("iomark", "end-1c")
+        # Strip off last newline and surrounding whitespace.
+        # (To allow you to hit return twice to end a statement.)
+        i = len(line)
+        while i &gt; 0 and line[i-1] in " \t":
+            i = i-1
+        if i &gt; 0 and line[i-1] == "\n":
+            i = i-1
+        while i &gt; 0 and line[i-1] in " \t":
+            i = i-1
+        line = line[:i]
+        more = self.interp.runsource(line)
+
+    def open_stack_viewer(self, event=None):
+        if self.interp.rpcclt:
+            return self.interp.remote_stack_viewer()
+        try:
+            sys.last_traceback
+        except:
+            tkMessageBox.showerror("No stack trace",
+                "There is no stack trace yet.\n"
+                "(sys.last_traceback is not defined)",
+                master=self.text)
+            return
+        from StackViewer import StackBrowser
+        sv = StackBrowser(self.root, self.flist)
+
+    def view_restart_mark(self, event=None):
+        self.text.see("iomark")
+        self.text.see("restart")
+
+    def restart_shell(self, event=None):
+        self.interp.restart_subprocess()
+
+    def showprompt(self):
+        self.resetoutput()
+        try:
+            s = str(sys.ps1)
+        except:
+            s = ""
+        self.console.write(s)
+        self.text.mark_set("insert", "end-1c")
+        self.set_line_and_column()
+        self.io.reset_undo()
+
+    def resetoutput(self):
+        source = self.text.get("iomark", "end-1c")
+        if self.history:
+            self.history.history_store(source)
+        if self.text.get("end-2c") != "\n":
+            self.text.insert("end-1c", "\n")
+        self.text.mark_set("iomark", "end-1c")
+        self.set_line_and_column()
+        sys.stdout.softspace = 0
+
+    def write(self, s, tags=()):
+        try:
+            self.text.mark_gravity("iomark", "right")
+            OutputWindow.write(self, s, tags, "iomark")
+            self.text.mark_gravity("iomark", "left")
+        except:
+            pass
+        if self.canceled:
+            self.canceled = 0
+            if not use_subprocess:
+                raise KeyboardInterrupt</t>
 </tnodes>
 </leo_file>
