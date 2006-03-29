@@ -13,7 +13,8 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"
+expanded="ekr.20041219071407,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
@@ -642,7 +643,7 @@
 <v t="ekr.20060325073234"><vh>Removed support @ifgui: it doesn't and can't work</vh></v>
 <v t="ekr.20060325122134.1"><vh>Removed autocompletion for self</vh></v>
 <v t="ekr.20060329090924"><vh>Rewrote g.importExtension to simplify startup logic</vh>
-<v t="ekr.20041219071407"><vh>g.importExtension &amp; helpers</vh>
+<v t="ekr.20041219071407" a="E"><vh>g.importExtension &amp; helpers</vh>
 <v t="ekr.20060329083657"><vh>cantImportDialog &amp; helpers</vh>
 <v t="ekr.20060329083310.1"><vh>createDialogFrame</vh></v>
 <v t="ekr.20060329083310.2"><vh>createDialogButtons</vh></v>
@@ -9817,7 +9818,7 @@ and added lua counterparts throughout, including a Lua comment scanner.</t>
 
     top = Tk.Toplevel(root)
     top.title(title)
-    
+
     def onKey(event,top=top):
         if event.char.lower() in ('\n','\r'):
             top.destroy()
@@ -9875,7 +9876,7 @@ but this module may be missing if you get Leo from cvs.
     if 1: # Requires minimal further imports.
         try:
             import Tkinter as Tk
-            root = g.app.root
+            root = g.app.root or Tk.Tk()
             title = 'Can not import %s' % moduleName
             top = createDialogFrame(Tk,root,title,message)
             root.wait_window(top)
