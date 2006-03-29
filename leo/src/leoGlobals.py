@@ -5176,7 +5176,7 @@ but this module may be missing if you get Leo from cvs.
     if 1: # Requires minimal further imports.
         try:
             import Tkinter as Tk
-            root = g.app.root
+            root = g.app.root or Tk.Tk()
             title = 'Can not import %s' % moduleName
             top = createDialogFrame(Tk,root,title,message)
             root.wait_window(top)
@@ -5200,7 +5200,7 @@ def createDialogFrame(Tk,root,title,message):
 
     top = Tk.Toplevel(root)
     top.title(title)
-    
+
     def onKey(event,top=top):
         if event.char.lower() in ('\n','\r'):
             top.destroy()
