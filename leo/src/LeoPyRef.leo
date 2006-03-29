@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="9374" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="9381" clone_windows="0"/>
 <globals body_outline_ratio="0.715460526316">
 	<global_window_position top="45" left="248" height="789" width="973"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -19,7 +19,7 @@
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -820,6 +820,7 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 </v>
+<v t="ekr.20060329095728" a="V"><vh>b3 distribution</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040430162943"></t>
@@ -9922,5 +9923,6 @@ def get_window_info (top):
     
     return w,h,x,y</t>
 <t tx="ekr.20060329090924"></t>
+<t tx="ekr.20060329095728">- Make sure leoSettings.leo works on the Mac.</t>
 </tnodes>
 </leo_file>

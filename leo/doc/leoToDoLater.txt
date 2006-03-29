@@ -6038,6 +6038,56 @@ e
 #@-node:ekr.20060116073938.2:Other
 #@-node:ekr.20060116073229:To do 4.4.1
 #@+node:ekr.20050816165305:Important
+#@+node:ekr.20060329102951:@ref
+@nocolor
+#@nonl
+#@+node:ekr.20060329102951.1:My summary post
+http://sourceforge.net/forum/message.php?msg_id=3598136
+
+> It appears that @ref nodes introduce a flexibility that can not be simulated (at all?) with clones.  
+ 
+Now that something like @ref appears necessary, it is so much easier to see how @ref is useful :-) 
+ 
+1. @ref is an explicit link (arc) that creates the links of a general graph structure explictily. 
+ 
+The simplest cycle is: 
+ 
+- root 
+..- a 
+.... - @ref b 
+..- b 
+.... - @ref a 
+ 
+This is not possible with clones! No more mumbling about being able to represent such links in uA's! 
+ 
+2. @ref allows users to compose documents from 'atomic' pieces of text properly. That is, adding a 'virtual' child to a piece of text does not add it to all other uses of that text in (possibly unrelated) documents. This vastly increases the flexibility of rst3 plugin. 
+ 
+I suspect other essential uses of @ref will appear. I am sure we can declare the 'post-leo LP tool' project a great success already :-) 
+ 
+Edward 
+#@-node:ekr.20060329102951.1:My summary post
+#@+node:ekr.20060329102951.2:Reply
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3650005
+By: itsme213
+
+Imho ...
+
+There will not be any "arbitrary graph" from @ref. Instead there is a forest
+of trees, and across trees, some nodes are same_as some other nodes (caused
+by @ref). same_as is transitive. Quite likely the roots of all trees are same_as.
+There may need to be some rules to ensure things make structural sense. Children
+of a node are just that -- children of that node.
+
+There will be a totally separate Merge node whose children will be the union
+of the children of all the nodes it merges. A Merge node is, itself, the ordinary child of some
+node.
+
+Tree traversals will be tree traversals.
+
+Hope that did not muddy the waters even more ... 
+#@-node:ekr.20060329102951.2:Reply
+#@-node:ekr.20060329102951:@ref
 #@+node:ekr.20031218072017.801:Zipped .leo files
 #@+node:ekr.20050428062312:Request 1
 @nocolor

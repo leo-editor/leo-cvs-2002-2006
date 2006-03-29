@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -84,8 +84,8 @@
 <v t="ekr.20050812125502"><vh>@rst-no-head End stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831195331.1"><vh>FAQ</vh>
-<v t="ekr.20050830115714"><vh>@rst html\FAQ.html</vh>
+<v t="ekr.20050831195331.1" a="E"><vh>FAQ</vh>
+<v t="ekr.20050830115714" a="E"><vh>@rst html\FAQ.html</vh>
 <v t="ekr.20050830120007"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050830115714.1"><vh>Learning to use Leo</vh>
 <v t="ekr.20050830115714.2"><vh>What's the best way to learn to use Leo?</vh></v>
@@ -119,7 +119,8 @@
 <v t="ekr.20050830115714.113"><vh>How can I create a template .leo file?</vh></v>
 <v t="ekr.20050830115714.116"><vh>How can I show Leo files with Excel?</vh></v>
 </v>
-<v t="ekr.20050830115714.76"><vh>Trouble shooting</vh>
+<v t="ekr.20050830115714.76" a="E"><vh>Trouble shooting</vh>
+<v t="ekr.20060329101442" a="V"><vh>Nothing (or almost nothing) happens when I start Leo.  What should I do?</vh></v>
 <v t="ekr.20060210070421"><vh>I can't run Leo from a cvs sandbox.  What's going on?</vh></v>
 <v t="ekr.20060323105214"><vh>Leo's Recent Files menu doesn't work from a cvs shandbox.  What's going on?</vh></v>
 <v t="ekr.20050830115714.77"><vh>How can I use Python's pdb debugger with Leo?</vh></v>
@@ -760,7 +761,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20060206111717"><vh>Ancient...</vh>
 <v t="edream.110203163054.118"><vh>3.x...</vh>
@@ -2512,7 +2513,7 @@
 </v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20060328171518" a="EV"><vh>4.4 b3</vh>
+<v t="ekr.20060328171518" a="E"><vh>4.4 b3</vh>
 <v t="ekr.20060328171518.1"><vh>New features</vh>
 <v t="ekr.20060328171518.10"><vh>Added scroll outline pane commands</vh></v>
 <v t="ekr.20060328171518.11"><vh>Improved registerCommand</vh></v>
@@ -17569,6 +17570,7 @@ Flash file gets mapped to an &lt;embed&gt; tag, etc).</t>
 .. ----- Relative links into Leo's documentation.
 
 .. _`Associating Leo with .leo Files`:  install.html#how-to-associate-leo-with-leo-files-on-windows
+.. _`How to install Leo on Windows`:    install.html#how-to-install-leo-on-windows
 
 .. _`CWEB mode`:                    directives.html#cweb-mode
 .. _command:                        commands.html
@@ -17578,6 +17580,7 @@ Flash file gets mapped to an &lt;embed&gt; tag, etc).</t>
 .. _`Run Leo from a console window`: `How can I run Leo from a console window?`_
 .. _`Tangle and Untangle`:          commands.html#tangling-an-outline-producing-derived-files
 .. _tutorial:                       intro.html
+
 
 .. ----- References to the glossary: the glossary now contains references to the tutorial.
 .. _`@asis`:                glossary.html#asis-trees
@@ -24792,5 +24795,11 @@ The fix was to plugins_menu.py: the cmd_callback must have an event argument.
 g.app.gui, but plugins need settings so the leoSettings.leo files must be parsed
 before g.app.gui.guiName() is known.</t>
 <t tx="ekr.20060328171518.249">It's not ready for prime time.</t>
+<t tx="ekr.20060329101442">Missing modules can cause installation problems.
+If the installer doesn't work (or puts up a dialog containing no text), you may install Leo from the .zip file
+as described at `How to install Leo on Windows`_.
+However you are installing Leo,
+be sure to `run Leo from a console window`_
+because as a last resort Leo prints error messages to the console.</t>
 </tnodes>
 </leo_file>
