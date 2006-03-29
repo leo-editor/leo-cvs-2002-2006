@@ -5139,7 +5139,7 @@ def importModule (moduleName,pluginName=None,verbose=False):
     return module
 #@nonl
 #@-node:ekr.20041219095213.1:g.importModule
-#@+node:ekr.20041219071407:g.importExtension
+#@+node:ekr.20041219071407:g.importExtension & helpers
 def importExtension (moduleName,pluginName=None,verbose=False,required=False):
 
     '''Try to import a module.  If that fails,
@@ -5156,34 +5156,141 @@ def importExtension (moduleName,pluginName=None,verbose=False,required=False):
             pluginName=pluginName,verbose=verbose)
             
         if not module and required:
-            #@            << put up a dialog and exit immediately >>
-            #@+node:ekr.20051126094757:<< put up a dialog and exit immediately >>
-            # g.trace(moduleName,pluginName,g.callers())
-            
-            import leoTkinterDialog
-            message = '''
-            %s requires the %s module.
-            Official distributions contain this module in Leo's extensions folder,
-            but this module may be missing if you get Leo from cvs.
-            ''' % (pluginName,moduleName)
-            
-            d = leoTkinterDialog.tkinterAskOk(
-                c=None,title='Can not import %s' %(moduleName),
-                message=message)
-            d.run(modal=True)
-            
-            # Exit immeditely without raising SystemExit.
-            try:
+            g.cantImportDialog(pluginName,moduleName)
+            try: # Avoid raising SystemExit if possible.
                 import os ; os._exit(1) # May not be available on all platforms.
             except Exception:
                 import sys ; sys.exit(1)
-            #@nonl
-            #@-node:ekr.20051126094757:<< put up a dialog and exit immediately >>
-            #@nl
 
     return module
 #@nonl
-#@-node:ekr.20041219071407:g.importExtension
+#@+node:ekr.20060329083657:cantImportDialog & helpers
+def cantImportDialog (pluginName,moduleName):
+    
+    message = '''
+%s requires the %s module.
+Official distributions contain this module in Leo's extensions folder,
+but this module may be missing if you get Leo from cvs.
+''' % (pluginName,moduleName)
+
+    if 1: # Requires minimal further imports.
+        try:
+            import Tkinter as Tk
+            root = g.app.root
+            title = 'Can not import %s' % moduleName
+            top = createDialogFrame(Tk,root,title,message)
+            root.wait_window(top)
+        except ImportError:
+            print 'Can not import %s' % moduleName
+            print 'Can not import Tkinter'
+            print 'Leo must now exit'
+        
+    else: # Can cause import problems during startup.
+        import leoTkinterDialog
+        
+        d = leoTkinterDialog.tkinterAskOk(
+            c=None,title='Can not import %s' %(moduleName),
+            message=message)
+        d.run(modal=True)
+#@nonl
+#@+node:ekr.20060329083310.1:createDialogFrame
+def createDialogFrame(Tk,root,title,message):
+    
+    """Create the Tk.Toplevel widget for a leoTkinterDialog."""
+
+    top = Tk.Toplevel(root)
+    top.title(title)
+    
+    def onKey(event,top=top):
+        if event.char.lower() in ('\n','\r'):
+            top.destroy()
+    top.bind("<Key>",onKey)
+
+    f = Tk.Frame(top)
+    f.pack(side="top",expand=1,fill="both")
+    
+    label = Tk.Label(f,text=message)
+    label.pack(pady=10)
+    
+    def okButton(top=top):
+        top.destroy()
+    
+    buttons = {"text":'OK',"command":okButton,"default":True}, # Singleton tuple.
+    createDialogButtons(Tk,top,buttons)
+    
+    center(top)
+    top.lift()
+    top.focus_force()
+    
+    # Attach the icon at idle time.
+    def attachIconCallback(top=top):
+        g.app.gui.attachLeoIcon(top)
+    top.after_idle(attachIconCallback)
+
+    return top
+#@nonl
+#@-node:ekr.20060329083310.1:createDialogFrame
+#@+node:ekr.20060329083310.2:createDialogButtons
+def createDialogButtons (Tk,top,buttons):
+    
+    """Create a row of buttons.
+    
+    buttons is a list of dictionaries containing the properties of each button."""
+    
+    f = Tk.Frame(top)
+    f.pack(side="top",padx=30)
+
+    buttonList = []
+    for d in buttons:
+        text = d.get("text","<missing button name>")
+        isDefault = d.get("default",False)
+        underline = d.get("underline",0)
+        command = d.get("command",None)
+        bd = g.choose(isDefault,4,2)
+
+        b = Tk.Button(f,width=6,text=text,bd=bd,underline=underline,command=command)
+        b.pack(side="left",padx=5,pady=10)
+#@nonl
+#@-node:ekr.20060329083310.2:createDialogButtons
+#@+node:ekr.20060329085417.1:center
+def center(top):
+
+    """Center the dialog on the screen.
+
+    WARNING: Call this routine _after_ creating a dialog.
+    (This routine inhibits the grid and pack geometry managers.)"""
+
+    sw = top.winfo_screenwidth()
+    sh = top.winfo_screenheight()
+    w,h,x,y = get_window_info(top)
+    
+    # Set the new window coordinates, leaving w and h unchanged.
+    x = (sw - w)/2
+    y = (sh - h)/2
+    top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+    
+    return w,h,x,y
+#@nonl
+#@-node:ekr.20060329085417.1:center
+#@+node:ekr.20060329085612:get_window_info
+# WARNING: Call this routine _after_ creating a dialog.
+# (This routine inhibits the grid and pack geometry managers.)
+
+def get_window_info (top):
+    
+    top.update_idletasks() # Required to get proper info.
+
+    # Get the information about top and the screen.
+    geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
+    dim,x,y = string.split(geom,'+')
+    w,h = string.split(dim,'x')
+    w,h,x,y = int(w),int(h),int(x),int(y)
+    
+    return w,h,x,y
+#@nonl
+#@-node:ekr.20060329085612:get_window_info
+#@-node:ekr.20060329083657:cantImportDialog & helpers
+#@-node:ekr.20041219071407:g.importExtension & helpers
 #@+node:ekr.20031218072017.2278:g.importFromPath
 def importFromPath (name,path,pluginName=None,verbose=False):
     
