@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="9369" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="9374" clone_windows="0"/>
 <globals body_outline_ratio="0.715460526316">
-	<global_window_position top="79" left="142" height="789" width="973"/>
+	<global_window_position top="45" left="248" height="789" width="973"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -17,7 +17,7 @@
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
-<v t="ekr.20060207133601" a="E"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
+<v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -638,9 +638,19 @@
 <v t="ekr.20031218072017.2860"><vh>weave</vh></v>
 </v>
 </v>
-<v t="ekr.20060227125713" a="E"><vh>Investigated colorizer problems: can not reproduce</vh></v>
+<v t="ekr.20060227125713"><vh>Investigated colorizer problems: can not reproduce</vh></v>
 <v t="ekr.20060325073234"><vh>Removed support @ifgui: it doesn't and can't work</vh></v>
 <v t="ekr.20060325122134.1"><vh>Removed autocompletion for self</vh></v>
+<v t="ekr.20060329090924"><vh>Rewrote g.importExtension to simplify startup logic</vh>
+<v t="ekr.20041219071407"><vh>g.importExtension &amp; helpers</vh>
+<v t="ekr.20060329083657"><vh>cantImportDialog &amp; helpers</vh>
+<v t="ekr.20060329083310.1"><vh>createDialogFrame</vh></v>
+<v t="ekr.20060329083310.2"><vh>createDialogButtons</vh></v>
+<v t="ekr.20060329085417.1"><vh>center</vh></v>
+<v t="ekr.20060329085612"><vh>get_window_info</vh></v>
+</v>
+</v>
+</v>
 </v>
 <v t="ekr.20060323140748"><vh>Plugins</vh>
 <v t="ekr.20060301182319"><vh>Support for chapters plugin</vh>
@@ -4012,6 +4022,29 @@ Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files
     else:
         return 0</t>
 <t tx="ekr.20041211042119"></t>
+<t tx="ekr.20041219071407">def importExtension (moduleName,pluginName=None,verbose=False,required=False):
+
+    '''Try to import a module.  If that fails,
+    try to import the module from Leo's extensions directory.
+
+    moduleName is the module's name, without file extension.'''
+    
+    # g.trace(verbose,moduleName,pluginName)
+    
+    module = g.importModule(moduleName,pluginName=pluginName,verbose=False)
+
+    if not module:
+        module = g.importFromPath(moduleName,g.app.extensionsDir,
+            pluginName=pluginName,verbose=verbose)
+            
+        if not module and required:
+            g.cantImportDialog(pluginName,moduleName)
+            try: # Avoid raising SystemExit if possible.
+                import os ; os._exit(1) # May not be available on all platforms.
+            except Exception:
+                import sys ; sys.exit(1)
+
+    return module</t>
 <t tx="ekr.20041221071131">def createPmwTreeCanvas (self,parentFrame,hScrollMode,pack):
  
     hscrollmode = g.choose(hScrollMode,'dynamic','none')
@@ -9777,5 +9810,117 @@ and added lua counterparts throughout, including a Lua comment scanner.</t>
         # g.es('current directory: %s' %  g.app.globalOpenDir)</t>
 <t tx="ekr.20060328150113.1"></t>
 <t tx="ekr.20060328150113.2"></t>
+<t tx="ekr.20060329083310.1">def createDialogFrame(Tk,root,title,message):
+    
+    """Create the Tk.Toplevel widget for a leoTkinterDialog."""
+
+    top = Tk.Toplevel(root)
+    top.title(title)
+    
+    def onKey(event,top=top):
+        if event.char.lower() in ('\n','\r'):
+            top.destroy()
+    top.bind("&lt;Key&gt;",onKey)
+
+    f = Tk.Frame(top)
+    f.pack(side="top",expand=1,fill="both")
+    
+    label = Tk.Label(f,text=message)
+    label.pack(pady=10)
+    
+    def okButton(top=top):
+        top.destroy()
+    
+    buttons = {"text":'OK',"command":okButton,"default":True}, # Singleton tuple.
+    createDialogButtons(Tk,top,buttons)
+    
+    center(top)
+    top.lift()
+    top.focus_force()
+    
+    # Attach the icon at idle time.
+    def attachIconCallback(top=top):
+        g.app.gui.attachLeoIcon(top)
+    top.after_idle(attachIconCallback)
+
+    return top</t>
+<t tx="ekr.20060329083310.2">def createDialogButtons (Tk,top,buttons):
+    
+    """Create a row of buttons.
+    
+    buttons is a list of dictionaries containing the properties of each button."""
+    
+    f = Tk.Frame(top)
+    f.pack(side="top",padx=30)
+
+    buttonList = []
+    for d in buttons:
+        text = d.get("text","&lt;missing button name&gt;")
+        isDefault = d.get("default",False)
+        underline = d.get("underline",0)
+        command = d.get("command",None)
+        bd = g.choose(isDefault,4,2)
+
+        b = Tk.Button(f,width=6,text=text,bd=bd,underline=underline,command=command)
+        b.pack(side="left",padx=5,pady=10)</t>
+<t tx="ekr.20060329083657">def cantImportDialog (pluginName,moduleName):
+    
+    message = '''
+%s requires the %s module.
+Official distributions contain this module in Leo's extensions folder,
+but this module may be missing if you get Leo from cvs.
+''' % (pluginName,moduleName)
+
+    if 1: # Requires minimal further imports.
+        try:
+            import Tkinter as Tk
+            root = g.app.root
+            title = 'Can not import %s' % moduleName
+            top = createDialogFrame(Tk,root,title,message)
+            root.wait_window(top)
+        except ImportError:
+            print 'Can not import %s' % moduleName
+            print 'Can not import Tkinter'
+            print 'Leo must now exit'
+        
+    else: # Can cause import problems during startup.
+        import leoTkinterDialog
+        
+        d = leoTkinterDialog.tkinterAskOk(
+            c=None,title='Can not import %s' %(moduleName),
+            message=message)
+        d.run(modal=True)</t>
+<t tx="ekr.20060329085417.1">def center(top):
+
+    """Center the dialog on the screen.
+
+    WARNING: Call this routine _after_ creating a dialog.
+    (This routine inhibits the grid and pack geometry managers.)"""
+
+    sw = top.winfo_screenwidth()
+    sh = top.winfo_screenheight()
+    w,h,x,y = get_window_info(top)
+    
+    # Set the new window coordinates, leaving w and h unchanged.
+    x = (sw - w)/2
+    y = (sh - h)/2
+    top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+    
+    return w,h,x,y</t>
+<t tx="ekr.20060329085612"># WARNING: Call this routine _after_ creating a dialog.
+# (This routine inhibits the grid and pack geometry managers.)
+
+def get_window_info (top):
+    
+    top.update_idletasks() # Required to get proper info.
+
+    # Get the information about top and the screen.
+    geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
+    dim,x,y = string.split(geom,'+')
+    w,h = string.split(dim,'x')
+    w,h,x,y = int(w),int(h),int(x),int(y)
+    
+    return w,h,x,y</t>
+<t tx="ekr.20060329090924"></t>
 </tnodes>
 </leo_file>

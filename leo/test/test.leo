@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7984" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7991" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
 	<global_window_position top="28" left="271" height="857" width="778"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="V" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -224,7 +224,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051104081824" a="V" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -293,6 +293,10 @@
 <v t="ekr.20060306120904"><vh>import reportlab</vh></v>
 </v>
 <v t="ekr.20060325071323"><vh>@test ifplatform</vh></v>
+<v t="ekr.20060329081113"><vh>test g.cantImportDialog</vh>
+<v t="ekr.20060329081432.1"><vh>createFrame</vh></v>
+<v t="ekr.20060329082300"><vh>createButtons</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -4799,5 +4803,56 @@ if sys.platform== 'darwin':
     
 
 </t>
+<t tx="ekr.20060329081113">g.cantImportDialog("Leo's core",'xyzzy')</t>
+<t tx="ekr.20060329081432.1">def createFrame(root,title,message):
+    
+    """Create the Tk.Toplevel widget for a leoTkinterDialog."""
+
+    top = Tk.Toplevel(root)
+    top.title(title)
+    
+    def onKey(event,top=top):
+        if event.char.lower() in ('\n','\r'):
+            top.destroy()
+    top.bind("&lt;Key&gt;",onKey)
+
+    f = Tk.Frame(top)
+    f.pack(side="top",expand=1,fill="both")
+    
+    label = Tk.Label(f,text=message)
+    label.pack(pady=10)
+    
+    def okButton(top=top):
+        top.destroy()
+    
+    buttons = {"text":'OK',"command":okButton,"default":True}, # Singleton tuple.
+    createButtons(top,buttons)
+    
+    # top.protocol("WM_DELETE_WINDOW",onClose)
+    
+    # Attach the icon at idle time.
+    def attachIconCallback(top=top):
+        g.app.gui.attachLeoIcon(top)
+    top.after_idle(attachIconCallback)
+    return top</t>
+<t tx="ekr.20060329082300">def createButtons (top,buttons):
+    
+    """Create a row of buttons.
+    
+    buttons is a list of dictionaries containing the properties of each button."""
+    
+    f = Tk.Frame(top)
+    f.pack(side="top",padx=30)
+
+    buttonList = []
+    for d in buttons:
+        text = d.get("text","&lt;missing button name&gt;")
+        isDefault = d.get("default",False)
+        underline = d.get("underline",0)
+        command = d.get("command",None)
+        bd = g.choose(isDefault,4,2)
+
+        b = Tk.Button(f,width=6,text=text,bd=bd,underline=underline,command=command)
+        b.pack(side="left",padx=5,pady=10)</t>
 </tnodes>
 </leo_file>
