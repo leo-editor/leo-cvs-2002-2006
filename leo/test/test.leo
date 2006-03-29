@@ -284,7 +284,7 @@
 <v t="ekr.20060329082300"><vh>createButtons</vh></v>
 </v>
 </v>
-<v t="ekr.20060329160534" a="E"><vh>Reference</vh>
+<v t="ekr.20060329160534" a="E"><vh>Idle Reference</vh>
 <v t="ekr.20060329160534.4"><vh>class PyShell(OutputWindow)</vh></v>
 <v t="ekr.20060329160534.1"><vh>PyShellEditorWindow (EditorWindow)</vh></v>
 <v t="ekr.20060329160534.3" a="E"><vh>class FileList</vh>
@@ -292,9 +292,11 @@
 </v>
 </v>
 <v t="ekr.20060308001046" a="E"><vh>@button IdleLeo</vh>
+<v t="ekr.20060329164735"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20060329164735.1" a="V"><vh>&lt;&lt; to do &gt;&gt;</vh></v>
 <v t="ekr.20060308004027"><vh>myMain</vh></v>
 <v t="ekr.20060308062532" a="E"><vh>leoPyShellEditorWindow</vh>
-<v t="ekr.20060308062532.1" a="V"><vh>ctor: leoPyShellEditorWindow </vh></v>
+<v t="ekr.20060308062532.1"><vh>ctor: leoPyShellEditorWindow </vh></v>
 </v>
 <v t="ekr.20060308014050" a="E"><vh>leoPyShell (PyShell)</vh>
 <v t="ekr.20060308015826"><vh>ctor: leoPyShell</vh></v>
@@ -4560,10 +4562,8 @@ else:
 
 print 'done'
 c.bodyWantsFocusNow()</t>
-<t tx="ekr.20060308001046">import idlelib.PyShell
-import os
-import sys
-import Tkinter
+<t tx="ekr.20060308001046">&lt;&lt; to do &gt;&gt;
+&lt;&lt; imports &gt;&gt;
 
 @others
 
@@ -4603,10 +4603,8 @@ def myMain(args):
     
     print '-' * 40
     
-    if 1:
-        flist = leoPyShellFileList(root)
-    else:
-        flist = idlelib.PyShell.PyShellFileList(root) # works.
+    flist = leoPyShellFileList(root)
+    # flist = idlelib.PyShell.PyShellFileList(root) # works.
     
     # Set the globals.
     idlelib.PyShell.use_subprocess = True 
@@ -4648,13 +4646,13 @@ def myMain(args):
             
     root.mainloop()
     # root.destroy() # This causes problems.</t>
-<t tx="ekr.20060308005321">class leoPyShellFileList(idlelib.FileList.FileList): ## idlelib.PyShell.PyShellFileList):
+<t tx="ekr.20060308005321">class leoPyShellFileList(idlelib.FileList.FileList):
     
-    # override FileList's class variable, instances return PyShellEditorWindow
-    # instead of EditorWindow when new edit windows are created.
+    '''Like PyShellFileList but uses leoPytShellEditorWindows instances
+    instead of the EditorWindow instances.'''
+
+    # override FileList's class variables
     pyshell = None
-    
-    # This is a class variable, originally defined in the FileList class.
     EditorWindow = leoPyShellEditorWindow
 
     @others</t>
@@ -4662,11 +4660,12 @@ def myMain(args):
     
     @others
 </t>
-<t tx="ekr.20060308014050.1"># Same as PyShellFileList open_shell except that it creates a leoPyShell.
-
-def open_shell(self, event=None):
+<t tx="ekr.20060308014050.1">def open_shell(self, event=None):
     
-    g.trace('leoPyShellFileList.open_shell  pyshell:',self.pyshell)
+    '''Just like PyShellFileList.open_shell but uses leoPytShellEditorWindows
+    instances instead of the EditorWindow instances.'''
+    
+    # g.trace('leoPyShellFileList.open_shell  pyshell:',self.pyshell)
 
     if self.pyshell:
         self.pyshell.top.wakeup()
@@ -4678,12 +4677,12 @@ def open_shell(self, event=None):
     return self.pyshell</t>
 <t tx="ekr.20060308014551">def __init__ (self,root):
         
-    print 'leoPyShellFileList.__init__ root:',root
+    # print 'leoPyShellFileList.__init__ root:',root
     
     idlelib.FileList.FileList.__init__(self,root)</t>
 <t tx="ekr.20060308015826">def __init__ (self,flist=None):
         
-    print 'leoPythonShell.__init__','flist',flist
+    # print 'leoPythonShell.__init__','flist',flist
     
     # Init the base class.
     idlelib.PyShell.PyShell.__init__(self,flist)</t>
@@ -4698,7 +4697,7 @@ def open_shell(self, event=None):
     else:
         nosub = "==== No Subprocess ===="
     
-    if 1:
+    if 1: # Suppress some stuff.
         self.write("Python %s on %s\nIDLE for Leo %s      %s\n" % (
             sys.version, sys.platform,idlelib.PyShell.idlever.IDLE_VERSION, nosub))
     else:
@@ -4711,10 +4710,12 @@ def open_shell(self, event=None):
     return True</t>
 <t tx="ekr.20060308062532">class leoPyShellEditorWindow (idlelib.PyShell.PyShellEditorWindow):
     
+    '''An over-ride of PyShellEditorWindow intended to support Leo outlines.'''
+    
     @others</t>
 <t tx="ekr.20060308062532.1">def __init__ (self,*args):
     
-    print 'leoPyShellEditorWindow',self,'args...\n',g.listToString(args)
+    # print 'leoPyShellEditorWindow' # ,self,'args...\n',g.listToString(args)
     
     # Init the base class.
     # Weird: somehow self has become appended to args.
@@ -5602,5 +5603,13 @@ if sys.platform== 'darwin':
             self.canceled = 0
             if not use_subprocess:
                 raise KeyboardInterrupt</t>
+<t tx="ekr.20060329164735">import idlelib.PyShell
+import os
+import sys
+import Tkinter</t>
+<t tx="ekr.20060329164735.1">@
+
+The pyshell class overrides bindings.
+</t>
 </tnodes>
 </leo_file>
