@@ -24,10 +24,10 @@ import re
 import string
 import sys
 import threading
+import Tkinter as Tk
 
 subprocess     = g.importExtension('subprocess',    pluginName=None,verbose=False)
 Pmw            = g.importExtension('Pmw',           pluginName=None,verbose=False)
-Tk             = g.importExtension('Tkinter',       pluginName=None,verbose=False)
 tkColorChooser = g.importExtension('tkColorChooser',pluginName=None,verbose=False)
 tkFileDialog   = g.importExtension('tkFileDialog',  pluginName=None,verbose=False)
 tkFont         = g.importExtension('tkFont',        pluginName=None,verbose=False)

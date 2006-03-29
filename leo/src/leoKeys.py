@@ -10,8 +10,7 @@
 #@+node:ekr.20050920094258:<< imports >>
 import leoGlobals as g
 import leoEditCommands
-
-Tk = g.importExtension('Tkinter',pluginName=None,verbose=False)
+import Tkinter as Tk
 
 import compiler
 import inspect

@@ -22,8 +22,7 @@ import tkFileDialog
 import os
 import string
 import sys
-
-Tk  = g.importExtension('Tkinter',pluginName='leoTkinterGui',verbose=True)
+import Tkinter as Tk
 Pmw = g.importExtension('Pmw',    pluginName='leoTkinterGui',verbose=True)
 #@nonl
 #@-node:ekr.20041228050845:<< imports >>

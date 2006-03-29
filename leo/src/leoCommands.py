@@ -42,8 +42,7 @@ import tempfile
 
 import tabnanny # for Check Python command
 import tokenize # for Check Python command
-
-Tk = g.importExtension('Tkinter',       pluginName=None,verbose=False)
+import Tkinter as Tk
 
 # The following import _is_ used.
 __pychecker__ = '--no-import'

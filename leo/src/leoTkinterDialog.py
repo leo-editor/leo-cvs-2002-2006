@@ -7,7 +7,8 @@
 import leoGlobals as g
 import string
 
-Tk  = g.importExtension("Tkinter",pluginName='LeoTkinterDialog',verbose=True,required=True)
+import Tkinter as Tk
+
 Pmw = g.importExtension("Pmw",    pluginName='LeoTkinterDialog',verbose=True,required=True)
 
 #@+others
