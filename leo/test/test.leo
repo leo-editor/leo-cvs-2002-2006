@@ -209,22 +209,8 @@
 </v>
 </v>
 <v t="ekr.20060307115056"><vh>Test of leoDebugger</vh></v>
-<v t="ekr.20060308001046"><vh>Prototype of using Idle's debugger in Leo</vh>
-<v t="ekr.20060308004027"><vh>myMain</vh></v>
-<v t="ekr.20060308062532"><vh>leoPyShellEditorWindow</vh>
-<v t="ekr.20060308062532.1"><vh>ctor: </vh></v>
 </v>
-<v t="ekr.20060308014050"><vh>leoPyShell</vh>
-<v t="ekr.20060308015826"><vh>ctor: leoPyShell</vh></v>
-<v t="ekr.20060308015826.1"><vh>begin</vh></v>
-</v>
-<v t="ekr.20060308005321"><vh>leoPyShellFileList</vh>
-<v t="ekr.20060308014551"><vh>ctor: leoPyShellFileList</vh></v>
-<v t="ekr.20060308014050.1"><vh>open_shell</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20051104081824" a="V" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -298,6 +284,21 @@
 <v t="ekr.20060329082300"><vh>createButtons</vh></v>
 </v>
 </v>
+<v t="ekr.20060308001046" a="E"><vh>@button IdleLeo</vh>
+<v t="ekr.20060308004027"><vh>myMain</vh></v>
+<v t="ekr.20060308062532" a="E"><vh>leoPyShellEditorWindow</vh>
+<v t="ekr.20060308062532.1"><vh>ctor: leoPyShellEditorWindow </vh></v>
+</v>
+<v t="ekr.20060308014050" a="E"><vh>leoPyShell</vh>
+<v t="ekr.20060308015826"><vh>ctor: leoPyShell</vh></v>
+<v t="ekr.20060308015826.1"><vh>begin</vh></v>
+</v>
+<v t="ekr.20060308005321" a="E"><vh>leoPyShellFileList</vh>
+<v t="ekr.20060308014551" a="V"><vh>ctor: leoPyShellFileList</vh></v>
+<v t="ekr.20060308014050.1"><vh>open_shell</vh></v>
+</v>
+</v>
+<v t="ekr.20060329133241"><vh>Flattened (posting)</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4559,7 +4560,6 @@ import Tkinter
 
 @others
 
-
 args = ['-d'] # Show debugger window on startup.
 args = []
 args = [r'c:\Python24\Lib\idlelib\EditorWindow.py'] # Edit file on startup.
@@ -4667,14 +4667,19 @@ def open_shell(self, event=None):
     return self.pyshell</t>
 <t tx="ekr.20060308014551">def __init__ (self,root,*args,**keys):
         
-    print 'leoPyShellFileList',args,keys
-        
-    idlelib.PyShell.PyShellFileList.__init__(self,root,*args,**keys)
+    print 'leoPyShellFileList',self,args,keys
     
-    # self.EditorWindow = leoPyShellEditorWindow</t>
+    self.EditorWindow = leoPyShellEditorWindow # Crashes.
+        
+    # idlelib.PyShell.PyShellFileList.__init__(self,root,*args,**keys)
+    
+    idlelib.FileList.FileList.__init__(self,root)
+    
+
+    print 'leoPyShellFileList.__init__: self.root',self.root   </t>
 <t tx="ekr.20060308015826">def __init__ (self,*args,**keys):
         
-    print 'leoPythonShell',args,keys
+    print 'leoPythonShell',self,args,keys
     
     # Init the base class.
     idlelib.PyShell.PyShell.__init__(self,*args,**keys)</t>
@@ -4705,11 +4710,10 @@ def open_shell(self, event=None):
     @others</t>
 <t tx="ekr.20060308062532.1">def __init__ (self,*args,**keys):
     
-    print 'leoPyShellEditorWindow',args,keys
+    print 'leoPyShellEditorWindow',self,'args',g.listToString(args)
     
     # Init the base class.
-    idlelib.PyShell.PyShellEditorWindow(self,*args,**keys)
-</t>
+    idlelib.PyShell.PyShellEditorWindow(self,*args,**keys) #args[0],args[1],**keys)</t>
 <t tx="ekr.20060309024008"></t>
 <t tx="ekr.20060309024008.1">c.frame.tree.canvas.yview_scroll(-1, "page")</t>
 <t tx="ekr.20060309024008.2">c.frame.tree.canvas.yview_scroll(1,"page")</t>
@@ -4854,5 +4858,35 @@ if sys.platform== 'darwin':
 
         b = Tk.Button(f,width=6,text=text,bd=bd,underline=underline,command=command)
         b.pack(side="left",padx=5,pady=10)</t>
+<t tx="ekr.20060329133241">class leoPyShellFileList(idlelib.PyShell.PyShellFileList):
+    
+    # override FileList's class variable, instances return PyShellEditorWindow
+    # instead of EditorWindow when new edit windows are created.
+
+    pyshell = None
+
+    def __init__ (self,root,*args,**keys):
+            
+        print 'leoPyShellFileList',args,keys
+            
+        idlelib.PyShell.PyShellFileList.__init__(self,root,*args,**keys)
+        
+        self.EditorWindow = leoPyShellEditorWindow # crashes
+
+    # Same as base open_shell except that it creates a leoPyShell.
+    
+    def open_shell(self, event=None):
+        
+        g.trace('leoPyShellFileList.pyshell:',self.pyshell)
+    
+        if self.pyshell:
+            self.pyshell.top.wakeup()
+        else:
+            self.pyshell = leoPyShell(self)
+            if self.pyshell:
+                if not self.pyshell.begin():
+                    return None
+        return self.pyshell
+    </t>
 </tnodes>
 </leo_file>
